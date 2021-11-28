@@ -5,3 +5,7 @@ const Formations = () => {
 }
  
 export default Formations;
+
+//Server side rendering
+export const getServerSideProps = async () => {
+}

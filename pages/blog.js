@@ -5,3 +5,7 @@ const Blog = () => {
 }
  
 export default Blog;
+
+//Static Generation
+export const getStaticProps = async () => {
+}
