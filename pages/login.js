@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/router'
 
 const Login = () => {
+
+    const router = useRouter();
 
     const [formData, setFormData] = useState({
         email: "",
@@ -18,12 +21,18 @@ const Login = () => {
         e.preventDefault();
         console.log(email, password)
         signIn('credentials', {
+            redirect: false,
             email,
             password,
-            // The page where you want to redirect to after a 
-            // successful login
-            callbackUrl: `${window.location.origin}/`
         })
+            .then(response => {
+                if (!response.error) {
+                    router.push('/')
+                } else {
+                    setFormData({ ...formData, message:'Cette adresse E-mail et ce mot de passe ne correspondent pas'});
+                }
+            })
+            .catch(error => console.log(error))
     }
 
     return (
