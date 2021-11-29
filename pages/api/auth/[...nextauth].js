@@ -1,6 +1,9 @@
+const { connectToDatabase } = require('../../../lib/mongodb');
+
 import NextAuth from "next-auth";
-import Providers from "next-auth/providers";
 import CredentialsProvider from "next-auth/providers/credentials";
+
+import User from '../../../models/User.model'
 
 export default NextAuth({
     providers: [
@@ -12,12 +15,19 @@ export default NextAuth({
             // e.g. domain, username, password, 2FA token, etc.
             // You can pass any HTML attribute to the <input> tag through the object.
             credentials: {
-                username: { label: "Email", type: "email", placeholder: "email@exemple.com" },
+                email: { label: "Email", type: "email", placeholder: "email@exemple.com" },
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials, req) {
                 // Add logic here to look up the user from the credentials supplied
-                const user = { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
+
+                console.log(credentials, req.body)
+
+                await connectToDatabase()
+
+                const user = await User.findOne({ email: credentials.email })
+
+                console.log('user from DB',user)
 
                 if (user) {
                     // Any object returned will be saved in `user` property of the JWT

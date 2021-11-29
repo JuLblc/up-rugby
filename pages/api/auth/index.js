@@ -1,5 +1,7 @@
 const { connectToDatabase } = require('../../../lib/mongodb');
 
+const bcrypt = require('bcryptjs');
+
 import User from '../../../models/User.model'
 
 export default function handler(req, res) {
@@ -29,18 +31,26 @@ const addUser = (req, res) => {
 
     const { email, password } = req.body;
 
-    const aNewUser = new User({
-        email,
-        password
-    })
+    User.findOne({ email })
+        .then(foundUser => {
+            if (foundUser) {
+                res.status(409).json({ message: 'Cette adresse E-mail est déjà utilisée' });
+                return;
+            }
 
-    aNewUser.save()
-        .then(response => {
-            console.log('response', response)
-            res.status(200).json(response)
+            const salt = bcrypt.genSaltSync(10);
+            const hashPass = bcrypt.hashSync(password, salt);
+
+            const aNewUser = new User({
+                email: email,
+                password: hashPass,
+            })
+
+            aNewUser.save()
+                .then(response => {
+                    console.log('response', response)
+                    res.status(200).json(response)
+                })
+                .catch(err => console.log(err))
         })
-        .catch(err => console.log(err))
-
-    
-
 }
