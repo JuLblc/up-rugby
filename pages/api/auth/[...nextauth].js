@@ -18,7 +18,7 @@ export default NextAuth({
                 const user = await User.findOne({ email: credentials.email })
                 const bcryptValidation = await bcrypt.compare(credentials.password, user.password);                
 
-                if (bcryptValidation && user ) {
+                if (bcryptValidation && user) {
                     console.log('login OK')
                     // Any object returned will be saved in `user` property of the JWT
                     return user

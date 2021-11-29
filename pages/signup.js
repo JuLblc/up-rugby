@@ -20,13 +20,12 @@ const SignUp = () => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        console.log('hi')
 
         axios.post('/api/auth', { email, password })
             .then(response => {
                 console.log('response: ', response.data)
             })
-            .catch(err => console.log('error: ',error))
+            .catch(err => setFormData({ ...formData, message: err.response.data.message }))
     }
 
     return (
