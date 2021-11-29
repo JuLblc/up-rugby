@@ -1,11 +1,7 @@
-import axios from 'axios';
-
 import { useState } from "react";
-// import {useNavigate} from 'react-router-dom';
+import { signIn } from 'next-auth/react'
 
-const SignUp = () => {
-    
-    // const navigate = useNavigate();
+const Login = () => {
 
     const [formData, setFormData] = useState({
         email: "",
@@ -20,13 +16,14 @@ const SignUp = () => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        console.log('hi')
-
-        axios.post('/api/auth', { email, password })
-            .then(response => {
-                console.log('response: ', response.data)
-            })
-            .catch(err => console.log('error: ',error))
+        console.log(email, password)
+        signIn('credentials', {
+            email,
+            password,
+            // The page where you want to redirect to after a 
+            // successful login
+            callbackUrl: `${window.location.origin}/`
+        })
     }
 
     return (
@@ -34,6 +31,7 @@ const SignUp = () => {
             {/* If user is logged in -> redirect to '/'*/}
             {/* {props.user && navigate('/')} */}
 
+            {/* Login Passeport Local Strategy */}
             <form onSubmit={handleFormSubmit}>
                 <label>Email:
                     <input type="email" name="email" value={email} onChange={onChange} />
@@ -43,14 +41,17 @@ const SignUp = () => {
                     <input type="password" name="password" value={password} onChange={onChange} />
                 </label>
 
-                <button>Sign Up</button>
+                <button>Login</button>
             </form>
 
             {message && (
                 <p className="message">{message}</p>
             )}
+
+            {/* Login Passeport Facebook Strategy */}
+            <a href="http://localhost:5000/auth/facebook">Se connecter avec Facebook</a>
         </>
     );
 }
 
-export default SignUp;
+export default Login;
