@@ -1,9 +1,20 @@
 import axios from 'axios';
 
 import { useState } from "react";
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 const SignUp = () => {
-    
+
+    const router = useRouter();
+
+    const { data: session, status } = useSession();
+
+    //User is already logged in -> redirect vers home
+    if (session){
+        router.push('/')
+    }
+
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -27,9 +38,6 @@ const SignUp = () => {
 
     return (
         <>
-            {/* If user is logged in -> redirect to '/'*/}
-            {/* {props.user && navigate('/')} */}
-
             <form onSubmit={handleFormSubmit}>
                 <label>Email:
                     <input type="email" name="email" value={email} onChange={onChange} />

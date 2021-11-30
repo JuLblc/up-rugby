@@ -4,7 +4,6 @@ import { signOut, useSession } from 'next-auth/react'
 const Navbar = () => {
 
     const { data: session, status } = useSession();
-    console.log({ session, status })
 
     const handleSignOut = (e) => {
         e.preventDefault();
@@ -18,13 +17,13 @@ const Navbar = () => {
                 <li><Link href='/formations'><a>Formations</a></Link></li>
                 <li><Link href='/exercices'><a>Exercices</a></Link></li>
                 <li><Link href='/blog'><a>Blog</a></Link></li>
-                
+
                 {/* If user is logged in -> display profile button*/}
                 {session && (
                 <li><Link href='/profile'><a>Mon compte</a></Link></li>
                 )}
             </ul>
-            <ul className={`auth ${!session && status === 'loading' ? 'loading' : 'loaded'}`}>
+            <ul className="auth">
                 {/* If user is not logged in -> display login & sign up link*/}
                 {status === 'unauthenticated' && !session && (
                     <>

@@ -1,10 +1,19 @@
 import { useState } from "react";
+import { useSession } from 'next-auth/react';
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/router'
 
 const Login = () => {
 
     const router = useRouter();
+
+    const { data: session, status } = useSession();
+    console.log({session, status})
+
+    //User is already logged in -> redirect vers home
+    if (session){
+        router.push('/')
+    }
 
     const [formData, setFormData] = useState({
         email: "",

@@ -27,9 +27,28 @@ export default NextAuth({
           console.log('login Not OK')
           return null
         }
-      },
-      secret: process.env.NEXTAUTH_SECRET
-
+      }
     })
-  ]
+  ],
+  // database: process.env.MONGODB_URI,
+  // session:{
+  //   jwt:true
+  // },
+  // jwt:{
+  //   secret:process.env.NEXTAUTH_SECRET
+  // },
+  // callbacks : {
+  //   async jwt(token, user) {
+  //     if (user) {
+  //       token.id = user.id
+  //     }
+  
+  //     return token
+  //   },
+  //   async sesssion(session, token){
+  //     session.user.id = token.id
+  //     return session
+  //   }
+  // },
+  // secret: process.env.NEXTAUTH_SECRET
 })
