@@ -27,7 +27,8 @@ export default NextAuth({
           console.log('login Not OK')
           return null
         }
-      }
+      },
+      secret: process.env.NEXTAUTH_SECRET
 
     })
   ]

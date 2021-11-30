@@ -7,5 +7,5 @@ const Exercices = () => {
 export default Exercices;
 
 //Server side rendering
-export const getServerSideProps = async () => {
-}
+//export const getServerSideProps = async () => {
+//}

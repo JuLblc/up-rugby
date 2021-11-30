@@ -74,7 +74,13 @@ const addUser = (req, res) => {
                     console.log('response', response)
                     res.status(200).json(response)
                 })
-                .catch(err => console.log(err))
+                .catch(err => {
+                    res.status(400).json({ message: "Une erreur lors de la création du compte s'est produite." });
+                    console.log(err)
+                })
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+            res.status(400).json({ message: "Une erreur lors de la création du compte s'est produite." });
+            console.log(err)
+        })
 }

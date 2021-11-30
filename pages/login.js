@@ -29,18 +29,21 @@ const Login = () => {
                 if (!response.error) {
                     router.push('/')
                 } else {
-                    setFormData({ ...formData, message:'Cette adresse E-mail et ce mot de passe ne correspondent pas'});
+                    setFormData({ ...formData, message: 'Cette adresse E-mail et ce mot de passe ne correspondent pas' });
                 }
             })
-            .catch(error => console.log(error))
+            .catch(err => {
+                console.log(err)
+                setFormData({ ...formData, message: err.response.data.message })
+            })
     }
 
     return (
         <>
             {/* If user is logged in -> redirect to '/'*/}
-            {/* {props.user && navigate('/')} */}
+            
 
-            {/* Login Passeport Local Strategy */}
+            {/* Login with Credentials */}
             <form onSubmit={handleFormSubmit}>
                 <label>Email:
                     <input type="email" name="email" value={email} onChange={onChange} />
@@ -57,7 +60,7 @@ const Login = () => {
                 <p className="message">{message}</p>
             )}
 
-            {/* Login Passeport Facebook Strategy */}
+            {/* Login with Facebook */}
             <a href="http://localhost:5000/auth/facebook">Se connecter avec Facebook</a>
         </>
     );
