@@ -26,7 +26,10 @@ export default function handler(req, res) {
                     break
             }
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+            console.log(err)
+            res.status(400).json({ success: false });
+        })
 }
 
 const addUser = (req, res) => {
@@ -77,7 +80,7 @@ const addUser = (req, res) => {
 
             aNewUser.save()
                 .then(response => {
-                    console.log('response', response)
+                    // console.log('response', response)
 
                     //Envoi email pour confirmer l'adresse
                     transporter.sendMail({
