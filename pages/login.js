@@ -70,7 +70,7 @@ const Login = () => {
             )}
 
             {/* Login with Facebook */}
-            <a href="http://localhost:5000/auth/facebook">Se connecter avec Facebook</a>
+            {/* <a href="http://localhost:5000/auth/facebook">Se connecter avec Facebook</a> */}
         </>
     );
 }

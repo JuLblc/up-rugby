@@ -31,7 +31,8 @@ const SignUp = () => {
 
         axios.post('/api/auth', { email, password })
             .then(response => {
-                console.log('response: ', response.data)
+                // console.log('response: ', response.data)
+                setFormData({ ...formData, message: response.data.message })
             })
             .catch(err => setFormData({ ...formData, message: err.response.data.message }))
     }

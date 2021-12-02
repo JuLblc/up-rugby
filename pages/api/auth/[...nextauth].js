@@ -1,7 +1,8 @@
-const { connectToDatabase } = require('../../../lib/mongodb');
+const { connectToDatabase } = require('../../../utils/mongodb');
 
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import FacebookProvider from "next-auth/providers/facebook";
 
 import User from '../../../models/User.model'
 
@@ -28,27 +29,33 @@ export default NextAuth({
           return null
         }
       }
+    }),
+    FacebookProvider({
+      clientId: process.env.FACEBOOK_CLIENT_ID,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET
     })
   ],
-  // database: process.env.MONGODB_URI,
-  // session:{
-  //   jwt:true
-  // },
-  // jwt:{
-  //   secret:process.env.NEXTAUTH_SECRET
-  // },
-  // callbacks : {
-  //   async jwt(token, user) {
-  //     if (user) {
-  //       token.id = user.id
-  //     }
-  
-  //     return token
-  //   },
-  //   async sesssion(session, token){
-  //     session.user.id = token.id
-  //     return session
-  //   }
-  // },
-  // secret: process.env.NEXTAUTH_SECRET
+  jwt: {
+    secret: process.env.NEXTAUTH_SECRET,
+    maxAge: 60 * 60 * 24 * 1, // 1 jour
+  },
+  session:{
+    maxAge: 60 * 60 * 24 * 1, // 1 jour
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      console.log('callbacks jwt: ', { token, user })
+      if (user) {
+        token.id = user.id
+      }
+
+      return token
+    },
+    async session({ session, token }) {
+      console.log('callbacks session: ', { session, token })
+      session.user.id = token.id
+      return session
+    }
+  },
+  secret: process.env.NEXTAUTH_SECRET
 })
