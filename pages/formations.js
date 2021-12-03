@@ -8,7 +8,7 @@ const Formations = () => {
     return (
         <>
             <h1>Page Formation</h1>
-            <h2>Toutes les formations sont affichés</h2>
+            <h2>Toutes les formations sont affichées</h2>
             <ul>
                 <li>Visiteurs</li>
                 <li>Utilisateurs connectés</li>

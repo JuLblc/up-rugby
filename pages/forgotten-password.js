@@ -17,8 +17,7 @@ const ForgottenPassword = () => {
         e.preventDefault();
         console.log('send me link')
 
-        // Axios request
-        axios.put('/api/auth/reset', { email })
+        axios.put('/api/auth/forgot', { email })
             .then(response => {
                 console.log('response: ', response)
                 setFormData({ ...formData, message: response.data.message })
