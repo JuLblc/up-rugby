@@ -16,7 +16,13 @@ export default NextAuth({
 
         await connectToDatabase()
 
-        const user = await User.findOne({ email: credentials.email })
+        const user = await User.findOne({
+          $and:[
+            { email: credentials.email },
+            { isEmailVerified: true }
+          ]
+        })
+
         const bcryptValidation = await bcrypt.compare(credentials.password, user.password);
 
         if (bcryptValidation && user) {
@@ -44,7 +50,7 @@ export default NextAuth({
   },
   callbacks: {
     async jwt({ token, user }) {
-      console.log('callbacks jwt: ', { token, user })
+      // console.log('callbacks jwt: ', { token, user })
       if (user) {
         token.id = user.id
       }
@@ -52,7 +58,7 @@ export default NextAuth({
       return token
     },
     async session({ session, token }) {
-      console.log('callbacks session: ', { session, token })
+      // console.log('callbacks session: ', { session, token })
       session.user.id = token.id
       return session
     }

@@ -17,13 +17,13 @@ const verifyToken = (req, res) => {
 
     const tokenToCheck = req.query.tokenToCheck
 
-    console.log('tokenToCheck: ', tokenToCheck)
+    // console.log('tokenToCheck: ', tokenToCheck)
     
     if (tokenToCheck) {
 
         User.findOne({ token: tokenToCheck })
             .then(foundUser => {
-                console.log('foundUser: ', foundUser)
+                // console.log('foundUser: ', foundUser)
                 if (!foundUser) {
                     res.status(400).json({ message: 'Cette clé de validation est incorrect' });
                     return

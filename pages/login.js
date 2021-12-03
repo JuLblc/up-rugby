@@ -28,18 +28,21 @@ const Login = () => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        console.log(email, password)
+
         signIn('credentials', {
             redirect: false,
             email,
             password,
         })
             .then(response => {
+                // console.log('response login: ', response)
                 if (!response.error) {
                     router.push('/')
+                } else if (response.error === `Cannot read property 'password' of null`){
+                    setFormData({ ...formData, message: 'Cette adresse E-mail est introuvable ou non validée' });
                 } else {
                     setFormData({ ...formData, message: 'Cette adresse E-mail et ce mot de passe ne correspondent pas' });
-                }
+                } 
             })
             .catch(err => {
                 console.log(err)
