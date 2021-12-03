@@ -28,7 +28,7 @@ export default function handler(req, res) {
         })
         .catch(err => {
             console.log(err)
-            res.status(400).json({ success: false });
+            res.status(400).json({ message: 'La connexion à la base de donnée a échoué' });
         })
 }
 

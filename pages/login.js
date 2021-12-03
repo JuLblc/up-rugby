@@ -1,17 +1,18 @@
-import { useState } from "react";
+import { useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { signIn } from 'next-auth/react'
-import { useRouter } from 'next/router'
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const Login = () => {
 
     const router = useRouter();
 
     const { data: session, status } = useSession();
-    console.log({session, status})
+    // console.log({session, status})
 
     //User is already logged in -> redirect vers home
-    if (session){
+    if (session) {
         router.push('/')
     }
 
@@ -29,31 +30,37 @@ const Login = () => {
     const handleFormSubmit = (e) => {
         e.preventDefault();
 
-        signIn('credentials', {
-            redirect: false,
-            email,
-            password,
-        })
-            .then(response => {
-                // console.log('response login: ', response)
-                if (!response.error) {
-                    router.push('/')
-                } else if (response.error === `Cannot read property 'password' of null`){
-                    setFormData({ ...formData, message: 'Cette adresse E-mail est introuvable ou non validée' });
-                } else {
-                    setFormData({ ...formData, message: 'Cette adresse E-mail et ce mot de passe ne correspondent pas' });
-                } 
+
+        // Check email and password are not empty
+        // Idéalement à faire coté back mais pas possible de modifier la réponse de SignIn
+        if (!email || !password) {
+            setFormData({ ...formData, message: 'Merci de saisir une adresse E-mail et un mot de passe' });
+        } else {
+            signIn('credentials', {
+                redirect: false,
+                email,
+                password,
             })
-            .catch(err => {
-                console.log(err)
-                setFormData({ ...formData, message: err.response.data.message })
-            })
+                .then(response => {
+                    // console.log('response login: ', response)
+                    if (!response.error) {
+                        router.push('/')
+                    } else if (response.error === `Cannot read property 'password' of null`) {
+                        setFormData({ ...formData, message: 'Cette adresse E-mail est introuvable ou non validée' });
+                    } else {
+                        setFormData({ ...formData, message: 'Cette adresse E-mail et ce mot de passe ne correspondent pas' });
+                    }
+                })
+                .catch(err => {
+                    console.log(err)
+                    setFormData({ ...formData, message: err.response.data.message })
+                })
+        }
     }
 
     return (
         <>
             {/* If user is logged in -> redirect to '/'*/}
-            
 
             {/* Login with Credentials */}
             <form onSubmit={handleFormSubmit}>
@@ -66,6 +73,7 @@ const Login = () => {
                 </label>
 
                 <button>Login</button>
+                <Link href='/forgotten-password'><a>Mot de passe oublié?</a></Link>
             </form>
 
             {message && (
