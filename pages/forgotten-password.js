@@ -31,7 +31,7 @@ const ForgottenPassword = () => {
     return (
         <>
             <h1>Mot de passe oublié?</h1>
-            <p>{`Saisissez l'adresse e-mail associée à votre compte. Nous vous enverrons un lien par e-mail pour réinitialiser votre mot de passe.`}</p>
+            <p>Saisissez l'adresse e-mail associée à votre compte. Nous vous enverrons un lien par e-mail pour réinitialiser votre mot de passe.</p>
             <form onSubmit={handleFormSubmit}>
                 <label>Email:
                     <input type="email" name="email" value={email} onChange={onChange} />

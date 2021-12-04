@@ -65,7 +65,7 @@ const sendTokenToReset = (req, res) => {
                         Bonjour ${foundUser.email},</br>
                         nous avons reçu une demande de réinitialisation de votre mot de passe.</br>
                         Le lien suivant est valide 1 heure, cliquez pour redéfinir votre mot de passe.</br>
-                        <a href=${process.env.DEV_URL}/reset-password/${foundUser.token}>Réinitialiser mon mot de passe</a></br>
+                        <a href=${process.env.VERCEL_URL}/reset-password/${foundUser.token}>Réinitialiser mon mot de passe</a></br>
                         Si vous n'êtes pas à l'origine de cette demande, merci d'ignorer cet E-mail.`
                     })
                         .then(() => res.status(200).json({ message: 'Un E-mail vous a été envoyé.' }))
