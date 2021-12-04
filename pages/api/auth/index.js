@@ -90,7 +90,7 @@ const addUser = (req, res) => {
                         html: `
                 Bienvenue ${aNewUser.email},</br>
                 cliquez sur le lien suivant pour valider votre adresse E-Mail</br>
-                <a href=${process.env.VERCEL_URL}/verify/${token}> Valider </a></br>
+                <a href=${process.env.DOMAIN_URL}/verify/${token}> Valider </a></br>
                 Merci`
                     })
                         .then(() => res.status(200).json({ message: 'Un E-mail pour valider votre adresse vous a été envoyé.' }))
