@@ -22,7 +22,7 @@ const Verify = () => {
 
     useEffect(() => {
         verifyToken()
-    }, [verifyToken])    // if userId changes, useEffect will run again
+    }, [verifyToken])    // if changes, useEffect will run again
                          // if you want to run only once, just leave array empty []
 
     return (

@@ -36,6 +36,7 @@ const Reset = () => {
                     message: err.response.data.message
                 })
             })
+            // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [token])
 
     useEffect(() => {
