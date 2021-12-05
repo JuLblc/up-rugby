@@ -31,7 +31,7 @@ const checkTokenValidity = (req, res) => {
 
     console.log('tokenToCheck: ', tokenToCheck)
 
-    if (tokenToCheck) {
+    // if (tokenToCheck) {
         User.findOne({ token: tokenToCheck })
             .then(foundUser => {
 
@@ -54,7 +54,7 @@ const checkTokenValidity = (req, res) => {
                 console.log(err)
                 res.status(400).json({ message: "Ce lien n'est pas valide.", displayForm: false });
             });
-    }
+    // }
 }
 
 const resetPassword = (req, res) => {

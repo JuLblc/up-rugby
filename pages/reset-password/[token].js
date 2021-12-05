@@ -20,22 +20,24 @@ const Reset = () => {
     console.log('token: ', token)
 
     const getEmail = useCallback(async () => {
-        axios.get('/api/auth/reset', { params: { tokenToCheck: token } })
-            .then(response => {
-                console.log('response getEmail', response)
-                setFormData({
-                    ...formData,
-                    email: response.data.email,
-                    message: response.data.message,
-                    displayForm: response.data.displayForm
+        if (token){
+            axios.get('/api/auth/reset', { params: { tokenToCheck: token } })
+                .then(response => {
+                    console.log('response getEmail', response)
+                    setFormData({
+                        ...formData,
+                        email: response.data.email,
+                        message: response.data.message,
+                        displayForm: response.data.displayForm
+                    })
                 })
-            })
-            .catch(err => {
-                setFormData({
-                    ...formData,
-                    message: err.response.data.message
+                .catch(err => {
+                    setFormData({
+                        ...formData,
+                        message: err.response.data.message
+                    })
                 })
-            })
+        }
             // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [token])
 

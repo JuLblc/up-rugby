@@ -19,7 +19,7 @@ const verifyToken = (req, res) => {
 
     // console.log('tokenToCheck: ', tokenToCheck)
     
-    if (tokenToCheck) {
+    // if (tokenToCheck) {
 
         User.findOne({ token: tokenToCheck })
             .then(foundUser => {
@@ -44,5 +44,5 @@ const verifyToken = (req, res) => {
                 console.log(err);
                 res.status(400).json({ message: 'Erreur lors de la validation de votre Email' });
             })
-    } 
+    // } 
 }

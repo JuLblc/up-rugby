@@ -11,13 +11,19 @@ const Verify = () => {
     const { token } = router.query;
 
     const verifyToken = useCallback(async () => {
-        axios.get('/api/auth/verify', { params: { tokenToCheck: token } })
-            .then(response => {
-                setMessage(response.data.message)
-            })
-            .catch(err => {               
-                setMessage(err.response.data.message)
-            })
+        console.log('token verifytoken usecallback: ',token)
+        
+        if (token){
+            axios.get('/api/auth/verify', { params: { tokenToCheck: token } })
+                .then(response => {
+                    console.log('response verifytoken: ', response)
+                    setMessage(response.data.message)
+                })
+                .catch(err => {             
+                    console.log('response verifytoken: ', err.response.data)  
+                    setMessage(err.response.data.message)
+                })
+        }
     },[token])
 
     useEffect(() => {
