@@ -58,6 +58,12 @@ const Login = () => {
         }
     }
 
+    const logInFacebook = (e) => {
+        e.preventDefault();
+
+        signIn('facebook', { callbackUrl: process.env.DOMAIN_URL })
+    }
+
     return (
         <>
             {/* If user is logged in -> redirect to '/'*/}
@@ -81,7 +87,9 @@ const Login = () => {
             )}
 
             {/* Login with Facebook */}
-            {/* <a href="http://localhost:5000/auth/facebook">Se connecter avec Facebook</a> */}
+            <Link href="#">
+                <a onClick={logInFacebook}>Se connecter avec Facebook</a>
+            </Link>
         </>
     );
 }

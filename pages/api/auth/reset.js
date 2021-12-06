@@ -29,32 +29,29 @@ const checkTokenValidity = (req, res) => {
 
     const tokenToCheck = req.query.tokenToCheck;
 
-    console.log('tokenToCheck: ', tokenToCheck)
+    User.findOne({ token: tokenToCheck })
+        .then(foundUser => {
 
-    // if (tokenToCheck) {
-        User.findOne({ token: tokenToCheck })
-            .then(foundUser => {
+            console.log('foundUser checkTokenValidity: ', foundUser)
+            if (!foundUser) {
+                res.status(400).json({ message: 'Cette clé de validation est incorrect', displayForm: false });
+                return
+            }
 
-                console.log('foundUser checkTokenValidity: ', foundUser)
-                if (!foundUser) {
-                    res.status(400).json({ message: 'Cette clé de validation est incorrect' , displayForm: false});
-                    return
-                }
+            const dateNow = Date.now()
+            const dateTokenExpires = Date.parse(foundUser.tokenExpires)
 
-                const dateNow = Date.now()
-                const dateTokenExpires = Date.parse(foundUser.tokenExpires)
+            if (dateNow > dateTokenExpires) {
+                res.status(200).json({ message: 'La validité de cette clé de validation a expiré', displayForm: false })
+                return
+            }
+            res.status(200).json({ email: foundUser.email, displayForm: true })
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(400).json({ message: "Ce lien n'est pas valide.", displayForm: false });
+        });
 
-                if (dateNow > dateTokenExpires) {
-                    res.status(200).json({ message: 'La validité de cette clé de validation a expiré', displayForm: false })
-                    return
-                }
-                res.status(200).json({ email: foundUser.email, displayForm: true })
-            })
-            .catch(err => {
-                console.log(err)
-                res.status(400).json({ message: "Ce lien n'est pas valide.", displayForm: false });
-            });
-    // }
 }
 
 const resetPassword = (req, res) => {
