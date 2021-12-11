@@ -20,6 +20,11 @@ const UserSchema = new mongoose.Schema({
   googleID:String,
   firstName:String,
   lastName:String,
+  role: {
+    type: String,
+    enum: ['USER', 'ADMIN'],
+    default: 'USER',
+  },
   
 })
 
