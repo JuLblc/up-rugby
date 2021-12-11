@@ -1,6 +1,6 @@
 import { useSession, getSession } from "next-auth/react";
 
-const Formations = () => {
+const Courses = () => {
 
     const { data: session } = useSession();
     console.log({ session })
@@ -19,7 +19,7 @@ const Formations = () => {
     );
 }
 
-export default Formations;
+export default Courses;
 
 //Server side rendering
 // export const getServerSideProps = async (context) => {

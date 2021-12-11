@@ -14,7 +14,7 @@ const Navbar = () => {
         <nav>
             <h1>Up-Rugby</h1>
             <ul className="menu">
-                <li><Link href='/formations'><a>Formations</a></Link></li>
+                <li><Link href='/courses'><a>Formations</a></Link></li>
                 <li><Link href='/exercices'><a>Exercices</a></Link></li>
                 <li><Link href='/blog'><a>Blog</a></Link></li>
 
