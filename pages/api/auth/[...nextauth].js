@@ -18,7 +18,7 @@ export default NextAuth({
         await connectToDatabase()
 
         const user = await User.findOne({
-          $and:[
+          $and: [
             { email: credentials.email },
             { isEmailVerified: true }
           ]
@@ -39,8 +39,27 @@ export default NextAuth({
     }),
     FacebookProvider({
       clientId: process.env.FACEBOOK_CLIENT_ID,
-      clientSecret: process.env.FACEBOOK_CLIENT_SECRET
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+      userinfo: {
+        params: {
+          fields: "id,email,name,first_name,last_name,picture"
+        }
+      },
+    
+      profile: (profile) => {
+        
+        console.log('profile: ', profile)
+        return {
+          id: profile.id,
+          name: profile.name,
+          firstName: profile.first_name,
+          lastName: profile.last_name,
+          email: profile.email,
+          image: profile.picture.data.url
+        };
+      },
     }),
+    
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET
@@ -50,14 +69,16 @@ export default NextAuth({
     secret: process.env.NEXTAUTH_SECRET,
     maxAge: 60 * 60 * 24 * 1, // 1 jour
   },
-  session:{
+  session: {
     maxAge: 60 * 60 * 24 * 1, // 1 jour
   },
   callbacks: {
     async jwt({ token, user }) {
       // console.log('callbacks jwt: ', { token, user })
       if (user) {
-        token.id = user.id
+        token.id = user.id;        
+        token.firstName = user.firstName;
+        token.lastName = user.lastName;
       }
 
       return token
@@ -65,6 +86,8 @@ export default NextAuth({
     async session({ session, token }) {
       // console.log('callbacks session: ', { session, token })
       session.user.id = token.id
+      session.user.firstName = token.firstName
+      session.user.lastName = token.lastName
       return session
     }
   },

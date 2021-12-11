@@ -1,7 +1,14 @@
 import mongoose from 'mongoose'
 
 const UserSchema = new mongoose.Schema({
-  email: String,
+  // unique index sparse => allowed several email === null
+  email: {
+    type: String,
+    unique:true,
+    index:true, 
+    lowercase: true,
+    sparse:true,
+  },
   password: String,
   isEmailVerified: {
     type: Boolean,
@@ -9,6 +16,11 @@ const UserSchema = new mongoose.Schema({
   },
   token: String,
   tokenExpires:Date,
+  facebookID:String,
+  googleID:String,
+  firstName:String,
+  lastName:String,
+  
 })
 
 module.exports = mongoose.models.User || mongoose.model('User', UserSchema)

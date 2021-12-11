@@ -30,7 +30,6 @@ const Login = () => {
     const handleFormSubmit = (e) => {
         e.preventDefault();
 
-
         // Check email and password are not empty
         // Idéalement à faire coté back mais pas possible de modifier la réponse de SignIn
         if (!email || !password) {

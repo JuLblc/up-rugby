@@ -30,7 +30,7 @@ export const getServerSideProps = async (context) => {
         props: {
             session,
             //Here formations should be fetch from DB
-            data: session ? `Hello ${session.user.email}` : ''
+            data: session ? `Hello ${session.user.name}` : ''
         }
     }
 }
