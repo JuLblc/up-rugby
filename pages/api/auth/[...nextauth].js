@@ -70,6 +70,7 @@ export default NextAuth({
 
           //2. Check if email from FB has been utilized to create an account
           if (user) {
+
             user.facebookID = profileFromFB.id;
             user.firstName ? user.firstName : user.firstName = profileFromFB.firstName
             user.lastName ? user.lastName : user.lastName = profileFromFB.lastName
@@ -94,14 +95,48 @@ export default NextAuth({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
 
-      profile: (profile) => {
-        return {
+      profile: async (profile) => {
+
+        await connectToDatabase()
+
+        const profileFromGoogle = {
           id: profile.sub,
           firstName: profile.given_name,
           lastName: profile.family_name,
           email: profile.email,
           image: profile.picture
-        };
+        }
+
+        let user = await User.findOne({ googleID: profileFromGoogle.id })
+
+        // 1. Check if user with Google_id already in DB
+        if (user) {
+          return profileFromGoogle;
+        }
+        else {
+
+          user = await User.findOne({ email: profileFromGoogle.email })
+          
+          //2. Check if email from Google has been utilized to create an account
+          if (user) {
+
+            user.googleID = profileFromGoogle.id;
+            user.firstName ? user.firstName : user.firstName = profileFromGoogle.firstName
+            user.lastName ? user.lastName : user.lastName = profileFromGoogle.lastName
+            await user.save();
+            
+          } else {
+
+            await User.create({
+              googleID: profileFromGoogle.id,
+              email: profileFromGoogle.email,
+              firstName: profileFromGoogle.firstName,
+              lastName: profileFromGoogle.lastName,
+              isEmailVerified: true
+            })
+          }
+          return profileFromGoogle;
+        }
       },
     })
   ],
