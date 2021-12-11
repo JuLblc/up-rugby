@@ -47,8 +47,6 @@ export default NextAuth({
       },
     
       profile: (profile) => {
-        
-        console.log('profile: ', profile)
         return {
           id: profile.id,
           name: profile.name,
@@ -62,7 +60,18 @@ export default NextAuth({
     
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+
+      profile: (profile) => {
+        return {
+          id: profile.sub,
+          name: profile.name,
+          firstName: profile.given_name,
+          lastName: profile.family_name,
+          email: profile.email,
+          image: profile.picture
+        };
+      },
     })
   ],
   jwt: {

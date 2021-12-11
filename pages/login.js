@@ -71,8 +71,6 @@ const Login = () => {
 
     return (
         <>
-            {/* If user is logged in -> redirect to '/'*/}
-
             {/* Login with Credentials */}
             <form onSubmit={handleFormSubmit}>
                 <label>Email:
