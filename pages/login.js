@@ -64,6 +64,12 @@ const Login = () => {
         signIn('facebook', { callbackUrl: process.env.DOMAIN_URL })
     }
 
+    const logInGoogle = (e) => {
+        e.preventDefault();
+
+        signIn('google', { callbackUrl: process.env.DOMAIN_URL })
+    }
+
     return (
         <>
             {/* If user is logged in -> redirect to '/'*/}
@@ -89,6 +95,11 @@ const Login = () => {
             {/* Login with Facebook */}
             <Link href="#">
                 <a onClick={logInFacebook}>Se connecter avec Facebook</a>
+            </Link>
+
+            {/* Login with Google */}
+            <Link href="#">
+                <a onClick={logInGoogle}>Se connecter avec Google</a>
             </Link>
         </>
     );
