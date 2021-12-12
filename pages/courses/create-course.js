@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { useState } from "react";
+import Video from "../../components/Video";
 
 const NewCourse = () => {
     /*TO DO*/
@@ -12,61 +13,72 @@ const NewCourse = () => {
     5. 
     */
 
-    const [videoData, setVideoData] = useState([{
+    const [chapterData, setChapterData] = useState([{
         title: "",
-        description: "",
-        url: ""
-    }]);
-
-    // const handleCourseFormSubmit = (e) => {
-
-    // }
+        lectures: [{
+            title: '',
+            description: '',
+            url: '',
+        }]
+    }])
 
     const onChange = (e, idx) => {
-        const newVideoData = [...videoData];
-        newVideoData[idx][e.target.name] = e.target.value;
-        setVideoData(newVideoData);
+        const newChapterData = [...chapterData]
+        newChapterData[idx][e.target.name] = e.target.value;
+        setChapterData(newChapterData)
     }
 
-    const addVideo = (e) => {
-        setVideoData([
-            ...videoData,
-            { title: "", description: "", url: "" }
-        ])
+    const onChangeVideo = (e, chapterIdx, lectureIdx) => {
+        const newChapterData = [...chapterData]
+        newChapterData[chapterIdx].lectures[lectureIdx][e.target.name] = e.target.value;
+        setChapterData(newChapterData)
     }
 
-    const removeVideo = (e, idx) => {
-        const newVideoData = [...videoData];
-        newVideoData.splice(idx, 1)
-        setVideoData(newVideoData);
+    const addVideo = (idx) => {
+
+        const newChapterData = [...chapterData]
+        newChapterData[idx].lectures.push({
+            title: '',
+            description: '',
+            url: '',
+        })
+        setChapterData(newChapterData)
+    }
+
+    const removeVideo = (chapterIdx, lectureIdx) => {
+        console.log('remove')
+        const newChapterData = [...chapterData]
+        newChapterData[chapterIdx].lectures.splice(lectureIdx, 1)
+        setChapterData(newChapterData)
+    }
+
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
+        alert(JSON.stringify(chapterData));
+        //ToDo: send to Database
     }
 
     return (
         <>
             <h1>Ajouter formation</h1>
 
-            {/** Vidéo */}
-            {videoData.map((video, idx) => (
-                <div className="video-container" key={idx}>
-                    <label> Titre vidéo:
-                        <input type='text' name='title' value={video.title || ""} onChange={e => onChange(e, idx)} />
-                    </label>
+            <form onSubmit={handleFormSubmit}>
+                {chapterData.map((chapter, chapterIdx) => (
+                    <div className="chapter-container" key={chapterIdx}>
+                        <label> Titre Chapitre:
+                            <input type='text' name='title' value={chapter.title || ""} onChange={e => onChange(e, chapterIdx)} />
+                        </label>
+                        {chapter.lectures.map((lecture, lectureIdx) => (
+                            <>
+                                <Video idx={lectureIdx} onChange={(e) => onChangeVideo(e, chapterIdx, lectureIdx)} removeVideo={() => removeVideo(chapterIdx, lectureIdx)} />
+                            </>
+                        ))}
+                        <button className="button-add" type="button" onClick={() => addVideo(chapterIdx)}>Ajouter video</button>
+                    </div>
+                ))}
 
-                    <label> Description:
-                        <input type='text' name='description' value={video.description || ""} onChange={e => onChange(e, idx)} />
-                    </label>
-
-                    <label> Video Url:
-                        <input type='text' name='url' value={video.url || ""} onChange={e => onChange(e, idx)} />
-                    </label>
-
-                    <button className="button-supp" type="button" onClick={removeVideo}>Supp</button>
-                </div>
-            ))}
-
-            <button className="button-add" type="button" onClick={addVideo}>Ajouter</button>
-
-            {/** Vidéo */}
+                <button type="submit">Submit</button>
+            </form>
         </>
     );
 }

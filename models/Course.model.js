@@ -11,7 +11,6 @@ const CourseSchema = new mongoose.Schema({
     chapter:[
         {
             title: String,
-            subtitle: String,
             lectures:[
                 {
                     title: String,
