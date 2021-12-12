@@ -4,10 +4,10 @@ const CourseSchema = new mongoose.Schema({
     allowedUsers: [
         { type: Schema.Types.ObjectId, ref: 'User' }
     ],
+    overview:String,
     title: String,
     category:String,
     image:String,
-    overview:String,
     chapter:[
         {
             title: String,

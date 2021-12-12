@@ -1,4 +1,5 @@
 import { useSession, getSession } from "next-auth/react";
+import Link from 'next/link';
 
 const Courses = () => {
 
@@ -15,6 +16,8 @@ const Courses = () => {
                 <li>Utilisateurs ayant acheté la formation</li>
                 <li>/!\ Seuls les Utilisateurs ayant payé peuvent accéder à la vidéo /!\</li>
             </ul>
+
+            <Link href='/courses/create-course'><a>Ajouter une formation</a></Link>
         </>
     );
 }
