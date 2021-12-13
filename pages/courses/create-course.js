@@ -1,8 +1,9 @@
 import { useState } from "react";
-import Video from "../../components/Video";
+import Chapter from "../../components/Chapter";
+import Lecture from "../../components/Lecture";
 
 const NewCourse = () => {
-    /*TO DO*/
+    /*To Do*/
     /*
     0. Protéger la route pour admin seulement
     1. Créer dynamiquement les différents chapitre au clic sur un bouton
@@ -13,48 +14,70 @@ const NewCourse = () => {
     5. 
     */
 
-    const [chapterData, setChapterData] = useState([{
-        title: "",
-        lectures: [{
-            title: '',
-            description: '',
-            url: '',
-        }]
-    }])
-
-    const onChange = (e, idx) => {
-        const newChapterData = [...chapterData]
-        newChapterData[idx][e.target.name] = e.target.value;
-        setChapterData(newChapterData)
+    const emptyCourse = {
+        // overview: '',
+        title: '',
+        // category: '',
+        // image: '',
+        chapters: [
+            {
+                title: "",
+                lectures: [{
+                    title: '',
+                    description: '',
+                    url: '',
+                }],
+            }
+        ],
     }
 
-    const onChangeVideo = (e, chapterIdx, lectureIdx) => {
-        const newChapterData = [...chapterData]
-        newChapterData[chapterIdx].lectures[lectureIdx][e.target.name] = e.target.value;
-        setChapterData(newChapterData)
+    const [courseData, SetCourseData] = useState(emptyCourse)
+
+    console.log('courseData: ', courseData)
+
+    const onChange = (e) => {
+        SetCourseData({ ...courseData, [e.target.name]: e.target.value })
+    }
+
+    const updateStateFromChild = (newCourseData) => {
+        SetCourseData(newCourseData)
+    }
+
+    const onChangeChapter = (e, idx) => {
+
+        const newCourseData = { ...courseData };
+        newCourseData.chapters[idx][e.target.name] = e.target.value;
+        SetCourseData(newCourseData);
+    }
+
+    const addChapter = () => {
+        console.log('addChapter')
+        const newCourseData = { ...courseData };
+        newCourseData.chapters.push({
+            title: "",
+            lectures: [{
+                title: '',
+                description: '',
+                url: '',
+            }],
+        })
+        SetCourseData(newCourseData);
     }
 
     const addVideo = (idx) => {
 
-        const newChapterData = [...chapterData]
-        newChapterData[idx].lectures.push({
+        const newCourseData = { ...courseData };
+        newCourseData.chapters[idx].lectures.push({
             title: '',
             description: '',
             url: '',
         })
-        setChapterData(newChapterData)
-    }
-
-    const removeVideo = (chapterIdx, lectureIdx) => {
-        console.log('remove')
-        const newChapterData = [...chapterData]
-        newChapterData[chapterIdx].lectures.splice(lectureIdx, 1)
-        setChapterData(newChapterData)
+        SetCourseData(newCourseData);
     }
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        alert(JSON.stringify(chapterData));
+        alert(JSON.stringify(courseData));
         //ToDo: send to Database
     }
 
@@ -63,19 +86,21 @@ const NewCourse = () => {
             <h1>Ajouter formation</h1>
 
             <form onSubmit={handleFormSubmit}>
-                {chapterData.map((chapter, chapterIdx) => (
-                    <div className="chapter-container" key={chapterIdx}>
-                        <label> Titre Chapitre:
-                            <input type='text' name='title' value={chapter.title || ""} onChange={e => onChange(e, chapterIdx)} />
-                        </label>
-                        {chapter.lectures.map((lecture, lectureIdx) => (
-                            <>
-                                <Video idx={lectureIdx} onChange={(e) => onChangeVideo(e, chapterIdx, lectureIdx)} removeVideo={() => removeVideo(chapterIdx, lectureIdx)} />
-                            </>
-                        ))}
-                        <button className="button-add" type="button" onClick={() => addVideo(chapterIdx)}>Ajouter video</button>
-                    </div>
+                <label> Titre Formation:
+                    <input type='text' name='title' value={courseData.title} onChange={onChange} />
+                </label>
+
+                {courseData.chapters.map((chapter, chapterIdx) => (
+
+                    <Chapter
+                        key={chapterIdx}
+                        chapterIdx={chapterIdx}
+                        courseData={courseData}
+                        updateStateFromChild={updateStateFromChild}
+                        onChangeChapter={(e) => onChangeChapter(e, chapterIdx)}
+                        addVideo={() => addVideo(chapterIdx)} />
                 ))}
+                <button className="button-add-chapter" type="button" onClick={addChapter} >Ajouter Chapitre</button>
 
                 <button type="submit">Submit</button>
             </form>
