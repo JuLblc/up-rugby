@@ -1,6 +1,7 @@
+import axios from 'axios';
+
 import { useState } from "react";
 import Chapter from "../../components/Chapter";
-import Lecture from "../../components/Lecture";
 
 const NewCourse = () => {
     /*To Do*/
@@ -13,6 +14,7 @@ const NewCourse = () => {
         title: '',
         overview: '',
         category: '',
+        price:'',
         //image: '',
         chapters: [
             {
@@ -76,8 +78,13 @@ const NewCourse = () => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        alert(JSON.stringify(courseData));
-        //ToDo: send to Database
+        //alert(JSON.stringify(courseData));
+
+        axios.post('/api/courses', {course: courseData})
+            .then(response => {
+                console.log('response: ', response.data)
+            })
+            .catch(err=> console.log('err: ', err))
     }
 
     return (
@@ -98,7 +105,7 @@ const NewCourse = () => {
                 </label>
 
                 <label> Prix:
-                    <input type='text' name='price' value={courseData.price} onChange={onChange} />
+                    <input type='number' name='price' value={courseData.price} onChange={onChange} />
                 </label>                   
 
                 {courseData.chapters.map((chapter, chapterIdx) => (
