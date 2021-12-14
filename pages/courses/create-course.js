@@ -6,19 +6,14 @@ const NewCourse = () => {
     /*To Do*/
     /*
     0. Protéger la route pour admin seulement
-    1. Créer dynamiquement les différents chapitre au clic sur un bouton
-
-    2. Button sauvegarde en base
-    3. Prévoir bouton mofication
-    4. Prévoir un état où la formation n'est pas visible par les utilisateurs (save / publish)
-    5. 
     */
 
     const emptyCourse = {
-        // overview: '',
+        
         title: '',
-        // category: '',
-        // image: '',
+        overview: '',
+        category: '',
+        //image: '',
         chapters: [
             {
                 title: "",
@@ -32,8 +27,6 @@ const NewCourse = () => {
     }
 
     const [courseData, SetCourseData] = useState(emptyCourse)
-
-    console.log('courseData: ', courseData)
 
     const onChange = (e) => {
         SetCourseData({ ...courseData, [e.target.name]: e.target.value })
@@ -63,6 +56,12 @@ const NewCourse = () => {
         })
         SetCourseData(newCourseData);
     }
+    const removeChapter = (idx) => {
+
+        const newCourseData = { ...courseData };
+        newCourseData.chapters.splice(idx, 1)
+        SetCourseData(newCourseData);
+    }
 
     const addVideo = (idx) => {
 
@@ -90,6 +89,18 @@ const NewCourse = () => {
                     <input type='text' name='title' value={courseData.title} onChange={onChange} />
                 </label>
 
+                <label> Catégorie:
+                    <input type='text' name='category' value={courseData.category} onChange={onChange} />
+                </label>
+
+                <label> Présentation:
+                    <input type='text' name='overview' value={courseData.overview} onChange={onChange} />
+                </label>
+
+                <label> Prix:
+                    <input type='text' name='price' value={courseData.price} onChange={onChange} />
+                </label>                   
+
                 {courseData.chapters.map((chapter, chapterIdx) => (
 
                     <Chapter
@@ -98,11 +109,25 @@ const NewCourse = () => {
                         courseData={courseData}
                         updateStateFromChild={updateStateFromChild}
                         onChangeChapter={(e) => onChangeChapter(e, chapterIdx)}
+                        removeChapter={() => removeChapter(chapterIdx)}
                         addVideo={() => addVideo(chapterIdx)} />
                 ))}
                 <button className="button-add-chapter" type="button" onClick={addChapter} >Ajouter Chapitre</button>
 
                 <button type="submit">Submit</button>
+                {/**
+                 * 1. Bouton save -> Enregistre en base avec status isPublished = false
+                 *    Champs ne sont plus modifiables
+                 *    Save isHidden / Modifier apparait
+                 *    Redirection sur la page update course
+                 *            
+                 * 2. Publier -> isPublished = true
+                 *    Redirection vers la page all formation    
+                 *  
+                 * 
+                 * 
+                 */}
+                
             </form>
         </>
     );

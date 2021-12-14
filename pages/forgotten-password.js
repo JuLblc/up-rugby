@@ -15,7 +15,6 @@ const ForgottenPassword = () => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        console.log('send me link')
 
         axios.put('/api/auth/forgot', { email })
             .then(response => {

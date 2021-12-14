@@ -3,11 +3,9 @@ import Lecture from "./Lecture";
 
 const Chapter = (props) => {
 
-    console.log('props Chapter: ', props)
+    //console.log('props Chapter: ', props)
 
     const onChangeVideo = (e, chapterIdx, lectureIdx) => {
-
-        console.log('chapter, lecture: ', chapterIdx, lectureIdx)
 
         const newCourseData = { ...props.courseData };
         newCourseData.chapters[chapterIdx].lectures[lectureIdx][e.target.name] = e.target.value;
@@ -15,8 +13,6 @@ const Chapter = (props) => {
     }
 
     const removeVideo = (chapterIdx, lectureIdx) => {
-
-        console.log('chapter, lecture: ', chapterIdx, lectureIdx)
 
         const newCourseData = { ...props.courseData };
         newCourseData.chapters[chapterIdx].lectures.splice(lectureIdx, 1)
@@ -37,7 +33,8 @@ const Chapter = (props) => {
                     onChangeVideo={(e) => onChangeVideo(e, props.chapterIdx, lectureIdx)}
                     removeVideo={() => removeVideo(props.chapterIdx, lectureIdx)} />
             ))}
-            <button className="button-add-lecture" type="button" onClick={() => props.addVideo(props.chapterIdx)}>Ajouter Lecture</button>
+            <button className="button-add-lecture" type="button" onClick={() => props.addVideo(props.chapterIdx)}>Ajouter Leçon</button>
+            {props.chapterIdx ? <button className="button-supp" type="button" onClick={() => props.removeChapter(props.chapterIdx) }>Supp chapitre</button> :null}
         </div>
     );
 }

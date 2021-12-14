@@ -1,10 +1,10 @@
 const Lecture = (props) => {
 
-    console.log('props Lecture: ', props)
+    //console.log('props Lecture: ', props)
 
     return (
         <div className="video-container">
-            <label> Titre vidéo:
+            <label> Titre leçon:
                 <input type='text' name='title' value={props.chapter.lectures[props.lectureIdx].title || ""} onChange={(e) => props.onChangeVideo(e, props.chapterIdx, props.lectureIdx)} />
             </label>
 
