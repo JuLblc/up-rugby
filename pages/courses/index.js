@@ -1,10 +1,23 @@
+import axios from 'axios';
 import { useSession, getSession } from "next-auth/react";
+import { useState, useEffect } from "react";
 import Link from 'next/link';
 
 const Courses = () => {
 
     const { data: session } = useSession();
     console.log({ session })
+
+    const [courses, setCourses] = useState([]);
+
+    useEffect(()=>{
+        axios.get('/api/courses')
+            .then(response => {
+                console.log('response: ', response)
+                setCourses(response.data)
+            })
+            .catch(err => console.log('err: ', err))
+    },[])
 
     return (
         <>
@@ -18,6 +31,8 @@ const Courses = () => {
             </ul>
 
             <Link href='/courses/create-course'><a>Ajouter une formation</a></Link>
+
+
         </>
     );
 }

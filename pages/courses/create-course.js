@@ -78,7 +78,6 @@ const NewCourse = () => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        //alert(JSON.stringify(courseData));
 
         axios.post('/api/courses', {course: courseData})
             .then(response => {
@@ -121,7 +120,7 @@ const NewCourse = () => {
                 ))}
                 <button className="button-add-chapter" type="button" onClick={addChapter} >Ajouter Chapitre</button>
 
-                <button type="submit">Submit</button>
+                <button type="submit">Save</button>
                 {/**
                  * 1. Bouton save -> Enregistre en base avec status isPublished = false
                  *    Champs ne sont plus modifiables

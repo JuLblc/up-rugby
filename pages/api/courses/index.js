@@ -12,7 +12,7 @@ export default function handler(req, res) {
 
             switch (method) {
                 case 'GET':
-                    res.status(200).json({ message: 'Courses API', method: method })
+                    getAllCourses(req, res)
                     break
                 case 'POST':
                     addCourse(req, res)
@@ -40,5 +40,14 @@ const addCourse = (req, res) => {
 
     newCourse.save()
         .then(res=> console.log('res: ', res))
-        .catch(err => console.log('back err : ', err))
+        .catch(err => console.log('err : ', err))
+}
+
+const getAllCourses = (req, res) => {
+
+    Course.find()
+        .then(coursesFromDB => {
+            res.status(200).json({coursesFromDB})
+        })
+        .catch(err => console.log('err : ', err))
 }
