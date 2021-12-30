@@ -29,7 +29,6 @@ export const getServerSideProps = async (context) => {
     return {
         props: {
             session,
-            //Here formations should be fetch from DB
             data: session ? `Hello ${session.user.firstName}` : ''
         }
     }

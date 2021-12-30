@@ -6,6 +6,7 @@ import Course from '../../../models/Course.model'
 export default function handler(req, res) {
 
     const { method } = req
+    console.log('req: ', req.params)
 
     connectToDatabase()
         .then(() => {
