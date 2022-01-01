@@ -6,22 +6,10 @@ import Link from 'next/link'
 import CardFormation from '../../components/CardFormation'
 
 const Courses = props => {
-  console.log('props: ', props)
+  // console.log('props: ', props)
 
   const { data: session } = useSession()
   // console.log('session courses: ',{ session })
-
-  // const [courses, setCourses] = useState([])
-
-  //   useEffect(() => {
-  //     axios
-  //       .get('/api/courses')
-  //       .then(response => {
-  //         console.log('response: ', response)
-  //         setCourses(response.data)
-  //       })
-  //       .catch(err => console.log('err: ', err))
-  //   }, [])
 
   return (
     <>
@@ -62,7 +50,6 @@ export const getServerSideProps = async context => {
   // console.log('session getServer: ', session)
 
   const res = await axios.get(`${process.env.DOMAIN_URL}/api/courses`)
-  console.log('coursesFromDB: ', res.data.coursesFromDB)
 
   return {
     props: {
