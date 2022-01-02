@@ -1,15 +1,34 @@
-import { useRouter } from "next/router";
+import axios from 'axios'
+import { useSession, getSession } from 'next-auth/react'
+import Formation from '../../../../components/Formation'
 
-const UpdateCourseDetails = () => {
+const UpdateCourseDetails = props => {
 
-    const router = useRouter();
-    const courseId = router.query.courseId
-    return ( 
-        <>
-            <h1>Detail de la formation à modifier {courseId}</h1>
-            <p>Afficher la formation à modifier</p>
-        </>
-     );
+  console.log('props: ', props)
+  
+  return (
+    <>
+      <h1>{props.course.title}</h1>
+
+      <Formation courseContent={props.course} action={'update'}/>
+    </>
+  )
 }
- 
-export default UpdateCourseDetails;
+
+export default UpdateCourseDetails
+
+//Server side rendering
+export const getServerSideProps = async context => {
+  const session = await getSession(context)
+
+  const res = await axios.get(`${process.env.DOMAIN_URL}/api/courses/`, {
+    params: { id: context.query.courseId }
+  })
+
+  return {
+    props: {
+      session,
+      course: res.data.courseFromDB
+    }
+  }
+}

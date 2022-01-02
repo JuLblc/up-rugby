@@ -10,6 +10,7 @@ const CardFormation = props => {
         Prix: <span>{props.price}</span>
       </p>
       <Link href={`/courses/${props.courseId}`}>Détails</Link>
+      <Link href={`/courses/update-course/${props.courseId}`}>Modifier</Link>
     </div>
   )
 }

@@ -21,8 +21,10 @@ export default function handler (req, res) {
           addCourse(req, res)
           break
         case 'PUT':
+          upadteCourse(req, res)
           break
         case 'DELETE':
+          deleteCourse(req, res)
           break
       }
     })
@@ -35,10 +37,10 @@ export default function handler (req, res) {
 }
 
 const addCourse = (req, res) => {
-//   console.log('req: ', req)
+  //   console.log('req: ', req)
   const { course } = req.body
 
-//   console.log('course: ', course)
+  //   console.log('course: ', course)
 
   const newCourse = new Course(course)
 
@@ -57,12 +59,32 @@ const getAllCourses = (req, res) => {
 }
 
 const getCourse = (req, res) => {
-
   const id = req.query.id
 
   Course.findById(id)
     .then(courseFromDB => {
       res.status(200).json({ courseFromDB })
+    })
+    .catch(err => console.log('err : ', err))
+}
+
+const upadteCourse = (req, res) => {
+  const id = req.body.course._id
+  const updatedCourse = req.body.course
+
+  Course.findByIdAndUpdate(id, updatedCourse)
+    .then(updatedCourseFromDB => {
+      res.status(200).json({ updatedCourseFromDB })
+    })
+    .catch(err => console.log('err : ', err))
+}
+
+const deleteCourse = (req, res) => {
+  const id = req.body
+
+  Course.findByIdAndDelete(id)
+    .then(() => {
+      res.status(200).json({ message: 'Formation supprimer' })
     })
     .catch(err => console.log('err : ', err))
 }
