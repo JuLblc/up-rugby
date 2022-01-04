@@ -10,7 +10,7 @@ const UpdateCourseDetails = props => {
     <>
       <h1>{props.course.title}</h1>
 
-      <Formation courseContent={props.course} action={'update'}/>
+      <Formation courseContent={props.course} action={'update'} disable={true}/>
     </>
   )
 }

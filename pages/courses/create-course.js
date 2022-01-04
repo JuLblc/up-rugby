@@ -28,14 +28,15 @@ const NewCourse = () => {
           }
         ]
       }
-    ]
+    ],
+    isPublished: false,
   }
 
   return (
     <>
       <h1>Ajouter formation</h1>
 
-      <Formation courseContent={emptyCourse} action={'create'} />
+      <Formation courseContent={emptyCourse} action={'create'} disable={false}/>
     </>
   )
 }
