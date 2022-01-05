@@ -198,6 +198,7 @@ const Formation = props => {
             onChangeChapter={e => onChangeChapter(e, chapterIdx)}
             removeChapter={() => removeChapter(chapterIdx)}
             addVideo={() => addVideo(chapterIdx)}
+            disableField={disableField}
           />
         ))}
 
@@ -205,6 +206,7 @@ const Formation = props => {
           className='button-add-chapter'
           type='button'
           onClick={addChapter}
+          disabled={disableField}
         >
           Ajouter Chapitre
         </button>
