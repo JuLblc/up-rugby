@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import Chapter from './Chapter'
 
 const Formation = props => {
-  console.log('props: ', props)
+  // console.log('3. props Formation: ', props)
 
   const router = useRouter()
 
@@ -72,32 +72,70 @@ const Formation = props => {
     setDisableField(false)
   }
 
+  const publishCourse = () => {
+    const newCourseData = { ...courseData }
+    newCourseData.isPublished = true
+    setCourseData(newCourseData)
+
+    axios
+      .put('/api/courses', { course: newCourseData })
+      .then(response => {
+        console.log('response publish: ', response.data)
+        router.push('/courses')
+      })
+      .catch(err => console.log('err: ', err))
+  }
+
   const handleFormSubmit = e => {
     e.preventDefault()
 
-    // Au click sur bouton 'enregistrer'
     setDisableField(true)
 
-    if (props.action === 'create') {
-      axios
-        .post('/api/courses', { course: courseData })
-        .then(response => {
-          console.log('response: ', response.data)
-          router.push(
-            `/courses/update-course/${response.data.newCourseFromDB._id}`
-          )
-        })
-        .catch(err => console.log('err: ', err))
+    if (!courseData.isPublished) {
+      if (props.action === 'create') {
+        axios
+          .post('/api/courses', { course: courseData })
+          .then(response => {
+            console.log('response: ', response.data)
+            router.push(
+              `/courses/update-course/${response.data.newCourseFromDB._id}`
+            )
+          })
+          .catch(err => console.log('err: ', err))
+      }
+
+      if (props.action === 'update') {
+        axios
+          .put('/api/courses', { course: courseData })
+          .then(response => {
+            console.log('response: ', response.data)
+            router.push(
+              `/courses/update-course/${response.data.updatedCourseFromDB._id}`
+            )
+          })
+          .catch(err => console.log('err: ', err))
+      }
     }
 
-    if (props.action === 'update') {
-      axios
-        .put('/api/courses', { course: courseData })
-        .then(response => {
-          console.log('response: ', response.data)
-        })
-        .catch(err => console.log('err: ', err))
-    }
+    // if (courseData.isPublished) {
+    //   // Créer un nouveau cours avec ces infos + isPublished = false
+    //   console.log('creation copy draft')
+
+    //   const newCourseData = { ...courseData }
+    //   delete newCourseData._id
+    //   newCourseData.isPublished = false
+    //   setCourseData(newCourseData)
+
+    //   axios
+    //     .post('/api/courses', { course: newCourseData })
+    //     .then(response => {
+    //       console.log('1. response: ', response.data)
+    //       router.push(
+    //         `/courses/update-course/${response.data.newCourseFromDB._id}`
+    //       )
+    //     })
+    //     .catch(err => console.log('err: ', err))
+    // }
   }
 
   return (
@@ -153,7 +191,7 @@ const Formation = props => {
 
         {courseData.chapters.map((chapter, chapterIdx) => (
           <Chapter
-            key={chapterIdx}
+            key={chapter._id ? chapter._id : chapterIdx}
             chapterIdx={chapterIdx}
             courseData={courseData}
             updateStateFromChild={updateStateFromChild}
@@ -180,14 +218,20 @@ const Formation = props => {
           <>
             {disableField ? (
               <>
-                <button type='submit'>Publier</button>
+                {/* Fields are disabled and buttons are displayed */}
+                <button type='button' onClick={publishCourse}>
+                  Publier
+                </button>
 
                 <button type='button' onClick={updateCourse}>
                   Modifier
                 </button>
               </>
             ) : (
-              <button type='submit'>Enregistrer</button>
+              <>
+                {/* Fields are enabled and buttons are displayed */}
+                <button type='submit'>Enregistrer</button>
+              </>
             )}
 
             <button
@@ -199,15 +243,6 @@ const Formation = props => {
             </button>
           </>
         )}
-
-        {/* 
-        1. save => redirect vers page upadte => OK
-                => afficher bouton 'publish' => au click MAJ du cours state = published ( au 1er passage pas de version published)
-                => champs ne sont plus modifiable + bouton modifier => au click champs modifiable + afficher bouton save
-                => créer un copy avec state = draft + afficher bouton 'publish' => au click MAJ du cours state = published + supp draft
-                    !!! Il faut garder le même n° d'id !!!
-
-        */}
       </form>
     </>
   )

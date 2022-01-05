@@ -4,7 +4,7 @@ import Formation from '../../../../components/Formation'
 
 const UpdateCourseDetails = props => {
 
-  console.log('props: ', props)
+  // console.log('props UpdateCourseDetails: ', props)
   
   return (
     <>

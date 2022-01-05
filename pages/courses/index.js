@@ -31,10 +31,11 @@ const Courses = props => {
       {props.courses.map(course => {
         return (
           <CardFormation
-            key={course.title}
+            key={course._id}
             courseId={course._id}
             title={course.title}
             price={course.price}
+            isPublished={course.isPublished}
           />
         )
       })}

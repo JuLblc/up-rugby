@@ -10,7 +10,10 @@ const CardFormation = props => {
         Prix: <span>{props.price}</span>
       </p>
       <Link href={`/courses/${props.courseId}`}>Détails</Link>
-      <Link href={`/courses/update-course/${props.courseId}`}>Modifier</Link>
+      {/* if course is a draft, it still can be updated */}
+      {!props.isPublished && (
+        <Link href={`/courses/update-course/${props.courseId}`}>Modifier</Link>
+      )}
     </div>
   )
 }

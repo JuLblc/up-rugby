@@ -26,7 +26,7 @@ const Chapter = (props) => {
             </label>
             {props.courseData.chapters[props.chapterIdx].lectures.map((lecture, lectureIdx) => (
                 <Lecture
-                    key={lectureIdx}
+                    key={lecture._id ? lecture._id  : lectureIdx}
                     chapterIdx={props.chapterIdx}
                     lectureIdx={lectureIdx}
                     chapter={props.courseData.chapters[props.chapterIdx]}
