@@ -54,7 +54,7 @@ const Lecture = props => {
           }
           disabled={props.disableField}
         >
-          Supp
+          Supprimer Leçon
         </button>
       ) : null}
     </div>

@@ -5,6 +5,8 @@ import { useRouter } from 'next/router'
 
 import Chapter from './Chapter'
 
+import styles from '../styles/Formation.module.css'
+
 const Formation = props => {
   // console.log('3. props Formation: ', props)
 
@@ -14,6 +16,7 @@ const Formation = props => {
   const [disableField, setDisableField] = useState(props.disable)
 
   const onChange = e => {
+    console.log(e.target)
     setCourseData({ ...courseData, [e.target.name]: e.target.value })
   }
 
@@ -140,11 +143,12 @@ const Formation = props => {
 
   return (
     <>
-      <form onSubmit={handleFormSubmit}>
+      <form className={styles.form} onSubmit={handleFormSubmit}>
         <label>
           {' '}
           Titre Formation:
           <input
+            className={styles.formationTitle}
             type='text'
             name='title'
             value={courseData.title}
@@ -153,17 +157,42 @@ const Formation = props => {
           />
         </label>
 
-        <label>
-          {' '}
-          Catégorie:
-          <input
-            type='text'
-            name='category'
-            value={courseData.category}
-            onChange={onChange}
-            disabled={disableField}
-          />
-        </label>
+        <div>
+          <label>
+            {' '}
+            Catégorie:
+            {/* <input
+              type='text'
+              name='category'
+              value={courseData.category}
+              onChange={onChange}
+              disabled={disableField}
+            /> */}
+            <select
+              name='category'
+              value={courseData.category}
+              onChange={onChange}
+              disabled={disableField}
+            >
+              <option value='Attaque'>Attaque</option>
+              <option value='Défense'>Défense</option>
+              <option value='Principe'>Principe</option>
+              <option value='Système de jeu'>Système de jeu</option>
+            </select>
+          </label>
+
+          <label>
+            {' '}
+            Prix:
+            <input
+              type='number'
+              name='price'
+              value={courseData.price}
+              onChange={onChange}
+              disabled={disableField}
+            />
+          </label>
+        </div>
 
         <label>
           {' '}
@@ -172,18 +201,6 @@ const Formation = props => {
             type='text'
             name='overview'
             value={courseData.overview}
-            onChange={onChange}
-            disabled={disableField}
-          />
-        </label>
-
-        <label>
-          {' '}
-          Prix:
-          <input
-            type='number'
-            name='price'
-            value={courseData.price}
             onChange={onChange}
             disabled={disableField}
           />

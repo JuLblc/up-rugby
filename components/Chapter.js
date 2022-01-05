@@ -1,5 +1,7 @@
-import { useState } from 'react'
 import Lecture from './Lecture'
+
+import styles from '../styles/Chapter.module.css'
+
 
 const Chapter = props => {
   //console.log('props Chapter: ', props)
@@ -18,7 +20,7 @@ const Chapter = props => {
   }
 
   return (
-    <div className='chapter-container'>
+    <div className={styles.chapterContainer}>
       <label>
         {' '}
         Titre Chapitre:

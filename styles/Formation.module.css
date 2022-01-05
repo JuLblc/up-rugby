@@ -1,0 +1,12 @@
+.form {
+    width:90vw;
+    line-height: 2em;
+    border: 1px solid darkgray;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+}
+
+.formationTitle {
+    width:500px;
+}
