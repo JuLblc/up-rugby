@@ -2,7 +2,6 @@ import axios from 'axios'
 import { useSession, getSession } from 'next-auth/react'
 
 const FormationDetails = props => {
-
   // console.log('props FormationDetails: ', props)
 
   return (
@@ -33,9 +32,11 @@ export default FormationDetails
 //Server side rendering
 export const getServerSideProps = async context => {
   const session = await getSession(context)
+  // console.log('session getServerSideProps FormationDetails: ', session)
 
   const res = await axios.get(`${process.env.DOMAIN_URL}/api/courses/`, {
-    params: { id: context.query.courseId }
+    params: { id: context.query.courseId },
+    headers: context.req.headers
   })
 
   return {

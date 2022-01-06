@@ -3,8 +3,14 @@ const { connectToDatabase } = require('../../../utils/mongodb')
 import User from '../../../models/User.model'
 import Course from '../../../models/Course.model'
 
-export default function handler (req, res) {
+import { getSession } from 'next-auth/react'
+
+export default async function handler (req, res) {
+  
+  const session = await getSession({ req })
   const { method, query } = req
+
+  console.log('session API: ', session)
 
   connectToDatabase()
     .then(() => {

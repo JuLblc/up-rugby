@@ -62,6 +62,8 @@ export default NextAuth({
 
         // 1. Check if user with FB_id already in DB
         if (user) {
+          console.log('user: ',user)
+          console.log('profileFromFB: ',profileFromFB)
           return profileFromFB;
         }
         else {
@@ -149,7 +151,7 @@ export default NextAuth({
   },
   callbacks: {
     async jwt({ token, user }) {
-      // console.log('callbacks jwt: ', { token, user })
+      console.log('callbacks jwt: ', { token, user })
       if (user) {
         token.id = user.id;
         token.firstName = user.firstName;
@@ -159,7 +161,7 @@ export default NextAuth({
       return token
     },
     async session({ session, token }) {
-      // console.log('callbacks session: ', { session, token })
+      console.log('callbacks session: ', { session, token })
       session.user.id = token.id
       session.user.firstName = token.firstName
       session.user.lastName = token.lastName
