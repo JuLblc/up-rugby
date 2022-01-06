@@ -1,0 +1,22 @@
+.cardFormationContainer{
+    display: flex;
+
+}
+
+.cardFormation {
+    border: 1px solid darkgray;
+    width: 370px;
+    margin:5px 10px;
+}
+
+.formationInfo { 
+    margin:5px 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.linkContainer{
+    margin:5px 20px;
+    display: flex;
+    justify-content: space-between;
+}

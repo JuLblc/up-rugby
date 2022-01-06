@@ -5,6 +5,8 @@ import Link from 'next/link'
 
 import CardFormation from '../../components/CardFormation'
 
+import styles from '../../styles/CardFormation.module.css'
+
 const Courses = props => {
   // console.log('props: ', props)
 
@@ -28,17 +30,19 @@ const Courses = props => {
         <a>Ajouter une formation</a>
       </Link>
 
-      {props.courses.map(course => {
-        return (
-          <CardFormation
-            key={course._id}
-            courseId={course._id}
-            title={course.title}
-            price={course.price}
-            isPublished={course.isPublished}
-          />
-        )
-      })}
+      <div className={styles.cardFormationContainer}>
+        {props.courses.map(course => {
+          return (
+            <CardFormation
+              key={course._id}
+              courseId={course._id}
+              title={course.title}
+              price={course.price}
+              isPublished={course.isPublished}
+            />
+          )
+        })}
+      </div>
     </>
   )
 }
