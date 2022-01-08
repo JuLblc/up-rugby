@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useSession, getSession } from 'next-auth/react'
+import { getSession } from 'next-auth/react'
 import Link from 'next/link'
 
 import CardFormation from '../../components/CardFormation'
@@ -8,9 +8,6 @@ import styles from '../../styles/CardFormation.module.css'
 
 const Courses = props => {
   // console.log('props: ', props)
-
-  const { data: session } = useSession()
-  // console.log('session courses: ',{ session })
 
   return (
     <>
@@ -25,9 +22,11 @@ const Courses = props => {
         </li>
       </ul>
 
-      <Link href='/courses/create-course'>
-        <a>Ajouter une formation</a>
-      </Link>
+      {props.session?.user.role === 'ADMIN' && (
+        <Link href='/courses/create-course'>
+          <a>Ajouter une formation</a>
+        </Link>
+      )}
 
       <div className={styles.cardFormationContainer}>
         {props.courses.map(course => {
@@ -38,6 +37,7 @@ const Courses = props => {
               title={course.title}
               price={course.price}
               isPublished={course.isPublished}
+              role={props.session?.user.role}
             />
           )
         })}
@@ -54,10 +54,9 @@ export const getServerSideProps = async context => {
   console.log('session getServer Courses: ', session)
   // console.log('context: ', context.req.headers)
 
-
   const res = await axios.get(`${process.env.DOMAIN_URL}/api/courses`, {
     headers: context.req.headers
-   })
+  })
 
   return {
     props: {

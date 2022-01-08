@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { compareSync } from 'bcryptjs'
 import { useSession, getSession } from 'next-auth/react'
 import Formation from '../../../../components/Formation'
 

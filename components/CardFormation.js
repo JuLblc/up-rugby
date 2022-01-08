@@ -17,8 +17,8 @@ const CardFormation = props => {
         <Link href={`/courses/${props.courseId}`}>
           <a className={styles.link}>Détails</a>
         </Link>
-        {/* if course is a draft, it still can be updated */}
-        {!props.isPublished && (
+        {/* if course is a draft, it still can be updated by ADMIN only */}
+        {props.role === 'ADMIN' && !props.isPublished && (
           <Link href={`/courses/update-course/${props.courseId}`}>
              <a className={styles.link}>Modifier</a>
           </Link>
