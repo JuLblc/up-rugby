@@ -27,12 +27,10 @@ export default NextAuth({
         const bcryptValidation = await bcrypt.compare(credentials.password, user.password);
 
         if (bcryptValidation && user) {
-          console.log('login OK')
           // Any object returned will be saved in `user` property of the JWT
           return user
         } else {
           // If you return null or false then the credentials will be rejected
-          console.log('login Not OK')
           return null
         }
       }
@@ -62,9 +60,7 @@ export default NextAuth({
 
         // 1. Check if user with FB_id already in DB
         if (user) {
-          console.log('user: ',user)
-          console.log('profileFromFB: ',profileFromFB)
-          return profileFromFB;
+          return user;
         }
         else {
 
@@ -77,18 +73,19 @@ export default NextAuth({
             user.firstName ? user.firstName : user.firstName = profileFromFB.firstName
             user.lastName ? user.lastName : user.lastName = profileFromFB.lastName
             await user.save();
+            return user;
             
           } else {
 
-            await User.create({
+            const newUser = await User.create({
               facebookID: profileFromFB.id,
               email: profileFromFB.email,
               firstName: profileFromFB.firstName,
               lastName: profileFromFB.lastName,
               isEmailVerified: true
             })
+            return newUser;
           }
-          return profileFromFB;
         }
       },
     }),
@@ -113,7 +110,7 @@ export default NextAuth({
 
         // 1. Check if user with Google_id already in DB
         if (user) {
-          return profileFromGoogle;
+          return user;
         }
         else {
 
@@ -126,18 +123,19 @@ export default NextAuth({
             user.firstName ? user.firstName : user.firstName = profileFromGoogle.firstName
             user.lastName ? user.lastName : user.lastName = profileFromGoogle.lastName
             await user.save();
-            
+            return user;
+
           } else {
 
-            await User.create({
+            const newUser = await User.create({
               googleID: profileFromGoogle.id,
               email: profileFromGoogle.email,
               firstName: profileFromGoogle.firstName,
               lastName: profileFromGoogle.lastName,
               isEmailVerified: true
             })
+            return newUser
           }
-          return profileFromGoogle;
         }
       },
     })
@@ -151,20 +149,22 @@ export default NextAuth({
   },
   callbacks: {
     async jwt({ token, user }) {
-      console.log('callbacks jwt: ', { token, user })
+      // console.log('callbacks jwt: ', { token, user })
       if (user) {
         token.id = user.id;
         token.firstName = user.firstName;
         token.lastName = user.lastName;
+        token.role = user.role;
       }
 
       return token
     },
     async session({ session, token }) {
-      console.log('callbacks session: ', { session, token })
+      // console.log('callbacks session: ', { session, token })
       session.user.id = token.id
       session.user.firstName = token.firstName
       session.user.lastName = token.lastName
+      session.user.role = token.role
       return session
     }
   },
