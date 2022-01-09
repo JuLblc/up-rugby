@@ -7,7 +7,7 @@ import CardFormation from '../../components/CardFormation'
 import styles from '../../styles/CardFormation.module.css'
 
 const Courses = props => {
-  // console.log('props: ', props)
+  console.log('props: ', props)
 
   return (
     <>
