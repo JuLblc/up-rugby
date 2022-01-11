@@ -57,9 +57,10 @@ export const getServerSideProps = async context => {
 
   try{
 
-    const res = await axios.get(`${process.env.DOMAIN_URL}/api/courses`, {
-      headers: context.req.headers
-    })
+    // const res = await axios.get(`${process.env.DOMAIN_URL}/api/courses`, {
+    //   headers: context.req.headers
+    // })
+    const res = await axios.get(`${process.env.DOMAIN_URL}/api/courses`)
     console.log('res courses: ', res)
     return {
       props: {
