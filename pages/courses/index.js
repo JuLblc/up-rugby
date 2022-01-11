@@ -7,7 +7,7 @@ import CardFormation from '../../components/CardFormation'
 import styles from '../../styles/CardFormation.module.css'
 
 const Courses = props => {
-  console.log('props: ', props)
+  console.log('props courses: ', props)
 
   return (
     <>
@@ -52,11 +52,19 @@ export default Courses
 export const getServerSideProps = async context => {
   const session = await getSession(context)
   console.log('session getServer Courses: ', session)
-  // console.log('context: ', context.req.headers)
+  console.log('contextgetServer Courses: ', context)
+  console.log('req.headers Courses: ', context.req.headers)
 
-  const res = await axios.get(`${process.env.DOMAIN_URL}/api/courses`, {
-    headers: context.req.headers
-  })
+  try{
+
+    const res = await axios.get(`${process.env.DOMAIN_URL}/api/courses`, {
+      headers: context.req.headers
+    })
+    console.log('res courses: ', res)
+  }
+  catch (error){
+    console.log('err ', error)
+  } 
 
   return {
     props: {
