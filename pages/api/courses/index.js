@@ -6,11 +6,10 @@ import Course from '../../../models/Course.model'
 import { getSession } from 'next-auth/react'
 
 export default async function handler (req, res) {
-  
   const session = await getSession({ req })
   const { method, query } = req
 
-  console.log('session API: ', session)
+  // console.log('session API: ', session)
 
   connectToDatabase()
     .then(() => {
@@ -24,13 +23,13 @@ export default async function handler (req, res) {
             break
           }
         case 'POST':
-          addCourse(req, res)
+          addCourse(req, res, session)
           break
         case 'PUT':
           upadteCourse(req, res, session)
           break
         case 'DELETE':
-          deleteCourse(req, res)
+          deleteCourse(req, res, session)
           break
       }
     })
@@ -42,12 +41,13 @@ export default async function handler (req, res) {
     })
 }
 
-const addCourse = (req, res) => {
+const addCourse = (req, res, session) => {
   //console.log('req: ', req)
   const { course } = req.body
 
-  if (session.user.role === 'USER'){
+  if (!session || session.user.role !== 'ADMIN') {
     res.status(401).json({ message: 'Unauthorized' })
+    return
   }
   //   console.log('course: ', course)
 
@@ -79,24 +79,28 @@ const getCourse = (req, res) => {
     .catch(err => console.log('err : ', err))
 }
 
-const upadteCourse =  (req, res, session) => {
-  const id = req.body.course._id
-  const updatedCourse = req.body.course
-
-  console.log('session.user.role: ',session.user.role)
-  if (session.user.role === 'USER'){
+const upadteCourse = (req, res, session) => {
+  if (!session || session.user.role !== 'ADMIN') {
     res.status(401).json({ message: 'Unauthorized' })
     return
   }
 
-  Course.findByIdAndUpdate(id, updatedCourse)
+  const id = req.body.course._id
+  const updatedCourse = req.body.course
+
+  Course.findByIdAndUpdate(id, updatedCourse, { new: true })
     .then(updatedCourseFromDB => {
       res.status(200).json({ updatedCourseFromDB })
     })
     .catch(err => console.log('err : ', err))
 }
 
-const deleteCourse = (req, res) => {
+const deleteCourse = (req, res, session) => {
+  if (!session || session.user.role !== 'ADMIN') {
+    res.status(401).json({ message: 'Unauthorized' })
+    return
+  }
+
   const id = req.body
 
   Course.findByIdAndDelete(id)

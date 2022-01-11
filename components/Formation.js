@@ -71,7 +71,6 @@ const Formation = props => {
   }
 
   const updateCourse = () => {
-    console.log('update me')
     setDisableField(false)
   }
 

@@ -8,8 +8,10 @@ const NewCourse = props => {
   const router = useRouter()
 
   useEffect(() => {
-    if (props.session.user.role !== 'ADMIN') {
-      router.back()
+    if (!props.session){
+      router.push('/login');
+    } else if (props.session.user.role !== 'ADMIN') {
+      router.back();
     }
   }, [])
 

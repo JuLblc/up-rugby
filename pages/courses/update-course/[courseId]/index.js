@@ -11,7 +11,10 @@ const UpdateCourseDetails = props => {
   const router = useRouter()
 
   useEffect(() => {
-    if (props.session.user.role !== 'ADMIN') {
+
+    if (!props.session){
+      router.push('/login');
+    } else if (props.session.user.role !== 'ADMIN') {
       router.back();
     }
   }, [])  
@@ -38,7 +41,7 @@ export const getServerSideProps = async context => {
 
   const res = await axios.get(`${process.env.DOMAIN_URL}/api/courses/`, {
     params: { id: context.query.courseId },
-    headers: context.req.headers
+    headers: { cookie: context.req.headers.cookie }
   })
 
   return {
