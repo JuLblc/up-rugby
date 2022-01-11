@@ -27,7 +27,7 @@ export default async function handler (req, res) {
           addCourse(req, res)
           break
         case 'PUT':
-          upadteCourse(req, res)
+          upadteCourse(req, res, session)
           break
         case 'DELETE':
           deleteCourse(req, res)
@@ -43,9 +43,12 @@ export default async function handler (req, res) {
 }
 
 const addCourse = (req, res) => {
-  //   console.log('req: ', req)
+  //console.log('req: ', req)
   const { course } = req.body
 
+  if (session.user.role === 'USER'){
+    res.status(401).json({ message: 'Unauthorized' })
+  }
   //   console.log('course: ', course)
 
   const newCourse = new Course(course)
@@ -76,9 +79,15 @@ const getCourse = (req, res) => {
     .catch(err => console.log('err : ', err))
 }
 
-const upadteCourse = (req, res) => {
+const upadteCourse =  (req, res, session) => {
   const id = req.body.course._id
   const updatedCourse = req.body.course
+
+  console.log('session.user.role: ',session.user.role)
+  if (session.user.role === 'USER'){
+    res.status(401).json({ message: 'Unauthorized' })
+    return
+  }
 
   Course.findByIdAndUpdate(id, updatedCourse)
     .then(updatedCourseFromDB => {

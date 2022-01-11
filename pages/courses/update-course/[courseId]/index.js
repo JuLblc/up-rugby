@@ -1,9 +1,20 @@
 import axios from 'axios'
-import { useSession, getSession } from 'next-auth/react'
+
+import { useEffect } from 'react'
+import { getSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
+
 import Formation from '../../../../components/Formation'
 
 const UpdateCourseDetails = props => {
-  // console.log('props UpdateCourseDetails: ', props)
+
+  const router = useRouter()
+
+  useEffect(() => {
+    if (props.session.user.role !== 'ADMIN') {
+      router.back();
+    }
+  }, [])  
 
   return (
     <>
