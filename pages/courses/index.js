@@ -61,15 +61,15 @@ export const getServerSideProps = async context => {
       headers: context.req.headers
     })
     console.log('res courses: ', res)
+    return {
+      props: {
+        session,
+        courses: res.data.coursesFromDB
+      }
+    }
   }
   catch (error){
     console.log('err ', error)
   } 
 
-  return {
-    props: {
-      session,
-      courses: res.data.coursesFromDB
-    }
-  }
 }
