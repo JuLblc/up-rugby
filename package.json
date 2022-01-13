@@ -8,6 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@u-wave/react-vimeo": "^0.9.5",
     "axios": "^0.24.0",
     "bcryptjs": "^2.4.3",
     "mongodb": "^4.2.0",

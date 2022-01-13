@@ -3,22 +3,27 @@ import axios from 'axios'
 import { useRouter } from 'next/router'
 import { getSession } from 'next-auth/react'
 
+import Vimeo from '@u-wave/react-vimeo'
+
 import Link from 'next/link'
+
+import styles from '../../../../styles/Lectures.module.css'
 
 const Lectures = props => {
   console.log('props lectures: ', props)
 
   return (
-    <div className='container'>
-      <div className='player'>
+    <div className={styles.container}>
+      <div className={styles.player}>
         <h1>{props.lecture.title}</h1>
+        <Vimeo video={props.lecture.url} />
+        <h2>A propos de ce contenu</h2>
         <p>{props.lecture.description}</p>
-        <p>{props.lecture.url}</p>
       </div>
-      <div className='side-course-chapter'>
+      <div className={styles.sideCourseChapter}>
         {props.course.chapters.map(chapter => {
           return (
-            <div className='section-chapters' key={chapter._id}>
+            <div className={styles.sectionChapters} key={chapter._id}>
               <h4>{chapter.title}</h4>
               {chapter.lectures.map(lecture => {
                 return (

@@ -1,0 +1,16 @@
+.container{
+    display: flex;
+}
+
+.courseChapters{
+    margin:10px 30px;
+}
+
+.courseChapters a{
+    display: block;
+}
+
+.overview{
+    margin:10px 30px;
+    max-width: 70vw;
+}
