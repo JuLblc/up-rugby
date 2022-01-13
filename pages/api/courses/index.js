@@ -1,6 +1,5 @@
 const { connectToDatabase } = require('../../../utils/mongodb')
 
-import User from '../../../models/User.model'
 import Course from '../../../models/Course.model'
 
 import { getSession } from 'next-auth/react'
@@ -16,10 +15,10 @@ export default async function handler (req, res) {
       switch (method) {
         case 'GET':
           if (!query.id) {
-            getAllCourses(req, res)
+            getAllCourses(req, res, session)
             break
           } else {
-            getCourse(req, res)
+            getCourse(req, res, session)
             break
           }
         case 'POST':
@@ -61,18 +60,28 @@ const addCourse = (req, res, session) => {
     .catch(err => console.log('err : ', err))
 }
 
-const getAllCourses = (req, res) => {
-  Course.find()
+const getAllCourses = (req, res, session) => {
+  const cond = {}
+  if (!session || session.user.role !== 'ADMIN') {
+    cond.isPublished = true 
+  }
+
+  Course.find(cond)
     .then(coursesFromDB => {
       res.status(200).json({ coursesFromDB })
     })
     .catch(err => console.log('err : ', err))
 }
 
-const getCourse = (req, res) => {
+const getCourse = (req, res, session) => {
   const id = req.query.id
 
-  Course.findById(id)
+  const cond = { _id: id }
+  if (!session || session.user.role !== 'ADMIN') {
+    cond.isPublished = true 
+  }
+
+  Course.findOne(cond)
     .then(courseFromDB => {
       res.status(200).json({ courseFromDB })
     })

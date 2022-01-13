@@ -16,7 +16,7 @@ const Lectures = props => {
     <div className={styles.container}>
       <div className={styles.player}>
         <h1>{props.lecture.title}</h1>
-        <Vimeo video={props.lecture.url} />
+        <Vimeo video={props.lecture.url} width={640} height={360}/>
         <h2>A propos de ce contenu</h2>
         <p>{props.lecture.description}</p>
       </div>

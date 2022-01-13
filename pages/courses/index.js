@@ -51,7 +51,7 @@ export default Courses
 //Server side rendering
 export const getServerSideProps = async context => {
   const session = await getSession(context)
-  console.log('session getServer Courses: ', session)
+  // console.log('session getServer Courses: ', session)
   //console.log('contextgetServer Courses: ', context)
   // console.log('req.headers.cookie Courses: ', context.req.headers.cookie)
 

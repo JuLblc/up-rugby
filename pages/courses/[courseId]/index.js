@@ -1,5 +1,9 @@
 import axios from 'axios'
+
+import { useEffect } from 'react'
 import { getSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
+
 import Link from 'next/link'
 
 import styles from '../../../styles/FormationDetails.module.css'
@@ -7,37 +11,47 @@ import styles from '../../../styles/FormationDetails.module.css'
 const FormationDetails = props => {
   // console.log('props FormationDetails: ', props)
 
+  const router = useRouter()
+
+  useEffect(() => {
+    if (!props.course) {
+      router.back()
+    }
+  }, [])
+
   return (
     <>
-      <main>
-        <h1>{props.course.title}</h1>
-        <div className={styles.container}>
-          <div className={styles.courseChapters}>
-            <h2>Chapitres</h2>
-            {props.course.chapters.map(chapter => {
-              return (
-                <div className='section-chapters' key={chapter._id}>
-                  <h3>{chapter.title}</h3>
-                  {chapter.lectures.map(lecture => {
-                    return (
-                      <Link
-                        href={`/courses/${props.course._id}/lecture/${lecture._id}?chapterId=${chapter._id}`}
-                        key={lecture._id}
-                      >
-                        <a>{lecture.title}</a>
-                      </Link>
-                    )
-                  })}
-                </div>
-              )
-            })}
+      {props.course && (
+        <main>
+          <h1>{props.course.title}</h1>
+          <div className={styles.container}>
+            <div className={styles.courseChapters}>
+              <h2>Chapitres</h2>
+              {props.course.chapters.map(chapter => {
+                return (
+                  <div className='section-chapters' key={chapter._id}>
+                    <h3>{chapter.title}</h3>
+                    {chapter.lectures.map(lecture => {
+                      return (
+                        <Link
+                          href={`/courses/${props.course._id}/lecture/${lecture._id}?chapterId=${chapter._id}`}
+                          key={lecture._id}
+                        >
+                          <a>{lecture.title}</a>
+                        </Link>
+                      )
+                    })}
+                  </div>
+                )
+              })}
+            </div>
+            <div className={styles.overview}>
+              <h2>Présentation</h2>
+              <article>{props.course.overview}</article>
+            </div>
           </div>
-          <div className={styles.overview}>
-            <h2>Présentation</h2>
-            <article>{props.course.overview}</article>
-          </div>
-        </div>
-      </main>
+        </main>
+      )}
     </>
   )
 }

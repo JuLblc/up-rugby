@@ -8,10 +8,10 @@ const NewCourse = props => {
   const router = useRouter()
 
   useEffect(() => {
-    if (!props.session){
-      router.push('/login');
+    if (!props.session) {
+      router.push('/login')
     } else if (props.session.user.role !== 'ADMIN') {
-      router.back();
+      router.back()
     }
   }, [])
 
@@ -38,13 +38,17 @@ const NewCourse = props => {
 
   return (
     <>
-      <h1>Ajouter formation</h1>
+      {props.session && props.session.user.role === 'ADMIN' && (
+        <>
+          <h1>Ajouter formation</h1>
 
-      <Formation
-        courseContent={emptyCourse}
-        action={'create'}
-        disable={false}
-      />
+          <Formation
+            courseContent={emptyCourse}
+            action={'create'}
+            disable={false}
+          />
+        </>
+      )}
     </>
   )
 }
@@ -56,7 +60,7 @@ export const getServerSideProps = async context => {
 
   return {
     props: {
-      session,
+      session
     }
   }
 }

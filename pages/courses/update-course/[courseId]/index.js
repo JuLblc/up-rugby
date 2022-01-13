@@ -7,27 +7,29 @@ import { useRouter } from 'next/router'
 import Formation from '../../../../components/Formation'
 
 const UpdateCourseDetails = props => {
-
   const router = useRouter()
 
   useEffect(() => {
-
-    if (!props.session){
-      router.push('/login');
+    if (!props.session) {
+      router.push('/login')
     } else if (props.session.user.role !== 'ADMIN') {
-      router.back();
+      router.back()
     }
-  }, [])  
+  }, [])
 
   return (
     <>
-      <h1>{props.course.title}</h1>
+      {props.course && (
+        <>
+          <h1>{props.course.title}</h1>
 
-      <Formation
-        courseContent={props.course}
-        action={'update'}
-        disable={true}
-      />
+          <Formation
+            courseContent={props.course}
+            action={'update'}
+            disable={true}
+          />
+        </>
+      )}
     </>
   )
 }
@@ -38,6 +40,15 @@ export default UpdateCourseDetails
 export const getServerSideProps = async context => {
   const session = await getSession(context)
   // console.log('session getServerSideProps UpdateCourseDetails: ', session)
+
+  // Check if user is authorized before sending axios request
+  if (!session || session.user.role !== 'ADMIN') {
+    return {
+      props: {
+        session
+      }
+    }
+  }
 
   const res = await axios.get(`${process.env.DOMAIN_URL}/api/courses/`, {
     params: { id: context.query.courseId },
