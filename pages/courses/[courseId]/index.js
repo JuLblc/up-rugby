@@ -18,11 +18,6 @@ const FormationDetails = props => {
                 {chapter.lectures.map(lecture => {
                   return (
                     <Link href={`/courses/${props.course._id}/lecture/${lecture._id}?chapterId=${chapter._id}`} key={lecture._id}><a>{lecture.title}</a></Link>
-                    // <div key={lecture._id}>
-                    //   <p>{lecture.title}</p>
-                    //   <p>{lecture.description}</p>
-                    //   <p>{lecture.url}</p>
-                    // </div>
                   )
                 })}
               </div>
