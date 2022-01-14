@@ -19,6 +19,19 @@ const FormationDetails = props => {
     }
   }, [])
 
+  const onPurchase = () => {
+    const query = {
+      courseId: props.course._id,
+      firstChapterId: props.course.chapters[0]._id,
+      firstLectureId: props.course.chapters[0].lectures[0]._id
+    }
+
+    router.push({
+      pathname: '/purchase-confirmation',
+      query
+    })
+  }
+
   return (
     <>
       {props.course && (
@@ -47,7 +60,12 @@ const FormationDetails = props => {
             </div>
             <div className={styles.overview}>
               <h2>Présentation</h2>
-              <article>{props.course.overview}</article>
+              <div>
+                <article>{props.course.overview}</article>
+                <button className={styles.buy} onClick={onPurchase}>
+                  $ Acheter $
+                </button>
+              </div>
             </div>
           </div>
         </main>

@@ -14,3 +14,9 @@
     margin:10px 30px;
     max-width: 70vw;
 }
+
+.buy{
+    margin: 20px auto;
+    display: block;
+    width: 200px;
+}
