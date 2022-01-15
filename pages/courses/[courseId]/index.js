@@ -14,12 +14,17 @@ const FormationDetails = props => {
   const router = useRouter()
 
   useEffect(() => {
+    // To prevent 'USER' to see 'ADMIN' courses
     if (!props.course) {
       router.back()
     }
   }, [])
 
   const onPurchase = () => {
+    //1. Check if user is logged in
+    //2. Si oui -> redirect confirmation achat
+    //3. Si non -> redirect login page
+
     const query = {
       courseId: props.course._id,
       firstChapterId: props.course.chapters[0]._id,
@@ -81,9 +86,14 @@ export const getServerSideProps = async context => {
   const session = await getSession(context)
   // console.log('session getServerSideProps FormationDetails: ', session)
 
+  const headers = {}
+  if (context.req.headers.cookie) {
+    headers.cookie = context.req.headers.cookie
+  }
+
   const res = await axios.get(`${process.env.DOMAIN_URL}/api/courses/`, {
     params: { id: context.query.courseId },
-    headers: { cookie: context.req.headers.cookie }
+    headers
   })
 
   return {

@@ -52,9 +52,14 @@ export const getServerSideProps = async context => {
 
   const { chapterId, lectureId } = context.query
 
+  const headers = {}
+  if (context.req.headers.cookie) {
+    headers.cookie = context.req.headers.cookie
+  }
+
   const res = await axios.get(`${process.env.DOMAIN_URL}/api/courses/`, {
     params: { id: context.query.courseId },
-    headers: { cookie: context.req.headers.cookie }
+    headers
   })
 
   const course = res.data.courseFromDB
