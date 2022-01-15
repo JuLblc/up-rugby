@@ -10,7 +10,7 @@ import Link from 'next/link'
 import styles from '../../../../styles/Lectures.module.css'
 
 const Lectures = props => {
-  console.log('props lectures: ', props)
+  // console.log('props lectures: ', props)
 
   return (
     <div className={styles.container}>

@@ -12,10 +12,9 @@ export default async function handler (req, res) {
     .then(() => {
       switch (method) {
         case 'GET':
-          console.log('get user')
+          getUser(req, res)
           break
         case 'PUT':
-          console.log('put user')
           updateUser(req, res)
           break
       }
@@ -28,18 +27,29 @@ export default async function handler (req, res) {
     })
 }
 
-const updateUser = (req, res) => {
+const getUser = (req, res) => {
+  const id = req.query.id
 
+  const cond = { _id: id }
+
+  User.findOne(cond)
+    .then(userFromDB => {
+      res.status(200).json({ userFromDB })
+    })
+    .catch(err => console.log('err : ', err))
+}
+
+const updateUser = (req, res) => {
   const { userId, courseId } = req.body
 
   User.findById(userId)
     .then(foundUser => {
-      foundUser.pruchasedCourses.push(courseId)
+      foundUser.purchasedCourses.push(courseId)
 
       foundUser
         .save()
-        .then(updateUser => {
-          res.status(200).json({ updateUser })
+        .then(updatedUser => {
+          res.status(200).json({ updatedUser })
         })
         .catch(err => console.log('err : ', err))
     })

@@ -85,9 +85,15 @@ const FormationDetails = props => {
                 <article>{props.course.overview}</article>
                 {/* Purchase button isn't display for ADMIN */}
                 {(!props.session || props.session.user.role !== 'ADMIN') && (
+                  props.course.isPurchased ? (
+                    <h1>Accèder à la formation</h1>
+                  ) : (
                   <button className={styles.buy} onClick={onPurchase}>
                     $ Acheter $
                   </button>
+
+                  )
+                  
                 )}
               </div>
             </div>
@@ -110,15 +116,29 @@ export const getServerSideProps = async context => {
     headers.cookie = context.req.headers.cookie
   }
 
-  const res = await axios.get(`${process.env.DOMAIN_URL}/api/courses/`, {
+  const resCourse = await axios.get(`${process.env.DOMAIN_URL}/api/courses/`, {
     params: { id: context.query.courseId },
     headers
   })
 
+  const resUser = await axios.get(`${process.env.DOMAIN_URL}/api/users/`, {
+    params: { id: session.user.id },
+  })
+
+  // Check if user already purchased this course. Pass the result as props
+  const course = resCourse.data.courseFromDB
+  const purchasedCourses = resUser.data.userFromDB.purchasedCourses
+
+  if (purchasedCourses.indexOf(course._id) === -1){
+    course.isPurchased = false;
+  } else {
+    course.isPurchased = true;
+  }
+
   return {
     props: {
       session,
-      course: res.data.courseFromDB
+      course
     }
   }
 }
