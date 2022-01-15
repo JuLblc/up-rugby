@@ -25,7 +25,7 @@ export default async function handler (req, res) {
           addCourse(req, res, session)
           break
         case 'PUT':
-          upadteCourse(req, res, session)
+          updateCourse(req, res, session)
           break
         case 'DELETE':
           deleteCourse(req, res, session)
@@ -88,7 +88,7 @@ const getCourse = (req, res, session) => {
     .catch(err => console.log('err : ', err))
 }
 
-const upadteCourse = (req, res, session) => {
+const updateCourse = (req, res, session) => {
   if (!session || session.user.role !== 'ADMIN') {
     res.status(401).json({ message: 'Unauthorized' })
     return

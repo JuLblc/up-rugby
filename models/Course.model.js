@@ -1,12 +1,12 @@
 import mongoose from 'mongoose';
 
 const CourseSchema = new mongoose.Schema({
-    allowedUsers: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
-        }
-    ],
+    // allowedUsers: [
+    //     {
+    //         type: mongoose.Schema.Types.ObjectId,
+    //         ref: 'User'
+    //     }
+    // ],
     overview: String,
     title: String,
     category: String,

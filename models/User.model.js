@@ -25,12 +25,12 @@ const UserSchema = new mongoose.Schema({
     enum: ['USER', 'ADMIN'],
     default: 'USER'
   },
-  // pruchasedCourses: [
-  //   {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: 'Course'
-  //   }
-  // ]
+  pruchasedCourses: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Course'
+    }
+  ]
 })
 
 module.exports = mongoose.models.User || mongoose.model('User', UserSchema)

@@ -49,6 +49,7 @@ export const getServerSideProps = async context => {
       }
     }
   }
+  
   const headers = {}
   if (context.req.headers.cookie) {
     headers.cookie = context.req.headers.cookie

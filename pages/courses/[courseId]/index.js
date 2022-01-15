@@ -20,21 +20,37 @@ const FormationDetails = props => {
     }
   }, [])
 
-  const onPurchase = () => {
-    //1. Check if user is logged in
-    //2. Si oui -> redirect confirmation achat
-    //3. Si non -> redirect login page
+  const onPurchase = async () => {
+    const query = {}
 
-    const query = {
-      courseId: props.course._id,
-      firstChapterId: props.course.chapters[0]._id,
-      firstLectureId: props.course.chapters[0].lectures[0]._id
+    //1. Check if user is logged in
+    if (!props.session) {
+      query.error = 'please log in to purchase'
+      router.push({
+        pathname: '/login',
+        query
+      })
     }
 
-    router.push({
-      pathname: '/purchase-confirmation',
-      query
-    })
+    //2. After payment, add formation to user
+    axios
+      .put('/api/users', {
+        userId: props.session.user.id,
+        courseId: props.course._id
+      })
+      .then(response => {
+        console.log('response: ', response.data)
+        //3. Redirect to payment confirmation page
+        query.courseId = props.course._id
+        query.firstChapterId = props.course.chapters[0]._id
+        query.firstLectureId = props.course.chapters[0].lectures[0]._id
+
+        router.push({
+          pathname: '/purchase-confirmation',
+          query
+        })
+      })
+      .catch(err => console.log('err: ', err))
   }
 
   return (
@@ -67,9 +83,12 @@ const FormationDetails = props => {
               <h2>Présentation</h2>
               <div>
                 <article>{props.course.overview}</article>
-                <button className={styles.buy} onClick={onPurchase}>
-                  $ Acheter $
-                </button>
+                {/* Purchase button isn't display for ADMIN */}
+                {(!props.session || props.session.user.role !== 'ADMIN') && (
+                  <button className={styles.buy} onClick={onPurchase}>
+                    $ Acheter $
+                  </button>
+                )}
               </div>
             </div>
           </div>
