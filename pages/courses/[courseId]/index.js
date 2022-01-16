@@ -86,7 +86,11 @@ const FormationDetails = props => {
                 {(!props.session || props.session.user.role !== 'ADMIN') &&
                   // Display purchase button only if the course has not been purchased by user yet
                   (props.course.isPurchased ? (
-                    <h1>Accèder à la formation</h1>
+                    <Link
+                      href={`/courses/${props.course._id}/lecture/${props.course.chapters[0].lectures[0]._id}?chapterId=${props.course.chapters[0]._id}`}
+                    >
+                      <a>Commencer</a>
+                    </Link>
                   ) : (
                     <button className={styles.buy} onClick={onPurchase}>
                       $ Acheter $

@@ -16,7 +16,12 @@ const Lectures = props => {
     <div className={styles.container}>
       <div className={styles.player}>
         <h1>{props.lecture.title}</h1>
-        <Vimeo video={props.lecture.url} width={640} height={360}/>
+        {props.course.isPurchased ? (
+
+          <Vimeo video={props.lecture.url} width={640} height={360}/>
+        ) : (
+          <div className={styles.blocked}>Contenu bloqué</div>
+        )}
         <h2>A propos de ce contenu</h2>
         <p>{props.lecture.description}</p>
       </div>
@@ -57,13 +62,31 @@ export const getServerSideProps = async context => {
     headers.cookie = context.req.headers.cookie
   }
 
-  const res = await axios.get(`${process.env.DOMAIN_URL}/api/courses/`, {
+  const resCourse = await axios.get(`${process.env.DOMAIN_URL}/api/courses/`, {
     params: { id: context.query.courseId },
     headers
   })
 
-  const course = res.data.courseFromDB
-  const chapter = res.data.courseFromDB.chapters.filter(
+  // Check if user already purchased this course. Pass the result as props
+  const course = resCourse.data.courseFromDB
+
+  if (!session || session.user.role === 'ADMIN') {
+    course.isPurchased = false
+  } else {
+    const resUser = await axios.get(`${process.env.DOMAIN_URL}/api/users/`, {
+      headers
+    })
+    const purchasedCourses = resUser.data.userFromDB.purchasedCourses
+
+    if (purchasedCourses.indexOf(course._id) === -1) {
+      course.isPurchased = false
+    } else {
+      course.isPurchased = true
+    }
+  }
+
+  // Display only the current lecture
+  const chapter = resCourse.data.courseFromDB.chapters.filter(
     chapter => chapter._id === chapterId
   )[0]
   const lecture = chapter.lectures.filter(

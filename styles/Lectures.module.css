@@ -10,3 +10,13 @@
 .sectionChapters a{
    display: block;
 }
+
+.blocked{
+    background-color: darkgrey;
+    color:red;
+    font-size:2em;
+    width:640px;
+    height: 360px;
+    text-align: center;
+    line-height: 360px;
+}
