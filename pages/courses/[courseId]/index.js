@@ -124,10 +124,7 @@ export const getServerSideProps = async context => {
   if (!session || session.user.role === 'ADMIN') {
     course.isPurchased = false
   } else {
-    const resUser = await axios.get(`${process.env.DOMAIN_URL}/api/users/`, {
-      params: { id: session.user.id }
-    })
-
+    const resUser = await axios.get(`${process.env.DOMAIN_URL}/api/users/`)
     const purchasedCourses = resUser.data.userFromDB.purchasedCourses
 
     if (purchasedCourses.indexOf(course._id) === -1) {

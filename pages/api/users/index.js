@@ -12,7 +12,7 @@ export default async function handler (req, res) {
     .then(() => {
       switch (method) {
         case 'GET':
-          getUser(req, res)
+          getUser(req, res, session)
           break
         case 'PUT':
           updateUser(req, res, session)
@@ -27,10 +27,13 @@ export default async function handler (req, res) {
     })
 }
 
-const getUser = (req, res) => {
-  const id = req.query.id
+const getUser = (req, res, session) => {
+  if (!session) {
+    res.status(401).json({ message: 'Unauthorized' })
+    return
+  }
 
-  const cond = { _id: id }
+  const cond = { _id: session.user.id }
 
   User.findOne(cond)
     .then(userFromDB => {
@@ -40,12 +43,12 @@ const getUser = (req, res) => {
 }
 
 const updateUser = (req, res, session) => {
-  const { courseId } = req.body
-
   if (!session) {
     res.status(401).json({ message: 'Unauthorized' })
     return
   }
+
+  const { courseId } = req.body
 
   User.findById(session.user.id)
     .then(foundUser => {
@@ -60,9 +63,7 @@ const updateUser = (req, res, session) => {
           })
           .catch(err => console.log('err : ', err))
       } else {
-        res
-          .status(400)
-          .json({ message: 'Cette formation a déjà été acheté' })
+        res.status(400).json({ message: 'Cette formation a déjà été acheté' })
       }
     })
     .catch(err => console.log('err : ', err))
