@@ -1,12 +1,13 @@
 import Link from 'next/link'
 import { signOut, useSession } from 'next-auth/react'
 
+import styles from '../styles/Navbar.module.css'
+
 const Navbar = () => {
   const { data: session, status } = useSession()
 
   const handleSignOut = e => {
     e.preventDefault()
-    console.log(window.location.origin)
     signOut({
       callbackUrl: '/login'
     })
@@ -15,7 +16,7 @@ const Navbar = () => {
   return (
     <nav>
       <h1>Up-Rugby</h1>
-      <ul className='menu'>
+      <ul className={`${status === 'loading' ? styles.loading : styles.loaded}`}>
         <li>
           <Link href='/courses'>
             <a>Formations</a>
@@ -41,7 +42,7 @@ const Navbar = () => {
           </li>
         )}
       </ul>
-      <ul className='auth'>
+      <ul className={`${status === 'loading' ? styles.loading : styles.loaded}`}>
         {/* If user is not logged in -> display login & sign up link*/}
         {status === 'unauthenticated' && !session && (
           <>

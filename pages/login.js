@@ -1,18 +1,15 @@
 import { useState } from 'react';
-import { useSession } from 'next-auth/react';
+import { getSession } from 'next-auth/react'
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-const Login = () => {
+const Login = props => {
 
     const router = useRouter();
 
-    const { data: session, status } = useSession();
-    // console.log({session, status})
-
     //User is already logged in -> redirect vers home
-    if (session) {
+    if (props.session) {
         router.push('/')
     }
 
@@ -103,3 +100,14 @@ const Login = () => {
 }
 
 export default Login;
+
+//Server side rendering
+export const getServerSideProps = async context => {
+    const session = await getSession(context)
+  
+    return {
+      props: {
+        session
+      }
+    }
+  }  
