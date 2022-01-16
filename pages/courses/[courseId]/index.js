@@ -30,27 +30,26 @@ const FormationDetails = props => {
         pathname: '/login',
         query
       })
-    }
-
-    //2. After payment, add formation to user
-    axios
-      .put('/api/users', {
-        userId: props.session.user.id,
-        courseId: props.course._id
-      })
-      .then(response => {
-        console.log('response: ', response.data)
-        //3. Redirect to payment confirmation page
-        query.courseId = props.course._id
-        query.firstChapterId = props.course.chapters[0]._id
-        query.firstLectureId = props.course.chapters[0].lectures[0]._id
-
-        router.push({
-          pathname: '/purchase-confirmation',
-          query
+    } else {
+      //2. After payment, add formation to user
+      axios
+        .put('/api/users', {
+          courseId: props.course._id
         })
-      })
-      .catch(err => console.log('err: ', err))
+        .then(response => {
+          console.log('response: ', response.data)
+          //3. Redirect to payment confirmation page
+          query.courseId = props.course._id
+          query.firstChapterId = props.course.chapters[0]._id
+          query.firstLectureId = props.course.chapters[0].lectures[0]._id
+
+          router.push({
+            pathname: '/purchase-confirmation',
+            query
+          })
+        })
+        .catch(err => console.log('err: ', err.response.data.message))
+    }
   }
 
   return (
@@ -85,16 +84,17 @@ const FormationDetails = props => {
                 <article>{props.course.overview}</article>
                 {/* Purchase button isn't display for ADMIN */}
                 {(!props.session || props.session.user.role !== 'ADMIN') && (
-                  props.course.isPurchased ? (
-                    <h1>Accèder à la formation</h1>
-                  ) : (
+                  // Display purchase button only if the course has not been purchased by user yet
+                  // (props.course.isPurchased ? (
+                  //   <h1>Accèder à la formation</h1>
+                  // ) : (
                   <button className={styles.buy} onClick={onPurchase}>
                     $ Acheter $
                   </button>
-
-                  )
-                  
-                )}
+                )
+                // )
+                // )
+                }
               </div>
             </div>
           </div>
@@ -121,18 +121,23 @@ export const getServerSideProps = async context => {
     headers
   })
 
-  const resUser = await axios.get(`${process.env.DOMAIN_URL}/api/users/`, {
-    params: { id: session.user.id },
-  })
-
   // Check if user already purchased this course. Pass the result as props
   const course = resCourse.data.courseFromDB
-  const purchasedCourses = resUser.data.userFromDB.purchasedCourses
 
-  if (purchasedCourses.indexOf(course._id) === -1){
-    course.isPurchased = false;
+  if (!session || session.user.role === 'ADMIN') {
+    course.isPurchased = false
   } else {
-    course.isPurchased = true;
+    const resUser = await axios.get(`${process.env.DOMAIN_URL}/api/users/`, {
+      params: { id: session.user.id }
+    })
+
+    const purchasedCourses = resUser.data.userFromDB.purchasedCourses
+
+    if (purchasedCourses.indexOf(course._id) === -1) {
+      course.isPurchased = false
+    } else {
+      course.isPurchased = true
+    }
   }
 
   return {

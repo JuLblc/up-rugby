@@ -15,7 +15,7 @@ export default async function handler (req, res) {
           getUser(req, res)
           break
         case 'PUT':
-          updateUser(req, res)
+          updateUser(req, res, session)
           break
       }
     })
@@ -39,19 +39,31 @@ const getUser = (req, res) => {
     .catch(err => console.log('err : ', err))
 }
 
-const updateUser = (req, res) => {
-  const { userId, courseId } = req.body
+const updateUser = (req, res, session) => {
+  const { courseId } = req.body
 
-  User.findById(userId)
+  if (!session) {
+    res.status(401).json({ message: 'Unauthorized' })
+    return
+  }
+
+  User.findById(session.user.id)
     .then(foundUser => {
-      foundUser.purchasedCourses.push(courseId)
+      // Check if course already in purchasedCourses
+      if (foundUser.purchasedCourses.indexOf(courseId) === -1) {
+        foundUser.purchasedCourses.push(courseId)
 
-      foundUser
-        .save()
-        .then(updatedUser => {
-          res.status(200).json({ updatedUser })
-        })
-        .catch(err => console.log('err : ', err))
+        foundUser
+          .save()
+          .then(updatedUser => {
+            res.status(201).json({ updatedUser })
+          })
+          .catch(err => console.log('err : ', err))
+      } else {
+        res
+          .status(400)
+          .json({ message: 'Cette formation a déjà été acheté' })
+      }
     })
     .catch(err => console.log('err : ', err))
 }
