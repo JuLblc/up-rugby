@@ -83,18 +83,15 @@ const FormationDetails = props => {
               <div>
                 <article>{props.course.overview}</article>
                 {/* Purchase button isn't display for ADMIN */}
-                {(!props.session || props.session.user.role !== 'ADMIN') && (
+                {(!props.session || props.session.user.role !== 'ADMIN') &&
                   // Display purchase button only if the course has not been purchased by user yet
-                  // (props.course.isPurchased ? (
-                  //   <h1>Accèder à la formation</h1>
-                  // ) : (
-                  <button className={styles.buy} onClick={onPurchase}>
-                    $ Acheter $
-                  </button>
-                )
-                // )
-                // )
-                }
+                  (props.course.isPurchased ? (
+                    <h1>Accèder à la formation</h1>
+                  ) : (
+                    <button className={styles.buy} onClick={onPurchase}>
+                      $ Acheter $
+                    </button>
+                  ))}
               </div>
             </div>
           </div>
