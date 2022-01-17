@@ -1,0 +1,9 @@
+.loaderContainer{
+    display: flex;
+    height: 100vh;
+}
+
+.loaderContainer img{
+    margin:auto;
+    width: 60px;
+}
