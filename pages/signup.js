@@ -3,15 +3,7 @@ import axios from 'axios'
 import { useState } from 'react'
 import { getSession } from 'next-auth/react'
 
-import { useRouter } from 'next/router'
-
 const SignUp = props => {
-  const router = useRouter()
-
-  //User is already logged in -> redirect vers home
-  if (props.session) {
-    router.push('/')
-  }
 
   const [formData, setFormData] = useState({
     email: '',
@@ -69,6 +61,16 @@ export default SignUp
 //Server side rendering
 export const getServerSideProps = async context => {
   const session = await getSession(context)
+
+  //User is already logged in -> redirect vers home
+  if (session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
 
   return {
     props: {

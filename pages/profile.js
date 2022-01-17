@@ -1,10 +1,25 @@
 import { getSession } from 'next-auth/react'
 
-const Profile = ({ data }) => {
+import Link from 'next/link'
+
+const Profile = props => {
   return (
     <>
       <h1>Mon compte</h1>
-      <h2>{data}</h2>
+      <ul>
+        <li onClick={e => console.log('click li')}>Mes informations</li>
+        <li>Mes formations</li>
+      </ul>
+
+      <form>
+        <h2>Mes informations</h2>
+        <p>add input etc... + bouton edit + gestion enabled / disabled</p>
+      </form>
+
+      <div>
+        <h2>Mes formations</h2>
+        <p>fetch user courses and display info</p>
+      </div>
     </>
   )
 }
@@ -27,8 +42,7 @@ export const getServerSideProps = async context => {
 
   return {
     props: {
-      session,
-      data: session ? `Hello ${session.user.firstName}` : ''
+      session
     }
   }
 }
