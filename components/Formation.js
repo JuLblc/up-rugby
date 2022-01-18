@@ -71,6 +71,7 @@ const Formation = props => {
   }
 
   const updateCourse = () => {
+    console.log("update")
     setDisableField(false)
   }
 
@@ -89,6 +90,7 @@ const Formation = props => {
   }
 
   const handleFormSubmit = e => {
+    console.log(e.target)
     e.preventDefault()
 
     setDisableField(true)

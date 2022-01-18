@@ -11,11 +11,8 @@ export default async function handler (req, res) {
   connectToDatabase()
     .then(() => {
       switch (method) {
-        case 'GET':
-          getUser(req, res, session)
-          break
         case 'PUT':
-          updateUser(req, res, session)
+          addCourseToUser(req, res, session)
           break
       }
     })
@@ -27,32 +24,29 @@ export default async function handler (req, res) {
     })
 }
 
-const getUser = (req, res, session) => {
+const addCourseToUser = (req, res, session) => {
   if (!session) {
     res.status(401).json({ message: 'Unauthorized' })
     return
   }
 
-  const cond = { _id: session.user.id }
+  const { courseId } = req.body
 
-  User.findOne(cond)
-    .then(userFromDB => {
-      res.status(200).json({ userFromDB })
-    })
-    .catch(err => console.log('err : ', err))
-}
+  User.findById(session.user.id)
+    .then(foundUser => {
+      // Check if course already in purchasedCourses
+      if (foundUser.purchasedCourses.indexOf(courseId) === -1) {
+        foundUser.purchasedCourses.push(courseId)
 
-const updateUser = (req, res, session) => {
-  if (!session) {
-    res.status(401).json({ message: 'Unauthorized' })
-    return
-  }
-
-  const userUpdate = req.body.userData
-
-  User.findByIdAndUpdate(userUpdate._id, userUpdate, { new: true })
-    .then(updatedUserFromDB => {
-      res.status(201).json({ updatedUserFromDB })
+        foundUser
+          .save()
+          .then(updatedUser => {
+            res.status(201).json({ updatedUser })
+          })
+          .catch(err => console.log('err : ', err))
+      } else {
+        res.status(400).json({ message: 'Cette formation a déjà été acheté' })
+      }
     })
     .catch(err => console.log('err : ', err))
 }

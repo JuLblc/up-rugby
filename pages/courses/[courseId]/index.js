@@ -33,7 +33,7 @@ const FormationDetails = props => {
     } else {
       //2. After payment, add formation to user
       axios
-        .put('/api/users', {
+        .put('/api/users/add-course-to-user', {
           courseId: props.course._id
         })
         .then(response => {

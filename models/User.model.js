@@ -20,6 +20,11 @@ const UserSchema = new mongoose.Schema({
   googleID: String,
   firstName: String,
   lastName: String,
+  club: String,
+  category:{
+    type: String,
+    enum: ['Joueur', 'Entraineur'],
+  },
   role: {
     type: String,
     enum: ['USER', 'ADMIN'],
