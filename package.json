@@ -8,6 +8,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tiptap/react": "^2.0.0-beta.105",
+    "@tiptap/starter-kit": "^2.0.0-beta.171",
     "@u-wave/react-vimeo": "^0.9.5",
     "axios": "^0.24.0",
     "bcryptjs": "^2.4.3",

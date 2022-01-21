@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 
 import Chapter from './Chapter'
+import Tiptap from './Tiptap'
 
 import styles from '../styles/Formation.module.css'
 
@@ -21,6 +22,7 @@ const Formation = props => {
   }
 
   const updateStateFromChild = newCourseData => {
+    console.log('newCourseData: ',newCourseData)
     setCourseData(newCourseData)
   }
 
@@ -71,7 +73,7 @@ const Formation = props => {
   }
 
   const updateCourse = () => {
-    console.log("update")
+    console.log('update')
     setDisableField(false)
   }
 
@@ -198,13 +200,17 @@ const Formation = props => {
         <label>
           {' '}
           Présentation:
-          <input
+          <Tiptap
+            courseData={courseData}
+            updateStateFromChild={updateStateFromChild}
+          />
+          {/* <input
             type='text'
             name='overview'
             value={courseData.overview}
             onChange={onChange}
             disabled={disableField}
-          />
+          /> */}
         </label>
 
         {courseData.chapters.map((chapter, chapterIdx) => (

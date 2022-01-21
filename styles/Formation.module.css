@@ -10,3 +10,8 @@
 .formationTitle {
     width:500px;
 }
+
+.tipTapContainer{
+    border: solid 1px darkgray;
+    padding: 5px;
+}
