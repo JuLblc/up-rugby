@@ -7,6 +7,7 @@ body {
   margin: 0;
   padding: 0;
 }
+
 .ProseMirror {
   border: solid 1px darkgray;
   padding: 5px;
@@ -44,7 +45,7 @@ img {
   height: auto;
 }
 
-blockquote {
+.ProseMirror blockquote {
   padding-left: 1rem;
   border-left: 2px solid rgba(#0d0d0d, 0.1);
 }

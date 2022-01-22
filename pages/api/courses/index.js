@@ -74,7 +74,6 @@ const getAllCourses = (req, res, session) => {
 }
 
 const getCourse = (req, res, session) => {
-  console.log('query: ', req.query)
   const id = req.query.id
 
   const cond = { _id: id }

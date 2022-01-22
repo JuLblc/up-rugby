@@ -73,7 +73,6 @@ const Formation = props => {
   }
 
   const updateCourse = () => {
-    console.log('update')
     setDisableField(false)
   }
 
@@ -96,6 +95,7 @@ const Formation = props => {
     e.preventDefault()
 
     setDisableField(true)
+
 
     if (!courseData.isPublished) {
       if (props.action === 'create') {
@@ -203,6 +203,7 @@ const Formation = props => {
           <Tiptap
             courseData={courseData}
             updateStateFromChild={updateStateFromChild}
+            disabled={disableField}
           />
           {/* <input
             type='text'

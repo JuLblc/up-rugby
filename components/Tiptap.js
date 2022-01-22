@@ -1,10 +1,11 @@
 import { useEditor, EditorContent } from '@tiptap/react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import StarterKit from '@tiptap/starter-kit'
 
 import styles from '../styles/Formation.module.css'
 
 const MenuBar = ({ editor }) => {
+  // console.log('editor menu bar: ', editor)
   if (!editor) {
     return null
   }
@@ -288,28 +289,42 @@ const Tiptap = props => {
   const [editorHtmlContent, setEditorHtmlContent] = useState(
     props.courseData.overview
   )
-
-  const updateParentState = () => {}
+  const [editableEditor, setEditableEditor] = useState(!props.disabled)
 
   const editor = useEditor({
     extensions: [StarterKit],
     content: editorHtmlContent,
+    editable: editableEditor,
+
     onUpdate: ({ editor }) => {
       setEditorHtmlContent(editor.getHTML())
-      
       const newCourseData = { ...props.courseData }
       newCourseData.overview = editor.getHTML()
-      console.log('editorHtmlContent: ', editor.getHTML())
-      console.log('newCourseData from Tiptap: ', newCourseData)
-
       props.updateStateFromChild(newCourseData)
     }
   })
 
+  useEffect(() => {
+    setEditableEditor(!props.disabled)
+
+    let $div = document.querySelector('.Formation_tipTapContainer__606S_ div')
+    if (props.disabled === true) {
+      $div.style.backgroundColor = '#f8f8f8'
+      $div.style.color = '#919191'
+    } else {
+      $div.style.backgroundColor = ''
+      $div.style.color = 'black'
+    }
+  }, [props.disabled])
+
+  const changeEditStatus = () => {
+    editor.setEditable(editableEditor)
+  }
+
   return (
     <div className={styles.tipTapContainer}>
       <MenuBar editor={editor} />
-      <EditorContent editor={editor} />
+      <EditorContent editor={editor} onFocus={changeEditStatus} />
     </div>
   )
 }
