@@ -5,6 +5,7 @@ import { getSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 
 import Link from 'next/link'
+import parse from 'html-react-parser';
 
 import styles from '../../../styles/FormationDetails.module.css'
 
@@ -81,7 +82,7 @@ const FormationDetails = props => {
             <div className={styles.overview}>
               <h2>Présentation</h2>
               <div>
-                <article>{props.course.overview}</article>
+                <article>{parse(props.course.overview)}</article>
                 {/* Purchase button isn't display for ADMIN */}
                 {(!props.session || props.session.user.role !== 'ADMIN') &&
                   // Display purchase button only if the course has not been purchased by user yet

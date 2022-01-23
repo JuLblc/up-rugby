@@ -40,18 +40,12 @@ h6 {
   border-radius: 0.5rem;
 }
 
-img {
-  max-width: 100%;
-  height: auto;
-}
-
 .ProseMirror blockquote {
   padding-left: 1rem;
   border-left: 2px solid rgba(#0d0d0d, 0.1);
 }
 
-hr {
-  border: none;
+.ProseMirror hr {
   border-top: 2px solid rgba(#0d0d0d, 0.1);
   margin: 2rem 0;
 }
