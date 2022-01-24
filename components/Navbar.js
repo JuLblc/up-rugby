@@ -1,17 +1,22 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { signOut, useSession } from 'next-auth/react'
-import { useMediaQuery } from 'react-responsive'
+import { useWindowDimensions } from '../hooks/useWindowDimensions'
+import { getDeviceTypeInfo } from '../utils/utilResponsive'
 
 import styles from '../styles/Navbar.module.css'
 
 const Navbar = () => {
   const { data: session, status } = useSession()
 
-  const isBigScreen = useMediaQuery({ minWidth: 1825 })
-  const isDesktopOrLaptop = useMediaQuery({ minWidth: 1225, maxWidth: 1824 })
-  const isTablet = useMediaQuery({ minWidth: 701, maxWidth: 1224 })
-  const isMobile = useMediaQuery({ maxWidth: 700 })
+  const { width, height } = useWindowDimensions()
+
+  const {
+    isMobile,
+    isTablet,
+    isDesktopOrLaptop,
+    isBigScreen
+  } = getDeviceTypeInfo(width, height)
 
   const displayMenu = () => {
     console.log('display menu')
@@ -154,6 +159,7 @@ const Navbar = () => {
         )}
 
         {/* Display burger button according to device */}
+        {/* {console.log(isMobile, isTablet, isDesktopOrLaptop, isBigScreen)} */}
         {(isTablet || isMobile) && (
           <li>
             <button
