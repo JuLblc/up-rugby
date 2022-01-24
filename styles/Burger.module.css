@@ -1,7 +1,6 @@
 .burger {
   width: 24px;
   height: 24px;
-  z-index: 20;
   display: none;
 }
 
@@ -10,6 +9,8 @@
     display: flex;
     justify-content: space-around;
     flex-flow: column nowrap;
+    position: relative;
+    z-index: 100;
   }
 
   .burger div {

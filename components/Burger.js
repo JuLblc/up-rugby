@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import styles from '../styles/Burger.module.css'
 
+import Sidebar from './Sidebar'
+
 const Burger = () => {
   const [open, setOpen] = useState(false)
 
@@ -11,7 +13,7 @@ const Burger = () => {
         <div />
         <div />
       </div>
-      {/* <RightNav open={open} /> */}
+      <Sidebar open={open} />
     </>
   )
 }
