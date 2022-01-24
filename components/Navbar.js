@@ -4,6 +4,8 @@ import { signOut, useSession } from 'next-auth/react'
 import { useWindowDimensions } from '../hooks/useWindowDimensions'
 import { getDeviceTypeInfo } from '../utils/utilResponsive'
 
+import Burger from './Burger'
+
 import styles from '../styles/Navbar.module.css'
 
 const Navbar = () => {
@@ -159,16 +161,16 @@ const Navbar = () => {
         )}
 
         {/* Display burger button according to device */}
-        {/* {console.log(isMobile, isTablet, isDesktopOrLaptop, isBigScreen)} */}
         {(isTablet || isMobile) && (
           <li>
-            <button
+            {/* <button
               className={styles.burger}
               type='button'
               onClick={displayMenu}
             >
               ≡
-            </button>
+            </button> */}
+            <Burger />
           </li>
         )}
       </ul>
