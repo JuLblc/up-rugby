@@ -33,7 +33,7 @@ const Lectures = props => {
               {chapter.lectures.map(lecture => {
                 return (
                   <Link
-                    href={`/courses/${props.course._id}/lecture/${lecture._id}?chapterId=${chapter._id}`}
+                    href={`/courses/${props.course.seoUrl}/lecture/${lecture.seoUrl}?chapter=${chapter.seoUrl}`}
                     key={lecture._id}
                   >
                     <a>{lecture.title}</a>
@@ -54,8 +54,7 @@ export default Lectures
 export const getServerSideProps = async context => {
   const session = await getSession(context)
   // console.log('session getServerSideProps FormationDetails: ', session)
-
-  const { chapterId, lectureId } = context.query
+  const { chapter, lectureUrl } = context.query
 
   const headers = {}
   if (context.req.headers.cookie) {
@@ -63,7 +62,7 @@ export const getServerSideProps = async context => {
   }
 
   const resCourse = await axios.get(`${process.env.DOMAIN_URL}/api/courses/`, {
-    params: { id: context.query.courseId },
+    params: { url: context.query.courseUrl },
     headers
   })
 
@@ -86,11 +85,11 @@ export const getServerSideProps = async context => {
   }
 
   // Display only the current lecture
-  const chapter = resCourse.data.courseFromDB.chapters.filter(
-    chapter => chapter._id === chapterId
+  const currentChapter = resCourse.data.courseFromDB.chapters.filter(
+    chapt => chapt.seoUrl === chapter
   )[0]
-  const lecture = chapter.lectures.filter(
-    lecture => lecture._id === lectureId
+  const lecture = currentChapter.lectures.filter(
+    lecture => lecture.seoUrl === lectureUrl
   )[0]
 
   return {

@@ -5,7 +5,7 @@ import { getSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 
 import Link from 'next/link'
-import parse from 'html-react-parser';
+import parse from 'html-react-parser'
 
 import styles from '../../../styles/FormationDetails.module.css'
 
@@ -40,9 +40,9 @@ const FormationDetails = props => {
         .then(response => {
           console.log('response: ', response.data)
           //3. Redirect to payment confirmation page
-          query.courseId = props.course._id
-          query.firstChapterId = props.course.chapters[0]._id
-          query.firstLectureId = props.course.chapters[0].lectures[0]._id
+          query.course = props.course.seoUrl
+          query.chapter = props.course.chapters[0].seoUrl
+          query.lecture = props.course.chapters[0].lectures[0].seoUrl
 
           router.push({
             pathname: '/purchase-confirmation',
@@ -68,7 +68,7 @@ const FormationDetails = props => {
                     {chapter.lectures.map(lecture => {
                       return (
                         <Link
-                          href={`/courses/${props.course._id}/lecture/${lecture._id}?chapterId=${chapter._id}`}
+                          href={`/courses/${props.course.seoUrl}/lecture/${lecture.seoUrl}?chapter=${chapter.seoUrl}`}
                           key={lecture._id}
                         >
                           <a>{lecture.title}</a>
@@ -88,7 +88,7 @@ const FormationDetails = props => {
                   // Display purchase button only if the course has not been purchased by user yet
                   (props.course.isPurchased ? (
                     <Link
-                      href={`/courses/${props.course._id}/lecture/${props.course.chapters[0].lectures[0]._id}?chapterId=${props.course.chapters[0]._id}`}
+                      href={`/courses/${props.course.seoUrl}/lecture/${props.course.chapters[0].lectures[0].seoUrl}?chapter=${props.course.chapters[0].seoUrl}`}
                     >
                       <a>Commencer</a>
                     </Link>
@@ -110,6 +110,7 @@ export default FormationDetails
 
 //Server side rendering
 export const getServerSideProps = async context => {
+  //console.log('context: ', context)
   const session = await getSession(context)
   // console.log('session getServerSideProps FormationDetails: ', session)
 
@@ -119,7 +120,7 @@ export const getServerSideProps = async context => {
   }
 
   const resCourse = await axios.get(`${process.env.DOMAIN_URL}/api/courses/`, {
-    params: { id: context.query.courseId },
+    params: { url: context.query.courseUrl },
     headers
   })
 

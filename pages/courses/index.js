@@ -35,6 +35,7 @@ const Courses = props => {
               key={course._id}
               courseId={course._id}
               title={course.title}
+              seoUrl={course.seoUrl}
               price={course.price}
               isPublished={course.isPublished}
               role={props.session?.user.role}

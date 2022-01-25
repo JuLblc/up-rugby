@@ -207,7 +207,7 @@ const MenuBar = ({ editor }) => {
 }
 
 const Tiptap = props => {
-  console.log('props Tiptap: ', props)
+  //console.log('props Tiptap: ', props)
 
   const [editorHtmlContent, setEditorHtmlContent] = useState(
     props.courseData.overview

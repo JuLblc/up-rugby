@@ -132,7 +132,7 @@ const Profile = props => {
           <h2>Mes formations</h2>
           {props.purchasedCourses.length > 0 ? (
             props.purchasedCourses.map(course => (
-              <Link href={`/courses/${course._id}`} key={course._id}>
+              <Link href={`/courses/${course.seoUrl}`} key={course._id}>
                 <a>{course.title}</a>
               </Link>
             ))

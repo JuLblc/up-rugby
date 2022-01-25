@@ -56,7 +56,7 @@ export const getServerSideProps = async context => {
   }
 
   const res = await axios.get(`${process.env.DOMAIN_URL}/api/courses/`, {
-    params: { id: context.query.courseId },
+    params: { url: context.query.courseUrl },
     headers
   })
 

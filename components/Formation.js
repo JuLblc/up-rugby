@@ -17,12 +17,27 @@ const Formation = props => {
   const [disableField, setDisableField] = useState(props.disable)
 
   const onChange = e => {
-    console.log(e.target)
+    //console.log(e.target)
     setCourseData({ ...courseData, [e.target.name]: e.target.value })
   }
 
+  const toSeoUrl = url => {
+    //console.log('initial Url: ', url)
+    return url
+      .toString() // Convert to string
+      .normalize('NFD') // Change diacritics
+      .replace(/[\u0300-\u036f]/g, '') // Remove illegal characters
+      .replace(/\s+/g, '-') // Change whitespace to dashes
+      .toLowerCase() // Change to lowercase
+      .replace(/&/g, '-and-') // Replace ampersand
+      .replace(/[^a-z0-9\-]/g, '') // Remove anything that is not a letter, number or dash
+      .replace(/-+/g, '-') // Remove duplicate dashes
+      .replace(/^-*/, '') // Remove starting dashes
+      .replace(/-*$/, '') // Remove trailing dashes
+  }
+
   const updateStateFromChild = newCourseData => {
-    console.log('newCourseData: ',newCourseData)
+    //console.log('newCourseData: ', newCourseData)
     setCourseData(newCourseData)
   }
 
@@ -36,9 +51,11 @@ const Formation = props => {
     const newCourseData = { ...courseData }
     newCourseData.chapters.push({
       title: '',
+      seoUrl:'',
       lectures: [
         {
           title: '',
+          seoUrl:'',
           description: '',
           url: ''
         }
@@ -56,6 +73,7 @@ const Formation = props => {
     const newCourseData = { ...courseData }
     newCourseData.chapters[idx].lectures.push({
       title: '',
+      seoUrl:'',
       description: '',
       url: ''
     })
@@ -91,20 +109,24 @@ const Formation = props => {
   }
 
   const handleFormSubmit = e => {
-    console.log(e.target)
+    //console.log(e.target)
     e.preventDefault()
 
-    setDisableField(true)
+    //Set Url for SEO
+    const newCourseData = { ...courseData }
+    //console.log('new url: ',toSeoUrl(courseData.title))
+    newCourseData.url = toSeoUrl(courseData.title)
 
+    setDisableField(true)
 
     if (!courseData.isPublished) {
       if (props.action === 'create') {
         axios
-          .post('/api/courses', { course: courseData })
+          .post('/api/courses', { course: newCourseData })
           .then(response => {
             console.log('response: ', response.data)
             router.push(
-              `/courses/update-course/${response.data.newCourseFromDB._id}`
+              `/courses/update-course/${response.data.newCourseFromDB.seoUrl}`
             )
           })
           .catch(err => console.log('err: ', err))
@@ -112,11 +134,11 @@ const Formation = props => {
 
       if (props.action === 'update') {
         axios
-          .put('/api/courses', { course: courseData })
+          .put('/api/courses', { course: newCourseData })
           .then(response => {
-            console.log('response: ', response.data)
+            //console.log('response: ', response.data)
             router.push(
-              `/courses/update-course/${response.data.updatedCourseFromDB._id}`
+              `/courses/update-course/${response.data.updatedCourseFromDB.seoUrl}`
             )
           })
           .catch(err => console.log('err: ', err))

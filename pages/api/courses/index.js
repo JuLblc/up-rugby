@@ -14,7 +14,7 @@ export default async function handler (req, res) {
     .then(() => {
       switch (method) {
         case 'GET':
-          if (!query.id) {
+          if (!query.url) {
             getAllCourses(req, res, session)
             break
           } else {
@@ -74,9 +74,10 @@ const getAllCourses = (req, res, session) => {
 }
 
 const getCourse = (req, res, session) => {
-  const id = req.query.id
+  
+  const seoUrl = req.query.url
 
-  const cond = { _id: id }
+  const cond = { seoUrl }
   if (!session || session.user.role !== 'ADMIN') {
     cond.isPublished = true 
   }
@@ -93,6 +94,7 @@ const updateCourse = (req, res, session) => {
     res.status(401).json({ message: 'Unauthorized' })
     return
   }
+
 
   const id = req.body.course._id
   const updatedCourse = req.body.course

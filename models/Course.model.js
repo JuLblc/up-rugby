@@ -1,23 +1,20 @@
 import mongoose from 'mongoose';
 
 const CourseSchema = new mongoose.Schema({
-    // allowedUsers: [
-    //     {
-    //         type: mongoose.Schema.Types.ObjectId,
-    //         ref: 'User'
-    //     }
-    // ],
     overview: String,
     title: String,
+    seoUrl:String,
     category: String,
     price:Number,
     image: String,
     chapters: [
         {
             title: String,
+            seoUrl:String,
             lectures: [
                 {
                     title: String,
+                    seoUrl:String,
                     description: String,
                     url: String,
                 }

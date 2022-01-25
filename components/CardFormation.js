@@ -15,12 +15,12 @@ const CardFormation = props => {
         </p>
       </div>
       <div className={styles.linkContainer}>
-        <Link href={`/courses/${props.courseId}`}>
+        <Link href={`/courses/${props.seoUrl}`}>
           <a className={styles.link}>Détails</a>
         </Link>
         {/* if course is a draft, it still can be updated by ADMIN only */}
         {props.role === 'ADMIN' && !props.isPublished && (
-          <Link href={`/courses/update-course/${props.courseId}`}>
+          <Link href={`/courses/update-course/${props.seoUrl}`}>
              <a className={styles.link}>Modifier</a>
           </Link>
         )}
