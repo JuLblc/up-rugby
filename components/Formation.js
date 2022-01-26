@@ -6,6 +6,8 @@ import { useRouter } from 'next/router'
 import Chapter from './Chapter'
 import Tiptap from './Tiptap'
 
+import { toSeoUrl } from '../utils/utilSeoUrl'
+
 import styles from '../styles/Formation.module.css'
 
 const Formation = props => {
@@ -18,21 +20,6 @@ const Formation = props => {
 
   const onChange = e => {
     setCourseData({ ...courseData, [e.target.name]: e.target.value })
-  }
-
-  const toSeoUrl = url => {
-    //console.log('initial Url: ', url)
-    return url
-      .toString() // Convert to string
-      .normalize('NFD') // Change diacritics
-      .replace(/[\u0300-\u036f]/g, '') // Remove illegal characters
-      .replace(/\s+/g, '-') // Change whitespace to dashes
-      .toLowerCase() // Change to lowercase
-      .replace(/&/g, '-and-') // Replace ampersand
-      .replace(/[^a-z0-9\-]/g, '') // Remove anything that is not a letter, number or dash
-      .replace(/-+/g, '-') // Remove duplicate dashes
-      .replace(/^-*/, '') // Remove starting dashes
-      .replace(/-*$/, '') // Remove trailing dashes
   }
 
   const updateStateFromChild = newCourseData => {
@@ -117,8 +104,13 @@ const Formation = props => {
 
     //Set Url for SEO
     const newCourseData = { ...courseData }
-    //console.log('new url: ',toSeoUrl(courseData.title))
     newCourseData.seoUrl = toSeoUrl(courseData.title)
+    newCourseData.chapters.map(chapter => {
+      chapter.seoUrl = toSeoUrl(chapter.title)
+      chapter.lectures.map(lecture => {
+        lecture.seoUrl = toSeoUrl(lecture.title)
+      })
+    })
 
     setDisableField(true)
 
@@ -172,7 +164,6 @@ const Formation = props => {
   return (
     <>
       <form className={styles.form} onSubmit={handleFormSubmit}>
-
         <label>
           {' '}
           Titre Formation:
