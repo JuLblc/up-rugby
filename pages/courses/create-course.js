@@ -17,17 +17,18 @@ const NewCourse = props => {
 
   const emptyCourse = {
     title: '',
-    url: '',
+    seoUrl: '',
     overview: '',
     category: '',
     price: '',
-    //image: '',
     chapters: [
       {
         title: '',
+        seoUrl:'',
         lectures: [
           {
             title: '',
+            seoUrl:'',
             description: '',
             url: ''
           }

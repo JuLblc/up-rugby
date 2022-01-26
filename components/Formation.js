@@ -17,7 +17,6 @@ const Formation = props => {
   const [disableField, setDisableField] = useState(props.disable)
 
   const onChange = e => {
-    //console.log(e.target)
     setCourseData({ ...courseData, [e.target.name]: e.target.value })
   }
 
@@ -37,7 +36,12 @@ const Formation = props => {
   }
 
   const updateStateFromChild = newCourseData => {
-    //console.log('newCourseData: ', newCourseData)
+    setCourseData(newCourseData)
+  }
+
+  const onChangeTipTap = newOverview => {
+    const newCourseData = { ...courseData }
+    newCourseData.overview = newOverview
     setCourseData(newCourseData)
   }
 
@@ -51,11 +55,11 @@ const Formation = props => {
     const newCourseData = { ...courseData }
     newCourseData.chapters.push({
       title: '',
-      seoUrl:'',
+      seoUrl: '',
       lectures: [
         {
           title: '',
-          seoUrl:'',
+          seoUrl: '',
           description: '',
           url: ''
         }
@@ -73,7 +77,7 @@ const Formation = props => {
     const newCourseData = { ...courseData }
     newCourseData.chapters[idx].lectures.push({
       title: '',
-      seoUrl:'',
+      seoUrl: '',
       description: '',
       url: ''
     })
@@ -109,13 +113,12 @@ const Formation = props => {
   }
 
   const handleFormSubmit = e => {
-    //console.log(e.target)
     e.preventDefault()
 
     //Set Url for SEO
     const newCourseData = { ...courseData }
     //console.log('new url: ',toSeoUrl(courseData.title))
-    newCourseData.url = toSeoUrl(courseData.title)
+    newCourseData.seoUrl = toSeoUrl(courseData.title)
 
     setDisableField(true)
 
@@ -169,6 +172,7 @@ const Formation = props => {
   return (
     <>
       <form className={styles.form} onSubmit={handleFormSubmit}>
+
         <label>
           {' '}
           Titre Formation:
@@ -223,8 +227,8 @@ const Formation = props => {
           {' '}
           Présentation:
           <Tiptap
-            courseData={courseData}
-            updateStateFromChild={updateStateFromChild}
+            overview={courseData.overview}
+            onChangeTipTap={onChangeTipTap}
             disabled={disableField}
           />
           {/* <input
