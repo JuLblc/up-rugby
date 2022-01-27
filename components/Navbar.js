@@ -20,10 +20,6 @@ const Navbar = () => {
     isBigScreen
   } = getDeviceTypeInfo(width, height)
 
-  const displayMenu = () => {
-    console.log('display menu')
-  }
-
   const handleSignOut = e => {
     e.preventDefault()
     signOut({

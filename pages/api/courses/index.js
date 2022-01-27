@@ -55,6 +55,7 @@ const addCourse = (req, res, session) => {
   newCourse
     .save()
     .then(newCourseFromDB => {
+      
       res.status(200).json({ newCourseFromDB })
     })
     .catch(err => console.log('err : ', err))

@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 
 import Chapter from './Chapter'
+import Upload from './Upload'
 import Tiptap from './Tiptap'
 
 import { toSeoUrl } from '../utils/utilSeoUrl'
@@ -36,6 +37,28 @@ const Formation = props => {
     const newCourseData = { ...courseData }
     newCourseData.chapters[idx][e.target.name] = e.target.value
     setCourseData(newCourseData)
+  }
+
+  const onChangeUpload = formData => {
+    console.log('formData: ', formData)
+    console.log('axios request post to upload file to api')
+
+    const config = {
+      headers: { 'content-type': 'multipart/form-data' },
+      onUploadProgress: event => {
+        console.log(
+          `Current progress:`,
+          Math.round((event.loaded * 100) / event.total)
+        )
+      }
+    }
+
+    axios
+      .post('/api/uploads', formData, config)
+      .then(response => {
+        console.log('response: ', response.data)
+      })
+      .catch(err => console.log('err: ', err))
   }
 
   const addChapter = () => {
@@ -139,26 +162,6 @@ const Formation = props => {
           .catch(err => console.log('err: ', err))
       }
     }
-
-    // if (courseData.isPublished) {
-    //   // Créer un nouveau cours avec ces infos + isPublished = false
-    //   console.log('creation copy draft')
-
-    //   const newCourseData = { ...courseData }
-    //   delete newCourseData._id
-    //   newCourseData.isPublished = false
-    //   setCourseData(newCourseData)
-
-    //   axios
-    //     .post('/api/courses', { course: newCourseData })
-    //     .then(response => {
-    //       console.log('1. response: ', response.data)
-    //       router.push(
-    //         `/courses/update-course/${response.data.newCourseFromDB._id}`
-    //       )
-    //     })
-    //     .catch(err => console.log('err: ', err))
-    // }
   }
 
   return (
@@ -181,13 +184,6 @@ const Formation = props => {
           <label>
             {' '}
             Catégorie:
-            {/* <input
-              type='text'
-              name='category'
-              value={courseData.category}
-              onChange={onChange}
-              disabled={disableField}
-            /> */}
             <select
               name='category'
               value={courseData.category}
@@ -222,13 +218,6 @@ const Formation = props => {
             onChangeTipTap={onChangeTipTap}
             disabled={disableField}
           />
-          {/* <input
-            type='text'
-            name='overview'
-            value={courseData.overview}
-            onChange={onChange}
-            disabled={disableField}
-          /> */}
         </label>
 
         {courseData.chapters.map((chapter, chapterIdx) => (
@@ -253,9 +242,17 @@ const Formation = props => {
           Ajouter Chapitre
         </button>
 
+        <Upload
+          label='Upload File(s)'
+          onChange={onChangeUpload}
+          uploadFileName='theFiles'
+        />
+
         {/*  Display 'save' button until course is save in DB*/}
         {props.action === 'create' && (
-          <button type='submit'>Enregistrer</button>
+          <button type='submit' className={styles.saveBtn}>
+            Enregistrer
+          </button>
         )}
 
         {props.action === 'update' && (
@@ -274,7 +271,9 @@ const Formation = props => {
             ) : (
               <>
                 {/* Fields are enabled and buttons are displayed */}
-                <button type='submit'>Enregistrer</button>
+                <button type='submit' className={styles.saveBtn}>
+                  Enregistrer
+                </button>
               </>
             )}
 
