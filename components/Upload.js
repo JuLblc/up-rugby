@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { useRef } from 'react'
 
 import styles from '../styles/Upload.module.css'
@@ -10,19 +11,27 @@ const Upload = props => {
     fileInputRef.current?.click()
   }
 
-  const onChangeHandler = event => {
-    console.log('event: ', event.target)
+  const onChangeHandler = async event => {
     if (!event.target.files?.length) {
       return
     }
 
+    const fileInput = event.currentTarget
+    
     const formData = new FormData()
+    formData.append('file', fileInput.files[0])
+    formData.append('upload_preset', 'uprugby-uploads')
+    
+    const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/raw/upload`
 
-    Array.from(event.target.files).forEach(file => {
-      formData.append(event.target.name, file)
-    })
+    axios
+      .post(url, formData)
+      .then(response => {
+        console.log('response: ', response)
+      })
+      .catch(err => console.log(err))
 
-    props.onChange(formData);
+    // props.onChange(formData)
 
     // formRef.current?.reset();
   }

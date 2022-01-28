@@ -37,7 +37,7 @@ const NewCourse = props => {
     ],
     isPublished: false
   }
-
+  
   return (
     <>
       {props.session && props.session.user.role === 'ADMIN' && (

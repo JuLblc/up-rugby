@@ -40,25 +40,9 @@ const Formation = props => {
   }
 
   const onChangeUpload = formData => {
-    console.log('formData: ', formData)
-    console.log('axios request post to upload file to api')
+    // console.log('formData: ', formData)
+    // console.log('axios request post to upload file to api')
 
-    const config = {
-      headers: { 'content-type': 'multipart/form-data' },
-      onUploadProgress: event => {
-        console.log(
-          `Current progress:`,
-          Math.round((event.loaded * 100) / event.total)
-        )
-      }
-    }
-
-    axios
-      .post('/api/uploads', formData, config)
-      .then(response => {
-        console.log('response: ', response.data)
-      })
-      .catch(err => console.log('err: ', err))
   }
 
   const addChapter = () => {
@@ -243,9 +227,9 @@ const Formation = props => {
         </button>
 
         <Upload
-          label='Upload File(s)'
+          label='Ajouter fichier'
           onChange={onChangeUpload}
-          uploadFileName='theFiles'
+          uploadFileName='file'
         />
 
         {/*  Display 'save' button until course is save in DB*/}
