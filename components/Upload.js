@@ -17,25 +17,42 @@ const Upload = props => {
     }
 
     const fileInput = event.currentTarget
-    
-    const formData = new FormData()
-    formData.append('file', fileInput.files[0])
+    console.log('fileInput: ', fileInput.files)
 
-    axios
-      .post("/api/uploads", formData)
-      .then(response => {
-        console.log('response: ', response.data)
-      })
-      .catch(err => console.log(err))
+    // const formData = new FormData()
+    // formData.append('file', fileInput.files[0])
+    props.onChange(fileInput.files[0])
 
-    // props.onChange(formData)
+    const newCourseData = { ...props.courseData }
+    newCourseData.attachements.push({ fileName: fileInput.files[0].name })
+    props.updateStateFromChild(newCourseData)
+
+    // axios
+    //   .post('/api/uploads', formData)
+    //   .then(response => {
+    //     console.log('response: ', response.data)
+    //     const newCourseData = { ...props.courseData }
+    //     newCourseData.attachements.push(response.data.uploadedFile.secure_url)
+    //     props.updateStateFromChild(newCourseData)
+    //   })
+    //   .catch(err => console.log(err))
 
     // formRef.current?.reset();
   }
 
   return (
     <div className={styles.uploadContainer} ref={formRef}>
-      <button type='button' onClick={onClickHandler}>
+      {/* Display exisiting attachements */}
+      {props.courseData.attachements.map(file => (
+        <div key={file.fileName}>
+          <p>{file.fileName}</p>
+          <button type='button' disabled={props.disabled}>
+            Supp fichier
+          </button>
+        </div>
+      ))}
+
+      <button type='button' onClick={onClickHandler} disabled={props.disabled}>
         {props.label}
       </button>
       <input

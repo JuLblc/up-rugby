@@ -20,24 +20,25 @@ const NewCourse = props => {
     seoUrl: '',
     overview: '',
     category: '',
-    price: '',
+    price: 0,
     chapters: [
       {
         title: '',
-        seoUrl:'',
+        seoUrl: '',
         lectures: [
           {
             title: '',
-            seoUrl:'',
+            seoUrl: '',
             description: '',
             url: ''
           }
         ]
       }
     ],
-    isPublished: false
+    isPublished: false,
+    attachements: []
   }
-  
+
   return (
     <>
       {props.session && props.session.user.role === 'ADMIN' && (

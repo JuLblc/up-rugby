@@ -27,6 +27,10 @@ const CourseSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    attachements:[{
+        fileName: String,
+        url: String
+    }]
 })
 
 module.exports = mongoose.models.Course || mongoose.model('Course', CourseSchema)

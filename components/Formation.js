@@ -18,6 +18,7 @@ const Formation = props => {
 
   const [courseData, setCourseData] = useState(props.courseContent)
   const [disableField, setDisableField] = useState(props.disable)
+  const [fileInput, setFileInput] = useState([])
 
   const onChange = e => {
     setCourseData({ ...courseData, [e.target.name]: e.target.value })
@@ -39,9 +40,10 @@ const Formation = props => {
     setCourseData(newCourseData)
   }
 
-  const onChangeUpload = formData => {
-    // console.log('formData: ', formData)
-    // console.log('axios request post to upload file to api')
+  const onChangeUpload = file => {
+    const newFileInputs = [...fileInput]
+    newFileInputs.push(file)
+    setFileInput(newFileInputs)
   }
 
   const addChapter = () => {
@@ -120,31 +122,53 @@ const Formation = props => {
 
     setDisableField(true)
 
-    if (!courseData.isPublished) {
-      if (props.action === 'create') {
-        axios
-          .post('/api/courses', { course: newCourseData })
-          .then(response => {
-            console.log('response: ', response.data)
-            router.push(
-              `/courses/update-course/${response.data.newCourseFromDB.seoUrl}`
-            )
-          })
-          .catch(err => console.log('err: ', err))
-      }
+    const formData = new FormData()
 
-      if (props.action === 'update') {
-        axios
-          .put('/api/courses', { course: newCourseData })
-          .then(response => {
-            //console.log('response: ', response.data)
-            router.push(
-              `/courses/update-course/${response.data.updatedCourseFromDB.seoUrl}`
-            )
-          })
-          .catch(err => console.log('err: ', err))
-      }
+    for (const file of fileInput) {
+      formData.append('file', file)
     }
+
+    // 1. Files upload to Cloudinary & get secure urls
+    axios
+      .post('/api/uploads', formData)
+      .then(response => {
+        // console.log('response: ', response.data)
+        newCourseData.attachements.map((file, idx) => {
+          file.url = response.data.secureUrls[idx]
+        })
+        // console.log('newCourseData: ', newCourseData)
+
+        //2. Save in DB
+        if (!courseData.isPublished) {
+          if (props.action === 'create') {
+            axios
+              .post('/api/courses', { course: newCourseData })
+              .then(response => {
+                console.log('response: ', response.data)
+                router.push(
+                  `/courses/update-course/${response.data.newCourseFromDB.seoUrl}`
+                )
+              })
+              .catch(err => console.log('err: ', err))
+          }
+    
+          if (props.action === 'update') {
+            axios
+              .put('/api/courses', { course: newCourseData })
+              .then(response => {
+                //console.log('response: ', response.data)
+                router.push(
+                  `/courses/update-course/${response.data.updatedCourseFromDB.seoUrl}`
+                )
+              })
+              .catch(err => console.log('err: ', err))
+          }
+        }
+
+      })
+      .catch(err => console.log(err))
+
+    
   }
 
   return (
@@ -227,8 +251,12 @@ const Formation = props => {
 
         <Upload
           label='Ajouter fichier'
+          courseData={courseData}
+          // formData={formData}
+          updateStateFromChild={updateStateFromChild}
           onChange={onChangeUpload}
           uploadFileName='file'
+          disabled={disableField}
         />
 
         {/*  Display 'save' button until course is save in DB*/}

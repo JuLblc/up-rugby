@@ -12,18 +12,34 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_SECRET
 })
 
-handler.post(upload.single('file'), async (req, res) => {
-  console.log(req.file)
-  if (req.file) {
-    cloudinary.uploader
-      .upload(req.file.path, {
-        public_id: req.file.originalname,
+const uploads = async file => {
+
+  return new Promise(resolve => {
+    cloudinary.uploader.upload(
+      file.path,
+      {
+        public_id: file.originalname,
         folder: '/uprugby-uploads',
         resource_type: 'raw'
-      })
-      .then(uploadedFile => res.status(200).json({ uploadedFile }))
-      .catch(err => console.log(err))
+      },
+      function (error, result) {
+        resolve(result.secure_url)
+      }
+    )
+  })
+}
+
+handler.post(upload.array('file'), async (req, res) => {
+  const uploader = async file => await uploads(file)
+
+  const secureUrls = []
+  const files = req.files
+  for (const file of files) {
+    const secureUrl = await uploader(file)
+    secureUrls.push(secureUrl)
   }
+
+  res.status(200).json({ secureUrls })
 })
 
 export const config = {
