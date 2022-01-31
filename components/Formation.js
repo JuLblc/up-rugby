@@ -42,7 +42,6 @@ const Formation = props => {
   const onChangeUpload = formData => {
     // console.log('formData: ', formData)
     // console.log('axios request post to upload file to api')
-
   }
 
   const addChapter = () => {

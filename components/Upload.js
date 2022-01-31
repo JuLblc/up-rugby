@@ -20,14 +20,11 @@ const Upload = props => {
     
     const formData = new FormData()
     formData.append('file', fileInput.files[0])
-    formData.append('upload_preset', 'uprugby-uploads')
-    
-    const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/raw/upload`
 
     axios
-      .post(url, formData)
+      .post("/api/uploads", formData)
       .then(response => {
-        console.log('response: ', response)
+        console.log('response: ', response.data)
       })
       .catch(err => console.log(err))
 
