@@ -153,13 +153,11 @@ const Formation = (props) => {
     axios
       .post("/api/uploads", formData)
       .then((response) => {
-        console.log("response: ", response.data);
+        //console.log("response: ", response.data);
 
         newCourseData.attachements
           .filter((file) => file.url === undefined)
           .map((file, idx) => (file.url = response.data.secureUrls[idx]));
-
-        console.log("newCourseData: ", newCourseData);
 
         //2. Save in DB
         if (!courseData.isPublished) {

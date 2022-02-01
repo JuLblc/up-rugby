@@ -1,3 +1,8 @@
-.uploadContainer input{
-    display: none;
+.uploadContainer input {
+  display: none;
+}
+
+.uploadContainer p {
+  display: inline-block;
+  margin: 0;
 }
