@@ -1,58 +1,50 @@
-import axios from 'axios'
-import { useRef } from 'react'
+import axios from "axios";
+import { useRef } from "react";
 
-import styles from '../styles/Upload.module.css'
+import styles from "../styles/Upload.module.css";
 
-const Upload = props => {
-  const fileInputRef = useRef(null)
-  const formRef = useRef(null)
+const Upload = (props) => {
+  const fileInputRef = useRef(null);
+  const divRef = useRef(null);
 
   const onClickHandler = () => {
-    fileInputRef.current?.click()
-  }
+    fileInputRef.current?.click();
+  };
 
-  const onChangeHandler = async event => {
+  const onChangeHandler = async (event) => {
     if (!event.target.files?.length) {
-      return
+      return;
     }
 
-    const fileInput = event.currentTarget
-    console.log('fileInput: ', fileInput.files)
+    const fileInput = event.currentTarget;
+    console.log("fileInput: ", fileInput.files);
 
-    // const formData = new FormData()
-    // formData.append('file', fileInput.files[0])
-    props.onChange(fileInput.files[0])
+    props.onChange(fileInput.files[0]);
 
-    const newCourseData = { ...props.courseData }
-    newCourseData.attachements.push({ fileName: fileInput.files[0].name })
-    props.updateStateFromChild(newCourseData)
+    const newCourseData = { ...props.courseData };
+    newCourseData.attachements.push({ fileName: fileInput.files[0].name });
+    props.updateStateFromChild(newCourseData);
 
-    // axios
-    //   .post('/api/uploads', formData)
-    //   .then(response => {
-    //     console.log('response: ', response.data)
-    //     const newCourseData = { ...props.courseData }
-    //     newCourseData.attachements.push(response.data.uploadedFile.secure_url)
-    //     props.updateStateFromChild(newCourseData)
-    //   })
-    //   .catch(err => console.log(err))
-
-    // formRef.current?.reset();
-  }
+    event.target.value = null;
+  };
 
   return (
-    <div className={styles.uploadContainer} ref={formRef}>
+    <div className={styles.uploadContainer} ref={divRef}>
       {/* Display exisiting attachements */}
-      {props.courseData.attachements.map(file => (
+      {props.courseData.attachements.map((file, idx) => (
         <div key={file.fileName}>
           <p>{file.fileName}</p>
-          <button type='button' disabled={props.disabled}>
-            Supp fichier
+          <button
+            type="button"
+            disabled={props.disabled}
+            onClick={() => props.removeAttachement(idx, file)}
+          >
+            Supp fichier!
           </button>
         </div>
       ))}
 
-      <button type='button' onClick={onClickHandler} disabled={props.disabled}>
+      <button type="button" onClick={onClickHandler} disabled={props.disabled}>
         {props.label}
       </button>
       <input
@@ -61,10 +53,10 @@ const Upload = props => {
         name={props.uploadFileName}
         onChange={onChangeHandler}
         ref={fileInputRef}
-        type='file'
+        type="file"
       />
     </div>
-  )
-}
+  );
+};
 
-export default Upload
+export default Upload;
