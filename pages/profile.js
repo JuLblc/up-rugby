@@ -2,15 +2,21 @@ import axios from 'axios'
 import { getSession } from 'next-auth/react'
 import { useState } from 'react'
 
+import { getCourses } from '../apiCall'
+import { getUser } from '../apiCall'
+
 import Link from 'next/link'
 
 import styles from '../styles/Profile.module.css'
 
 const Profile = props => {
-
   // Prevent to be undefined
-  !props.userFromDB.firstName ? (props.userFromDB.firstName = '') : props.userFromDB.firstName
-  !props.userFromDB.lastName ? (props.userFromDB.lastName = '') : props.userFromDB.lastName
+  !props.userFromDB.firstName
+    ? (props.userFromDB.firstName = '')
+    : props.userFromDB.firstName
+  !props.userFromDB.lastName
+    ? (props.userFromDB.lastName = '')
+    : props.userFromDB.lastName
   !props.userFromDB.club ? (props.userFromDB.club = '') : props.userFromDB.club
 
   const [displayInfo, setDisplayInfo] = useState(true)
@@ -150,7 +156,6 @@ export default Profile
 //Server side rendering
 export const getServerSideProps = async context => {
   const session = await getSession(context)
-  // console.log('session getServer Profile: ', session)
 
   if (!session) {
     return {
@@ -161,35 +166,19 @@ export const getServerSideProps = async context => {
     }
   }
 
-  const headers = {}
-  if (context.req.headers.cookie) {
-    headers.cookie = context.req.headers.cookie
-  }
-
-  const resUser = await axios.get(`${process.env.DOMAIN_URL}/api/users/`, {
-    headers
-  })
+  const resUser = await getUser(context)
 
   const userFromDB = resUser.data.userFromDB
   const purchasedCoursesId = resUser.data.userFromDB.purchasedCourses
-  // console.log('purchasedCoursesId: ', purchasedCoursesId)
-  // soit tableau de promesses - 1 requete par id => si 10 id => bcp de requete
 
-  /* soit on fetch toutes les formations et on filtre sur celles achetées */
   let purchasedCourses = []
   if (purchasedCoursesId) {
-    const resCourses = await axios.get(
-      `${process.env.DOMAIN_URL}/api/courses`,
-      {
-        headers
-      }
-    )
+    const resCourses = await getCourses(context)
 
     purchasedCourses = resCourses.data.coursesFromDB.filter(course =>
       purchasedCoursesId.includes(course._id)
     )
   }
-  /* ------------------------------------------------------------------------------- */
 
   return {
     props: {

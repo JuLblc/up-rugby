@@ -1,6 +1,6 @@
-import axios from 'axios'
 import { getSession } from 'next-auth/react'
 import Link from 'next/link'
+import { getCourses } from '../../apiCall'
 
 import CardFormation from '../../components/CardFormation'
 
@@ -52,18 +52,8 @@ export default Courses
 //Server side rendering
 export const getServerSideProps = async context => {
   const session = await getSession(context)
-  // console.log('session getServer Courses: ', session)
-  //console.log('contextgetServer Courses: ', context)
-  // console.log('req.headers.cookie Courses: ', context.req.headers.cookie)
 
-  const headers = {}
-  if (context.req.headers.cookie) {
-    headers.cookie = context.req.headers.cookie
-  }
-
-  const res = await axios.get(`${process.env.DOMAIN_URL}/api/courses`, {
-    headers
-  })
+  const res = await getCourses(context)
 
   return {
     props: {

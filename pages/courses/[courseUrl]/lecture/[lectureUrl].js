@@ -1,15 +1,15 @@
-import axios from 'axios'
-
 import { getSession } from 'next-auth/react'
 
 import Vimeo from '@u-wave/react-vimeo'
+
+import { getCourses } from '../../../../apiCall'
+import { getUser } from '../../../../apiCall'
 
 import SideCourseChapter from '../../../../components/SideCourseChapter'
 
 import styles from '../../../../styles/Lectures.module.css'
 
 const Lectures = props => {
-  // console.log('props lectures: ', props)
 
   return (
     <div className={styles.container}>
@@ -34,18 +34,10 @@ export default Lectures
 //Server side rendering
 export const getServerSideProps = async context => {
   const session = await getSession(context)
-  // console.log('session getServerSideProps FormationDetails: ', session)
   const { chapter, lectureUrl } = context.query
 
-  const headers = {}
-  if (context.req.headers.cookie) {
-    headers.cookie = context.req.headers.cookie
-  }
-
-  const resCourse = await axios.get(`${process.env.DOMAIN_URL}/api/courses/`, {
-    params: { url: context.query.courseUrl },
-    headers
-  })
+  const resCourse = await getCourses(context, context.query.courseUrl)
+  console.log('resCourse: ', resCourse.data.courseFromDB)
 
   // Check if user already purchased this course. Pass the result as props
   const course = resCourse.data.courseFromDB
@@ -53,9 +45,8 @@ export const getServerSideProps = async context => {
   if (!session || session.user.role === 'ADMIN') {
     course.isPurchased = false
   } else {
-    const resUser = await axios.get(`${process.env.DOMAIN_URL}/api/users/`, {
-      headers
-    })
+    const resUser = await getUser(context)
+
     const purchasedCourses = resUser.data.userFromDB.purchasedCourses
 
     if (purchasedCourses.indexOf(course._id) === -1) {

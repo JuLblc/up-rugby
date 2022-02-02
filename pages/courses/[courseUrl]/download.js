@@ -2,6 +2,8 @@ import axios from 'axios'
 
 import { getSession } from 'next-auth/react'
 import Link from 'next/link'
+import { getCourses } from '../../../apiCall'
+import { getUser } from '../../../apiCall'
 
 import SideCourseChapter from '../../../components/SideCourseChapter'
 
@@ -35,19 +37,9 @@ export default Download
 
 //Server side rendering
 export const getServerSideProps = async context => {
-  //console.log('context: ', context)
   const session = await getSession(context)
-  // console.log('session getServerSideProps FormationDetails: ', session)
 
-  const headers = {}
-  if (context.req.headers.cookie) {
-    headers.cookie = context.req.headers.cookie
-  }
-
-  const resCourse = await axios.get(`${process.env.DOMAIN_URL}/api/courses/`, {
-    params: { url: context.query.courseUrl },
-    headers
-  })
+  const resCourse = await getCourses(context, context.query.courseUrl)
 
   // Check if user already purchased this course. Pass the result as props
   const course = resCourse.data.courseFromDB
@@ -55,9 +47,8 @@ export const getServerSideProps = async context => {
   if (!session || session.user.role === 'ADMIN') {
     course.isPurchased = false
   } else {
-    const resUser = await axios.get(`${process.env.DOMAIN_URL}/api/users/`, {
-      headers
-    })
+    const resUser = await getUser(context)
+
     const purchasedCourses = resUser.data.userFromDB.purchasedCourses
 
     if (purchasedCourses.indexOf(course._id) === -1) {
