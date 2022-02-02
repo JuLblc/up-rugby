@@ -1,57 +1,57 @@
-import axios from "axios";
+import axios from 'axios'
 
-import { useEffect } from "react";
-import { getSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import { useEffect } from 'react'
+import { getSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
 
-import Link from "next/link";
-import parse from "html-react-parser";
+import Link from 'next/link'
+import parse from 'html-react-parser'
 
-import styles from "../../../styles/FormationDetails.module.css";
+import styles from '../../../styles/FormationDetails.module.css'
 
-const FormationDetails = (props) => {
+const FormationDetails = props => {
   // console.log('props FormationDetails: ', props)
 
-  const router = useRouter();
+  const router = useRouter()
 
   useEffect(() => {
     // To prevent 'USER' to see 'ADMIN' courses
     if (!props.course) {
-      router.back();
+      router.back()
     }
-  }, []);
+  }, [])
 
   const onPurchase = async () => {
-    const query = {};
+    const query = {}
 
     //1. Check if user is logged in
     if (!props.session) {
-      query.error = "please log in to purchase";
+      query.error = 'please log in to purchase'
       router.push({
-        pathname: "/login",
+        pathname: '/login',
         query
-      });
+      })
     } else {
       //2. After payment, add formation to user
       axios
-        .put("/api/users/add-course-to-user", {
+        .put('/api/users/add-course-to-user', {
           courseId: props.course._id
         })
-        .then((response) => {
-          console.log("response: ", response.data);
+        .then(response => {
+          console.log('response: ', response.data)
           //3. Redirect to payment confirmation page
-          query.course = props.course.seoUrl;
-          query.chapter = props.course.chapters[0].seoUrl;
-          query.lecture = props.course.chapters[0].lectures[0].seoUrl;
+          query.course = props.course.seoUrl
+          query.chapter = props.course.chapters[0].seoUrl
+          query.lecture = props.course.chapters[0].lectures[0].seoUrl
 
           router.push({
-            pathname: "/purchase-confirmation",
+            pathname: '/purchase-confirmation',
             query
-          });
+          })
         })
-        .catch((err) => console.log("err: ", err.response.data.message));
+        .catch(err => console.log('err: ', err.response.data.message))
     }
-  };
+  }
 
   return (
     <>
@@ -61,11 +61,11 @@ const FormationDetails = (props) => {
           <div className={styles.container}>
             <div className={styles.courseChapters}>
               <h2>Chapitres</h2>
-              {props.course.chapters.map((chapter) => {
+              {props.course.chapters.map(chapter => {
                 return (
-                  <div className="section-chapters" key={chapter._id}>
+                  <div className='section-chapters' key={chapter._id}>
                     <h3>{chapter.title}</h3>
-                    {chapter.lectures.map((lecture) => {
+                    {chapter.lectures.map(lecture => {
                       return (
                         <Link
                           href={`/courses/${props.course.seoUrl}/lecture/${lecture.seoUrl}?chapter=${chapter.seoUrl}`}
@@ -73,23 +73,25 @@ const FormationDetails = (props) => {
                         >
                           <a>{lecture.title}</a>
                         </Link>
-                      );
+                      )
                     })}
-                    {props.course.attachements.length > 0 && (
-                      <Link href={`/courses/${props.course.seoUrl}/download`}>
-                        <a>Téléchargement</a>
-                      </Link>
-                    )}
                   </div>
-                );
+                )
               })}
+              {props.course.attachements.length > 0 && (
+                <h3>
+                  <Link href={`/courses/${props.course.seoUrl}/download`}>
+                    <a>Téléchargement</a>
+                  </Link>
+                </h3>
+              )}
             </div>
             <div className={styles.overview}>
               <h2>Présentation</h2>
               <div>
                 <article>{parse(props.course.overview)}</article>
                 {/* Purchase button isn't display for ADMIN */}
-                {(!props.session || props.session.user.role !== "ADMIN") &&
+                {(!props.session || props.session.user.role !== 'ADMIN') &&
                   // Display purchase button only if the course has not been purchased by user yet
                   (props.course.isPurchased ? (
                     <Link
@@ -108,42 +110,42 @@ const FormationDetails = (props) => {
         </main>
       )}
     </>
-  );
-};
+  )
+}
 
-export default FormationDetails;
+export default FormationDetails
 
 //Server side rendering
-export const getServerSideProps = async (context) => {
+export const getServerSideProps = async context => {
   //console.log('context: ', context)
-  const session = await getSession(context);
+  const session = await getSession(context)
   // console.log('session getServerSideProps FormationDetails: ', session)
 
-  const headers = {};
+  const headers = {}
   if (context.req.headers.cookie) {
-    headers.cookie = context.req.headers.cookie;
+    headers.cookie = context.req.headers.cookie
   }
 
   const resCourse = await axios.get(`${process.env.DOMAIN_URL}/api/courses/`, {
     params: { url: context.query.courseUrl },
     headers
-  });
+  })
 
   // Check if user already purchased this course. Pass the result as props
-  const course = resCourse.data.courseFromDB;
+  const course = resCourse.data.courseFromDB
 
-  if (!session || session.user.role === "ADMIN") {
-    course.isPurchased = false;
+  if (!session || session.user.role === 'ADMIN') {
+    course.isPurchased = false
   } else {
     const resUser = await axios.get(`${process.env.DOMAIN_URL}/api/users/`, {
       headers
-    });
-    const purchasedCourses = resUser.data.userFromDB.purchasedCourses;
+    })
+    const purchasedCourses = resUser.data.userFromDB.purchasedCourses
 
     if (purchasedCourses.indexOf(course._id) === -1) {
-      course.isPurchased = false;
+      course.isPurchased = false
     } else {
-      course.isPurchased = true;
+      course.isPurchased = true
     }
   }
 
@@ -152,5 +154,5 @@ export const getServerSideProps = async (context) => {
       session,
       course
     }
-  };
-};
+  }
+}

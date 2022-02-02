@@ -17,8 +17,7 @@ const Lectures = props => {
       <div className={styles.player}>
         <h1>{props.lecture.title}</h1>
         {props.course.isPurchased ? (
-
-          <Vimeo video={props.lecture.url} width={640} height={360}/>
+          <Vimeo video={props.lecture.url} width={640} height={360} />
         ) : (
           <div className={styles.blocked}>Contenu bloqué</div>
         )}
@@ -43,6 +42,13 @@ const Lectures = props => {
             </div>
           )
         })}
+        {props.course.attachements.length > 0 && (
+          <h4>
+            <Link href={`/courses/${props.course.seoUrl}/download`}>
+              <a>Téléchargement</a>
+            </Link>
+          </h4>
+        )}
       </div>
     </div>
   )
