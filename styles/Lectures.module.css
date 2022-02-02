@@ -7,10 +7,6 @@
     margin: 10px;
 }
 
-.sectionChapters a{
-   display: block;
-}
-
 .blocked{
     background-color: darkgrey;
     color:red;

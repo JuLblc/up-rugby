@@ -1,11 +1,10 @@
 import axios from 'axios'
 
-import { useRouter } from 'next/router'
 import { getSession } from 'next-auth/react'
 
 import Vimeo from '@u-wave/react-vimeo'
 
-import Link from 'next/link'
+import SideCourseChapter from '../../../../components/SideCourseChapter'
 
 import styles from '../../../../styles/Lectures.module.css'
 
@@ -24,32 +23,8 @@ const Lectures = props => {
         <h2>A propos de ce contenu</h2>
         <p>{props.lecture.description}</p>
       </div>
-      <div className={styles.sideCourseChapter}>
-        {props.course.chapters.map(chapter => {
-          return (
-            <div className={styles.sectionChapters} key={chapter._id}>
-              <h4>{chapter.title}</h4>
-              {chapter.lectures.map(lecture => {
-                return (
-                  <Link
-                    href={`/courses/${props.course.seoUrl}/lecture/${lecture.seoUrl}?chapter=${chapter.seoUrl}`}
-                    key={lecture._id}
-                  >
-                    <a>{lecture.title}</a>
-                  </Link>
-                )
-              })}
-            </div>
-          )
-        })}
-        {props.course.attachements.length > 0 && (
-          <h4>
-            <Link href={`/courses/${props.course.seoUrl}/download`}>
-              <a>Téléchargement</a>
-            </Link>
-          </h4>
-        )}
-      </div>
+
+      <SideCourseChapter course={props.course} />
     </div>
   )
 }

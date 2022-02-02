@@ -4,7 +4,7 @@ import StarterKit from '@tiptap/starter-kit'
 
 import styles from '../styles/Formation.module.css'
 
-const MenuBar = ({ editor }) => {
+const MenuBar = ({ editor, disabled }) => {
   if (!editor) {
     return null
   }
@@ -12,6 +12,7 @@ const MenuBar = ({ editor }) => {
   return (
     <>
       <button
+        disabled={disabled}
         type='button'
         onClick={() =>
           editor
@@ -36,6 +37,7 @@ const MenuBar = ({ editor }) => {
         </svg>
       </button>
       <button
+        disabled={disabled}
         type='button'
         onClick={() =>
           editor
@@ -60,6 +62,7 @@ const MenuBar = ({ editor }) => {
         </svg>
       </button>
       <button
+        disabled={disabled}
         type='button'
         onClick={() =>
           editor
@@ -84,6 +87,7 @@ const MenuBar = ({ editor }) => {
         </svg>
       </button>
       <button
+        disabled={disabled}
         type='button'
         onClick={() =>
           editor
@@ -108,6 +112,7 @@ const MenuBar = ({ editor }) => {
         </svg>
       </button>
       <button
+        disabled={disabled}
         type='button'
         onClick={() =>
           editor
@@ -132,6 +137,7 @@ const MenuBar = ({ editor }) => {
         </svg>
       </button>
       <button
+        disabled={disabled}
         type='button'
         onClick={() =>
           editor
@@ -156,6 +162,7 @@ const MenuBar = ({ editor }) => {
         </svg>
       </button>
       <button
+        disabled={disabled}
         type='button'
         onClick={() =>
           editor
@@ -180,6 +187,7 @@ const MenuBar = ({ editor }) => {
         </svg>
       </button>
       <button
+        disabled={disabled}
         type='button'
         onClick={() =>
           editor
@@ -204,6 +212,7 @@ const MenuBar = ({ editor }) => {
         </svg>
       </button>
       <button
+        disabled={disabled}
         type='button'
         onClick={() =>
           editor
@@ -228,6 +237,7 @@ const MenuBar = ({ editor }) => {
         </svg>
       </button>
       <button
+        disabled={disabled}
         type='button'
         onClick={() =>
           editor
@@ -252,6 +262,7 @@ const MenuBar = ({ editor }) => {
         </svg>
       </button>
       <button
+        disabled={disabled}
         type='button'
         onClick={() =>
           editor
@@ -276,6 +287,7 @@ const MenuBar = ({ editor }) => {
         </svg>
       </button>
       <button
+        disabled={disabled}
         type='button'
         onClick={() =>
           editor
@@ -299,6 +311,7 @@ const MenuBar = ({ editor }) => {
         </svg>
       </button>
       <button
+        disabled={disabled}
         type='button'
         onClick={() =>
           editor
@@ -322,6 +335,7 @@ const MenuBar = ({ editor }) => {
         </svg>
       </button>
       <button
+        disabled={disabled}
         type='button'
         onClick={() =>
           editor
@@ -345,6 +359,7 @@ const MenuBar = ({ editor }) => {
         </svg>
       </button>
       <button
+        disabled={disabled}
         type='button'
         onClick={() =>
           editor
@@ -378,7 +393,7 @@ const Tiptap = props => {
   const editor = useEditor({
     extensions: [StarterKit],
     content: props.overview,
-    editable: editableEditor,
+    editable: editableEditor
   })
 
   useEffect(() => {
@@ -405,7 +420,7 @@ const Tiptap = props => {
   return (
     <>
       <div className={styles.tipTapContainer}>
-        <MenuBar editor={editor} />
+        <MenuBar editor={editor} disabled={props.disabled} />
         <EditorContent
           editor={editor}
           onFocus={changeEditStatus}

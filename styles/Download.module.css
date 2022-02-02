@@ -13,10 +13,6 @@
   display: block;
 }
 
-.sectionChapters a {
-  display: block;
-}
-
 .disabled {
   pointer-events: none;
 }

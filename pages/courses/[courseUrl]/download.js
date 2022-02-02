@@ -3,6 +3,8 @@ import axios from 'axios'
 import { getSession } from 'next-auth/react'
 import Link from 'next/link'
 
+import SideCourseChapter from '../../../components/SideCourseChapter'
+
 import styles from '../../../styles/Download.module.css'
 
 const Download = props => {
@@ -16,36 +18,14 @@ const Download = props => {
               href={props.course.isPurchased ? file.url : '#'}
               key={file._id}
             >
-              <a className={!props.course.isPurchased && styles.disabled}>{file.fileName}</a>
+              <a className={!props.course.isPurchased && styles.disabled}>
+                {file.fileName}
+              </a>
             </Link>
           ))}
         </div>
-        <div className={styles.sideCourseChapter}>
-          {props.course.chapters.map(chapter => {
-            return (
-              <div className={styles.sectionChapters} key={chapter._id}>
-                <h4>{chapter.title}</h4>
-                {chapter.lectures.map(lecture => {
-                  return (
-                    <Link
-                      href={`/courses/${props.course.seoUrl}/lecture/${lecture.seoUrl}?chapter=${chapter.seoUrl}`}
-                      key={lecture._id}
-                    >
-                      <a>{lecture.title}</a>
-                    </Link>
-                  )
-                })}
-              </div>
-            )
-          })}
-          {props.course.attachements.length > 0 && (
-            <h4>
-              <Link href={`/courses/${props.course.seoUrl}/download`}>
-                <a>Téléchargement</a>
-              </Link>
-            </h4>
-          )}
-        </div>
+
+        <SideCourseChapter course={props.course} />
       </div>
     </>
   )
