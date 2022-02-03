@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@normal&display=swap');
+
 * {
   box-sizing: border-box;
 }
@@ -6,6 +12,16 @@ html,
 body {
   margin: 0;
   padding: 0;
+  font-family: 'Roboto';
+  font-size: 16px;
+  font-weight: normal;
+  color: #3a3a3a;
+}
+
+h1 {
+  font-size: 2em;
+  font-weight: 500;
+  line-height: 1.25em;
 }
 
 .ProseMirror {
