@@ -99,16 +99,23 @@
   position: relative;
   padding: 8px 16px 8px 48px;
   border-radius: 8px;
-  border-color: transparent;
-  color: #323338;
-  background-color: #F9DADE;
   font-size: 0.8em;
+  color: #323338;
+  border-color: transparent;
+}
+
+.error {
+  background-color: #f9dade;
+}
+
+.success {
+  background-color: #CCF4E3;
 }
 
 .forgotten {
   display: block;
   text-align: right;
-  margin: 10px 0;
+  margin: 10px 0 0;
   color: #676879;
   font-size: 0.8em;
 }
@@ -123,7 +130,7 @@
   font-weight: bold;
   letter-spacing: 1px;
   cursor: pointer;
-  margin: 12px 0;
+  margin: 20px 0;
 }
 
 .register {
@@ -136,4 +143,6 @@
 .register a {
   font-weight: 500;
   padding: 0 5px;
+  text-decoration: underline;
+  cursor: pointer;
 }

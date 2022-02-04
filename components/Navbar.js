@@ -23,7 +23,7 @@ const Navbar = () => {
   const handleSignOut = e => {
     e.preventDefault()
     signOut({
-      callbackUrl: '/login'
+      callbackUrl: '/login?login=signin'
     })
   }
 
@@ -106,7 +106,7 @@ const Navbar = () => {
           <>
             {isTablet || isMobile ? (
               <li>
-                <Link href='/login'>
+                <Link href='/login?login=signin'>
                   <a>
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
@@ -123,12 +123,12 @@ const Navbar = () => {
             ) : (
               <>
                 <li>
-                  <Link href='/signup'>
+                  <Link href='/login?login=signup'>
                     <a>S'inscrire</a>
                   </Link>
                 </li>
                 <li>
-                  <Link href='/login'>
+                  <Link href='/login?login=signin'>
                     <a>Se connecter</a>
                   </Link>
                 </li>
@@ -159,13 +159,6 @@ const Navbar = () => {
         {/* Display burger button according to device */}
         {(isTablet || isMobile) && (
           <li>
-            {/* <button
-              className={styles.burger}
-              type='button'
-              onClick={displayMenu}
-            >
-              ≡
-            </button> */}
             <Burger />
           </li>
         )}
