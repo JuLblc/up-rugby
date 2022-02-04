@@ -3,6 +3,8 @@
   margin-right: auto;
   max-width: 400px;
   width: calc(100% - 20px * 2);
+  z-index: 50;
+  position: relative;
 }
 
 .authContainer h1 {

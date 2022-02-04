@@ -1,41 +1,86 @@
-.loaded{
-    opacity:1;
+.loaded {
+  opacity: 1;
 }
 
-.loading{
-    opacity:0;
+.loading {
+  opacity: 0;
 }
 
-.header{
-    display: flex;
-    padding: 32px 20px 24px 20px ;
-    justify-content: space-between;
+.header {
+  display: flex;
+  padding: 24px 20px 16px 20px;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+  position: relative;
+
+  /* border-bottom: solid 1px #d5e3ec; */
 }
 
-.headerNav{
-    display: flex;
-    list-style:none;
-    margin:0;
-    padding: 0;
+.headerNav {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.headerNav li{
-    margin: 10px;
+.headerNav li {
+  margin: auto 20px;
 }
 
-.headerSide{
-    display: flex;
-    list-style:none;
-    margin:0;
-    padding: 0;
+.imageWrapper {
+  box-sizing: content-box;
+}
+.imageWrapper > span {
+  width: 75px !important;
+  height: unset !important;
 }
 
-.headerSide li{
-   margin: 10px;
+.headerNav a {
+  text-decoration: none;
+  color: #000;
+  font-weight: 400;
+}
+.headerNav a:hover {
+  color: #0085ff;
 }
 
-.burger{
-    background-color: transparent;
-    border:none;
-    font-size: 1.5em;
+.headerRightSide {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.headerRightSide li {
+  margin: 10px;
+  height: 24px; /*fit svg size*/
+}
+
+/* .btnLogin{
+  text-decoration: none;
+  color: white;
+  display: block;
+  width: 124px;
+  text-align: center;
+} */
+
+/* .btnSignIn{
+  background-color: #00CA72;
+}
+.btnSignUp{
+  background-color: #0085FF;
+} */
+
+
+.burger {
+  background-color: transparent;
+  border: none;
+  font-size: 1.5em;
+}
+
+.break {
+  width: calc(100% - 40px);
+  border-bottom: 1px solid lightgrey;
+  margin:auto;
 }
