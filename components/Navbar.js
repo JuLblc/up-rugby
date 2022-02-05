@@ -37,13 +37,11 @@ const Navbar = () => {
             status === 'loading' ? styles.loading : styles.loaded
           } `}
         >
-          <li>
-            <Link href='/'>
-              <span className={styles.imageWrapper}>
-                <Image src={logo} alt='logo' />
-              </span>
-            </Link>
-          </li>
+          <Link href='/'>
+            <span className={styles.imageWrapper}>
+              <Image src={logo} alt='logo' />
+            </span>
+          </Link>
           {/* Display menu according to device */}
           {(isDesktopOrLaptop || isBigScreen) && (
             <>
@@ -63,12 +61,12 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <Link href='/blog'>
+                <Link href='#'>
                   <a>Prestation</a>
                 </Link>
               </li>
               <li>
-                <Link href='/blog'>
+                <Link href='#'>
                   <a>A propos</a>
                 </Link>
               </li>
@@ -103,7 +101,7 @@ const Navbar = () => {
 
             <>
               {isTablet || isMobile ? (
-                <li>
+                <li className={styles.liRightSide}>
                   <Link href='/login?login=signin'>
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
@@ -118,14 +116,14 @@ const Navbar = () => {
                 </li>
               ) : (
                 <>
-                  <li>
+                  <li className={`${styles.btnLogin} ${styles.btnSignIn}`}>
                     <Link href='/login?login=signin'>
-                      <a className={`${styles.btnLogin} ${styles.btnSignIn}`}>Se connecter</a>
+                      <a>Se connecter</a>
                     </Link>
                   </li>
-                  <li>
+                  <li className={`${styles.btnLogin} ${styles.btnSignUp}`}>
                     <Link href='/login?login=signup'>
-                      <a className={`${styles.btnLogin} ${styles.btnSignUp}`}>S'inscrire</a>
+                      <a>S'inscrire</a>
                     </Link>
                   </li>
                 </>
@@ -154,7 +152,7 @@ const Navbar = () => {
 
           {/* Display burger button according to device */}
           {(isTablet || isMobile) && (
-            <li>
+            <li className={styles.liRightSide}>
               <Burger />
             </li>
           )}

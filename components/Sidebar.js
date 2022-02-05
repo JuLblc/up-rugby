@@ -5,7 +5,11 @@ import styles from '../styles/Sidebar.module.css'
 
 const Sidebar = props => {
   return (
-    <ul className={`${styles.sidebar} ${props.open ? styles.open : styles.closed}`}>
+    <ul
+      className={`${styles.sidebar} ${
+        props.open ? styles.open : styles.closed
+      }`}
+    >
       {/* <li>
         <Link href='/signup'>
           <a>S'inscrire</a>
@@ -29,6 +33,16 @@ const Sidebar = props => {
       <li>
         <Link href='/blog'>
           <a>Blog</a>
+        </Link>
+      </li>
+      <li>
+        <Link href='#'>
+          <a>Prestation</a>
+        </Link>
+      </li>
+      <li>
+        <Link href='#'>
+          <a>A propos</a>
         </Link>
       </li>
     </ul>

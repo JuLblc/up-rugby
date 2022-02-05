@@ -13,8 +13,6 @@
   align-items: center;
   z-index: 100;
   position: relative;
-
-  /* border-bottom: solid 1px #d5e3ec; */
 }
 
 .headerNav {
@@ -52,26 +50,31 @@
   padding: 0;
 }
 
-.headerRightSide li {
+.liRightSide{
+  height: 24px; /* fit svg*/
   margin: 10px;
-  height: 24px; /*fit svg size*/
 }
 
-/* .btnLogin{
-  text-decoration: none;
-  color: white;
-  display: block;
+.btnLogin {
   width: 124px;
   text-align: center;
-} */
-
-/* .btnSignIn{
-  background-color: #00CA72;
+  padding:10px;
+  border-radius: 4px;
 }
-.btnSignUp{
-  background-color: #0085FF;
-} */
 
+.btnLogin a{
+  text-decoration: none;
+  color: white;
+}
+
+.btnSignIn {
+  background-color: #00c875;
+  margin-right: 10px;
+}
+.btnSignUp {
+  background-color: #0085ff;
+  margin-left: 10px;
+}
 
 .burger {
   background-color: transparent;
@@ -82,5 +85,5 @@
 .break {
   width: calc(100% - 40px);
   border-bottom: 1px solid lightgrey;
-  margin:auto;
+  margin: auto;
 }
