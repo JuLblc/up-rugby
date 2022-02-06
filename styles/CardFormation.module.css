@@ -1,12 +1,7 @@
-.cardFormationContainer{
-    display: flex;
 
-}
 
 .cardFormation {
     border: 1px solid darkgray;
-    width: 370px;
-    margin:5px 10px;
 }
 
 .formationInfo { 

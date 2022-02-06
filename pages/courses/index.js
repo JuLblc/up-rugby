@@ -4,45 +4,51 @@ import { getCourses } from '../../apiCall'
 
 import CardFormation from '../../components/CardFormation'
 
-import styles from '../../styles/CardFormation.module.css'
+import styles from '../../styles/Courses.module.css'
 
 const Courses = props => {
   //console.log('props courses: ', props)
 
   return (
-    <main>
-      <h1>Formations</h1>
-      <h2>Toutes les formations sont affichées</h2>
-      <ul>
-        <li>Visiteurs</li>
-        <li>Utilisateurs connectés</li>
-        <li>Utilisateurs ayant acheté la formation</li>
-        <li>
-          /!\ Seuls les Utilisateurs ayant payé peuvent accéder à la vidéo /!\
-        </li>
-      </ul>
-
+    <main className={styles.cardFormationContainer}>
+      <div className={styles.intro}>
+        <h1>
+          Toutes les <br/>
+          <span className={styles.strong}> formations</span>
+        </h1>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec
+          nisl vulputate, iaculis tortor quis, convallis ipsum. Duis consequat fringilla condimentum.
+        </p>
+      </div>
       {props.session?.user.role === 'ADMIN' && (
         <Link href='/courses/create-course'>
           <a>Ajouter une formation</a>
         </Link>
       )}
 
-      <div className={styles.cardFormationContainer}>
-        {props.courses.map(course => {
-          return (
-            <CardFormation
-              key={course._id}
-              courseId={course._id}
-              title={course.title}
-              seoUrl={course.seoUrl}
-              price={course.price}
-              isPublished={course.isPublished}
-              role={props.session?.user.role}
-            />
-          )
-        })}
-      </div>
+      {/* <div>Item 1</div>
+      <div>Item 2</div>
+      <div>Item 3</div>
+      <div>Item 4</div>
+      <div>Item 5</div>
+      <div>Item 6</div>
+      <div>Item 7</div>
+      <div>Item 8</div> */}
+
+      {props.courses.map(course => {
+        return (
+          <CardFormation
+            key={course._id}
+            courseId={course._id}
+            title={course.title}
+            seoUrl={course.seoUrl}
+            price={course.price}
+            isPublished={course.isPublished}
+            role={props.session?.user.role}
+          />
+        )
+      })}
     </main>
   )
 }

@@ -1,0 +1,33 @@
+.cardFormationContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-auto-flow: dense;
+  grid-gap: 32px;
+}
+
+@media (min-width: 840px) {
+  .intro {
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+}
+
+.intro {
+  max-width: 620px;
+}
+
+.strong {
+  color: #0085ff;
+}
+
+.intro p {
+  font-size: 1.5em;
+  color: #808080;
+  font-weight: 300;
+}
+
+@media (max-width: 840px) {
+  .intro p {
+    font-size: 1em;
+  }
+}

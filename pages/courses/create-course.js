@@ -40,7 +40,7 @@ const NewCourse = props => {
   }
 
   return (
-    <>
+    <main>
       {props.session && props.session.user.role === 'ADMIN' && (
         <>
           <h1>Ajouter formation</h1>
@@ -52,7 +52,7 @@ const NewCourse = props => {
           />
         </>
       )}
-    </>
+    </main>
   )
 }
 
