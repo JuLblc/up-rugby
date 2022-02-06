@@ -1,40 +1,41 @@
 import { getSession } from 'next-auth/react'
 import Link from 'next/link'
 import { getCourses } from '../../apiCall'
+import { useWindowDimensions } from '../../hooks/useWindowDimensions'
+import { getDeviceTypeInfo } from '../../utils/utilResponsive'
 
 import CardFormation from '../../components/CardFormation'
 
 import styles from '../../styles/Courses.module.css'
 
 const Courses = props => {
-  //console.log('props courses: ', props)
+  const { width, height } = useWindowDimensions()
+
+  const {
+    isMobile,
+    isTablet,
+    isDesktopOrLaptop,
+    isBigScreen
+  } = getDeviceTypeInfo(width, height)
 
   return (
     <main className={styles.cardFormationContainer}>
-      <div className={styles.intro}>
+      <div className={`${styles.intro} ${!isMobile && styles.introNotMobile}`}>
         <h1>
-          Toutes les <br/>
+          Toutes les <br />
           <span className={styles.strong}> formations</span>
         </h1>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec
-          nisl vulputate, iaculis tortor quis, convallis ipsum. Duis consequat fringilla condimentum.
+          nisl vulputate, iaculis tortor quis, convallis ipsum. Duis consequat
+          fringilla condimentum.
         </p>
+        {props.session?.user.role === 'ADMIN' && (
+          <Link href='/courses/create-course'>
+            <a>Ajouter une formation</a>
+          </Link>
+        )}
       </div>
-      {props.session?.user.role === 'ADMIN' && (
-        <Link href='/courses/create-course'>
-          <a>Ajouter une formation</a>
-        </Link>
-      )}
-
-      {/* <div>Item 1</div>
-      <div>Item 2</div>
-      <div>Item 3</div>
-      <div>Item 4</div>
-      <div>Item 5</div>
-      <div>Item 6</div>
-      <div>Item 7</div>
-      <div>Item 8</div> */}
 
       {props.courses.map(course => {
         return (

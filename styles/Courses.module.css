@@ -5,11 +5,9 @@
   grid-gap: 32px;
 }
 
-@media (min-width: 840px) {
-  .intro {
-    grid-column-start: 1;
-    grid-column-end: 3;
-  }
+.introNotMobile {
+  grid-column-start: 1;
+  grid-column-end: 3;
 }
 
 .intro {
@@ -21,13 +19,12 @@
 }
 
 .intro p {
-  font-size: 1.5em;
+  /* font-size: 1.5em; */
   color: #808080;
   font-weight: 300;
+  font-size: 1.1em;
 }
 
-@media (max-width: 840px) {
-  .intro p {
-    font-size: 1em;
-  }
+.introNotMobile p {
+  font-size: 1.5em;
 }

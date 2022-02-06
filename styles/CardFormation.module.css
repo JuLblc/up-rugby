@@ -1,17 +1,54 @@
-
-
 .cardFormation {
-    border: 1px solid darkgray;
+  border: 1px solid #d5e3ec;
+  border-radius: 5px;
+  position: relative;
 }
 
-.formationInfo { 
-    margin:5px 20px;
-    display: flex;
-    justify-content: space-between;
+.cardFormation:hover{
+  transition: all 0.2s ease-out;
+  box-shadow: 0px 4px 8px rgba(38, 38, 38, 0.2);
+  top: -2px;
+  border: 1px solid #cccccc;
 }
 
-.linkContainer{
-    margin:5px 20px;
-    display: flex;
-    justify-content: space-between;
+.imgCard > span {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.formationInfo {
+  margin: 0px 15px;
+}
+.formationTitle {
+  font-weight: 500;
+  margin: 16px 0;
+}
+.formationDescription {
+  color: #808080;
+  font-weight: 300;
+}
+.cardFooterContainer {
+  padding: 5px 15px;
+  display: flex;
+  justify-content: space-between;
+  color: #808080;
+  background-color: #DFF0FF;
+}
+
+.cardFooterInfo {
+  display: flex;
+}
+.cardFooterInfo span {
+  padding-left: 5px;
+}
+
+.link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  display: block;
 }
