@@ -1,21 +1,26 @@
 .cardFormation {
-  border: 1px solid #d5e3ec;
   border-radius: 5px;
   position: relative;
 }
 
-.cardFormation:hover{
+.cardFormation:hover {
   transition: all 0.2s ease-out;
   box-shadow: 0px 4px 8px rgba(38, 38, 38, 0.2);
   top: -2px;
-  border: 1px solid #cccccc;
 }
 
 .imgCard > span {
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
+  display: block !important;
 }
 
+.CardFormationWrapper {
+  border: 1px solid #d5e3ec;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+
+}
 .formationInfo {
   margin: 0px 15px;
 }
@@ -32,7 +37,7 @@
   display: flex;
   justify-content: space-between;
   color: #808080;
-  background-color: #DFF0FF;
+  background-color: #dff0ff;
 }
 
 .cardFooterInfo {
@@ -51,4 +56,5 @@
   height: 100%;
   width: 100%;
   display: block;
+  color: transparent;
 }
