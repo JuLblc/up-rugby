@@ -28,7 +28,7 @@ const ForgottenPassword = () => {
     }
 
     return (
-        <>
+        <main>
             <h1>Mot de passe oublié?</h1>
             <p>Saisissez l'adresse e-mail associée à votre compte. Nous vous enverrons un lien par e-mail pour réinitialiser votre mot de passe.</p>
             <form onSubmit={handleFormSubmit}>
@@ -41,7 +41,7 @@ const ForgottenPassword = () => {
             {message && (
                 <p className="message">{message}</p>
             )}
-        </>
+        </main>
     );
 }
 

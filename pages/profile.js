@@ -57,7 +57,7 @@ const Profile = props => {
   }
 
   return (
-    <>
+    <main>
       <h1>Mon compte</h1>
       <ul>
         <li id='info' onClick={e => handleDisplay(e)}>
@@ -147,7 +147,7 @@ const Profile = props => {
           )}
         </div>
       )}
-    </>
+    </main>
   )
 }
 

@@ -10,7 +10,7 @@ const Courses = props => {
   //console.log('props courses: ', props)
 
   return (
-    <>
+    <main>
       <h1>Formations</h1>
       <h2>Toutes les formations sont affichées</h2>
       <ul>
@@ -43,7 +43,7 @@ const Courses = props => {
           )
         })}
       </div>
-    </>
+    </main>
   )
 }
 

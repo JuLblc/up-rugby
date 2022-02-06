@@ -16,10 +16,17 @@ body {
   color: #3a3a3a;
 }
 
+main{
+  margin: 24px auto;
+  max-width: 1400px;
+  width: calc(100% - 20px * 2);
+}
+
 h1 {
   font-size: 2em;
   font-weight: 500;
   line-height: 1.25em;
+  margin-top: 0;
 }
 
 .ProseMirror {

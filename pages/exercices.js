@@ -1,6 +1,6 @@
 const Exercices = () => {
     return (  
-        <>
+        <main>
         <h1>Page Exercices</h1>
         <h2>Tous les exercices sont affichés</h2>
         <ul>
@@ -9,7 +9,7 @@ const Exercices = () => {
             <li>Utilisateurs abonnés</li>
             <li>/!\ Seuls les abonnés peuvent accéder à la vidéo /!\</li>
         </ul>
-    </>
+    </main>
     );
 }
  

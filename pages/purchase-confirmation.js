@@ -9,13 +9,13 @@ const PurchasedConfirmation= () => {
   const {course , chapter, lecture} = router.query;  
 
   return (
-    <>
+    <main>
       <h1>Merci pour votre achat</h1>
 
       <Link href={`/courses/${course}/lecture/${lecture}?chapter=${chapter}`}>
         <a>Commencer la formation</a>
       </Link>
-    </>
+    </main>
   )
 }
 

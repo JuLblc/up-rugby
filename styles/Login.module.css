@@ -1,8 +1,8 @@
 .authContainer {
-  margin-left: auto;
+  /* margin-left: auto;
   margin-right: auto;
+  width: calc(100% - 20px * 2); */
   max-width: 400px;
-  width: calc(100% - 20px * 2);
   z-index: 50;
   position: relative;
 }
