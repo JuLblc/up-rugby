@@ -30,7 +30,7 @@
   box-sizing: content-box;
 }
 .imageWrapper > span {
-  width: 75px !important;
+  width: 60px !important;
   height: unset !important;
 }
 
@@ -51,8 +51,18 @@
 }
 
 .liRightSide{
-  height: 24px; /* fit svg*/
-  margin: 10px;
+  /* height: 24px; fit svg*/
+  /* line-height: calc(24px + 8px); vertical align bottom */
+  margin: 5px;
+  display: flex;
+}
+
+.liRightSide:hover{
+  cursor: pointer;
+}
+
+.divRightSide{
+  margin: 0 5px;
 }
 
 .btnLogin {
