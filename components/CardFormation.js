@@ -32,7 +32,7 @@ const CardFormation = props => {
                 fill='rgba(128,128,128,1)'
               />
             </svg>
-            <span>4 Chapitres</span>
+            <span>{`${props.lecturesQty} Chapitre${props.lecturesQty > 1 ? 's':''}`}</span>
           </div>
           <div className={styles.cardFooterInfo}>
             <svg
@@ -54,7 +54,7 @@ const CardFormation = props => {
           {/* if course is a draft, it still can be updated by ADMIN only */}
           {props.role === 'ADMIN' && !props.isPublished && (
             <Link href={`/courses/update-course/${props.seoUrl}`}>
-              <a>Modifier</a>
+              <a className={styles.linkAdmin}>Modifier</a>
             </Link>
           )}
         </div>

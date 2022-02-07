@@ -406,10 +406,13 @@ const Tiptap = props => {
     } else {
       $div.style.backgroundColor = ''
       $div.style.color = 'black'
+      if ($div.children[0])
+        $div.children[0].setAttribute('contenteditable', true)
     }
   }, [props.disabled])
 
   const changeEditStatus = () => {
+    console.log('editableEditor: ', editableEditor)
     editor.setEditable(editableEditor)
   }
 

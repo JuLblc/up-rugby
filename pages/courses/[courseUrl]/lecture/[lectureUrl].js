@@ -10,22 +10,23 @@ import SideCourseChapter from '../../../../components/SideCourseChapter'
 import styles from '../../../../styles/Lectures.module.css'
 
 const Lectures = props => {
-
   return (
-    <div className={styles.container}>
-      <div className={styles.player}>
-        <h1>{props.lecture.title}</h1>
-        {props.course.isPurchased ? (
-          <Vimeo video={props.lecture.url} width={640} height={360} />
-        ) : (
-          <div className={styles.blocked}>Contenu bloqué</div>
-        )}
-        <h2>A propos de ce contenu</h2>
-        <p>{props.lecture.description}</p>
-      </div>
+    <main>
+      <div className={styles.container}>
+        <div className={styles.player}>
+          <h1>{props.lecture.title}</h1>
+          {props.course.isPurchased ? (
+            <Vimeo video={props.lecture.url} width={640} height={360} />
+          ) : (
+            <div className={styles.blocked}>Contenu bloqué</div>
+          )}
+          <h2>A propos de ce contenu</h2>
+          <p>{props.lecture.description}</p>
+        </div>
 
-      <SideCourseChapter course={props.course} />
-    </div>
+        <SideCourseChapter course={props.course} />
+      </div>
+    </main>
   )
 }
 

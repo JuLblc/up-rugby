@@ -9,7 +9,7 @@ import { getUser } from '../../../apiCall'
 import Link from 'next/link'
 import parse from 'html-react-parser'
 
-import styles from '../../../styles/FormationDetails.module.css'
+import styles from '../../../styles/CourseDetails.module.css'
 
 const FormationDetails = props => {
   const router = useRouter()
@@ -61,30 +61,46 @@ const FormationDetails = props => {
           <div className={styles.container}>
             <div className={styles.courseChapters}>
               <h2>Chapitres</h2>
-              {props.course.chapters.map(chapter => {
-                return (
+              <div className={styles.chaptersSplit}>
+                {props.course.chapters.map(chapter => (
                   <div className='section-chapters' key={chapter._id}>
-                    <h3>{chapter.title}</h3>
-                    {chapter.lectures.map(lecture => {
-                      return (
-                        <Link
-                          href={`/courses/${props.course.seoUrl}/lecture/${lecture.seoUrl}?chapter=${chapter.seoUrl}`}
-                          key={lecture._id}
-                        >
-                          <a>{lecture.title}</a>
-                        </Link>
-                      )
-                    })}
+                    <h3 className={styles.chapterTitle}>{chapter.title}</h3>
+                    {chapter.lectures.map(lecture => (
+                      <Link
+                        href={`/courses/${props.course.seoUrl}/lecture/${lecture.seoUrl}?chapter=${chapter.seoUrl}`}
+                        key={lecture._id}
+                      >
+                        <a className={styles.link}>
+                          <div className={styles.linkDetails}>
+                            <svg
+                              xmlns='http://www.w3.org/2000/svg'
+                              viewBox='0 0 24 24'
+                              width='24'
+                              height='24'
+                            >
+                              <path fill='none' d='M0 0h24v24H0z' />
+                              <path d='M7.752 5.439l10.508 6.13a.5.5 0 0 1 0 .863l-10.508 6.13A.5.5 0 0 1 7 18.128V5.871a.5.5 0 0 1 .752-.432z' />
+                            </svg>
+                            <span className={styles.lectureTitle}>
+                              {lecture.title}
+                            </span>
+                            <span className={styles.lectureDuration}>
+                              12 min
+                            </span>
+                          </div>
+                        </a>
+                      </Link>
+                    ))}
                   </div>
-                )
-              })}
-              {props.course.attachements.length > 0 && (
-                <h3>
-                  <Link href={`/courses/${props.course.seoUrl}/download`}>
-                    <a>Téléchargement</a>
-                  </Link>
-                </h3>
-              )}
+                ))}
+                {props.course.attachements.length > 0 && (
+                  <h3 className={styles.chapterTitle}>
+                    <Link href={`/courses/${props.course.seoUrl}/download`}>
+                      <a>Téléchargement</a>
+                    </Link>
+                  </h3>
+                )}
+              </div>
             </div>
             <div className={styles.overview}>
               <h2>Présentation</h2>

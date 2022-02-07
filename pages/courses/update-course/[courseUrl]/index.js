@@ -17,7 +17,7 @@ const UpdateCourseDetails = props => {
   }, [])
 
   return (
-    <>
+    <main>
       {props.course && (
         <>
           <h1>{props.course.title}</h1>
@@ -29,7 +29,7 @@ const UpdateCourseDetails = props => {
           />
         </>
       )}
-    </>
+    </main>
   )
 }
 

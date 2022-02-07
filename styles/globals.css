@@ -14,9 +14,10 @@ body {
   font-size: 16px;
   font-weight: normal;
   color: #3a3a3a;
+  /* background-color: #f7fafb; */
 }
 
-main{
+main {
   margin: 24px auto;
   max-width: 1400px;
   width: calc(100% - 20px * 2);

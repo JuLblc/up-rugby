@@ -18,6 +18,12 @@ const Courses = props => {
     isBigScreen
   } = getDeviceTypeInfo(width, height)
 
+  const getLecturesQty = (course) =>{
+    let qty = 0;
+    course.chapters.map(chapter => qty = qty + chapter.lectures.length)
+    return qty;
+  }
+
   return (
     <main className={styles.cardFormationContainer}>
       <div className={`${styles.intro} ${!isMobile && styles.introNotMobile}`}>
@@ -47,6 +53,7 @@ const Courses = props => {
             price={course.price}
             isPublished={course.isPublished}
             role={props.session?.user.role}
+            lecturesQty = {getLecturesQty(course)}
           />
         )
       })}

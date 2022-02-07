@@ -57,4 +57,11 @@
   width: 100%;
   display: block;
   color: transparent;
+  z-index: 50;
+}
+
+.linkAdmin{
+  z-index: 100;
+  position: relative;
+
 }
