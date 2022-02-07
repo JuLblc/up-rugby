@@ -74,6 +74,17 @@
   font-size: 0.8em;
 }
 
+.download {
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.download a {
+  margin-left: auto;
+}
+
 .overview {
 }
 
