@@ -17,6 +17,7 @@ const CourseSchema = new mongoose.Schema({
                     seoUrl:String,
                     description: String,
                     url: String,
+                    duration: Number,
                 }
             ]
         }

@@ -42,6 +42,9 @@ const Lecture = props => {
             props.onChangeVideo(e, props.chapterIdx, props.lectureIdx)
           }
           disabled={props.disableField}
+          onBlur={() =>
+            props.onBlurUrlVideo(props.chapterIdx, props.lectureIdx)
+          }
         />
       </label>
 

@@ -30,7 +30,8 @@ const NewCourse = props => {
             title: '',
             seoUrl: '',
             description: '',
-            url: ''
+            url: '',
+            duration: 0
           }
         ]
       }

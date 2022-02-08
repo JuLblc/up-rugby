@@ -48,7 +48,7 @@ const addCourse = (req, res, session) => {
     res.status(401).json({ message: 'Unauthorized' })
     return
   }
-  //   console.log('course: ', course)
+    console.log('course: ', course)
 
   const newCourse = new Course(course)
 

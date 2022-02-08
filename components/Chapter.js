@@ -42,6 +42,7 @@ const Chapter = props => {
             onChangeVideo={e => onChangeVideo(e, props.chapterIdx, lectureIdx)}
             removeVideo={() => removeVideo(props.chapterIdx, lectureIdx)}
             disableField={props.disableField}
+            onBlurUrlVideo={props.onBlurUrlVideo}
           />
         )
       )}
