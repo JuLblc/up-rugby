@@ -6,7 +6,10 @@ const CourseSchema = new mongoose.Schema({
     seoUrl:String,
     category: String,
     price:Number,
-    image: String,
+    img: {
+        fileName: String,
+        url: String
+    },
     chapters: [
         {
             title: String,

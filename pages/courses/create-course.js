@@ -21,6 +21,7 @@ const NewCourse = props => {
     overview: '',
     category: '',
     price: 0,
+    img:{},
     chapters: [
       {
         title: '',

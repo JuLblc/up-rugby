@@ -19,6 +19,8 @@ const Formation = props => {
   const [courseData, setCourseData] = useState(props.courseContent)
   const [disableField, setDisableField] = useState(props.disable)
   const [fileInput, setFileInput] = useState([])
+  const [pictInput, setPictInput] = useState()
+
 
   const onChange = e => {
     setCourseData({ ...courseData, [e.target.name]: e.target.value })
@@ -40,7 +42,11 @@ const Formation = props => {
     setCourseData(newCourseData)
   }
 
-  const onChangeUpload = file => {
+  const onChangeUploadPict = picture => {
+    setPictInput(picture)
+  }
+
+  const onChangeUploadFile = file => {
     const newFileInputs = [...fileInput]
     newFileInputs.push(file)
     setFileInput(newFileInputs)
@@ -263,6 +269,16 @@ const Formation = props => {
           </label>
         </div>
 
+        <Upload
+          label='Ajouter photo'
+          courseData={courseData}
+          removeAttachement={removeAttachement}
+          updateStateFromChild={updateStateFromChild}
+          onChange={onChangeUploadPict}
+          uploadFileName='picture'
+          disabled={disableField}
+        />
+
         <label>
           {' '}
           Présentation:
@@ -301,7 +317,7 @@ const Formation = props => {
           courseData={courseData}
           removeAttachement={removeAttachement}
           updateStateFromChild={updateStateFromChild}
-          onChange={onChangeUpload}
+          onChange={onChangeUploadFile}
           uploadFileName='file'
           disabled={disableField}
         />
