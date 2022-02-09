@@ -1,51 +1,51 @@
-import axios from 'axios'
-import { useRef } from 'react'
+import { useRef } from "react";
 
-import styles from '../styles/Upload.module.css'
+import styles from "../styles/Upload.module.css";
 
-const Upload = props => {
-  const fileInputRef = useRef(null)
-  const divRef = useRef(null)
+const Upload = (props) => {
+  const fileInputRef = useRef(null);
+  const divRef = useRef(null);
 
   const onClickHandler = () => {
-    fileInputRef.current?.click()
-  }
+    fileInputRef.current?.click();
+  };
 
-  const onChangeHandler = async event => {
+  const onChangeHandler = async (event) => {
     if (!event.target.files?.length) {
-      return
+      return;
     }
 
-    const fileInput = event.currentTarget
-    console.log('fileInput: ', fileInput.files)
+    const fileInput = event.currentTarget;
+    console.log("fileInput: ", fileInput.files);
 
-    props.onChange(fileInput.files[0])
+    props.onChange(fileInput.files[0]);
 
-    const newCourseData = { ...props.courseData }
+    const newCourseData = { ...props.courseData };
 
-    if (props.uploadFileName === 'file') {
-      newCourseData.attachements.push({ fileName: fileInput.files[0].name })
+    if (props.uploadFileName === "file") {
+      newCourseData.attachements.push({ fileName: fileInput.files[0].name });
     }
 
-    if (props.uploadFileName === 'picture') {
-      newCourseData.img.fileName = fileInput.files[0].name
+    if (props.uploadFileName === "picture") {
+      newCourseData.img.fileName = fileInput.files[0].name;
     }
 
-    props.updateStateFromChild(newCourseData)
+    props.updateStateFromChild(newCourseData);
 
-    event.target.value = null
-  }
+    event.target.value = null;
+  };
 
   return (
     <div className={styles.uploadContainer} ref={divRef}>
       {/* Display exisiting picture */}
-      {props.uploadFileName === 'picture' && props.courseData.img.fileName && (
-        <div >
+      {props.uploadFileName === "picture" && props.courseData.img.fileName && (
+        <div>
           <p>{props.courseData.img.fileName}</p>
           <button
-            type='button'
+            type="button"
             disabled={props.disabled}
-            onClick={() => props.removeAttachement(idx, file)}
+            onClick={() => props.remove()}
+            //onClick={() => console.log("click")}
           >
             Supp photo!
           </button>
@@ -53,20 +53,21 @@ const Upload = props => {
       )}
 
       {/* Display exisiting attachements */}
-      {props.uploadFileName === 'file' && props.courseData.attachements.map((file, idx) => (
-        <div key={file.fileName}>
-          <p>{file.fileName}</p>
-          <button
-            type='button'
-            disabled={props.disabled}
-            onClick={() => props.removeAttachement(idx, file)}
-          >
-            Supp fichier!
-          </button>
-        </div>
-      ))}
+      {props.uploadFileName === "file" &&
+        props.courseData.attachements.map((file, idx) => (
+          <div key={file.fileName}>
+            <p>{file.fileName}</p>
+            <button
+              type="button"
+              disabled={props.disabled}
+              onClick={() => props.remove(idx, file)}
+            >
+              Supp fichier!
+            </button>
+          </div>
+        ))}
 
-      <button type='button' onClick={onClickHandler} disabled={props.disabled}>
+      <button type="button" onClick={onClickHandler} disabled={props.disabled}>
         {props.label}
       </button>
       <input
@@ -75,10 +76,10 @@ const Upload = props => {
         name={props.uploadFileName}
         onChange={onChangeHandler}
         ref={fileInputRef}
-        type='file'
+        type="file"
       />
     </div>
-  )
-}
+  );
+};
 
-export default Upload
+export default Upload;
