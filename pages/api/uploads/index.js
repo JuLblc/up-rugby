@@ -30,7 +30,6 @@ const uploads = async (file, folder, resource_type) => {
 
 handler.post(upload.array("file"), async (req, res) => {
   const { folder, resource_type } = req.query;
-  console.log("req.body: ", folder, resource_type);
   const uploader = async (file) => await uploads(file, folder, resource_type);
 
   const secureUrls = [];

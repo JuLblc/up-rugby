@@ -45,7 +45,6 @@ const Upload = (props) => {
             type="button"
             disabled={props.disabled}
             onClick={() => props.remove()}
-            //onClick={() => console.log("click")}
           >
             Supp photo!
           </button>
@@ -71,13 +70,13 @@ const Upload = (props) => {
         {props.label}
       </button>
       <input
-        // accept={props.acceptedFileTypes}
-        // multiple={props.allowMultipleFiles}
         name={props.uploadFileName}
         onChange={onChangeHandler}
         ref={fileInputRef}
         type="file"
+        accept={props.acceptedFileTypes}
       />
+      
     </div>
   );
 };

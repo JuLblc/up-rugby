@@ -76,7 +76,6 @@ const Formation = (props) => {
   };
 
   const removeAttachement = (idx, fileToRemove) => {
-    console.log("removeAttachement", idx, fileToRemove);
     //Remove from courseData
     const newCourseData = { ...courseData };
     newCourseData.attachements.splice(idx, 1);
@@ -89,15 +88,12 @@ const Formation = (props) => {
       .indexOf(fileToRemove.fileName);
 
     if (index !== -1) {
-      console.log("fileName: ", fileToRemove.fileName, "index: ", index);
       newFileInputs.splice(index, 1);
       setFileInput(newFileInputs);
     }
   };
 
   const removePict = () => {
-    console.log("removePict");
-
     //Remove from courseData
     const newCourseData = { ...courseData };
     newCourseData.img = {};
@@ -200,7 +196,6 @@ const Formation = (props) => {
           resource_type: "raw"
         }
       });
-      console.log("resUploadFile: ", resUploadFile.data);
 
       newCourseData.attachements
         .filter((file) => file.url === undefined)
@@ -208,21 +203,18 @@ const Formation = (props) => {
     }
 
     //2. Picture upload to Cloudinary & get secure urls
-    console.log("pictInput: ", pictInput);
     if (pictInput) {
       const formDataPict = new FormData();
       formDataPict.append("file", pictInput);
 
-      console.log("formDataPict: ", formDataPict);
       const resUploadPict = await axios.post("/api/uploads", formDataPict, {
         params: {
           folder: "/uprugby-uploads-pict-formation",
-          resource_type: "raw"
+          resource_type: "image"
         }
       });
-      console.log("resUploadPict: ", resUploadPict.data);
 
-      newCourseData.img.url = resUploadPict.data.secureUrls;
+      newCourseData.img.url = resUploadPict.data.secureUrls[0];
     }
 
     //3. Save in DB
@@ -231,7 +223,6 @@ const Formation = (props) => {
         const resCreate = await axios.post("/api/courses", {
           course: newCourseData
         });
-        console.log("resCreate: ", resCreate.data);
         router.push(
           `/courses/update-course/${resCreate.data.newCourseFromDB.seoUrl}`
         );
@@ -241,7 +232,6 @@ const Formation = (props) => {
         const resUpdate = await axios.put("/api/courses", {
           course: newCourseData
         });
-        console.log("resCreate: ", resUpdate.data);
         router.push(
           `/courses/update-course/${resUpdate.data.updatedCourseFromDB.seoUrl}`
         );
@@ -303,6 +293,7 @@ const Formation = (props) => {
           onChange={onChangeUploadPict}
           uploadFileName="picture"
           disabled={disableField}
+          acceptedFileTypes="image/*"
         />
 
         <label>
@@ -346,6 +337,7 @@ const Formation = (props) => {
           onChange={onChangeUploadFile}
           uploadFileName="file"
           disabled={disableField}
+          acceptedFileTypes=".ppt, .pptx, .pdf"
         />
 
         {/*  Display 'save' button until course is save in DB*/}
