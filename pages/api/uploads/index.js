@@ -12,14 +12,14 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_SECRET
 });
 
-const uploads = async (file) => {
+const uploads = async (file, folder, resource_type) => {
   return new Promise((resolve) => {
     cloudinary.uploader.upload(
       file.path,
       {
         public_id: file.originalname,
-        folder: "/uprugby-uploads",
-        resource_type: "raw"
+        folder,
+        resource_type
       },
       function (error, result) {
         resolve(result.secure_url);
@@ -29,7 +29,9 @@ const uploads = async (file) => {
 };
 
 handler.post(upload.array("file"), async (req, res) => {
-  const uploader = async (file) => await uploads(file); // uploads(file, folder, ressourceType)
+  const { folder, resource_type } = req.query;
+  console.log("req.body: ", folder, resource_type);
+  const uploader = async (file) => await uploads(file, folder, resource_type);
 
   const secureUrls = [];
   const files = req.files;

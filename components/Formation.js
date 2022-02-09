@@ -187,23 +187,45 @@ const Formation = (props) => {
 
     setDisableField(true);
 
-    const formData = new FormData();
-
-    for (const file of fileInput) {
-      formData.append("file", file);
-    }
-
     // 1. Files upload to Cloudinary & get secure urls
-    if (formData.lenghth > 0) {
-      const resUpload = await axios.post("/api/uploads", formData);
-      console.log("resUpload: ", resUpload.data);
+    if (fileInput.length > 0) {
+      const formDataFile = new FormData();
+
+      for (const file of fileInput) {
+        formDataFile.append("file", file);
+      }
+      const resUploadFile = await axios.post("/api/uploads", formDataFile, {
+        params: {
+          folder: "/uprugby-uploads-ppt",
+          resource_type: "raw"
+        }
+      });
+      console.log("resUploadFile: ", resUploadFile.data);
 
       newCourseData.attachements
         .filter((file) => file.url === undefined)
-        .map((file, idx) => (file.url = resUpload.data.secureUrls[idx]));
+        .map((file, idx) => (file.url = resUploadFile.data.secureUrls[idx]));
     }
 
-    //2. Save in DB
+    //2. Picture upload to Cloudinary & get secure urls
+    console.log("pictInput: ", pictInput);
+    if (pictInput) {
+      const formDataPict = new FormData();
+      formDataPict.append("file", pictInput);
+
+      console.log("formDataPict: ", formDataPict);
+      const resUploadPict = await axios.post("/api/uploads", formDataPict, {
+        params: {
+          folder: "/uprugby-uploads-pict-formation",
+          resource_type: "raw"
+        }
+      });
+      console.log("resUploadPict: ", resUploadPict.data);
+
+      newCourseData.img.url = resUploadPict.data.secureUrls;
+    }
+
+    //3. Save in DB
     if (!courseData.isPublished) {
       if (props.action === "create") {
         const resCreate = await axios.post("/api/courses", {
@@ -213,28 +235,16 @@ const Formation = (props) => {
         router.push(
           `/courses/update-course/${resCreate.data.newCourseFromDB.seoUrl}`
         );
-
-        /*axios
-          .post("/api/courses", { course: newCourseData })
-          .then((response) => {
-            console.log("response: ", response.data);
-            router.push(
-              `/courses/update-course/${response.data.newCourseFromDB.seoUrl}`
-            );
-          })
-          .catch((err) => console.log("err: ", err));*/
       }
 
       if (props.action === "update") {
-        axios
-          .put("/api/courses", { course: newCourseData })
-          .then((response) => {
-            //console.log('response: ', response.data)
-            router.push(
-              `/courses/update-course/${response.data.updatedCourseFromDB.seoUrl}`
-            );
-          })
-          .catch((err) => console.log("err: ", err));
+        const resUpdate = await axios.put("/api/courses", {
+          course: newCourseData
+        });
+        console.log("resCreate: ", resUpdate.data);
+        router.push(
+          `/courses/update-course/${resUpdate.data.updatedCourseFromDB.seoUrl}`
+        );
       }
     }
   };
