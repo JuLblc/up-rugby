@@ -5,11 +5,12 @@ import img from '../public/relance-de-jeu.jpg'
 import styles from '../styles/CardFormation.module.css'
 
 const CardFormation = props => {
-  // console.log('CardFormation props: ', props)
+
   return (
     <article className={styles.cardFormation}>
       <span className={styles.imgCard}>
-        <Image src={img} alt='img' />
+        {/* <Image src={img} alt='img' /> */}
+        <Image src={props.img.url} alt='img' width={props.img.width} height={props.img.height} />
       </span>
       <div className={styles.CardFormationWrapper}>
         <div className={styles.formationInfo}>
@@ -32,7 +33,9 @@ const CardFormation = props => {
                 fill='rgba(128,128,128,1)'
               />
             </svg>
-            <span>{`${props.lecturesQty} Chapitre${props.lecturesQty > 1 ? 's':''}`}</span>
+            <span>{`${props.lecturesQty} Chapitre${
+              props.lecturesQty > 1 ? 's' : ''
+            }`}</span>
           </div>
           <div className={styles.cardFooterInfo}>
             <svg

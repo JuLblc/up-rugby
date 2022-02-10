@@ -10,6 +10,7 @@ import Tiptap from "./Tiptap";
 import { toSeoUrl } from "../utils/utilSeoUrl";
 
 import styles from "../styles/Formation.module.css";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
 
 const Formation = (props) => {
   // console.log('3. props Formation: ', props)
@@ -214,7 +215,9 @@ const Formation = (props) => {
         }
       });
 
-      newCourseData.img.url = resUploadPict.data.secureUrls[0];
+      newCourseData.img.url = resUploadPict.data.url;
+      newCourseData.img.width = resUploadPict.data.width;
+      newCourseData.img.height = resUploadPict.data.height;
     }
 
     //3. Save in DB
@@ -223,6 +226,7 @@ const Formation = (props) => {
         const resCreate = await axios.post("/api/courses", {
           course: newCourseData
         });
+        console.log('newCourseFromDB: ', resCreate.data.newCourseFromDB)
         router.push(
           `/courses/update-course/${resCreate.data.newCourseFromDB.seoUrl}`
         );

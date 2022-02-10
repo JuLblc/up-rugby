@@ -54,6 +54,7 @@ const Courses = props => {
             isPublished={course.isPublished}
             role={props.session?.user.role}
             lecturesQty = {getLecturesQty(course)}
+            img={course.img}
           />
         )
       })}

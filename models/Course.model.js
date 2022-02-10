@@ -8,7 +8,9 @@ const CourseSchema = new mongoose.Schema({
     price:Number,
     img: {
         fileName: String,
-        url: String
+        url: String,
+        width:Number,
+        height:Number
     },
     chapters: [
         {

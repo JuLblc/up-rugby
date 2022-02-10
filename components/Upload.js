@@ -16,7 +16,6 @@ const Upload = (props) => {
     }
 
     const fileInput = event.currentTarget;
-    console.log("fileInput: ", fileInput.files);
 
     props.onChange(fileInput.files[0]);
 

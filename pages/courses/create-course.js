@@ -23,7 +23,9 @@ const NewCourse = (props) => {
     price: 0,
     img: {
       fileName: "",
-      url: ""
+      url: "",
+      width:0,
+      height: 0
     },
     chapters: [
       {
