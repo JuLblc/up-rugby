@@ -20,7 +20,7 @@ const Login = props => {
     messageType: ''
   })
   const [loginOpt, setLoginOpt] = useState(props.loginOpt)
-  const [reset, doReset] = useState(0)
+  const [reset, doReset] = useState(0);
 
   const [pattern, setPattern] = useState(props.patternStr)
 
@@ -33,12 +33,12 @@ const Login = props => {
       type: 'email',
       placeholder: 'Email',
       errorMessages: {
-        patternMismatch: null,
+        patternMismatch : null,
         valueMissing: 'Veuillez saisir votre adresse Email',
         valid: 'Merci de saisir une adresse valide'
       },
       required: true,
-      reset: reset,
+      reset:reset,
       svg: (
         <svg
           className={styles.icon}
@@ -61,14 +61,13 @@ const Login = props => {
       type: 'password',
       placeholder: 'Password',
       errorMessages: {
-        patternMismatch:
-          'Le mot de passe doit contenir au moins 6 caractères, un chiffre, une lettre et un caractère spécial',
+        patternMismatch : 'Le mot de passe doit contenir au moins 6 caractères, un chiffre, une lettre et un caractère spécial',
         valueMissing: 'Veuillez saisir votre mot de passe',
         valid: null
       },
       pattern: pattern,
       required: true,
-      reset: reset,
+      reset:reset,
       svg: (
         <svg
           className={styles.icon}
@@ -95,14 +94,13 @@ const Login = props => {
       messageType: ''
     })
 
-  const onClick = () => {
+    const onClick = () => {
+
     doReset(prev => prev + 1)
 
     if (loginOpt === 'signin') {
       setLoginOpt('signup')
-      setPattern(
-        `^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,20}$`
-      )
+      setPattern(`^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,20}$`)
     }
 
     if (loginOpt === 'signup') {
@@ -330,6 +328,7 @@ const Login = props => {
 
       {/* Login with Credentials */}
       <form onSubmit={handleFormSubmit}>
+
         {inputs.map(input => (
           <FormInput
             key={input.id}
@@ -341,9 +340,8 @@ const Login = props => {
 
         {messageAPI && (
           <div
-            className={`${styles.message} ${styles.messageAPI} ${messageType ===
-              'error' && styles.onError}  ${messageType === 'success' &&
-              styles.onSuccessServer}`}
+            className={`${styles.message} ${styles.messageAPI} ${messageType === 'error' &&
+              styles.onError}  ${messageType === 'success' && styles.onSuccessServer}`}
           >
             <svg
               className={styles.icon}
@@ -408,10 +406,9 @@ export const getServerSideProps = async context => {
   }
 
   const loginOpt = context.query.login
-  let patternStr
-  loginOpt === 'signin'
-    ? (patternStr = null)
-    : (patternStr = `^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,20}$`)
+  let patternStr;
+  loginOpt === 'signin' ? patternStr = null : patternStr = `^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,20}$`
+
 
   return {
     props: {
