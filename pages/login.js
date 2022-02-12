@@ -6,6 +6,8 @@ import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
+import FormInput from '../components/FormInput'
+
 import styles from '../styles/Login.module.css'
 
 const Login = props => {
@@ -14,24 +16,104 @@ const Login = props => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    message: '',
+    messageAPI: '',
     messageType: ''
   })
-
   const [loginOpt, setLoginOpt] = useState(props.loginOpt)
+  const [reset, doReset] = useState(0)
 
-  const { email, password, message, messageType } = formData
+  const [pattern, setPattern] = useState(props.patternStr)
+
+  const { email, password, messageAPI, messageType } = formData
+
+  const inputs = [
+    {
+      id: 1,
+      name: 'email',
+      type: 'email',
+      placeholder: 'Email',
+      errorMessages: {
+        patternMismatch: null,
+        valueMissing: 'Veuillez saisir votre adresse Email',
+        valid: 'Merci de saisir une adresse valide'
+      },
+      required: true,
+      reset: reset,
+      svg: (
+        <svg
+          className={styles.icon}
+          xmlns='http://www.w3.org/2000/svg'
+          viewBox='0 0 24 24'
+          width='24'
+          height='24'
+        >
+          <path fill='none' d='M0 0h24v24H0z' />
+          <path
+            d='M3 3h18a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm9.06 8.683L5.648 6.238 4.353 7.762l7.72 6.555 7.581-6.56-1.308-1.513-6.285 5.439z'
+            fill='rgba(103,104,121,1)'
+          />
+        </svg>
+      )
+    },
+    {
+      id: 2,
+      name: 'password',
+      type: 'password',
+      placeholder: 'Password',
+      errorMessages: {
+        patternMismatch:
+          'Le mot de passe doit contenir au moins 6 caractères, un chiffre, une lettre et un caractère spécial',
+        valueMissing: 'Veuillez saisir votre mot de passe',
+        valid: null
+      },
+      pattern: pattern,
+      required: true,
+      reset: reset,
+      svg: (
+        <svg
+          className={styles.icon}
+          xmlns='http://www.w3.org/2000/svg'
+          viewBox='0 0 24 24'
+          width='24'
+          height='24'
+        >
+          <path fill='none' d='M0 0h24v24H0z' />
+          <path
+            d='M19 10h1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V11a1 1 0 0 1 1-1h1V9a7 7 0 1 1 14 0v1zm-2 0V9A5 5 0 0 0 7 9v1h10zm-6 4v4h2v-4h-2z'
+            fill='rgba(103,104,121,1)'
+          />
+        </svg>
+      )
+    }
+  ]
 
   const onChange = e =>
-    setFormData({ ...formData, [e.target.name]: e.target.value })
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+      messageAPI: '',
+      messageType: ''
+    })
 
   const onClick = () => {
-    if (loginOpt === 'signin') setLoginOpt('signup')
-    if (loginOpt === 'signup') setLoginOpt('signin')
+    doReset(prev => prev + 1)
+
+    if (loginOpt === 'signin') {
+      setLoginOpt('signup')
+      setPattern(
+        `^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,20}$`
+      )
+    }
+
+    if (loginOpt === 'signup') {
+      setLoginOpt('signin')
+      setPattern(null)
+    }
+
     setFormData({
-      email: formData.email,
+      email: '',
       password: '',
-      message: '',
+      messageAPI: '',
       messageType: ''
     })
   }
@@ -41,48 +123,39 @@ const Login = props => {
 
     /* --------------------------- SIGN IN ---------------------------*/
     if (loginOpt === 'signin') {
-      // Check email and password are not empty
-      if (!email || !password) {
-        setFormData({
-          ...formData,
-          message: 'Merci de saisir une adresse E-mail et un mot de passe',
-          messageType: 'error'
-        })
-      } else {
-        signIn('credentials', {
-          redirect: false,
-          email,
-          password
-        })
-          .then(response => {
-            if (!response.error) {
-              router.push('/')
-            } else if (
-              response.error === `Cannot read property 'password' of null`
-            ) {
-              setFormData({
-                ...formData,
-                message: 'Cette adresse E-mail est introuvable ou non validée',
-                messageType: 'error'
-              })
-            } else {
-              setFormData({
-                ...formData,
-                message:
-                  'Cette adresse E-mail et ce mot de passe ne correspondent pas',
-                messageType: 'error'
-              })
-            }
-          })
-          .catch(err => {
-            console.log(err)
+      signIn('credentials', {
+        redirect: false,
+        email,
+        password
+      })
+        .then(response => {
+          if (!response.error) {
+            router.push('/')
+          } else if (
+            response.error === `Cannot read property 'password' of null`
+          ) {
             setFormData({
               ...formData,
-              message: err.response.data.message,
+              messageAPI: 'Cette adresse E-mail est introuvable ou non validée',
               messageType: 'error'
             })
+          } else {
+            setFormData({
+              ...formData,
+              messageAPI:
+                'Cette adresse E-mail et ce mot de passe ne correspondent pas',
+              messageType: 'error'
+            })
+          }
+        })
+        .catch(err => {
+          console.log(err)
+          setFormData({
+            ...formData,
+            messageAPI: err.response.data.message,
+            messageType: 'error'
           })
-      }
+        })
     } else {
       /* --------------------------- SIGN UP ---------------------------*/
       console.log(loginOpt)
@@ -92,14 +165,14 @@ const Login = props => {
           // console.log('response: ', response.data)
           setFormData({
             ...formData,
-            message: response.data.message,
+            messageAPI: response.data.message,
             messageType: response.data.messageType
           })
         })
         .catch(err =>
           setFormData({
             ...formData,
-            message: err.response.data.message,
+            messageAPI: err.response.data.message,
             messageType: err.response.data.messageType
           })
         )
@@ -257,57 +330,20 @@ const Login = props => {
 
       {/* Login with Credentials */}
       <form onSubmit={handleFormSubmit}>
-        <label>
-          <svg
-            className={styles.icon}
-            xmlns='http://www.w3.org/2000/svg'
-            viewBox='0 0 24 24'
-            width='24'
-            height='24'
-          >
-            <path fill='none' d='M0 0h24v24H0z' />
-            <path
-              d='M3 3h18a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm9.06 8.683L5.648 6.238 4.353 7.762l7.72 6.555 7.581-6.56-1.308-1.513-6.285 5.439z'
-              fill='rgba(103,104,121,1)'
-            />
-          </svg>
-
-          <input
-            placeholder='Email'
-            type='email'
-            name='email'
-            value={email}
+        {inputs.map(input => (
+          <FormInput
+            key={input.id}
+            {...input}
+            value={formData[input.name]}
             onChange={onChange}
           />
-        </label>
+        ))}
 
-        <label>
-          <svg
-            className={styles.icon}
-            xmlns='http://www.w3.org/2000/svg'
-            viewBox='0 0 24 24'
-            width='24'
-            height='24'
-          >
-            <path fill='none' d='M0 0h24v24H0z' />
-            <path
-              d='M19 10h1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V11a1 1 0 0 1 1-1h1V9a7 7 0 1 1 14 0v1zm-2 0V9A5 5 0 0 0 7 9v1h10zm-6 4v4h2v-4h-2z'
-              fill='rgba(103,104,121,1)'
-            />
-          </svg>
-          <input
-            placeholder='Password'
-            type='password'
-            name='password'
-            value={password}
-            onChange={onChange}
-          />
-        </label>
-
-        {message && (
+        {messageAPI && (
           <div
-            className={`${styles.message} ${messageType === 'error' &&
-              styles.error}  ${messageType === 'success' && styles.success}`}
+            className={`${styles.message} ${styles.messageAPI} ${messageType ===
+              'error' && styles.onError}  ${messageType === 'success' &&
+              styles.onSuccessServer}`}
           >
             <svg
               className={styles.icon}
@@ -325,7 +361,7 @@ const Login = props => {
               />
             </svg>
 
-            <span>{message}</span>
+            <span>{messageAPI}</span>
           </div>
         )}
 
@@ -372,11 +408,16 @@ export const getServerSideProps = async context => {
   }
 
   const loginOpt = context.query.login
+  let patternStr
+  loginOpt === 'signin'
+    ? (patternStr = null)
+    : (patternStr = `^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,20}$`)
 
   return {
     props: {
       session,
-      loginOpt
+      loginOpt,
+      patternStr
     }
   }
 }

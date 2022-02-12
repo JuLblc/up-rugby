@@ -56,12 +56,13 @@ const addUser = (req, res) => {
   }
 
   //3. Check password is strong
-  const regexPassword = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/
+  const regexPassword = /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,20}$/
+  
 
   if (!regexPassword.test(password)) {
     res.status(403).json({
       message:
-        'Le mot de passe doit contenir au moins 6 caractères, un chiffre, une minuscule et une majuscule',
+        'Le mot de passe doit contenir au moins 6 caractères, un chiffre, une lettre et un caractère spécial',
       messageType: 'error'
     })
     return

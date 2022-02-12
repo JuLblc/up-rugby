@@ -10,7 +10,6 @@ import Tiptap from "./Tiptap";
 import { toSeoUrl } from "../utils/utilSeoUrl";
 
 import styles from "../styles/Formation.module.css";
-import { CloudinaryStorage } from "multer-storage-cloudinary";
 
 const Formation = (props) => {
   // console.log('3. props Formation: ', props)
