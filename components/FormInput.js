@@ -1,5 +1,6 @@
 import styles from '../styles/Login.module.css'
 import { useState, useEffect } from 'react'
+import axios from 'axios'
 
 const FormInput = props => {
   const [focused, setFocused] = useState(false)
@@ -11,7 +12,19 @@ const FormInput = props => {
     eyeType: 1
   })
 
-  const { errorMessages, onChange, id, svg, reset, type, ...inputProps } = props
+  const {
+    errorMessages,
+    onChange,
+    id,
+    svg,
+    reset,
+    type,
+    label,
+    chapterIdx,
+    lectureIdx,
+    getDuration,
+    ...inputProps
+  } = props
 
   useEffect(() => {
     setErrorMessage('')
@@ -38,6 +51,22 @@ const FormInput = props => {
       setErrorMessage(errorMessages.valid)
       return
     }
+
+    //Check video exist on vimeo
+    if (e.target.name === 'url') {
+      let vimeoId = e.target.value.substring(31, e.target.value.length)
+
+      axios
+        .get(`https://api.vimeo.com/videos/${vimeoId}`, {
+          headers: {
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_VIMEO_TOKEN}`
+          }
+        })
+        .then(response => {
+          getDuration(response.data.duration, props.chapterIdx, props.lectureIdx)
+        })
+        .catch(err => console.log(err))
+    }
   }
 
   const onEyeClick = () => {
@@ -60,7 +89,8 @@ const FormInput = props => {
   return (
     <>
       <label>
-        {svg[0]}
+        {svg && svg[0]}
+        {label}
         <input
           {...inputProps}
           type={type === 'password' ? passwordShown.type : type}
@@ -68,7 +98,9 @@ const FormInput = props => {
           onBlur={handleOnBlur}
           focused={focused.toString()}
         />
-        {svg.length > 1 && <span onClick={onEyeClick}>{svg[passwordShown.eyeType]}</span>}
+        {svg && svg.length > 1 && (
+          <span onClick={onEyeClick}>{svg[passwordShown.eyeType]}</span>
+        )}
       </label>
 
       <div

@@ -1,52 +1,52 @@
+import FormInput from './FormInput'
+
 const Lecture = props => {
   //console.log('props Lecture: ', props)
+  const inputs = [
+    {
+      id: 1,
+      label: 'Titre leçon:',
+      name: 'title',
+      type: 'text',
+      disabled: props.disableField
+    },
+    {
+      id: 2,
+      label: 'Description:',
+      name: 'description',
+      type: 'text',
+      disabled: props.disableField
+    },
+    {
+      id: 3,
+      label: 'Video URL:',
+      name: 'url',
+      type: 'text',
+      errorMessages: {
+        valueMissing: 'Veuillez saisir le lien de la vidéo',
+        patternMismatch: `Le lien doit commencer par "https://player.vimeo.com/video/" et se terminer par l'id de la vidéo`
+      },
+      required: true,
+      pattern: '^https://player.vimeo.com/video/[0-9]+$',
+      disabled: props.disableField,
+      chapterIdx: props.chapterIdx,
+      lectureIdx: props.lectureIdx,
+      getDuration: props.getDuration
+    }
+  ]
 
   return (
     <div className='video-container'>
-      <label>
-        {' '}
-        Titre leçon:
-        <input
-          type='text'
-          name='title'
-          value={props.chapter.lectures[props.lectureIdx].title || ''}
+      {inputs.map(input => (
+        <FormInput
+          key={input.id}
+          {...input}
+          value={props.chapter.lectures[props.lectureIdx][input.name] || ''}
           onChange={e =>
             props.onChangeVideo(e, props.chapterIdx, props.lectureIdx)
           }
-          disabled={props.disableField}
         />
-      </label>
-
-      <label>
-        {' '}
-        Description:
-        <input
-          type='text'
-          name='description'
-          value={props.chapter.lectures[props.lectureIdx].description || ''}
-          onChange={e =>
-            props.onChangeVideo(e, props.chapterIdx, props.lectureIdx)
-          }
-          disabled={props.disableField}
-        />
-      </label>
-
-      <label>
-        {' '}
-        Video Url:
-        <input
-          type='text'
-          name='url'
-          value={props.chapter.lectures[props.lectureIdx].url || ''}
-          onChange={e =>
-            props.onChangeVideo(e, props.chapterIdx, props.lectureIdx)
-          }
-          disabled={props.disableField}
-          onBlur={() =>
-            props.onBlurUrlVideo(props.chapterIdx, props.lectureIdx)
-          }
-        />
-      </label>
+      ))}
 
       {props.lectureIdx ? (
         <button

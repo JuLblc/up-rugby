@@ -1,7 +1,7 @@
 import Lecture from './Lecture'
+import FormInput from './FormInput'
 
 import styles from '../styles/Chapter.module.css'
-
 
 const Chapter = props => {
   //console.log('props Chapter: ', props)
@@ -13,6 +13,13 @@ const Chapter = props => {
     props.updateStateFromChild(newCourseData)
   }
 
+  const getDuration = (duration, chapterIdx, lectureIdx) => {
+    console.log('from chapter', duration, chapterIdx, lectureIdx)
+    const newCourseData = { ...props.courseData }
+    newCourseData.chapters[chapterIdx].lectures[lectureIdx].duration = duration
+    props.updateStateFromChild(newCourseData)
+  }
+
   const removeVideo = (chapterIdx, lectureIdx) => {
     const newCourseData = { ...props.courseData }
     newCourseData.chapters[chapterIdx].lectures.splice(lectureIdx, 1)
@@ -21,28 +28,26 @@ const Chapter = props => {
 
   return (
     <div className={styles.chapterContainer}>
-      <label>
-        {' '}
-        Titre Chapitre:
-        <input
-          type='text'
-          name='title'
-          value={props.courseData.chapters[props.chapterIdx].title || ''}
-          onChange={e => props.onChangeChapter(e, props.chapterIdx)}
-          disabled={props.disableField}
-        />
-      </label>
+      <FormInput
+        label='Titre Chapitre:'
+        type='text'
+        name='title'
+        value={props.courseData.chapters[props.chapterIdx].title || ''}
+        onChange={e => props.onChangeChapter(e, props.chapterIdx)}
+        disabled={props.disableField}
+      />
+
       {props.courseData.chapters[props.chapterIdx].lectures.map(
         (lecture, lectureIdx) => (
           <Lecture
             key={lecture._id ? lecture._id : lectureIdx}
             chapterIdx={props.chapterIdx}
-            lectureIdx={lectureIdx}
+            lectureIdx={lectureIdx}      
             chapter={props.courseData.chapters[props.chapterIdx]}
             onChangeVideo={e => onChangeVideo(e, props.chapterIdx, lectureIdx)}
             removeVideo={() => removeVideo(props.chapterIdx, lectureIdx)}
             disableField={props.disableField}
-            onBlurUrlVideo={props.onBlurUrlVideo}
+            getDuration={getDuration}
           />
         )
       )}

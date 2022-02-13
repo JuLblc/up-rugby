@@ -188,7 +188,6 @@ const Login = props => {
         })
     } else {
       /* --------------------------- SIGN UP ---------------------------*/
-      console.log(loginOpt)
       axios
         .post('/api/auth', { email, password })
         .then(response => {
