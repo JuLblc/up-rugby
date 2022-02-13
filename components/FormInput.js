@@ -5,8 +5,13 @@ const FormInput = props => {
   const [focused, setFocused] = useState(false)
   const [error, setError] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
+  const [passwordShown, setPasswordShown] = useState({
+    type: props.type,
+    show: false,
+    eyeType: 1
+  })
 
-  const { errorMessages, onChange, id, svg, reset, ...inputProps } = props
+  const { errorMessages, onChange, id, svg, reset, type, ...inputProps } = props
 
   useEffect(() => {
     setErrorMessage('')
@@ -35,16 +40,35 @@ const FormInput = props => {
     }
   }
 
+  const onEyeClick = () => {
+    let type = ''
+    let eyeType = 0
+    if (passwordShown.type === 'password') {
+      type = 'text'
+      eyeType = 2
+    } else {
+      type = 'password'
+      eyeType = 1
+    }
+    setPasswordShown({
+      type: type,
+      show: !passwordShown.show,
+      eyeType: eyeType
+    })
+  }
+
   return (
     <>
       <label>
-        {svg}
+        {svg[0]}
         <input
           {...inputProps}
+          type={type === 'password' ? passwordShown.type : type}
           onChange={onChange}
           onBlur={handleOnBlur}
           focused={focused.toString()}
         />
+        {svg.length > 1 && <span onClick={onEyeClick}>{svg[passwordShown.eyeType]}</span>}
       </label>
 
       <div

@@ -61,6 +61,12 @@
   height: 16px;
 }
 
+.eye {
+  left: unset;
+  right: 16px;
+
+}
+
 .break {
   display: flex;
   flex-direction: row;
