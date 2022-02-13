@@ -42,6 +42,7 @@ const Login = props => {
       svg: [
         <svg
           className={styles.icon}
+          key='0'
           xmlns='http://www.w3.org/2000/svg'
           viewBox='0 0 24 24'
           width='24'
@@ -72,6 +73,7 @@ const Login = props => {
       svg: [
         <svg
           className={styles.icon}
+          key='0'
           xmlns='http://www.w3.org/2000/svg'
           viewBox='0 0 24 24'
           width='24'
@@ -85,7 +87,7 @@ const Login = props => {
         </svg>,
         <svg
           className={`${styles.icon} ${styles.eye}`}
-          // onClick={onEyeClick}
+          key='1'
           xmlns='http://www.w3.org/2000/svg'
           viewBox='0 0 24 24'
           width='24'
@@ -99,7 +101,7 @@ const Login = props => {
         </svg>,
         <svg
           className={`${styles.icon} ${styles.eye}`}
-          // onClick={onEyeClick}
+          key='2'
           xmlns='http://www.w3.org/2000/svg'
           viewBox='0 0 24 24'
           width='24'
