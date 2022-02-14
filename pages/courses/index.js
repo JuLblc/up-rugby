@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { getCourses } from '../../apiCall'
 import { useWindowDimensions } from '../../hooks/useWindowDimensions'
 import { getDeviceTypeInfo } from '../../utils/utilResponsive'
+import { getLecturesQty , getLecturesTime } from '../../utils/utilCourses'
 
 import CardFormation from '../../components/CardFormation'
 
@@ -17,12 +18,6 @@ const Courses = props => {
     isDesktopOrLaptop,
     isBigScreen
   } = getDeviceTypeInfo(width, height)
-
-  const getLecturesQty = (course) =>{
-    let qty = 0;
-    course.chapters.map(chapter => qty = qty + chapter.lectures.length)
-    return qty;
-  }
 
   return (
     <main className={styles.cardFormationContainer}>
@@ -53,7 +48,8 @@ const Courses = props => {
             price={course.price}
             isPublished={course.isPublished}
             role={props.session?.user.role}
-            lecturesQty = {getLecturesQty(course)}
+            lecturesQty={getLecturesQty(course)}
+            lecturesTimes={getLecturesTime(course)}
             img={course.img}
           />
         )

@@ -50,7 +50,7 @@ const CardFormation = props => {
                 fill='rgba(128,128,128,1)'
               />
             </svg>
-            <span>2h51</span>
+            <span>{props.lecturesTimes}</span>
           </div>
 
           <span>{props.price} €</span>
