@@ -11,8 +11,7 @@ import styles from '../../../../styles/Lectures.module.css'
 
 const Lectures = props => {
   return (
-    <main>
-      <div className={styles.container}>
+    <main className={styles.container}>
         <div className={styles.player}>
           <h1>{props.lecture.title}</h1>
           {props.course.isPurchased ? (
@@ -24,8 +23,7 @@ const Lectures = props => {
           <p>{props.lecture.description}</p>
         </div>
 
-        <SideCourseChapter course={props.course} />
-      </div>
+        <SideCourseChapter course={props.course} styles={styles}/>
     </main>
   )
 }
