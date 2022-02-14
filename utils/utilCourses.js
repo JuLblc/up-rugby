@@ -17,10 +17,9 @@ export const getLecturesTime = course => {
   return convertTime(timeCourse)
 }
 
-const convertTime = totalSeconds => {
-  let hours = Math.floor(totalSeconds / 3600)
-  totalSeconds %= 3600
-  let minutes = Math.floor(totalSeconds / 60)
+export const convertTime = totalMinutes => {
+  let hours = Math.floor(totalMinutes / 60)
+  let minutes = totalMinutes %= 60
 
   if (hours > 0) {
     minutes = String(minutes).padStart(2, '0')

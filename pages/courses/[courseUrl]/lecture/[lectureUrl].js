@@ -38,7 +38,7 @@ export const getServerSideProps = async context => {
   const { chapter, lectureUrl } = context.query
 
   const resCourse = await getCourses(context, context.query.courseUrl)
-  console.log('resCourse: ', resCourse.data.courseFromDB)
+  // console.log('resCourse: ', resCourse.data.courseFromDB)
 
   // Check if user already purchased this course. Pass the result as props
   const course = resCourse.data.courseFromDB

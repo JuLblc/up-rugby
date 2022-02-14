@@ -6,6 +6,8 @@ import { useRouter } from 'next/router'
 import { getCourses } from '../../../apiCall'
 import { getUser } from '../../../apiCall'
 
+import { convertTime } from '../../../utils/utilCourses'
+
 import Link from 'next/link'
 import parse from 'html-react-parser'
 
@@ -85,7 +87,7 @@ const FormationDetails = props => {
                               {lecture.title}
                             </span>
                             <span className={styles.lectureDuration}>
-                              12 min
+                              {convertTime(lecture.duration)}
                             </span>
                           </div>
                         </a>

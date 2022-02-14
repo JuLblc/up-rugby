@@ -63,8 +63,9 @@ const FormInput = props => {
           }
         })
         .then(response => {
+          let durationToUpperMin = Math.ceil(response.data.duration / 60)
           getDuration(
-            response.data.duration,
+            durationToUpperMin,
             props.chapterIdx,
             props.lectureIdx
           )
