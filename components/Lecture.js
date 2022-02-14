@@ -24,7 +24,8 @@ const Lecture = props => {
       type: 'text',
       errorMessages: {
         valueMissing: 'Veuillez saisir le lien de la vidéo',
-        patternMismatch: `Le lien doit commencer par "https://player.vimeo.com/video/" et se terminer par l'id de la vidéo`
+        patternMismatch: `Le lien doit commencer par "https://player.vimeo.com/video/" et se terminer par l'id de la vidéo`,
+        vimeo:"Cette vidéo n'est pas répertoriée sur Vimeo"
       },
       required: true,
       pattern: '^https://player.vimeo.com/video/[0-9]+$',

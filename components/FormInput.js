@@ -63,9 +63,16 @@ const FormInput = props => {
           }
         })
         .then(response => {
-          getDuration(response.data.duration, props.chapterIdx, props.lectureIdx)
+          getDuration(
+            response.data.duration,
+            props.chapterIdx,
+            props.lectureIdx
+          )
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+          setError(true)
+          setErrorMessage(errorMessages.vimeo)
+        })
     }
   }
 

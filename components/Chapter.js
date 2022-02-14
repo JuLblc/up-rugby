@@ -14,7 +14,6 @@ const Chapter = props => {
   }
 
   const getDuration = (duration, chapterIdx, lectureIdx) => {
-    console.log('from chapter', duration, chapterIdx, lectureIdx)
     const newCourseData = { ...props.courseData }
     newCourseData.chapters[chapterIdx].lectures[lectureIdx].duration = duration
     props.updateStateFromChild(newCourseData)
