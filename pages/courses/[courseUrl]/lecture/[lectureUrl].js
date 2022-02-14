@@ -2,6 +2,8 @@ import { getSession } from 'next-auth/react'
 
 import Vimeo from '@u-wave/react-vimeo'
 
+import { useWindowDimensions } from '../../../../hooks/useWindowDimensions'
+import { getDeviceTypeInfo } from '../../../../utils/utilResponsive'
 import { getCourses } from '../../../../apiCall'
 import { getUser } from '../../../../apiCall'
 
@@ -10,20 +12,34 @@ import SideCourseChapter from '../../../../components/SideCourseChapter'
 import styles from '../../../../styles/Lectures.module.css'
 
 const Lectures = props => {
-  return (
-    <main className={styles.container}>
-        <div className={styles.player}>
-          <h1>{props.lecture.title}</h1>
-          {props.course.isPurchased ? (
-            <Vimeo video={props.lecture.url} width={640} height={360} />
-          ) : (
-            <div className={styles.blocked}>Contenu bloqué</div>
-          )}
-          <h2>A propos de ce contenu</h2>
-          <p>{props.lecture.description}</p>
-        </div>
+  const { width, height } = useWindowDimensions()
 
-        <SideCourseChapter course={props.course} styles={styles}/>
+  const {
+    isMobile,
+    isTablet,
+    // isDesktopOrLaptop,
+    // isBigScreen
+  } = getDeviceTypeInfo(width, height)
+
+  return (
+    <main>
+      <h1>{props.lecture.title}</h1>
+      <div className={styles.container}>
+        {props.course.isPurchased ? (
+          <Vimeo video={props.lecture.url} responsive={true} />
+        ) : (
+          <div className={styles.blocked}>Contenu bloqué</div>
+        )}
+        {isMobile || isTablet ? (
+            <SideCourseChapter course={props.course} styles={styles} />
+        ) : (
+          <div className={styles.SideCourseChapterContainer}>
+            <SideCourseChapter course={props.course} styles={styles} />
+          </div>
+        )}
+      </div>
+      <h2>A propos de ce contenu</h2>
+      <p>{props.lecture.description}</p>
     </main>
   )
 }

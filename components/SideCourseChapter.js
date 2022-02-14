@@ -9,7 +9,7 @@ const SideCourseChapter = props => {
   return (
     <div className={styles.chaptersSplit}>
       {props.course.chapters.map(chapter => (
-        <div className={styles.sectionChapters} key={chapter._id}>
+        <div key={chapter._id}>
           <h3 className={styles.chapterTitle}>{chapter.title}</h3>
           {chapter.lectures.map(lecture => (
             <Link

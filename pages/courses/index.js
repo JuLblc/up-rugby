@@ -14,9 +14,9 @@ const Courses = props => {
 
   const {
     isMobile,
-    isTablet,
-    isDesktopOrLaptop,
-    isBigScreen
+    // isTablet,
+    // isDesktopOrLaptop,
+    // isBigScreen
   } = getDeviceTypeInfo(width, height)
 
   return (

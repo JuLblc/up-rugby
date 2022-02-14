@@ -1,16 +1,93 @@
-.container{
-    display: flex;
+.container {
+  display: grid;
+  grid-template-columns: 1fr;
 }
 
-/* .player{
-} */
+@media (min-width: 991px) {
+  .container {
+    grid-template-columns: 1fr 385px;
+  }
+}
 
-.blocked{
-    background-color: darkgrey;
-    color:red;
-    font-size:2em;
-    width:640px;
-    height: 360px;
-    text-align: center;
-    line-height: 360px;
+.blocked {
+  background-color: darkgrey;
+  color: red;
+  font-size: 2em;
+  width: 640px;
+  height: 360px;
+  text-align: center;
+  line-height: 360px;
+}
+
+.SideCourseChapterContainer {
+  position: relative;
+}
+
+.chaptersSplit {
+  padding: 12px 0;
+  border: 1px solid #d5e3ec;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 1px 1px 2px rgba(38, 38, 38, 0.2);
+}
+
+@media (min-width: 991px) {
+  .chaptersSplit {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: auto;
+  }
+}
+
+.chapterTitle {
+  margin: 0;
+  padding: 8px 24px;
+  font-weight: 400;
+}
+.chapterTitle a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.link {
+  text-decoration: none;
+  display: flex;
+  padding: 12px 24px;
+  color: inherit;
+  font-size: 0.9em;
+  font-weight: 400;
+}
+.link:hover {
+  background-color: #f7fafb;
+}
+
+.linkDetails {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.lectureTitle {
+  margin-left: 8px;
+}
+
+.lectureDuration {
+  margin-left: auto;
+  color: #808080;
+  font-size: 0.8em;
+}
+
+.download {
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  font-size: 0.9em;
+}
+
+.download a {
+  margin-left: auto;
 }

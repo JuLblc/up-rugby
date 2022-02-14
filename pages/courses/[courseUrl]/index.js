@@ -8,7 +8,6 @@ import Link from 'next/link'
 
 import { getCourses } from '../../../apiCall'
 import { getUser } from '../../../apiCall'
-import { convertTime } from '../../../utils/utilCourses'
 
 import SideCourseChapter from '../../../components/SideCourseChapter'
 
