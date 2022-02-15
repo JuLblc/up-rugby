@@ -1,4 +1,5 @@
 import { getSession } from 'next-auth/react'
+import Image from 'next/image'
 
 import Vimeo from '@u-wave/react-vimeo'
 
@@ -11,12 +12,14 @@ import SideCourseChapter from '../../../../components/SideCourseChapter'
 
 import styles from '../../../../styles/Lectures.module.css'
 
+import blockedImg from '../../../../public/blocked.jpg'
+
 const Lectures = props => {
   const { width, height } = useWindowDimensions()
 
   const {
     isMobile,
-    isTablet,
+    isTablet
     // isDesktopOrLaptop,
     // isBigScreen
   } = getDeviceTypeInfo(width, height)
@@ -28,10 +31,15 @@ const Lectures = props => {
         {props.course.isPurchased ? (
           <Vimeo video={props.lecture.url} responsive={true} />
         ) : (
-          <div className={styles.blocked}>Contenu bloqué</div>
+          <div className={styles.blockedContentWrapper}>
+            <div className={styles.blockedImageWrapper}>
+              <Image src={blockedImg} alt='blockedImg' />
+            </div>
+            <span className={styles.blockedContent}>Achetez la formation pour visionner la vidéo</span>
+          </div>
         )}
         {isMobile || isTablet ? (
-            <SideCourseChapter course={props.course} styles={styles} />
+          <SideCourseChapter course={props.course} styles={styles} />
         ) : (
           <div className={styles.SideCourseChapterContainer}>
             <SideCourseChapter course={props.course} styles={styles} />

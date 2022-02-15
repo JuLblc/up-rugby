@@ -9,14 +9,42 @@
   }
 }
 
-.blocked {
-  background-color: darkgrey;
-  color: red;
+.blockedContentWrapper {
+  position: relative;
+}
+
+.blockedContent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   font-size: 2em;
-  width: 640px;
-  height: 360px;
   text-align: center;
-  line-height: 360px;
+  color: whitesmoke;
+  background-color:rgba(58, 58, 58, 0.7) ; /* rgba(58, 58, 58) = #3a3a3a */
+  padding: 16px 24px;
+  border-radius: 2px;
+}
+
+@media (min-width: 991px) and (max-width: 1200px) {
+  .blockedContent {
+    font-size: 1.4em;
+  }
+}
+
+@media (max-width: 790px) {
+  .blockedContent {
+    font-size: 1em;
+  }
+}
+
+.blockedImageWrapper {
+  overflow: hidden;
+}
+
+.blockedImageWrapper > span {
+  display: block !important;
+  filter: blur(2px);
 }
 
 .SideCourseChapterContainer {
