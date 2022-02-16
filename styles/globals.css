@@ -34,6 +34,9 @@ h1 {
 .ProseMirror {
   border: solid 1px darkgray;
   padding: 5px;
+  font-family: 'Roboto';
+  font-size: 16px;
+  font-weight: normal;
 }
 
 .ProseMirror ul,
@@ -41,13 +44,26 @@ h1 {
   padding: 0 1rem;
 }
 
-.ProseMirror h1,
-.ProseMirror h2,
-.ProseMirror h3,
-.ProseMirror h4,
-.ProseMirror h5,
-.ProseMirror h6 {
-  line-height: 1.1;
+ul li p,
+ol li p {
+  margin: 0;
+  line-height: 1.1em
+}
+
+.ProseMirror h3, h3 {
+  font-weight: 400;
+  font-size: 1.5em;
+}
+
+.ProseMirror h4, h4 {
+  font-weight: 500;
+  font-size: 1.25em;
+}
+
+.ProseMirror h5, h5 {
+  font-weight: 500;
+  font-size: 1em;
+
 }
 
 .ProseMirror code {

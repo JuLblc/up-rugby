@@ -2,7 +2,8 @@ import { useEditor, EditorContent } from '@tiptap/react'
 import { useState, useEffect } from 'react'
 import StarterKit from '@tiptap/starter-kit'
 
-import styles from '../styles/Formation.module.css'
+// import styles from '../styles/Formation.module.css'
+import styles from '../styles/TipTap.module.css'
 
 const MenuBar = ({ editor, disabled }) => {
   if (!editor) {
@@ -11,6 +12,7 @@ const MenuBar = ({ editor, disabled }) => {
 
   return (
     <>
+      {/* Bold */}
       <button
         disabled={disabled}
         type='button'
@@ -36,6 +38,8 @@ const MenuBar = ({ editor, disabled }) => {
           />
         </svg>
       </button>
+
+      {/* Italic */}
       <button
         disabled={disabled}
         type='button'
@@ -61,6 +65,8 @@ const MenuBar = ({ editor, disabled }) => {
           />
         </svg>
       </button>
+
+      {/* Strike */}
       <button
         disabled={disabled}
         type='button'
@@ -86,6 +92,8 @@ const MenuBar = ({ editor, disabled }) => {
           />
         </svg>
       </button>
+
+      {/* Paragraph */}
       <button
         disabled={disabled}
         type='button'
@@ -111,56 +119,8 @@ const MenuBar = ({ editor, disabled }) => {
           />
         </svg>
       </button>
-      <button
-        disabled={disabled}
-        type='button'
-        onClick={() =>
-          editor
-            .chain()
-            .focus()
-            .toggleHeading({ level: 1 })
-            .run()
-        }
-        // className={editor.isActive('heading', { level: 1 }) ? 'is-active' : ''}
-      >
-        <svg
-          xmlns='http://www.w3.org/2000/svg'
-          viewBox='0 0 24 24'
-          width='24'
-          height='24'
-        >
-          <path fill='none' d='M0 0H24V24H0z' />
-          <path
-            d='M13 20h-2v-7H4v7H2V4h2v7h7V4h2v16zm8-12v12h-2v-9.796l-2 .536V8.67L19.5 8H21z'
-            fill='#000'
-          />
-        </svg>
-      </button>
-      <button
-        disabled={disabled}
-        type='button'
-        onClick={() =>
-          editor
-            .chain()
-            .focus()
-            .toggleHeading({ level: 2 })
-            .run()
-        }
-        // className={editor.isActive('heading', { level: 2 }) ? 'is-active' : ''}
-      >
-        <svg
-          xmlns='http://www.w3.org/2000/svg'
-          viewBox='0 0 24 24'
-          width='24'
-          height='24'
-        >
-          <path fill='none' d='M0 0H24V24H0z' />
-          <path
-            d='M4 4v7h7V4h2v16h-2v-7H4v7H2V4h2zm14.5 4c2.071 0 3.75 1.679 3.75 3.75 0 .857-.288 1.648-.772 2.28l-.148.18L18.034 18H22v2h-7v-1.556l4.82-5.546c.268-.307.43-.709.43-1.148 0-.966-.784-1.75-1.75-1.75-.918 0-1.671.707-1.744 1.606l-.006.144h-2C14.75 9.679 16.429 8 18.5 8z'
-            fill='#000'
-          />
-        </svg>
-      </button>
+
+      {/* h3 */}
       <button
         disabled={disabled}
         type='button'
@@ -186,6 +146,8 @@ const MenuBar = ({ editor, disabled }) => {
           />
         </svg>
       </button>
+
+      {/* h4 */}
       <button
         disabled={disabled}
         type='button'
@@ -205,12 +167,35 @@ const MenuBar = ({ editor, disabled }) => {
           height='24'
         >
           <path fill='none' d='M0 0H24V24H0z' />
-          <path
-            d='M13 20h-2v-7H4v7H2V4h2v7h7V4h2v16zm9-12v8h1.5v2H22v2h-2v-2h-5.5v-1.34l5-8.66H22zm-2 3.133L17.19 16H20v-4.867z'
-            fill='#000'
-          />
+          <path d='M13 20h-2v-7H4v7H2V4h2v7h7V4h2v16zm9-12v8h1.5v2H22v2h-2v-2h-5.5v-1.34l5-8.66H22zm-2 3.133L17.19 16H20v-4.867z' />
         </svg>
       </button>
+
+      {/* h5 */}
+      <button
+        disabled={disabled}
+        type='button'
+        onClick={() =>
+          editor
+            .chain()
+            .focus()
+            .toggleHeading({ level: 5 })
+            .run()
+        }
+        // className={editor.isActive('heading', { level: 5 }) ? 'is-active' : ''}
+      >
+        <svg
+          xmlns='http://www.w3.org/2000/svg'
+          viewBox='0 0 24 24'
+          width='24'
+          height='24'
+        >
+          <path fill='none' d='M0 0H24V24H0z' />
+          <path d='M22 8v2h-4.323l-.464 2.636c.33-.089.678-.136 1.037-.136 2.21 0 4 1.79 4 4s-1.79 4-4 4c-1.827 0-3.367-1.224-3.846-2.897l1.923-.551c.24.836 1.01 1.448 1.923 1.448 1.105 0 2-.895 2-2s-.895-2-2-2c-.63 0-1.193.292-1.56.748l-1.81-.904L16 8h6zM4 4v7h7V4h2v16h-2v-7H4v7H2V4h2z' />
+        </svg>
+      </button>
+
+      {/* bulletList */}
       <button
         disabled={disabled}
         type='button'
@@ -236,6 +221,8 @@ const MenuBar = ({ editor, disabled }) => {
           />
         </svg>
       </button>
+
+      {/* orderedList */}
       <button
         disabled={disabled}
         type='button'
@@ -261,6 +248,8 @@ const MenuBar = ({ editor, disabled }) => {
           />
         </svg>
       </button>
+
+      {/* blockquote */}
       <button
         disabled={disabled}
         type='button'
@@ -286,6 +275,8 @@ const MenuBar = ({ editor, disabled }) => {
           />
         </svg>
       </button>
+
+      {/* horizontal break */}
       <button
         disabled={disabled}
         type='button'
@@ -310,6 +301,8 @@ const MenuBar = ({ editor, disabled }) => {
           />
         </svg>
       </button>
+
+      {/* hard break */}
       <button
         disabled={disabled}
         type='button'
@@ -334,6 +327,8 @@ const MenuBar = ({ editor, disabled }) => {
           />
         </svg>
       </button>
+
+      {/* Undo */}
       <button
         disabled={disabled}
         type='button'
@@ -358,6 +353,8 @@ const MenuBar = ({ editor, disabled }) => {
           />
         </svg>
       </button>
+
+      {/* Redo */}
       <button
         disabled={disabled}
         type='button'
@@ -395,11 +392,14 @@ const Tiptap = props => {
     content: props.overview,
     editable: editableEditor
   })
+  
 
   useEffect(() => {
     setEditableEditor(!props.disabled)
 
-    let $div = document.querySelector('.Formation_tipTapContainer__606S_ div')
+    // let $div = document.querySelector('.Formation_tipTapContainer__606S_ div')
+    let $div = document.querySelector('.TipTap_tipTapContainer__NT1u4 div')
+
     if (props.disabled === true) {
       $div.style.backgroundColor = '#f8f8f8'
       $div.style.color = '#919191'
