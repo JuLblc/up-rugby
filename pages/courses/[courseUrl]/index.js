@@ -103,19 +103,30 @@ export const getServerSideProps = async context => {
   // Check if user already purchased this course. Pass the result as props
   const course = resCourse.data.courseFromDB
 
-  if (!session || session.user.role === 'ADMIN') {
+  if (!session) {
     course.isPurchased = false
-  } else {
-    const resUser = await getUser(context)
-
-    const purchasedCourses = resUser.data.userFromDB.purchasedCourses
-
-    if (purchasedCourses.indexOf(course._id) === -1) {
-      course.isPurchased = false
-    } else {
-      course.isPurchased = true
+    return {
+      props: {
+        session,
+        course
+      }
     }
   }
+
+  if (session.user.role === 'ADMIN') {
+    course.isPurchased = true
+    return {
+      props: {
+        session,
+        course
+      }
+    }
+  }
+
+  const resUser = await getUser(context)
+  const purchasedCourses = resUser.data.userFromDB.purchasedCourses
+
+  purchasedCourses.indexOf(course._id) === -1 ? course.isPurchased = false : course.isPurchased = true
 
   return {
     props: {
