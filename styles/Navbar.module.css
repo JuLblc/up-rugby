@@ -6,12 +6,12 @@
   opacity: 0;
 }
 
-.navWrapper{
+.navWrapper {
   position: fixed;
   width: 100%;
   top: 0;
   transition: top 0.6s;
-  background-color: white;
+  background-color: #f7fafb;
   z-index: 100;
 }
 
@@ -61,29 +61,29 @@
   padding: 0;
 }
 
-.liRightSide{
+.liRightSide {
   /* height: 24px; fit svg*/
   /* line-height: calc(24px + 8px); vertical align bottom */
   margin: 5px;
   display: flex;
 }
 
-.liRightSide:hover{
+.liRightSide:hover {
   cursor: pointer;
 }
 
-.divRightSide{
+.divRightSide {
   margin: 0 5px;
 }
 
 .btnLogin {
   width: 124px;
   text-align: center;
-  padding:10px;
+  padding: 10px;
   border-radius: 4px;
 }
 
-.btnLogin a{
+.btnLogin a {
   text-decoration: none;
   color: white;
 }
