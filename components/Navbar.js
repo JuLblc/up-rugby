@@ -4,8 +4,8 @@ import logo from '../public/logo.png'
 
 import { signOut, useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
-import { useState, useEffect, useRef } from 'react'
 import { useWindowDimensions } from '../hooks/useWindowDimensions'
+import { useScrollPosition } from '../hooks/useScrollPosition'
 import { useScrollY } from '../hooks/useScrollY'
 import { getDeviceTypeInfo } from '../utils/utilResponsive'
 
@@ -20,6 +20,8 @@ const Navbar = () => {
   const { width, height } = useWindowDimensions()
 
   const goingUp = useScrollY()
+  const scrollPositionY = useScrollPosition()
+  console.log(goingUp, scrollPositionY)
 
   const {
     isMobile,
@@ -37,9 +39,9 @@ const Navbar = () => {
 
   return (
     <>
-      {goingUp && (
+      {(goingUp || scrollPositionY < 150) && (
         <nav className={styles.navWrapper}>
-          <div  className={styles.header}>
+          <div className={styles.header}>
             <ul
               className={`${styles.headerNav} ${
                 status === 'loading' ? styles.loading : styles.loaded

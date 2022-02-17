@@ -126,6 +126,8 @@
 
 .break {
   border-bottom: 1px solid lightgrey;
+  width: 100vw;
+  margin-left: -20px;
 }
 
 .smallNav {
