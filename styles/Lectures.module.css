@@ -49,7 +49,7 @@
   filter: blur(2px);
 }
 
-.svgPlay {
+.svgPlayBlocked {
   background-color: white;
   border-radius: 100%;
   padding: 10px;
@@ -115,6 +115,12 @@
   display: flex;
   align-items: center;
   width: 100%;
+}
+
+.svgPlay {
+  background-color: #f7fafb;
+  border-radius: 100%;
+  padding: 8px;
 }
 
 .lectureTitle {
