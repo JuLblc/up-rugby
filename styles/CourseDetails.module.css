@@ -1,6 +1,6 @@
 .container {
   display: grid;
-  grid-template-columns: 320px 1fr;
+  grid-template-columns: 350px 1fr;
   grid-gap: 50px;
 }
 
@@ -20,12 +20,6 @@
   .container div:nth-of-type(2) {
     order: 1;
   }
-}
-
-.container h2 {
-  font-size: 2em;
-  font-weight: 400;
-  margin-top: 0;
 }
 
 .chaptersSplit {
@@ -54,8 +48,9 @@
   font-size: 1.15em;
   font-weight: 400;
 }
+
 .link:hover {
-  background-color: #f7fafb;
+  background-color: #F4F9FF;
 }
 
 .linkDetails {
@@ -65,7 +60,7 @@
 }
 
 .svgPlay {
-  background-color: #f7fafb;
+  background-color: #F4F9FF;
   border-radius: 100%;
   padding: 5px;
 }

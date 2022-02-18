@@ -1,6 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
 
 * {
   box-sizing: border-box;
@@ -10,7 +10,7 @@ html,
 body {
   margin: 0;
   padding: 0;
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-size: 16px;
   font-weight: normal;
   color: #3a3a3a;
@@ -33,10 +33,17 @@ h1 {
   overflow: hidden;
 }
 
+h2 {
+  font-size: 2em;
+  font-weight: 500;
+  margin-top: 0;
+  color: #002789;
+}
+
 .ProseMirror {
   border: solid 1px darkgray;
   padding: 5px;
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-size: 16px;
   font-weight: normal;
 }
@@ -56,6 +63,8 @@ ol li p {
 h3 {
   font-weight: 400;
   font-size: 1.5em;
+  color: #0f56b3;
+
 }
 
 .ProseMirror h4,
@@ -78,7 +87,7 @@ h5 {
 .ProseMirror pre {
   background: #0d0d0d;
   color: #fff;
-  font-family: "JetBrainsMono", monospace;
+  font-family: 'JetBrainsMono', monospace;
   padding: 0.75rem 1rem;
   border-radius: 0.5rem;
 }

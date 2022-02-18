@@ -19,14 +19,15 @@
   border: 1px solid #d5e3ec;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
-
 }
+
 .formationInfo {
   margin: 0px 15px;
 }
 .formationTitle {
   font-weight: 500;
-  margin: 16px 0;
+  margin: 12px 0;
+  color: inherit;
 }
 .formationDescription {
   color: #808080;
