@@ -19,6 +19,12 @@ const Chapter = props => {
     props.updateStateFromChild(newCourseData)
   }
 
+  const onChangeTipTapChapter = (content, chapterIdx, lectureIdx) => {
+    const newCourseData = { ...props.courseData }
+    newCourseData.chapters[chapterIdx].lectures[lectureIdx]['description'] = content
+    props.updateStateFromChild(newCourseData)
+  }
+
   const removeVideo = (chapterIdx, lectureIdx) => {
     const newCourseData = { ...props.courseData }
     newCourseData.chapters[chapterIdx].lectures.splice(lectureIdx, 1)
@@ -47,6 +53,7 @@ const Chapter = props => {
             removeVideo={() => removeVideo(props.chapterIdx, lectureIdx)}
             disableField={props.disableField}
             getDuration={getDuration}
+            onChangeTipTap={(content) => onChangeTipTapChapter(content, props.chapterIdx, lectureIdx)}
           />
         )
       )}

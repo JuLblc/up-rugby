@@ -150,7 +150,7 @@ const Lectures = props => {
         {toggleMenu && (
           <div className={styles.lectureDescription}>
             <h3>A propos de ce contenu</h3>
-            <p>{props.lecture.description}</p>
+            <article>{parse(props.lecture.description)}</article>
           </div>
         )}
         {(isMobile || isTablet) && !toggleMenu && (

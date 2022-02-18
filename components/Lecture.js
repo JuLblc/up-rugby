@@ -1,7 +1,9 @@
 import FormInput from './FormInput'
+import Tiptap from './Tiptap'
 
 const Lecture = props => {
   //console.log('props Lecture: ', props)
+
   const inputs = [
     {
       id: 1,
@@ -12,20 +14,13 @@ const Lecture = props => {
     },
     {
       id: 2,
-      label: 'Description:',
-      name: 'description',
-      type: 'text',
-      disabled: props.disableField
-    },
-    {
-      id: 3,
       label: 'Video URL:',
       name: 'url',
       type: 'text',
       errorMessages: {
         valueMissing: 'Veuillez saisir le lien de la vidéo',
         patternMismatch: `Le lien doit commencer par "https://player.vimeo.com/video/" et se terminer par l'id de la vidéo`,
-        vimeo:"Cette vidéo n'est pas répertoriée sur Vimeo"
+        vimeo: "Cette vidéo n'est pas répertoriée sur Vimeo"
       },
       required: true,
       pattern: '^https://player.vimeo.com/video/[0-9]+$',
@@ -48,6 +43,15 @@ const Lecture = props => {
           }
         />
       ))}
+
+      <label>
+        Description:
+        <Tiptap
+          content={props.chapter.lectures[props.lectureIdx]['description']}
+          onChangeTipTap={(content) => props.onChangeTipTap(content,props.chapterIdx, props.lectureIdx)}
+          disabled={props.disableField}
+        />
+      </label>
 
       {props.lectureIdx ? (
         <button

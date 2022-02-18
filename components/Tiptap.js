@@ -389,34 +389,37 @@ const Tiptap = props => {
 
   const editor = useEditor({
     extensions: [StarterKit],
-    content: props.overview,
+    content: props.content,
     editable: editableEditor
   })
-  
 
   useEffect(() => {
     setEditableEditor(!props.disabled)
 
-    // let $div = document.querySelector('.Formation_tipTapContainer__606S_ div')
-    let $div = document.querySelector('.TipTap_tipTapContainer__NT1u4 div')
+    let $divArray = document.querySelectorAll(
+      '.TipTap_tipTapContainer__NT1u4 div'
+    )
 
     if (props.disabled === true) {
-      $div.style.backgroundColor = '#f8f8f8'
-      $div.style.color = '#919191'
-    } else {
+      $divArray.forEach($div => {
+        $div.style.backgroundColor = '#f8f8f8'
+        $div.style.color = '#919191'
+      })
+      return
+    }
+
+    $divArray.forEach($div => {
       $div.style.backgroundColor = ''
       $div.style.color = 'black'
-      if ($div.children[0])
-        $div.children[0].setAttribute('contenteditable', true)
-    }
+      if ($div.children[0]) $div.children[0].setAttribute('contenteditable', true)
+    })
   }, [props.disabled])
 
   const changeEditStatus = () => {
-    console.log('editableEditor: ', editableEditor)
     editor.setEditable(editableEditor)
   }
 
-  const updateOverview = () => {
+  const updateContent = () => {
     props.onChangeTipTap(editor.getHTML())
   }
 
@@ -427,7 +430,7 @@ const Tiptap = props => {
         <EditorContent
           editor={editor}
           onFocus={changeEditStatus}
-          onBlur={updateOverview}
+          onBlur={updateContent}
         />
       </div>
     </>

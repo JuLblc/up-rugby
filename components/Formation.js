@@ -281,7 +281,7 @@ const Formation = props => {
         <label>
           Présentation:
           <Tiptap
-            overview={courseData.overview}
+            content={courseData.overview}
             onChangeTipTap={onChangeTipTap}
             disabled={disableField}
           />
