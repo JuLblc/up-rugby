@@ -63,6 +63,7 @@
   background-color: #F4F9FF;
   border-radius: 100%;
   padding: 5px;
+  min-width: 36px;
 }
 
 .lectureTitle {
@@ -73,6 +74,7 @@
   margin-left: auto;
   color: #808080;
   font-size: 0.8em;
+  min-width: 45px;
 }
 
 .download {
