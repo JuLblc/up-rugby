@@ -53,11 +53,15 @@
   background-color: white;
   border-radius: 100%;
   padding: 10px;
+  margin-bottom: 10px;
 }
 
 .textPlay {
   font-size: 0.8em;
-  margin-top: 10px;
+}
+
+.textPlay a{
+  color:inherit;
 }
 
 .textDuration {
