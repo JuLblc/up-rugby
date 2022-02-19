@@ -6,6 +6,8 @@ import { useRouter } from 'next/router'
 
 import Loading from '../components/Loading'
 import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
+
 
 function MyApp ({ Component, pageProps }) {
   // console.log('myApp: ', pageProps)
@@ -33,6 +35,7 @@ function MyApp ({ Component, pageProps }) {
         <>
           <Navbar />
           <Component {...pageProps} />
+          {/* <Footer/> */}
         </>
       )}
     </SessionProvider>
