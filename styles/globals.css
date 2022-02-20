@@ -19,7 +19,7 @@ body {
 }
 
 main {
-  margin: 24px auto 0;
+  margin: 24px auto;
   max-width: 1400px;
   width: calc(100% - 20px * 2);
   padding-top: 80px;

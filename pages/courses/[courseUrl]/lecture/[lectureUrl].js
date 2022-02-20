@@ -10,6 +10,7 @@ import { getCourses } from '../../../../apiCall'
 import { getUser } from '../../../../apiCall'
 
 import SideCourseChapter from '../../../../components/SideCourseChapter'
+import Comment from '../../../../components/Comment'
 
 import styles from '../../../../styles/Lectures.module.css'
 
@@ -49,7 +50,7 @@ const Lectures = props => {
   }, [width, height])
 
   return (
-    <main>
+    <main className={styles.main}>
       <h1>{props.lecture.title}</h1>
       <section className={styles.container}>
         {props.course.isPurchased ? (
@@ -82,11 +83,17 @@ const Lectures = props => {
                 </>
               ) : toggleOnPlayMsg.user === 'visitor' ? (
                 <span className={styles.textPlay}>
-                  <Link href='/login?login=signin'><a>Connectez-vous</a></Link> pour acheter cette formation
+                  <Link href='/login?login=signin'>
+                    <a>Connectez-vous</a>
+                  </Link>{' '}
+                  pour acheter cette formation
                 </span>
               ) : (
                 <span className={styles.textPlay}>
-                  <Link href='#'><a>Acheter</a></Link> cette formation pour lire la vidéo
+                  <Link href='#'>
+                    <a>Acheter</a>
+                  </Link>{' '}
+                  cette formation pour lire la vidéo
                 </span>
               )}
             </div>
@@ -148,10 +155,13 @@ const Lectures = props => {
         )}
 
         {toggleMenu && (
-          <div className={styles.lectureDescription}>
-            <h3>A propos de ce contenu</h3>
-            <article>{parse(props.lecture.description)}</article>
-          </div>
+          <>
+            <div className={styles.lectureDescription}>
+              <h3>A propos de ce contenu</h3>
+              <article>{parse(props.lecture.description)}</article>
+            </div>
+            <Comment />
+          </>
         )}
         {(isMobile || isTablet) && !toggleMenu && (
           <SideCourseChapter course={props.course} styles={styles} />

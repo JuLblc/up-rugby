@@ -80,7 +80,7 @@ const Footer = () => {
           <div className={styles.footerSocial}>
             <h5>Suivez-moi</h5>
             {/* Facebook */}
-            <a href='https://www.facebook.com/uprugby' target='_blank'>
+            <a href='https://www.facebook.com/uprugby' target='_blank' rel="noreferrer">
               <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'>
                 <rect width='512' height='512' rx='15%' fill='#1877f2' />
                 <path
@@ -90,7 +90,7 @@ const Footer = () => {
               </svg>
             </a>
             {/* Youtube */}
-            <a href='https://www.youtube.com/c/uprugby' target='_blank'>
+            <a href='https://www.youtube.com/c/uprugby' target='_blank' rel="noreferrer">
               <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'>
                 <title>youtube-flat</title>
                 <g id='YouTube'>

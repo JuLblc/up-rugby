@@ -1,3 +1,7 @@
+.main {
+  margin-bottom: 0;
+}
+
 .container {
   display: grid;
   grid-template-columns: 1fr;
@@ -60,8 +64,8 @@
   font-size: 0.8em;
 }
 
-.textPlay a{
-  color:inherit;
+.textPlay a {
+  color: inherit;
 }
 
 .textDuration {
@@ -161,6 +165,7 @@
   padding: 0 calc((100vw - 100%) / 2);
   min-height: 300px;
   background-color: white;
+  padding-bottom: 20px;
 }
 .lectureContainer h3 {
   margin-top: 0;
