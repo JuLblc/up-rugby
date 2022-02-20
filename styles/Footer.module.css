@@ -1,11 +1,77 @@
-.footerSocial svg{
-    width: 48px;
-    height: 48px;
-    margin: 5px;
+.break {
+  border-bottom: 2.5px solid lightgrey;
+  width: 100vw;
+  margin-left: calc((-100vw + 100%) / 2);
 }
 
-.footerContact svg{
-    width: 48px;
-    height: 48px;
-    margin: 5px;
+.footer {
+  margin: 24px auto;
+  max-width: 1400px;
+  width: calc(100% - 20px * 2);
+  color: #616C73;
+}
+
+@media (min-width: 768px) {
+  .footer {
+    display: grid;
+    grid-template-columns: 6fr 2fr 1fr;
+    grid-gap: 32px;
+  }
+}
+
+.footer h5 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #3A3A3A;
+}
+
+.footer p {
+  text-align: justify;
+}
+
+.footerContact {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+.footerContact div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.footerContact svg {
+  width: 16px;
+  height: 16px;
+  margin: 5px 10px;
+}
+.footerContact span {
+  margin-left: 30px;
+  /* font-size: 1.3em; */
+}
+
+@media (max-width: 768px) {
+  .footerSocial {
+    margin-bottom: 16px;
+  }
+}
+
+.footerSocial svg {
+  width: 36px;
+  height: 36px;
+  margin-right: 20px;
+  margin-top: 5px;
+}
+.footer ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer ul a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.footer ul a:hover {
+  text-decoration: underline;
+  color: inherit;
 }
