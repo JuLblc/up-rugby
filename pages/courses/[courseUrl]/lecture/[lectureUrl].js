@@ -112,7 +112,7 @@ const Lectures = props => {
             <div className={styles.break}></div>
             <div className={styles.smallNav}>
               <div
-                className={toggleMenu && `${styles.selected}`}
+                className={toggleMenu ? `${styles.selected}` : undefined}
                 onClick={() => !toggleMenu && setToggleMenu(!toggleMenu)}
               >
                 <svg
@@ -160,7 +160,8 @@ const Lectures = props => {
               <h3>A propos de ce contenu</h3>
               <article>{parse(props.lecture.description)}</article>
             </div>
-            <Comment />
+
+            {props.course.isPurchased && <Comment session={props.session}/>}
           </>
         )}
         {(isMobile || isTablet) && !toggleMenu && (

@@ -23,12 +23,16 @@ const CourseSchema = new mongoose.Schema({
                     description: String,
                     url: String,
                     duration: Number,
+                    comments:[
+                        {
+                          type: mongoose.Schema.Types.ObjectId,
+                          ref: 'Comment'
+                        }
+                      ]
                 }
             ]
         }
     ],
-    reviews: [Number],
-    // comments:
     isPublished: {
         type: Boolean,
         default: false
