@@ -2,21 +2,21 @@
   margin-bottom: 0;
 }
 .intro {
-  /* background-color: red; */
-  display: grid;
-  grid-template-columns: 500px 1fr;
-  grid-gap: 70px;
-  justify-content: space-between;
-  margin-top: 70px;
-  margin-bottom: 70px;
+  margin-bottom: 30px;
 }
-/* .body {
-  width: 500px;
-  margin-right: 70px;
-} */
 
-.intro strong,
-.support strong {
+@media (min-width: 1100px) {
+  .intro {
+    display: grid;
+    grid-template-columns: 500px 1fr;
+    grid-gap: 70px;
+    margin-top: 70px;
+    margin-bottom: 70px;
+  }
+}
+
+.intro span,
+.support span {
   color: #0085ff;
 }
 
@@ -24,13 +24,19 @@
   font-size: 1.5em;
   color: #808080;
   font-weight: 300;
-  /* font-size: 1.1em; */
 }
+
 .link {
   display: flex;
 }
+@media (max-width: 490px) {
+  .link {
+    display: block;
+  }
+}
+
 .link a {
-  display: block;
+  display: inline-block;
   text-decoration: none;
   padding: 20px;
   white-space: nowrap;
@@ -42,35 +48,53 @@
   margin-top: 20px;
   margin-right: 20px;
 }
+
 .link a:nth-child(2) {
   background-color: #f7fafb;
   color: #0085ff;
 }
 
 .illustration {
-  height: 445px;
-  background-color: gray;
-  font-size: 3em;
-  color: white;
-  text-align: center;
-  padding-top: 150px;
-  padding-bottom: 150px;
+  /* background-color: gray; */
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+@media (min-width: 1100px) {
+  .support {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 70px;
+    padding: 70px calc((100vw - 100%) / 2);
+  }
 }
 
 .support {
-  display: grid;
-  grid-template-columns: 600px 1fr;
-  grid-gap: 70px;
   background-color: white;
   margin-bottom: 0;
   width: 100vw;
   margin-left: calc((-100vw + 100%) / 2);
-  padding: 70px calc((100vw - 100%) / 2);
+  padding: 30px calc((100vw - 100%) / 2);
+  padding-bottom: 40px;
 }
 
+@media (min-width: 1100px) {
+  .supportWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
 .supportItemsContainer {
   border: solid 1px lightgrey;
   border-radius: 5px;
+}
+
+@media (min-width: 1100px) {
+  .supportItemsContainer {
+    max-height: calc(3 * 88px + 2px);
+  }
 }
 
 .supportItemsContent {
@@ -86,6 +110,12 @@
 .supportItemsContent p {
   margin: 5px 0 0;
   color: #808080;
+}
+
+@media (min-width: 1100px) {
+  .supportItemsContent p {
+    white-space: nowrap;
+  }
 }
 
 .supportItemsContent a {
