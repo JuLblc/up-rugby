@@ -105,7 +105,6 @@ const Lectures = props => {
           </div>
         )}
       </section>
-      {/* <div className={styles.break}></div> */}
       <section className={styles.lectureContainer}>
         {(isMobile || isTablet) && (
           <>
@@ -131,7 +130,7 @@ const Lectures = props => {
                 <span>Description</span>
               </div>
               <div
-                className={!toggleMenu && `${styles.selected}`}
+                className={!toggleMenu ? `${styles.selected}` : undefined}
                 onClick={() => toggleMenu && setToggleMenu(!toggleMenu)}
               >
                 <svg
@@ -161,7 +160,14 @@ const Lectures = props => {
               <article>{parse(props.lecture.description)}</article>
             </div>
 
-            {props.course.isPurchased && <Comment session={props.session}/>}
+            {props.course.isPurchased && (
+              <Comment
+                session={props.session}
+                course={props.course}
+                chapterIdx={props.chapterIdx}
+                lectureIdx={props.lectureIdx}
+              />
+            )}
           </>
         )}
         {(isMobile || isTablet) && !toggleMenu && (
@@ -186,12 +192,19 @@ export const getServerSideProps = async context => {
   const course = resCourse.data.courseFromDB
 
   // Display only the current lecture
+  let chapterIdx
   const currentChapter = resCourse.data.courseFromDB.chapters.filter(
-    chapt => chapt.seoUrl === chapter
+    (chapt, idx) => {
+      if (chapt.seoUrl === chapter) chapterIdx = idx
+      return chapt.seoUrl === chapter
+    }
   )[0]
-  const lecture = currentChapter.lectures.filter(
-    lecture => lecture.seoUrl === lectureUrl
-  )[0]
+
+  let lectureIdx
+  const lecture = currentChapter.lectures.filter((lecture, idx) => {
+    if (lecture.seoUrl === lectureUrl) lectureIdx = idx
+    return lecture.seoUrl === lectureUrl
+  })[0]
 
   if (!session) {
     course.isPurchased = false
@@ -199,7 +212,9 @@ export const getServerSideProps = async context => {
       props: {
         session,
         course,
-        lecture
+        lecture,
+        chapterIdx,
+        lectureIdx
       }
     }
   }
@@ -210,7 +225,9 @@ export const getServerSideProps = async context => {
       props: {
         session,
         course,
-        lecture
+        lecture,
+        chapterIdx,
+        lectureIdx
       }
     }
   }
@@ -226,7 +243,9 @@ export const getServerSideProps = async context => {
     props: {
       session,
       course,
-      lecture
+      lecture,
+      chapterIdx,
+      lectureIdx
     }
   }
 }

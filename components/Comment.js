@@ -1,25 +1,37 @@
 import axios from 'axios'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 import FormInput from './FormInput'
 import styles from '../styles/Comment.module.css'
 
 const Comment = props => {
   const router = useRouter()
 
+  const [commentData, setCommentData] = useState({
+    author: props.session.user.id,
+    authorname: props.session.user.firstName,
+    comment: ''
+  })
+
+  const onChange = e => {
+    setCommentData({ ...commentData, [e.target.name]: e.target.value })
+  }
+
   const handleFormSubmit = e => {
     e.preventDefault()
 
     console.log('post comment')
 
-    const newComment = {
-        author : props.session.user.id,
-        comment:'some text'
-    }
-
     axios
-      .post('/api/comment', { comment: newComment})
+      .post('/api/comment', { comment: commentData })
       .then(response => {
-        console.log('response coment: ', response.data)
+
+        const updatedCourse = { ...props.course }
+        updatedCourse.chapters[props.chapterIdx].lectures[
+          props.lectureIdx
+        ].comments.push(response.data.newCommentFromDB)
+
+        axios.put('/api/courses/add-comment-to-course', { course : updatedCourse })
         router.push(router.asPath)
       })
       .catch(err => console.log('err: ', err))
@@ -33,15 +45,19 @@ const Comment = props => {
         <FormInput
           label="NOM D'UTILISATEUR:"
           type='text'
-          name='username'
-          //   errorMessages={errorMessages}
-          //   required={true}
-        //   value={props.session.user.firstName}
-          //   onChange={onChange}
+          name='authorname'
+          required={true}
+          value={commentData.authorname}
+          onChange={onChange}
         />
         <label>
           VOTRE MESSAGE:
-          <textarea name='comment'></textarea>
+          <textarea
+            name='comment'
+            value={commentData.comment}
+            required={true}
+            onChange={onChange}
+          ></textarea>
         </label>
 
         <button type='submit'>Envoyer</button>
