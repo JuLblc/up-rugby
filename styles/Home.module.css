@@ -66,7 +66,8 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 70px;
-    padding: 70px calc((100vw - 100%) / 2);
+    padding-top: 70px !important;
+    padding-bottom: 70px !important;
   }
 }
 
@@ -127,4 +128,15 @@
   border-bottom: solid 1px lightgrey;
   width: calc(100% - 40px);
   margin-left: 20px;
+}
+
+.testimonial {
+  margin: 70px 0;
+}
+
+.testiContainer {
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 32px;
+  overflow: auto;
 }
