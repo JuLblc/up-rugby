@@ -158,14 +158,14 @@ const Home = () => {
           <CardTestimonial />
           <CardTestimonial />
           <CardTestimonial />
-          <CardTestimonial />
-          <CardTestimonial />
-
+          {/* <CardTestimonial />
           <CardTestimonial />
 
           <CardTestimonial />
 
           <CardTestimonial />
+
+          <CardTestimonial /> */}
         </div>
       </section>
     </main>
