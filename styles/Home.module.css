@@ -16,7 +16,8 @@
 }
 
 .intro span,
-.support span {
+.support span,
+.testiContainer span {
   color: #0085ff;
 }
 
@@ -24,6 +25,13 @@
   font-size: 1.5em;
   color: #808080;
   font-weight: 300;
+}
+
+.bodyComment {
+  color: #3a3a3a;
+  font-weight: 400;
+  margin-top: 20px;
+  text-align: justify;
 }
 
 .link {
@@ -130,13 +138,58 @@
   margin-left: 20px;
 }
 
-.testimonial {
+.testiContainer {
   margin: 70px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.testiContainer {
-  display: grid;
-  grid-auto-flow: column;
-  grid-gap: 32px;
-  overflow: auto;
+@media (max-width: 1100px) {
+  .testiContainer {
+    margin: 30px 0;
+  }
+}
+
+@media (min-width: 720px) {
+  .testiContainer {
+    display: grid !important;
+    grid-auto-flow: column;
+    grid-gap: 32px;
+    overflow: auto;
+    flex-direction: unset;
+    align-items: unset;
+  }
+}
+
+.bodyTestimonial {
+  width: 320px;
+}
+
+@media (max-width: 720px) {
+  .bodyTestimonial {
+    width: 100%;
+  }
+}
+
+.btnContainer {
+  display: flex;
+  justify-content: center;
+  margin: 25px 0;
+}
+
+.btnContainer button {
+  color: #f7fafb;
+  background-color: #0085ff;
+  margin: 10px;
+  border: solid 1px #f7fafb;
+  padding: 5px 10px;
+  font-size: 1.3em;
+  font-weight: 900;
+  border-radius: 5px;
+  opacity: 0.7;
+}
+
+.btnDisabled {
+  opacity: 0.3 !important;
 }
