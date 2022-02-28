@@ -44,9 +44,11 @@ const addCourseToUser = (req, res, session) => {
             res.status(201).json({ updatedUser })
           })
           .catch(err => console.log('err : ', err))
-      } else {
-        res.status(400).json({ message: 'Cette formation a déjà été acheté' })
+
+        return
       }
+
+      res.status(400).json({ message: 'Cette formation a déjà été acheté' })
     })
     .catch(err => console.log('err : ', err))
 }

@@ -78,20 +78,24 @@ const FormInput = props => {
   }
 
   const onEyeClick = () => {
-    let type = ''
-    let eyeType = 0
+
     if (passwordShown.type === 'password') {
-      type = 'text'
-      eyeType = 2
-    } else {
-      type = 'password'
-      eyeType = 1
+      setPasswordShown({
+        type: 'text',
+        show: !passwordShown.show,
+        eyeType: 2
+      })
+      return
     }
-    setPasswordShown({
-      type: type,
-      show: !passwordShown.show,
-      eyeType: eyeType
-    })
+
+    if (passwordShown.type !== 'password') {
+      setPasswordShown({
+        type: 'password',
+        show: !passwordShown.show,
+        eyeType: 1
+      })
+      return
+    }
   }
 
   return (

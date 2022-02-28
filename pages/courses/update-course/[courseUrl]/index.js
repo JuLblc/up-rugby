@@ -10,8 +10,11 @@ const UpdateCourseDetails = props => {
 
   useEffect(() => {
     if (!props.session) {
-      router.push('/login')
-    } else if (props.session.user.role !== 'ADMIN') {
+      router.push('/login?login=signin')
+      return
+    }
+
+    if (props.session.user.role !== 'ADMIN') {
       router.back()
     }
   }, [])

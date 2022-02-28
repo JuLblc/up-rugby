@@ -161,21 +161,26 @@ const Login = props => {
         .then(response => {
           if (!response.error) {
             router.push('/')
-          } else if (
-            response.error === `Cannot read property 'password' of null`
-          ) {
+            return
+          }
+
+          if (response.error === `Cannot read property 'password' of null`) {
             setFormData({
               ...formData,
               messageAPI: 'Cette adresse E-mail est introuvable ou non validée',
               messageType: 'error'
             })
-          } else {
+            return
+          }
+
+          if (response.error) {
             setFormData({
               ...formData,
               messageAPI:
                 'Cette adresse E-mail et ce mot de passe ne correspondent pas',
               messageType: 'error'
             })
+            return
           }
         })
         .catch(err => {
@@ -186,8 +191,11 @@ const Login = props => {
             messageType: 'error'
           })
         })
-    } else {
-      /* --------------------------- SIGN UP ---------------------------*/
+      return
+    }
+
+    /* --------------------------- SIGN UP ---------------------------*/
+    if (loginOpt === 'signup') {
       axios
         .post('/api/auth', { email, password })
         .then(response => {

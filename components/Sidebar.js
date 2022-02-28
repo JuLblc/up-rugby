@@ -10,16 +10,6 @@ const Sidebar = props => {
         props.open ? styles.open : styles.closed
       }`}
     >
-      {/* <li>
-        <Link href='/signup'>
-          <a>S'inscrire</a>
-        </Link>
-      </li>
-      <li>
-        <Link href='/login'>
-          <a>Se connecter</a>
-        </Link>
-      </li> */}
       <li>
         <Link href='/courses'>
           <a>Formations</a>

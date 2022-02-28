@@ -17,10 +17,11 @@ export default async function handler (req, res) {
           if (!query.url) {
             getAllCourses(req, res, session)
             break
-          } else {
-            getCourse(req, res, session)
-            break
           }
+          
+          getCourse(req, res, session)
+          break
+
         case 'POST':
           addCourse(req, res, session)
           break
@@ -48,13 +49,12 @@ const addCourse = (req, res, session) => {
     res.status(401).json({ message: 'Unauthorized' })
     return
   }
-  
+
   const newCourse = new Course(course)
 
   newCourse
     .save()
     .then(newCourseFromDB => {
-      
       res.status(200).json({ newCourseFromDB })
     })
     .catch(err => console.log('err : ', err))
@@ -63,7 +63,7 @@ const addCourse = (req, res, session) => {
 const getAllCourses = (req, res, session) => {
   const cond = {}
   if (!session || session.user.role !== 'ADMIN') {
-    cond.isPublished = true 
+    cond.isPublished = true
   }
 
   Course.find(cond)
@@ -74,12 +74,11 @@ const getAllCourses = (req, res, session) => {
 }
 
 const getCourse = (req, res, session) => {
-  
   const seoUrl = req.query.url
 
   const cond = { seoUrl }
   if (!session || session.user.role !== 'ADMIN') {
-    cond.isPublished = true 
+    cond.isPublished = true
   }
 
   Course.findOne(cond)
@@ -94,7 +93,6 @@ const updateCourse = (req, res, session) => {
     res.status(401).json({ message: 'Unauthorized' })
     return
   }
-
 
   const id = req.body.course._id
   const updatedCourse = req.body.course

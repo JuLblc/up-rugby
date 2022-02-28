@@ -30,7 +30,7 @@ const FormationDetails = props => {
     if (!props.session) {
       query.error = 'please log in to purchase'
       router.push({
-        pathname: '/login',
+        pathname: '/login?login=signin',
         query
       })
     } else {

@@ -32,12 +32,19 @@ export const getDeviceTypeInfo = (width, height) => {
 
   if (width < idDeviceBreakpointsByWidth.mobileMax) {
     deviceTypeInfo.isMobile = true
-  } else if (width >= idDeviceBreakpointsByWidth.mobileMax && width < idDeviceBreakpointsByWidth.tabletMax) {
+  } 
+  
+  if (width >= idDeviceBreakpointsByWidth.mobileMax && width < idDeviceBreakpointsByWidth.tabletMax) {
     deviceTypeInfo.isTablet = true
-  } else if (width >= idDeviceBreakpointsByWidth.tabletMax && width < idDeviceBreakpointsByWidth.laptopMax) {
+  } 
+  
+  if (width >= idDeviceBreakpointsByWidth.tabletMax && width < idDeviceBreakpointsByWidth.laptopMax) {
     deviceTypeInfo.isDesktopOrLaptop = true
-  } else if (width >= idDeviceBreakpointsByWidth.laptopMax) {
+  } 
+  
+  if (width >= idDeviceBreakpointsByWidth.laptopMax) {
     deviceTypeInfo.isBigScreen = true
   }
+  
   return deviceTypeInfo
 }

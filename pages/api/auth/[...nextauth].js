@@ -27,10 +27,10 @@ export default NextAuth({
         if (bcryptValidation && user) {
           // Any object returned will be saved in `user` property of the JWT
           return user
-        } else {
-          // If you return null or false then the credentials will be rejected
-          return null
         }
+
+        // If you return null or false then the credentials will be rejected
+        return null
       }
     }),
     FacebookProvider({
@@ -53,36 +53,35 @@ export default NextAuth({
           image: profile.picture.data.url
         }
 
-        let user = await User.findOne({ facebookID: profileFromFB.id })
-
         // 1. Check if user with FB_id already in DB
+        let user = await User.findOne({ facebookID: profileFromFB.id })
         if (user) {
           return user
-        } else {
-          user = await User.findOne({ email: profileFromFB.email })
-
-          //2. Check if email from FB has been utilized to create an account
-          if (user) {
-            user.facebookID = profileFromFB.id
-            user.firstName
-              ? user.firstName
-              : (user.firstName = profileFromFB.firstName)
-            user.lastName
-              ? user.lastName
-              : (user.lastName = profileFromFB.lastName)
-            await user.save()
-            return user
-          } else {
-            const newUser = await User.create({
-              facebookID: profileFromFB.id,
-              email: profileFromFB.email,
-              firstName: profileFromFB.firstName,
-              lastName: profileFromFB.lastName,
-              isEmailVerified: true
-            })
-            return newUser
-          }
         }
+
+        //2. Check if email from FB has been utilized to create an account
+        user = await User.findOne({ email: profileFromFB.email })
+        if (user) {
+          user.facebookID = profileFromFB.id
+          user.firstName
+            ? user.firstName
+            : (user.firstName = profileFromFB.firstName)
+          user.lastName
+            ? user.lastName
+            : (user.lastName = profileFromFB.lastName)
+          await user.save()
+          return user
+        }
+        
+        //3. Create user
+        const newUser = await User.create({
+          facebookID: profileFromFB.id,
+          email: profileFromFB.email,
+          firstName: profileFromFB.firstName,
+          lastName: profileFromFB.lastName,
+          isEmailVerified: true
+        })
+        return newUser
       }
     }),
 
@@ -101,36 +100,35 @@ export default NextAuth({
           image: profile.picture
         }
 
-        let user = await User.findOne({ googleID: profileFromGoogle.id })
-
         // 1. Check if user with Google_id already in DB
+        let user = await User.findOne({ googleID: profileFromGoogle.id })
         if (user) {
           return user
-        } else {
-          user = await User.findOne({ email: profileFromGoogle.email })
-
-          //2. Check if email from Google has been utilized to create an account
-          if (user) {
-            user.googleID = profileFromGoogle.id
-            user.firstName
-              ? user.firstName
-              : (user.firstName = profileFromGoogle.firstName)
-            user.lastName
-              ? user.lastName
-              : (user.lastName = profileFromGoogle.lastName)
-            await user.save()
-            return user
-          } else {
-            const newUser = await User.create({
-              googleID: profileFromGoogle.id,
-              email: profileFromGoogle.email,
-              firstName: profileFromGoogle.firstName,
-              lastName: profileFromGoogle.lastName,
-              isEmailVerified: true
-            })
-            return newUser
-          }
         }
+
+        //2. Check if email from Google has been utilized to create an account
+        user = await User.findOne({ email: profileFromGoogle.email })
+        if (user) {
+          user.googleID = profileFromGoogle.id
+          user.firstName
+            ? user.firstName
+            : (user.firstName = profileFromGoogle.firstName)
+          user.lastName
+            ? user.lastName
+            : (user.lastName = profileFromGoogle.lastName)
+          await user.save()
+          return user
+        }
+
+        //3. Create user
+        const newUser = await User.create({
+          googleID: profileFromGoogle.id,
+          email: profileFromGoogle.email,
+          firstName: profileFromGoogle.firstName,
+          lastName: profileFromGoogle.lastName,
+          isEmailVerified: true
+        })
+        return newUser
       }
     })
   ],
@@ -145,12 +143,12 @@ export default NextAuth({
     async jwt ({ token, user }) {
       // console.log('callbacks jwt: ', { token, user })
       if (user) {
-        token.id = user.id;
-        token.firstName = user.firstName;
-        token.lastName = user.lastName;
-        token.role = user.role;
+        token.id = user.id
+        token.firstName = user.firstName
+        token.lastName = user.lastName
+        token.role = user.role
       }
-      return token 
+      return token
     },
     async session ({ session, token }) {
       // console.log('callbacks session: ', { session, token })
