@@ -6,8 +6,8 @@ import Vimeo from '@u-wave/react-vimeo'
 
 import { useWindowDimensions } from '../../../../hooks/useWindowDimensions'
 import { getDeviceTypeInfo } from '../../../../utils/utilResponsive'
-import { getCourses } from '../../../../apiCall'
-import { getUser } from '../../../../apiCall'
+import { getCourses } from '../../../../apiCall/courses'
+import { getUser } from '../../../../apiCall/users'
 
 import SideCourseChapter from '../../../../components/SideCourseChapter'
 import Comment from '../../../../components/Comment'

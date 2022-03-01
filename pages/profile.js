@@ -1,9 +1,8 @@
-import axios from 'axios'
 import { getSession } from 'next-auth/react'
 import { useState } from 'react'
 
-import { getCourses } from '../apiCall'
-import { getUser } from '../apiCall'
+import { getCourses } from '../apiCall/courses'
+import { getUser, putUser } from '../apiCall/users'
 
 import Link from 'next/link'
 
@@ -44,16 +43,11 @@ const Profile = props => {
     setDisableField(false)
   }
 
-  const handleFormSubmit = e => {
+  const handleFormSubmit = async e => {
     e.preventDefault()
     setDisableField(true)
 
-    axios
-      .put('/api/users', { userData })
-      .then(response => {
-        console.log('response: ', response.data)
-      })
-      .catch(err => console.log('err: ', err.response.data.message))
+    await putUser(userData)
   }
 
   return (

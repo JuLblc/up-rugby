@@ -1,6 +1,6 @@
 import { getSession } from 'next-auth/react'
 import Link from 'next/link'
-import { getCourses } from '../../apiCall'
+import { getCourses } from '../../apiCall/courses'
 import { useWindowDimensions } from '../../hooks/useWindowDimensions'
 import { getDeviceTypeInfo } from '../../utils/utilResponsive'
 import { getLecturesQty , getLecturesTime } from '../../utils/utilCourses'

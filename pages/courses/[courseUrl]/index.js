@@ -6,8 +6,8 @@ import { useRouter } from 'next/router'
 import parse from 'html-react-parser'
 import Link from 'next/link'
 
-import { getCourses } from '../../../apiCall'
-import { getUser } from '../../../apiCall'
+import { getCourses } from '../../../apiCall/courses'
+import { getUser, putCourseToUser } from '../../../apiCall/users'
 
 import SideCourseChapter from '../../../components/SideCourseChapter'
 
@@ -29,30 +29,26 @@ const FormationDetails = props => {
     //1. Check if user is logged in
     if (!props.session) {
       query.error = 'please log in to purchase'
+      query.login = 'signin'
       router.push({
-        pathname: '/login?login=signin',
+        pathname: '/login',
         query
       })
-    } else {
-      //2. After payment, add formation to user
-      axios
-        .put('/api/users/add-course-to-user', {
-          courseId: props.course._id
-        })
-        .then(response => {
-          console.log('response: ', response.data)
-          //3. Redirect to payment confirmation page
-          query.course = props.course.seoUrl
-          query.chapter = props.course.chapters[0].seoUrl
-          query.lecture = props.course.chapters[0].lectures[0].seoUrl
-
-          router.push({
-            pathname: '/purchase-confirmation',
-            query
-          })
-        })
-        .catch(err => console.log('err: ', err.response.data.message))
+      return
     }
+
+    //2. After payment, add formation to user
+    await putCourseToUser(props.course._id)
+
+    //3. Redirect to payment confirmation page
+    query.course = props.course.seoUrl
+    query.chapter = props.course.chapters[0].seoUrl
+    query.lecture = props.course.chapters[0].lectures[0].seoUrl
+
+    router.push({
+      pathname: '/purchase-confirmation',
+      query
+    })
   }
 
   return (
@@ -126,7 +122,9 @@ export const getServerSideProps = async context => {
   const resUser = await getUser(context)
   const purchasedCourses = resUser.data.userFromDB.purchasedCourses
 
-  purchasedCourses.indexOf(course._id) === -1 ? course.isPurchased = false : course.isPurchased = true
+  purchasedCourses.indexOf(course._id) === -1
+    ? (course.isPurchased = false)
+    : (course.isPurchased = true)
 
   return {
     props: {

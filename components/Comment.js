@@ -1,7 +1,8 @@
-import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import FormInput from './FormInput'
+import { putCommentToCourse } from '../apiCall/courses'
+import { postComment } from '../apiCall/comments'
 import styles from '../styles/Comment.module.css'
 
 const Comment = props => {
@@ -17,24 +18,20 @@ const Comment = props => {
     setCommentData({ ...commentData, [e.target.name]: e.target.value })
   }
 
-  const handleFormSubmit = e => {
+  const handleFormSubmit = async e => {
     e.preventDefault()
 
-    console.log('post comment')
+    const resComment = await postComment(commentData)
 
-    axios
-      .post('/api/comment', { comment: commentData })
-      .then(response => {
+    const updatedCourse = { ...props.course }
+    updatedCourse
+      .chapters[props.chapterIdx]
+      .lectures[props.lectureIdx]
+      .comments
+      .push(resComment.data.newCommentFromDB)
 
-        const updatedCourse = { ...props.course }
-        updatedCourse.chapters[props.chapterIdx].lectures[
-          props.lectureIdx
-        ].comments.push(response.data.newCommentFromDB)
-
-        axios.put('/api/courses/add-comment-to-course', { course : updatedCourse })
-        router.push(router.asPath)
-      })
-      .catch(err => console.log('err: ', err))
+    await putCommentToCourse(updatedCourse)
+    router.push(router.asPath)
   }
 
   return (

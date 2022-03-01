@@ -9,11 +9,11 @@ import Tiptap from './Tiptap'
 import FormInput from './FormInput'
 
 import { toSeoUrl } from '../utils/utilSeoUrl'
+import { postCourse, putCourse, removeCourse } from '../apiCall/courses'
 
 import styles from '../styles/Formation.module.css'
 
 const Formation = props => {
-  // console.log('3. props Formation: ', props)
 
   const router = useRouter()
 
@@ -115,32 +115,22 @@ const Formation = props => {
     setCourseData(newCourseData)
   }
 
-  const deleteCourse = () => {
-    axios
-      .delete('/api/courses', { data: courseData._id })
-      .then(response => {
-        console.log('response: ', response.data)
-        router.push('/courses')
-      })
-      .catch(err => console.log('err: ', err))
+  const deleteCourse = async () => {
+    await removeCourse(courseData)
+    router.push('/courses')
   }
 
   const updateCourse = () => {
     setDisableField(false)
   }
 
-  const publishCourse = () => {
+  const publishCourse = async () => {
     const newCourseData = { ...courseData }
     newCourseData.isPublished = true
     setCourseData(newCourseData)
 
-    axios
-      .put('/api/courses', { course: newCourseData })
-      .then(response => {
-        console.log('response publish: ', response.data)
-        router.push('/courses')
-      })
-      .catch(err => console.log('err: ', err))
+    await putCourse(newCourseData)
+    router.push('/courses')
   }
 
   const handleFormSubmit = async e => {
@@ -202,19 +192,14 @@ const Formation = props => {
     //3. Save in DB
     if (!courseData.isPublished) {
       if (props.action === 'create') {
-        const resCreate = await axios.post('/api/courses', {
-          course: newCourseData
-        })
-        console.log('newCourseFromDB: ', resCreate.data.newCourseFromDB)
+        const resCreate =  await postCourse(newCourseData)
         router.push(
           `/courses/update-course/${resCreate.data.newCourseFromDB.seoUrl}`
         )
       }
 
       if (props.action === 'update') {
-        const resUpdate = await axios.put('/api/courses', {
-          course: newCourseData
-        })
+        const resUpdate = await putCourse(newCourseData)
         router.push(
           `/courses/update-course/${resUpdate.data.updatedCourseFromDB.seoUrl}`
         )
@@ -264,7 +249,6 @@ const Formation = props => {
             onChange={onChange}
             disabled={disableField}
           />
-
         </div>
 
         <Upload
