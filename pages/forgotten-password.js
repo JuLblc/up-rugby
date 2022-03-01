@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { useState } from "react";
+import { putAuthForgot } from '../apiCall/auth'
 
 const ForgottenPassword = () => {
 
@@ -13,18 +13,11 @@ const ForgottenPassword = () => {
     const onChange = (e) =>
         setFormData({ ...formData, [e.target.name]: e.target.value })
 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
 
-        axios.put('/api/auth/forgot', { email })
-            .then(response => {
-                console.log('response: ', response)
-                setFormData({ ...formData, message: response.data.message })
-            })
-            .catch(err => {
-                console.log('err: ', err);
-                setFormData({ ...formData, message: err.response.data.message })
-            })
+        const resAuthForgot = await putAuthForgot(email)
+        setFormData({ ...formData, message: resAuthForgot.data.message })
     }
 
     return (

@@ -1,7 +1,6 @@
-import axios from 'axios'
-
 import { useRouter } from 'next/router'
 import { useState, useEffect, useCallback } from 'react'
+import { getAuthReset , putAuthReset } from '../../apiCall/auth'
 
 const Reset = () => {
   const [formData, setFormData] = useState({
@@ -20,23 +19,14 @@ const Reset = () => {
 
   const getEmail = useCallback(async () => {
     if (token) {
-      axios
-        .get('/api/auth/reset', { params: { tokenToCheck: token } })
-        .then(response => {
-          console.log('response getEmail', response)
-          setFormData({
-            ...formData,
-            email: response.data.email,
-            message: response.data.message,
-            displayForm: response.data.displayForm
-          })
-        })
-        .catch(err => {
-          setFormData({
-            ...formData,
-            message: err.response.data.message
-          })
-        })
+      const resGetAuthReset = await getAuthReset(token)
+      
+      setFormData({
+        ...formData,
+        email: resGetAuthReset.data?.email,
+        message: resGetAuthReset.data?.message,
+        displayForm: resGetAuthReset.data?.displayForm
+      })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token])
@@ -48,22 +38,16 @@ const Reset = () => {
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value })
 
-  const handleFormSubmit = e => {
+  const handleFormSubmit = async e => {
     e.preventDefault()
 
-    axios
-      .put('/api/auth/reset', { password, token })
-      .then(response => {
-        setFormData({
-          ...formData,
-          email: response.data.email,
-          message: response.data.message,
-          displayForm: response.data.displayForm
-        })
-      })
-      .catch(err => {
-        setFormData({ ...formData, message: err.response.data.message })
-      })
+    const resPutAuthReset = await putAuthReset(password, token)
+    setFormData({
+      ...formData,
+      email: resPutAuthReset.data?.email,
+      message: resPutAuthReset.data?.message,
+      displayForm: resPutAuthReset.data?.displayForm
+    })
   }
 
   return (

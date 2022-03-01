@@ -43,7 +43,7 @@ handler.post(upload.array('file'), async (req, res) => {
   const uploader = async file => await uploads(file, folder, resource_type)
   const files = req.files
 
-  console.log('files: ', files)
+  // console.log('files: ', files)
 
   if (resource_type === 'raw') {
     const secureUrls = []
@@ -58,7 +58,7 @@ handler.post(upload.array('file'), async (req, res) => {
   if (resource_type === 'image') {
     const imgInfo = await uploader(files[0])
 
-    console.log('imgInfo: ', imgInfo)
+    // console.log('imgInfo: ', imgInfo)
     res.status(200).json(imgInfo)
   }
 })

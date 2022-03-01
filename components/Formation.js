@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 
@@ -10,11 +8,11 @@ import FormInput from './FormInput'
 
 import { toSeoUrl } from '../utils/utilSeoUrl'
 import { postCourse, putCourse, removeCourse } from '../apiCall/courses'
+import { postUpload } from '../apiCall/uploads'
 
 import styles from '../styles/Formation.module.css'
 
 const Formation = props => {
-
   const router = useRouter()
 
   const [courseData, setCourseData] = useState(props.courseContent)
@@ -160,12 +158,12 @@ const Formation = props => {
       for (const file of fileInput) {
         formDataFile.append('file', file)
       }
-      const resUploadFile = await axios.post('/api/uploads', formDataFile, {
-        params: {
-          folder: '/uprugby-uploads-ppt',
-          resource_type: 'raw'
-        }
-      })
+
+      const resUploadFile = await postUpload(
+        formDataFile,
+        '/uprugby-uploads-ppt',
+        'raw'
+      )
 
       newCourseData.attachements
         .filter(file => file.url === undefined)
@@ -177,12 +175,11 @@ const Formation = props => {
       const formDataPict = new FormData()
       formDataPict.append('file', pictInput)
 
-      const resUploadPict = await axios.post('/api/uploads', formDataPict, {
-        params: {
-          folder: '/uprugby-uploads-pict-formation',
-          resource_type: 'image'
-        }
-      })
+      const resUploadPict = await postUpload(
+        formDataPict,
+        '/uprugby-uploads-pict-formation',
+        'image'
+      )
 
       newCourseData.img.url = resUploadPict.data.url
       newCourseData.img.width = resUploadPict.data.width
@@ -192,7 +189,7 @@ const Formation = props => {
     //3. Save in DB
     if (!courseData.isPublished) {
       if (props.action === 'create') {
-        const resCreate =  await postCourse(newCourseData)
+        const resCreate = await postCourse(newCourseData)
         router.push(
           `/courses/update-course/${resCreate.data.newCourseFromDB.seoUrl}`
         )

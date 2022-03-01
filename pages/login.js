@@ -1,11 +1,10 @@
-import axios from 'axios'
-
 import { useState } from 'react'
 import { getSession } from 'next-auth/react'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
+import { postAuth } from '../apiCall/auth'
 import FormInput from '../components/FormInput'
 
 import styles from '../styles/Login.module.css'
@@ -148,7 +147,7 @@ const Login = props => {
     })
   }
 
-  const handleFormSubmit = e => {
+  const handleFormSubmit = async e => {
     e.preventDefault()
 
     /* --------------------------- SIGN IN ---------------------------*/
@@ -196,23 +195,12 @@ const Login = props => {
 
     /* --------------------------- SIGN UP ---------------------------*/
     if (loginOpt === 'signup') {
-      axios
-        .post('/api/auth', { email, password })
-        .then(response => {
-          // console.log('response: ', response.data)
-          setFormData({
-            ...formData,
-            messageAPI: response.data.message,
-            messageType: response.data.messageType
-          })
-        })
-        .catch(err =>
-          setFormData({
-            ...formData,
-            messageAPI: err.response.data.message,
-            messageType: err.response.data.messageType
-          })
-        )
+      const resPostAuth = await postAuth(email, password)
+      setFormData({
+        ...formData,
+        messageAPI: resPostAuth.data.message,
+        messageType: resPostAuth.data.messageType
+      })
     }
   }
 
