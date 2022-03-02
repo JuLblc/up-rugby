@@ -169,10 +169,15 @@ const Lectures = props => {
                 lectureIdx={props.lectureIdx}
               />
             )}
+            <div className={styles.commentsContainer}>
+              {!props.course.isPurchased && props.lecture.comments.length > 0 && <h3>Commentaire</h3>}
 
-            {props.lecture.comments.map(comment => (
-              <CommentDisplay key={comment} id={comment} />
-            ))}
+              {props.lecture.comments.length > 0 && (<div className={styles.break}></div>)}
+
+              {props.lecture.comments.map(comment => (
+                <CommentDisplay key={comment} id={comment} />
+              ))}
+            </div>
           </>
         )}
         {(isMobile || isTablet) && !toggleMenu && (
