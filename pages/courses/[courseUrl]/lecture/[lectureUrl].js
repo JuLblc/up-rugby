@@ -4,19 +4,20 @@ import parse from 'html-react-parser'
 
 import Vimeo from '@u-wave/react-vimeo'
 
+import Link from 'next/link'
 import { useWindowDimensions } from '../../../../hooks/useWindowDimensions'
 import { getDeviceTypeInfo } from '../../../../utils/utilResponsive'
 import { getCourses } from '../../../../apiCall/courses'
 import { getUser } from '../../../../apiCall/users'
 
 import SideCourseChapter from '../../../../components/SideCourseChapter'
-import Comment from '../../../../components/Comment'
+import CommentInput from '../../../../components/CommentInput'
+import CommentDisplay from '../../../../components/CommentDisplay'
 
 import styles from '../../../../styles/Lectures.module.css'
 
 import blockedImg from '../../../../public/blocked.jpg'
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
 
 const Lectures = props => {
   const { width, height } = useWindowDimensions()
@@ -160,14 +161,22 @@ const Lectures = props => {
               <article>{parse(props.lecture.description)}</article>
             </div>
 
-            {props.course.isPurchased && (
-              <Comment
-                session={props.session}
-                course={props.course}
-                chapterIdx={props.chapterIdx}
-                lectureIdx={props.lectureIdx}
-              />
-            )}
+            <div className={styles.commentInput}>
+              <h3>Commentaire</h3>
+              <div className={styles.break}></div>
+              {props.course.isPurchased && (
+                <CommentInput
+                  session={props.session}
+                  course={props.course}
+                  chapterIdx={props.chapterIdx}
+                  lectureIdx={props.lectureIdx}
+                />
+              )}
+            </div>
+            
+            {props.lecture.comments.map(comment => (
+              <CommentDisplay key={comment} id={comment} />
+            ))}
           </>
         )}
         {(isMobile || isTablet) && !toggleMenu && (

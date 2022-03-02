@@ -3,9 +3,9 @@ import { useState } from 'react'
 import FormInput from './FormInput'
 import { putCommentToCourse } from '../apiCall/courses'
 import { postComment } from '../apiCall/comments'
-import styles from '../styles/Comment.module.css'
+import styles from '../styles/CommentInput.module.css'
 
-const Comment = props => {
+const CommentInput = props => {
   const router = useRouter()
 
   const [commentData, setCommentData] = useState({
@@ -21,7 +21,12 @@ const Comment = props => {
   const handleFormSubmit = async e => {
     e.preventDefault()
 
-    const resComment = await postComment(commentData)
+    //convert /n into <br>
+    const regex = /\n/gi
+    const convertedCommentData = { ...commentData}
+    convertedCommentData.comment = convertedCommentData.comment.replace(regex, "<br>")
+
+    const resComment = await postComment(convertedCommentData)
 
     const updatedCourse = { ...props.course }
     updatedCourse
@@ -35,7 +40,8 @@ const Comment = props => {
   }
 
   return (
-    <div className={styles.comment}>
+    
+    <div className={styles.commentInput}>
       <h3>Commentaire</h3>
       <div className={styles.break}></div>
       <form onSubmit={handleFormSubmit}>
@@ -59,8 +65,10 @@ const Comment = props => {
 
         <button type='submit'>Envoyer</button>
       </form>
+      
     </div>
+   
   )
 }
 
-export default Comment
+export default CommentInput
