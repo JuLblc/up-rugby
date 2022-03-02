@@ -161,19 +161,15 @@ const Lectures = props => {
               <article>{parse(props.lecture.description)}</article>
             </div>
 
-            <div className={styles.commentInput}>
-              <h3>Commentaire</h3>
-              <div className={styles.break}></div>
-              {props.course.isPurchased && (
-                <CommentInput
-                  session={props.session}
-                  course={props.course}
-                  chapterIdx={props.chapterIdx}
-                  lectureIdx={props.lectureIdx}
-                />
-              )}
-            </div>
-            
+            {props.course.isPurchased && (
+              <CommentInput
+                session={props.session}
+                course={props.course}
+                chapterIdx={props.chapterIdx}
+                lectureIdx={props.lectureIdx}
+              />
+            )}
+
             {props.lecture.comments.map(comment => (
               <CommentDisplay key={comment} id={comment} />
             ))}
