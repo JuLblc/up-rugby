@@ -59,7 +59,7 @@ const Login = props => {
       id: 2,
       name: 'password',
       type: 'password',
-      placeholder: 'Password',
+      placeholder: 'Mot de passe',
       errorMessages: {
         patternMismatch:
           'Le mot de passe doit contenir au moins 6 caractères, un chiffre, une lettre et un caractère spécial',

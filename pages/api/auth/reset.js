@@ -32,9 +32,8 @@ const checkTokenValidity = (req, res) => {
     User.findOne({ token: tokenToCheck })
         .then(foundUser => {
 
-            console.log('foundUser checkTokenValidity: ', foundUser)
             if (!foundUser) {
-                res.status(400).json({ message: 'Cette clé de validation est incorrect', displayForm: false });
+                res.status(400).json({ message: 'Cette clé de validation est incorrecte', displayForm: false });
                 return
             }
 
@@ -71,7 +70,6 @@ const resetPassword = (req, res) => {
 
     User.findOne({ token })
         .then(foundUser => {
-            console.log('foundUser reset password: ', foundUser)
 
             foundUser.password = hashPass;
             foundUser.token = undefined;
