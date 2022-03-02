@@ -151,6 +151,12 @@
   }
 }
 
+@media (max-width: 720px) {
+  .testiContainer {
+    margin-bottom: 0;
+  }
+}
+
 @media (min-width: 720px) {
   .testiContainer {
     display: grid !important;

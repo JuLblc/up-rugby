@@ -228,16 +228,18 @@ const Home = () => {
         </div>
       </section>
       <section className={styles.testiContainer}>
-          <div className={`${styles.body} ${styles.bodyTestimonial}`}>
-            <h1>
-              <span>Témoignages</span> d'entraineurs
-            </h1>
-            <p>Consultez les témoignages les plus marquants.</p>
-            <div className={styles.bodyComment}>
-              Certains entraîneurs ont préféré garder l'anonymat (notamment Fed.
-              2 et au dessus), je travail à révéler leur identité!
-            </div>
+        <div className={`${styles.body} ${styles.bodyTestimonial}`}>
+          <h1>
+            <span>Témoignages</span> d'entraineurs
+          </h1>
+          <p>Consultez les témoignages les plus marquants.</p>
+          <div className={styles.bodyComment}>
+            Certains entraîneurs ont préféré garder l'anonymat (notamment Fed. 2
+            et au dessus), je travail à révéler leur identité!
+          </div>
 
+          {/* Displaying button above testimonial container*/}
+          {width > 720 && (
             <div className={styles.btnContainer}>
               <button
                 className={
@@ -264,17 +266,47 @@ const Home = () => {
                 {'>'}
               </button>
             </div>
-          </div>
-          {testimonials.map(testimonial => (
-            <CardTestimonial
-              key={testimonial.id}
-              img={testimonial.img}
-              content={testimonial.content}
-              name={testimonial.name}
-              jobs={testimonial.jobs}
-              display={itemsToDisplay.includes(testimonial.id)}
-            />
-          ))}
+          )}
+        </div>
+        {testimonials.map(testimonial => (
+          <CardTestimonial
+            key={testimonial.id}
+            img={testimonial.img}
+            content={testimonial.content}
+            name={testimonial.name}
+            jobs={testimonial.jobs}
+            display={itemsToDisplay.includes(testimonial.id)}
+          />
+        ))}
+        {/* Displaying button below testimonial container */}
+        {width <= 720 && (
+            <div className={styles.btnContainer}>
+              <button
+                className={
+                  Math.min(...itemsToDisplay) === 0
+                    ? styles.btnDisabled
+                    : undefined
+                }
+                type='button'
+                onClick={clickDecrease}
+                disabled={Math.min(...itemsToDisplay) === 0 ? true : false}
+              >
+                {'<'}
+              </button>
+              <button
+                className={
+                  Math.max(...itemsToDisplay) === 4
+                    ? styles.btnDisabled
+                    : undefined
+                }
+                type='button'
+                onClick={clickIncrease}
+                disabled={Math.max(...itemsToDisplay) === 4 ? true : false}
+              >
+                {'>'}
+              </button>
+            </div>
+          )}
       </section>
     </main>
   )
