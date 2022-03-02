@@ -23,11 +23,12 @@ const NewCourse = props => {
     overview: '',
     category: '',
     price: 0,
+    // set image by default
     img: {
-      fileName: '',
-      url: '',
-      width: 0,
-      height: 0
+      fileName: 'logo.png',
+      url: 'https://res.cloudinary.com/dwznpgbcd/image/upload/v1646205285/uprugby-uploads-pict-formation/logo.png.png',
+      width: 1528,
+      height: 1004
     },
     chapters: [
       {

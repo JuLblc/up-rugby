@@ -196,6 +196,7 @@ const Login = props => {
     /* --------------------------- SIGN UP ---------------------------*/
     if (loginOpt === 'signup') {
       const resPostAuth = await postAuth(email, password)
+      console.log('resPostAuth: ', resPostAuth)
       setFormData({
         ...formData,
         messageAPI: resPostAuth.data.message,

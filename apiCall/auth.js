@@ -10,7 +10,7 @@ export const putAuthForgot = async email => {
 
 export const postAuth = async (email, password) => {
   try {
-    return axios.post('/api/auth', { email, password })
+    return await axios.post('/api/auth', { email, password })
   } catch (err) {
     return err.response
   }

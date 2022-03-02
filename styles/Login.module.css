@@ -148,6 +148,7 @@
   letter-spacing: 1px;
   cursor: pointer;
   margin: 20px 0;
+  font-size: 1em;
 }
 
 .register {
@@ -162,4 +163,10 @@
   padding: 0 5px;
   text-decoration: underline;
   cursor: pointer;
+}
+
+.reinit{
+  border: solid 2px #0085ff!important;
+  background-color: #fff!important;
+  color: #0085ff!important;
 }

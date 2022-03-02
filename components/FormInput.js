@@ -21,7 +21,7 @@ const FormInput = props => {
     type,
     label,
     chapterIdx,
-    lectureIdx,
+    lectureIdx, 
     getDuration,
     ...inputProps
   } = props
