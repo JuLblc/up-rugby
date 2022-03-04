@@ -162,8 +162,13 @@ const Lectures = props => {
             </div>
 
             <div className={styles.commentsContainer}>
-              <h3>Commentaire</h3>
-              <div className={styles.break}></div>
+              {(props.course.isPurchased ||
+                props.lecture.comments.length > 0) && (
+                <>
+                  <h3>Commentaire</h3>
+                  <div className={styles.break}></div>
+                </>
+              )}
               {props.course.isPurchased && (
                 <CommentInput
                   session={props.session}
@@ -173,14 +178,18 @@ const Lectures = props => {
                 />
               )}
 
-              {props.session && props.lecture.comments.length > 0 && (
+              {props.session && props.lecture.comments.length > 0 && props.course.isPurchased && (
                 <div
                   className={`${styles.break}  ${styles.breakCommentDisplay}`}
                 ></div>
               )}
 
               {props.lecture.comments.map(comment => (
-                <CommentDisplay key={comment} id={comment} session={props.session}/>
+                <CommentDisplay
+                  key={comment}
+                  id={comment}
+                  session={props.session}
+                />
               ))}
             </div>
           </>

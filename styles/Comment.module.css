@@ -36,7 +36,8 @@
   display: none;
 }
 
-.comment:hover .reply {
+.comment:hover .reply,
+.replyMobileOrTab {
   display: flex;
 }
 

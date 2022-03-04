@@ -3,8 +3,16 @@ import styles from '../styles/Comment.module.css'
 import avatar from '../public/avatar_default.png'
 import parse from 'html-react-parser'
 import { diffTime } from '../utils/utilCourses'
+import { useWindowDimensions } from '../hooks/useWindowDimensions'
+import { getDeviceTypeInfo } from '../utils/utilResponsive'
 
 const Comment = props => {
+  const { width, height } = useWindowDimensions()
+  const {
+    isMobile,
+    isTablet,
+  } = getDeviceTypeInfo(width, height)
+
   const handleReply = () => {
     props.updateStateFromChild(true)
   }
@@ -26,7 +34,12 @@ const Comment = props => {
               <i>Il y a {diffTime(Date.parse(date))}</i>
             </p>
             {props.session && !props.isReply && (
-              <div className={styles.reply} onClick={handleReply}>
+              <div
+                className={`${
+                  isMobile || isTablet ? styles.replyMobileOrTab : styles.reply
+                }`}
+                onClick={handleReply}
+              >
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   viewBox='0 0 24 24'
