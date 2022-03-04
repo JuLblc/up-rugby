@@ -37,7 +37,7 @@ const CommentDisplay = props => {
       updateStateFromChild={updateStateFromChild}
       commentData = {commentData}/>
 
-      {commentData.replies.map(reply => <Comment commentData={reply} isReply={true}/>)}
+      {commentData.replies.map(reply => <Comment key={props.id} commentData={reply} isReply={true}/>)}
 
       {replyVisible && (
         <CommentInput
