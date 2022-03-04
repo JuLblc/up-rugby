@@ -1,29 +1,17 @@
-.commentInput{
-  padding-top: 20px;
-}
-.commentInput h3 {
-  margin-bottom: 5px;
-}
-.break {
-  width: 100%;
-  border-bottom: 1px solid lightgray;
-  margin: auto;
-}
-
-.commentInput label,
-.commentInput input,
-.commentInput textarea {
+.commentForm label,
+.commentForm input,
+.commentForm textarea {
   display: block;
 }
 
-.commentInput label {
+.commentForm label {
   margin-top: 20px;
   font-size: 0.8em;
   color: #616c73;
 }
 
-.commentInput input,
-.commentInput textarea {
+.commentForm input,
+.commentForm textarea {
   margin-top: 5px;
   background-color: #f7fafb;
   border: solid 1px #d5e3ec;
@@ -33,12 +21,12 @@
   font-family: inherit;
 }
 
-.commentInput textarea {
+.commentForm textarea {
   width: 100%;
   height: 150px;
 }
 
-.commentInput button {
+.commentForm button {
   margin-top: 20px;
   color: #f7fafb;
   background-color: #0f56b3;
@@ -51,7 +39,7 @@
   border-radius: 5px;
 }
 
-.commentInput button:hover {
+.commentForm button:hover {
   background-color: #f7fafb;
   color: #0f56b3;
   cursor: pointer;

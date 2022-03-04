@@ -209,3 +209,7 @@
   border-bottom: 1px solid lightgray;
   margin: auto;
 }
+
+.breakCommentDisplay {
+  margin: 20px auto 0!important;
+}

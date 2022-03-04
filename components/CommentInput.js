@@ -23,51 +23,45 @@ const CommentInput = props => {
 
     //convert /n into <br>
     const regex = /\n/gi
-    const convertedCommentData = { ...commentData}
-    convertedCommentData.comment = convertedCommentData.comment.replace(regex, "<br>")
+    const convertedCommentData = { ...commentData }
+    convertedCommentData.comment = convertedCommentData.comment.replace(
+      regex,
+      '<br>'
+    )
 
     const resComment = await postComment(convertedCommentData)
 
     const updatedCourse = { ...props.course }
-    updatedCourse
-      .chapters[props.chapterIdx]
-      .lectures[props.lectureIdx]
-      .comments
-      .push(resComment.data.newCommentFromDB)
+    updatedCourse.chapters[props.chapterIdx].lectures[
+      props.lectureIdx
+    ].comments.push(resComment.data.newCommentFromDB)
 
     await putCommentToCourse(updatedCourse)
     router.push(router.asPath)
   }
 
   return (
-    
-    <div className={styles.commentInput}>
-      <h3>Commentaire</h3>
-      <div className={styles.break}></div>
-      <form onSubmit={handleFormSubmit}>
-        <FormInput
-          label="NOM D'UTILISATEUR:"
-          type='text'
-          name='authorname'
+    <form onSubmit={handleFormSubmit} className={styles.commentForm}>
+      <FormInput
+        label="NOM D'UTILISATEUR:"
+        type='text'
+        name='authorname'
+        required={true}
+        value={commentData.authorname}
+        onChange={onChange}
+      />
+      <label>
+        VOTRE MESSAGE:
+        <textarea
+          name='comment'
+          value={commentData.comment}
           required={true}
-          value={commentData.authorname}
           onChange={onChange}
-        />
-        <label>
-          VOTRE MESSAGE:
-          <textarea
-            name='comment'
-            value={commentData.comment}
-            required={true}
-            onChange={onChange}
-          ></textarea>
-        </label>
+        ></textarea>
+      </label>
 
-        <button type='submit'>Envoyer</button>
-      </form>
-      
-    </div>
-   
+      <button type='submit'>Envoyer</button>
+    </form>
   )
 }
 
