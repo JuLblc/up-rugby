@@ -173,7 +173,7 @@ const Lectures = props => {
                 />
               )}
 
-              {props.lecture.comments.length > 0 && (
+              {props.session && props.lecture.comments.length > 0 && (
                 <div
                   className={`${styles.break}  ${styles.breakCommentDisplay}`}
                 ></div>

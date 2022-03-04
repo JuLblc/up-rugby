@@ -1,4 +1,10 @@
-.CommentDisplay {
+.commentIsReply {
+  margin-left:20px;
+  padding-left: 20px;
+  border-left: solid 1px lightgray;
+}
+
+.comment {
   margin-top: 20px;
 }
 
@@ -22,21 +28,28 @@
   line-height: 1.3em;
 }
 
-.action,
-.reply {
+.action {
   display: flex;
 }
 
-.reply:hover{
-    cursor: pointer;
+.reply {
+  display: none;
 }
 
-.reply:hover .replyLink{
-    text-decoration:underline;
+.comment:hover .reply {
+  display: flex;
 }
 
-.reply svg{
-    margin: 0 5px;
+.reply:hover {
+  cursor: pointer;
+}
+
+.reply:hover .replyLink {
+  text-decoration: underline;
+}
+
+.reply svg {
+  margin: 0 5px;
 }
 
 .action p {
@@ -46,6 +59,6 @@
   line-height: 1.3em;
 }
 
-.comment {
+.content {
   text-align: justify;
 }

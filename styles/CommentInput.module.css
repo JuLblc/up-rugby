@@ -1,6 +1,7 @@
 .commentFormIsReply {
   border-left: solid 1px lightgray;
   padding-left: 20px;
+  margin-left:20px;
 }
 
 .commentForm label,

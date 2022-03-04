@@ -9,3 +9,7 @@ export const getComment = async (id) => {
     params: { id }
   })
 }
+
+export const postReply = async (id, replyData) => {
+  return await axios.post('/api/comment', { reply: replyData, id })
+}

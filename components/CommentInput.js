@@ -1,12 +1,23 @@
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import FormInput from './FormInput'
 import { putCommentToCourse } from '../apiCall/courses'
-import { postComment } from '../apiCall/comments'
+import { postComment, postReply } from '../apiCall/comments'
 import styles from '../styles/CommentInput.module.css'
 
 const CommentInput = props => {
   const router = useRouter()
+
+  const myRef = useRef(null)
+  const executeScroll = () =>
+    myRef.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center'
+    })
+
+  useEffect(() => {
+    if (props.isReply) executeScroll()
+  }, [])
 
   const [commentData, setCommentData] = useState({
     author: props.session.user.id,
@@ -31,7 +42,7 @@ const CommentInput = props => {
     convertedCommentData.comment = convertedCommentData.comment.replace(
       regex,
       '<br>'
-    )   
+    )
 
     if (!props.isReply) {
       const resComment = await postComment(convertedCommentData)
@@ -42,17 +53,18 @@ const CommentInput = props => {
       ].comments.push(resComment.data.newCommentFromDB)
 
       await putCommentToCourse(updatedCourse)
-      router.push(router.asPath)
-      return
     }
 
     if (props.isReply) {
-      console.log(convertedCommentData.comment, 'work to do')
+      await postReply(props.id, convertedCommentData)
     }
+
+    router.push(router.asPath)
   }
 
   return (
     <form
+      ref={myRef}
       onSubmit={handleFormSubmit}
       className={`${styles.commentForm} ${props.isReply &&
         styles.commentFormIsReply}`}

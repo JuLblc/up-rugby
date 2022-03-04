@@ -12,8 +12,14 @@ export default async function handler (req, res) {
     .then(() => {
       switch (method) {
         case 'POST':
-          addComment(req, res, session)
-          break
+          if (req.body.comment) {
+            addComment(req, res, session)
+            break
+          }
+          if (req.body.reply) {
+            addReply(req, res, session)
+            break
+          }
         case 'GET':
           getComment(req, res, session)
           break
@@ -46,12 +52,27 @@ const addComment = (req, res, session) => {
 }
 
 const getComment = (req, res, session) => {
-
   const { id } = req.query
 
   Comment.findById(id)
     .then(commentFromDB => {
       res.status(200).json({ commentFromDB })
+    })
+    .catch(err => console.log('err : ', err))
+}
+
+const addReply = (req, res, session) => {
+  const { id, reply } = req.body
+
+  Comment.findById(id)
+    .then(commentFromDB => {
+      commentFromDB.replies.push(reply)
+      commentFromDB
+        .save()
+        .then(newCommentFromDB => {
+          res.status(200).json({ newCommentFromDB })
+        })
+        .catch(err => console.log('err : ', err))
     })
     .catch(err => console.log('err : ', err))
 }
