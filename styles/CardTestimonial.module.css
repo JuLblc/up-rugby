@@ -39,22 +39,30 @@
   border-radius: 100%;
 }
 
-.quoteContainer{
+/* .quoteContainer{
   position: absolute;
   top: 65px;
   right: calc(100%/2 - 50px);
-}
+} */
 
 .quote {
-  font-size: 60px;
-  font-family: Revalia;
+  position: absolute;
+  top: 65px;
+  right: calc(100%/2 - 50px);
+
   background-color: #f7fafb;
   color: #0085ff;
-  /* position: absolute; */
-  border-radius: 100%;
-  /* top: 65px;
-  right: calc(100%/2 - 50px); */
-  line-height: 0.75em;
+  font-family: Revalia;
+
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 60px;
+  line-height: 60px;
 }
 
 .testimonial {
