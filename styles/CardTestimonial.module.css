@@ -39,15 +39,21 @@
   border-radius: 100%;
 }
 
+.quoteContainer{
+  position: absolute;
+  top: 65px;
+  right: calc(100%/2 - 50px);
+}
+
 .quote {
   font-size: 60px;
   font-family: Revalia;
   background-color: #f7fafb;
   color: #0085ff;
-  position: absolute;
+  /* position: absolute; */
   border-radius: 100%;
-  top: 65px;
-  right: calc(100%/2 - 50px);
+  /* top: 65px;
+  right: calc(100%/2 - 50px); */
   line-height: 0.75em;
 }
 
