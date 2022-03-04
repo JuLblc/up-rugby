@@ -189,6 +189,7 @@ const Lectures = props => {
                   key={comment}
                   id={comment}
                   session={props.session}
+                  isPurchased={props.course.isPurchased}
                 />
               ))}
             </div>

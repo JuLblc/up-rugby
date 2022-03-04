@@ -35,7 +35,8 @@ const CommentDisplay = props => {
       id={props.id}
       session={props.session}
       updateStateFromChild={updateStateFromChild}
-      commentData = {commentData}/>
+      commentData = {commentData}
+      isPurchased={props.isPurchased}/>
 
       {commentData.replies.map(reply => <Comment key={props.id} commentData={reply} isReply={true}/>)}
 

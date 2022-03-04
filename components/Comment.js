@@ -33,7 +33,7 @@ const Comment = props => {
             <p>
               <i>Il y a {diffTime(Date.parse(date))}</i>
             </p>
-            {props.session && !props.isReply && (
+            {props.session && !props.isReply && props.isPurchased && (
               <div
                 className={`${
                   isMobile || isTablet ? styles.replyMobileOrTab : styles.reply
