@@ -1,3 +1,8 @@
+.commentFormIsReply {
+  border-left: solid 1px lightgray;
+  padding-left: 20px;
+}
+
 .commentForm label,
 .commentForm input,
 .commentForm textarea {
@@ -26,21 +31,30 @@
   height: 150px;
 }
 
-.commentForm button {
+.btnContainer button {
   margin-top: 20px;
-  color: #f7fafb;
-  background-color: #0f56b3;
+  margin-right: 20px;
+
   padding: 10px;
-  border: solid 2px #0f56b3;
+  border: solid 1px #0f56b3;
   font-family: 'Roboto';
   font-weight: 500;
   font-size: 1em;
   letter-spacing: 1px;
   border-radius: 5px;
+  cursor: pointer;
 }
 
-.commentForm button:hover {
+.btnContainer button:hover {
+  opacity: 0.85;
+}
+
+.commentForm button:nth-child(1) {
+  color: #f7fafb;
+  background-color: #0f56b3;
+}
+
+.commentForm button:nth-child(2) {
   background-color: #f7fafb;
   color: #0f56b3;
-  cursor: pointer;
 }

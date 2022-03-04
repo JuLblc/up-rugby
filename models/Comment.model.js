@@ -5,9 +5,20 @@ const CommentSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
-  authorname:String,
+  authorname: String,
   comment: String,
-  date: { type: Date, default: Date.now }
+  date: { type: Date, default: Date.now },
+  replies: [
+    {
+      author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+      },
+      authorname: String,
+      comment: String,
+      date: { type: Date, default: Date.now }
+    }
+  ]
 })
 
 module.exports =

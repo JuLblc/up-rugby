@@ -1,34 +1,51 @@
-.CommentDisplay{
-    margin-top: 20px;
+.CommentDisplay {
+  margin-top: 20px;
 }
 
-.userWrapper{
-    display: flex;
-    align-items: center;
+.userWrapper {
+  display: flex;
+  align-items: center;
 }
 
 .avatarWrapper {
-    width: 50px;
-    margin-right:10px ;
+  width: 50px;
+  margin-right: 10px;
 }
 
-.avatarWrapper span{
-    border-radius: 100%;
+.avatarWrapper span {
+  border-radius: 100%;
 }
 
-.authorName{
-    margin:0;
-    font-weight: 500;
-    line-height: 1.3em;
+.authorName {
+  margin: 0;
+  font-weight: 500;
+  line-height: 1.3em;
 }
 
-.date{
-    margin:0;
-    color:#808080;
-    font-size: 0.9em;
-    line-height: 1.3em;
+.action,
+.reply {
+  display: flex;
 }
 
-.comment{
-    text-align: justify;
+.reply:hover{
+    cursor: pointer;
+}
+
+.reply:hover .replyLink{
+    text-decoration:underline;
+}
+
+.reply svg{
+    margin: 0 5px;
+}
+
+.action p {
+  margin: 0 20px 0 0;
+  color: #808080;
+  font-size: 0.9em;
+  line-height: 1.3em;
+}
+
+.comment {
+  text-align: justify;
 }

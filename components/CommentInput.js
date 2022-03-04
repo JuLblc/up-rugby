@@ -18,6 +18,10 @@ const CommentInput = props => {
     setCommentData({ ...commentData, [e.target.name]: e.target.value })
   }
 
+  const handleCancel = () => {
+    props.updateStateFromChild(false)
+  }
+
   const handleFormSubmit = async e => {
     e.preventDefault()
 
@@ -27,21 +31,32 @@ const CommentInput = props => {
     convertedCommentData.comment = convertedCommentData.comment.replace(
       regex,
       '<br>'
-    )
+    )   
 
-    const resComment = await postComment(convertedCommentData)
+    if (!props.isReply) {
+      const resComment = await postComment(convertedCommentData)
 
-    const updatedCourse = { ...props.course }
-    updatedCourse.chapters[props.chapterIdx].lectures[
-      props.lectureIdx
-    ].comments.push(resComment.data.newCommentFromDB)
+      const updatedCourse = { ...props.course }
+      updatedCourse.chapters[props.chapterIdx].lectures[
+        props.lectureIdx
+      ].comments.push(resComment.data.newCommentFromDB)
 
-    await putCommentToCourse(updatedCourse)
-    router.push(router.asPath)
+      await putCommentToCourse(updatedCourse)
+      router.push(router.asPath)
+      return
+    }
+
+    if (props.isReply) {
+      console.log(convertedCommentData.comment, 'work to do')
+    }
   }
 
   return (
-    <form onSubmit={handleFormSubmit} className={styles.commentForm}>
+    <form
+      onSubmit={handleFormSubmit}
+      className={`${styles.commentForm} ${props.isReply &&
+        styles.commentFormIsReply}`}
+    >
       <FormInput
         label="NOM D'UTILISATEUR:"
         type='text'
@@ -60,7 +75,14 @@ const CommentInput = props => {
         ></textarea>
       </label>
 
-      <button type='submit'>Envoyer</button>
+      <div className={styles.btnContainer}>
+        <button type='submit'>Envoyer</button>
+        {props.isReply && (
+          <button type='button' onClick={handleCancel}>
+            Annuler
+          </button>
+        )}
+      </div>
     </form>
   )
 }

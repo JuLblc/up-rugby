@@ -180,7 +180,7 @@ const Lectures = props => {
               )}
 
               {props.lecture.comments.map(comment => (
-                <CommentDisplay key={comment} id={comment} />
+                <CommentDisplay key={comment} id={comment} session={props.session}/>
               ))}
             </div>
           </>
