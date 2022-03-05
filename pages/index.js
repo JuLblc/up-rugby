@@ -55,32 +55,65 @@ const Home = () => {
       content: `"Voilà un expert qui met à notre disposition des connaissances et des savoirs indispensables à notre quotidien de coach pour optimiser le potentiel de nos équipes, augmenter notre pouvoir de transformation. En plus elles sont évolutives ! Bravo pour cet immense travail et cet apport à notre rugby"`,
       name: 'Serge Collinet',
       jobs: ['RESP. SPORTIF STADE FRANÇAIS', 'CHAMPION DE FRANCE FED. 2']
+    },
+    {
+      id: 5,
+      img: testiPict1,
+      content: `"Nous avions quelques idées sur les systèmes de jeu et notamment le
+      système 1 3 3 1 mais de façon assez globale et empirique… Le détails et
+      la finesse de l’analyse nous ont permis de gagner en précision et en
+      connaissance. De superbes outils (analyse vidéo, powerpoint…) tant
+      pour les éducateurs que pour les joueurs. Je recommande vivement !
+      Bravo Charles !"`,
+      name: 'Adrien Renault',
+      jobs: ['RESPONSABLE SPORTIF COB79']
     }
   ]
 
+  const [items, setItems] = useState(
+    testimonials.map(testimonial => testimonial.id)
+  )
+  const [itemsToDisplay, setItemsToDisplay] = useState([])
+
   useEffect(() => {
     if (width > 1420) {
-      setItemsToDisplay([0, 1, 2])
+      setItemsToDisplay([3, 4, 5])
       return
     }
     if (width > 1060 && width <= 1420) {
-      setItemsToDisplay([0, 1])
+      setItemsToDisplay([2, 3])
       return
     }
     if (width <= 1060) {
-      setItemsToDisplay([0])
+      setItemsToDisplay([5])
       return
     }
   }, [width])
 
-  const [itemsToDisplay, setItemsToDisplay] = useState([0, 1, 2])
-
   const clickIncrease = () => {
-    setItemsToDisplay([...itemsToDisplay].map(item => item + 1))
+    let newItems = [...items]
+    for (let i = 0; i < itemsToDisplay.length; i++) {
+      let firstElement = newItems.shift()
+      newItems.push(firstElement)
+    }
+    console.log(newItems)
+    setItems(newItems)
+
+    setItemsToDisplay(
+      newItems.slice(itemsToDisplay.length, 2 * itemsToDisplay.length)
+    )
   }
 
   const clickDecrease = () => {
-    setItemsToDisplay([...itemsToDisplay].map(item => item - 1))
+    let newItems = [...items]
+    for (let i = 0; i < itemsToDisplay.length; i++) {
+      let lastElement = newItems.pop()
+      newItems.unshift(lastElement)
+    }
+
+    setItems(newItems)
+    setItemsToDisplay(newItems.slice(itemsToDisplay.length, 2 * itemsToDisplay.length))
+
   }
 
   return (
@@ -241,72 +274,54 @@ const Home = () => {
           {/* Displaying button above testimonial container*/}
           {width > 720 && (
             <div className={styles.btnContainer}>
-              <button
-                className={
-                  Math.min(...itemsToDisplay) === 0
-                    ? styles.btnDisabled
-                    : undefined
-                }
-                type='button'
-                onClick={clickDecrease}
-                disabled={Math.min(...itemsToDisplay) === 0 ? true : false}
-              >
+              <button type='button' onClick={clickDecrease}>
                 {'<'}
               </button>
-              <button
-                className={
-                  Math.max(...itemsToDisplay) === 4
-                    ? styles.btnDisabled
-                    : undefined
-                }
-                type='button'
-                onClick={clickIncrease}
-                disabled={Math.max(...itemsToDisplay) === 4 ? true : false}
-              >
+              <button type='button' onClick={clickIncrease}>
                 {'>'}
               </button>
             </div>
           )}
         </div>
-        {testimonials.map(testimonial => (
+        {items.map(item => (
           <CardTestimonial
-            key={testimonial.id}
-            img={testimonial.img}
-            content={testimonial.content}
-            name={testimonial.name}
-            jobs={testimonial.jobs}
-            display={itemsToDisplay.includes(testimonial.id)}
+            key={testimonials[item].id}
+            img={testimonials[item].img}
+            content={testimonials[item].content}
+            name={testimonials[item].name}
+            jobs={testimonials[item].jobs}
+            display={itemsToDisplay.includes(testimonials[item].id)}
           />
         ))}
         {/* Displaying button below testimonial container */}
         {width <= 720 && (
-            <div className={styles.btnContainer}>
-              <button
-                className={
-                  Math.min(...itemsToDisplay) === 0
-                    ? styles.btnDisabled
-                    : undefined
-                }
-                type='button'
-                onClick={clickDecrease}
-                disabled={Math.min(...itemsToDisplay) === 0 ? true : false}
-              >
-                {'<'}
-              </button>
-              <button
-                className={
-                  Math.max(...itemsToDisplay) === 4
-                    ? styles.btnDisabled
-                    : undefined
-                }
-                type='button'
-                onClick={clickIncrease}
-                disabled={Math.max(...itemsToDisplay) === 4 ? true : false}
-              >
-                {'>'}
-              </button>
-            </div>
-          )}
+          <div className={styles.btnContainer}>
+            <button
+              className={
+                Math.min(...itemsToDisplay) === 0
+                  ? styles.btnDisabled
+                  : undefined
+              }
+              type='button'
+              onClick={clickDecrease}
+              disabled={Math.min(...itemsToDisplay) === 0 ? true : false}
+            >
+              {'<'}
+            </button>
+            <button
+              className={
+                Math.max(...itemsToDisplay) === 4
+                  ? styles.btnDisabled
+                  : undefined
+              }
+              type='button'
+              onClick={clickIncrease}
+              disabled={Math.max(...itemsToDisplay) === 4 ? true : false}
+            >
+              {'>'}
+            </button>
+          </div>
+        )}
       </section>
     </main>
   )

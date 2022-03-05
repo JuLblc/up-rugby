@@ -1,15 +1,16 @@
 import Image from 'next/image'
 import styles from '../styles/CardTestimonial.module.css'
+import { useEffect, useRef } from 'react'
 
 const CardTestimonial = props => {
   return (
     <div
-      className={`${styles.cardContainer} ${!props.display &&
+      className={`${styles.cardContainer} ${styles.animate} ${!props.display &&
         styles.notDisplayed}`}
     >
       <div className={styles.imageWrapper}>
         <Image src={props.img} alt='testimonial-picture' />
-          <div className={styles.quote}>"</div>
+        <div className={styles.quote}>"</div>
       </div>
 
       <p className={styles.testimonial}>

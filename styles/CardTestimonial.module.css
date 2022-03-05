@@ -10,6 +10,23 @@
   background-color: white;
 }
 
+.animate {
+  animation-duration: 0.5s;
+  animation-name: slidein;
+}
+
+@keyframes slidein {
+  from {
+    margin-left: 100%;
+    /* width: 300%; */
+  }
+
+  to {
+    margin-left: 0%;
+    /* width: 100%; */
+  }
+}
+
 @media (max-width: 720px) {
   .cardContainer {
     width: 100%;
@@ -39,16 +56,10 @@
   border-radius: 100%;
 }
 
-/* .quoteContainer{
-  position: absolute;
-  top: 65px;
-  right: calc(100%/2 - 50px);
-} */
-
 .quote {
   position: absolute;
   top: 65px;
-  right: calc(100%/2 - 50px);
+  right: calc(100% / 2 - 50px);
 
   background-color: #f7fafb;
   color: #0085ff;
@@ -79,7 +90,7 @@
 }
 
 @media (max-width: 720px) {
-  .testimonial { 
+  .testimonial {
     max-height: unset;
   }
 }
@@ -97,7 +108,7 @@
 }
 
 @media (max-width: 720px) {
-  .fadeOut { 
+  .fadeOut {
     background: unset;
   }
 }
