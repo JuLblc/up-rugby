@@ -1,7 +1,7 @@
 .burger {
   display: flex;
-  width: 18px;
-  height: 18px;
+  width: 24px;
+  height: 24px;
   justify-content: space-around;
   flex-flow: column nowrap;
   position: relative;
@@ -10,7 +10,7 @@
 
 .burger div {
   height: 3px;
-  background-color: black;
+  background-color: #3a3a3a;
   border-radius: 10px;
   transform-origin: 1px;
   transition: all 0.3s linear;

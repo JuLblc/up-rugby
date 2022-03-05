@@ -46,7 +46,7 @@
 .link a {
   display: inline-block;
   text-decoration: none;
-  padding: 20px;
+  padding: 15px 20px;
   white-space: nowrap;
   font-size: 1.2em;
   border: solid 1px #0085ff;
@@ -55,6 +55,11 @@
   color: #f7fafb;
   margin-top: 20px;
   margin-right: 20px;
+  font-weight:500;
+}
+
+.link a:hover { 
+  opacity: 0.8;
 }
 
 .link a:nth-child(2) {
@@ -198,4 +203,19 @@
 
 .btnDisabled {
   opacity: 0.3 !important;
+}
+
+@media (max-width: 767px) {
+  .body p {
+    font-size: 1.25em;
+  }
+  .link a {
+    font-size: 1em;
+  }
+  .supportItemsContent a {
+    font-size: 1.1em;
+  }
+  .supportItemsContent p {
+    font-size: 0.95em;
+  }
 }

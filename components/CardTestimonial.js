@@ -9,9 +9,7 @@ const CardTestimonial = props => {
     >
       <div className={styles.imageWrapper}>
         <Image src={props.img} alt='testimonial-picture' />
-        <div className={styles.quoteContainer}>
           <div className={styles.quote}>"</div>
-        </div>
       </div>
 
       <p className={styles.testimonial}>

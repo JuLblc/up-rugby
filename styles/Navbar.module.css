@@ -47,7 +47,7 @@
 
 .headerNav a {
   text-decoration: none;
-  color: #000;
+  color: #3a3a3a;
   font-weight: 400;
 }
 .headerNav a:hover {
@@ -64,7 +64,7 @@
 .liRightSide {
   /* height: 24px; fit svg*/
   /* line-height: calc(24px + 8px); vertical align bottom */
-  margin: 5px;
+  margin: 5px 10px;
   display: flex;
 }
 
@@ -73,7 +73,9 @@
 }
 
 .divRightSide {
+  align-items: center;
   margin: 0 5px;
+  display: flex;
 }
 
 .btnLogin {

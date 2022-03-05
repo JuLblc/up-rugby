@@ -5,13 +5,15 @@
   grid-gap: 32px;
 }
 
+@media (max-width: 375px) {
+  .cardFormationContainer {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+}
+
 .introNotMobile {
   grid-column-start: 1;
   grid-column-end: 3;
-}
-
-.intro {
-  max-width: 620px;
 }
 
 .strong {
@@ -19,7 +21,6 @@
 }
 
 .intro p {
-  /* font-size: 1.5em; */
   color: #808080;
   font-weight: 300;
   font-size: 1.1em;
