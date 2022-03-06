@@ -1,11 +1,10 @@
 import Image from 'next/image'
 import styles from '../styles/CardTestimonial.module.css'
-import { useEffect, useRef } from 'react'
 
 const CardTestimonial = props => {
   return (
     <div
-      className={`${styles.cardContainer} ${styles.animate} ${!props.display &&
+      className={`${styles.cardContainer} ${props.animation === 'right' ? styles.animateLeftToRight : styles.animateRightToLeft } ${!props.display &&
         styles.notDisplayed}`}
     >
       <div className={styles.imageWrapper}>

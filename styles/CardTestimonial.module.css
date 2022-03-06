@@ -10,20 +10,32 @@
   background-color: white;
 }
 
-.animate {
-  animation-duration: 0.5s;
-  animation-name: slidein;
+.animateRightToLeft {
+  animation: slideRightToLeft 1s;
+  position:relative;
+  z-index: 100;
 }
 
-@keyframes slidein {
+@keyframes slideRightToLeft {
   from {
-    margin-left: 100%;
-    /* width: 300%; */
+    margin-left: 300%;
   }
-
   to {
     margin-left: 0%;
-    /* width: 100%; */
+  }
+}
+
+.animateLeftToRight {
+  animation: slideLeftToRight 1s;
+  position:relative;
+}
+
+@keyframes slideLeftToRight {
+  from {
+    margin-left: -300%;
+  }
+  to {
+    margin-left: 0%;
   }
 }
 
@@ -36,6 +48,7 @@
 
 .notDisplayed {
   display: none;
+  /* visibility: hidden; */
 }
 
 .cardContainer:hover .fadeOut {

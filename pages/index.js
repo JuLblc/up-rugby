@@ -75,17 +75,22 @@ const Home = () => {
   )
   const [itemsToDisplay, setItemsToDisplay] = useState([])
 
+  const [animation, setAnimation] = useState(null)
+
   useEffect(() => {
     if (width > 1420) {
+      // setItemsToDisplay([0, 1, 2])
       setItemsToDisplay([3, 4, 5])
       return
     }
     if (width > 1060 && width <= 1420) {
       setItemsToDisplay([2, 3])
+      // setItemsToDisplay([0, 1])
       return
     }
     if (width <= 1060) {
       setItemsToDisplay([5])
+      // setItemsToDisplay([0])
       return
     }
   }, [width])
@@ -96,12 +101,13 @@ const Home = () => {
       let firstElement = newItems.shift()
       newItems.push(firstElement)
     }
-    console.log(newItems)
     setItems(newItems)
-
     setItemsToDisplay(
       newItems.slice(itemsToDisplay.length, 2 * itemsToDisplay.length)
+      // newItems.slice(0,  itemsToDisplay.length)
+
     )
+    setAnimation('right')
   }
 
   const clickDecrease = () => {
@@ -112,7 +118,11 @@ const Home = () => {
     }
 
     setItems(newItems)
-    setItemsToDisplay(newItems.slice(itemsToDisplay.length, 2 * itemsToDisplay.length))
+    setItemsToDisplay(
+      // newItems.slice(0,  itemsToDisplay.length)
+      newItems.slice(itemsToDisplay.length, 2 * itemsToDisplay.length)
+    )
+    setAnimation('left')
 
   }
 
@@ -291,33 +301,16 @@ const Home = () => {
             name={testimonials[item].name}
             jobs={testimonials[item].jobs}
             display={itemsToDisplay.includes(testimonials[item].id)}
+            animation={animation}
           />
         ))}
         {/* Displaying button below testimonial container */}
         {width <= 720 && (
           <div className={styles.btnContainer}>
-            <button
-              className={
-                Math.min(...itemsToDisplay) === 0
-                  ? styles.btnDisabled
-                  : undefined
-              }
-              type='button'
-              onClick={clickDecrease}
-              disabled={Math.min(...itemsToDisplay) === 0 ? true : false}
-            >
+            <button type='button' onClick={clickDecrease}>
               {'<'}
             </button>
-            <button
-              className={
-                Math.max(...itemsToDisplay) === 4
-                  ? styles.btnDisabled
-                  : undefined
-              }
-              type='button'
-              onClick={clickIncrease}
-              disabled={Math.max(...itemsToDisplay) === 4 ? true : false}
-            >
+            <button type='button' onClick={clickIncrease}>
               {'>'}
             </button>
           </div>

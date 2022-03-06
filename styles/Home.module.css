@@ -168,7 +168,6 @@
     display: grid !important;
     grid-auto-flow: column;
     grid-gap: 32px;
-    overflow: auto;
     flex-direction: unset;
     align-items: unset;
   }
@@ -176,6 +175,9 @@
 
 .bodyTestimonial {
   width: 320px;
+  position: relative;
+  z-index: 200;
+  background-color: #f7fafb;
 }
 
 @media (max-width: 720px) {
