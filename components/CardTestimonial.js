@@ -1,11 +1,45 @@
 import Image from 'next/image'
+import { useState, useEffect, useRef } from 'react'
 import styles from '../styles/CardTestimonial.module.css'
+import { useFirstRender } from '../hooks/useFirstRender'
 
 const CardTestimonial = props => {
+  const ref = useRef()
+  const firstRender = useFirstRender()
+
+  useEffect(() => {
+    // ref.current.style.display = "block"
+    if (!firstRender) {
+      setTimeout(() => {
+        // console.log('useEffect')
+        console.log('props.display: ', props.display)
+        props.updateStateFromChild(null)
+        if (!props.display) {
+          console.log('ajouter class not display')
+          // ref.current.style.display = "none"
+        }
+      }, 500)
+    }
+  }, [props.trigger])
+
   return (
     <div
-      className={`${styles.cardContainer} ${props.animation === 'right' ? styles.animateLeftToRight : styles.animateRightToLeft } ${!props.display &&
-        styles.notDisplayed}`}
+      ref={ref}
+      className={`
+      ${styles.cardContainer} 
+      ${props.display &&
+        props.animation === 'LeftToRight' &&
+        styles.enterLeftToRight}
+      ${!props.display &&
+        props.animation === 'LeftToRight' &&
+        styles.exitLeftToRight}
+      ${!props.display &&
+        props.animation === 'RightToLeft' &&
+        styles.exitRightToLeft}
+      ${props.display &&
+        props.animation === 'RightToLeft' &&
+        styles.enterRightToLeft}  
+      `}
     >
       <div className={styles.imageWrapper}>
         <Image src={props.img} alt='testimonial-picture' />

@@ -73,27 +73,33 @@ const Home = () => {
   const [items, setItems] = useState(
     testimonials.map(testimonial => testimonial.id)
   )
-  const [itemsToDisplay, setItemsToDisplay] = useState([])
+  const [itemsToDisplay, setItemsToDisplay] = useState([0,1,2,3,4,5])
 
   const [animation, setAnimation] = useState(null)
+  const [trigger, setTrigger] = useState(true)
 
   useEffect(() => {
     if (width > 1420) {
-      // setItemsToDisplay([0, 1, 2])
-      setItemsToDisplay([3, 4, 5])
+      // setItemsToDisplay([3, 4, 5]) 
+      setItemsToDisplay([0, 1, 2]) 
+
       return
     }
     if (width > 1060 && width <= 1420) {
-      setItemsToDisplay([2, 3])
-      // setItemsToDisplay([0, 1])
+      setItemsToDisplay([0, 1])
+      // setItemsToDisplay([2, 3])
+
       return
     }
     if (width <= 1060) {
-      setItemsToDisplay([5])
-      // setItemsToDisplay([0])
+      setItemsToDisplay([0])
       return
     }
   }, [width])
+
+  const updateStateFromChild = animation => {
+    setAnimation(animation)
+  }
 
   const clickIncrease = () => {
     let newItems = [...items]
@@ -103,11 +109,11 @@ const Home = () => {
     }
     setItems(newItems)
     setItemsToDisplay(
-      newItems.slice(itemsToDisplay.length, 2 * itemsToDisplay.length)
-      // newItems.slice(0,  itemsToDisplay.length)
+      newItems.slice(0, itemsToDisplay.length)
 
     )
-    setAnimation('right')
+    setAnimation('LeftToRight')
+    setTrigger(!trigger)
   }
 
   const clickDecrease = () => {
@@ -119,11 +125,11 @@ const Home = () => {
 
     setItems(newItems)
     setItemsToDisplay(
-      // newItems.slice(0,  itemsToDisplay.length)
-      newItems.slice(itemsToDisplay.length, 2 * itemsToDisplay.length)
-    )
-    setAnimation('left')
+      newItems.slice(0, itemsToDisplay.length)
 
+    )
+    setAnimation('RightToLeft')
+    setTrigger(!trigger)
   }
 
   return (
@@ -296,19 +302,22 @@ const Home = () => {
         {items.map(item => (
           <CardTestimonial
             key={testimonials[item].id}
+            id={testimonials[item].id}
             img={testimonials[item].img}
             content={testimonials[item].content}
             name={testimonials[item].name}
             jobs={testimonials[item].jobs}
             display={itemsToDisplay.includes(testimonials[item].id)}
             animation={animation}
+            updateStateFromChild={updateStateFromChild}
+            trigger={trigger}
           />
         ))}
         {/* Displaying button below testimonial container */}
         {width <= 720 && (
           <div className={styles.btnContainer}>
             <button type='button' onClick={clickDecrease}>
-              {'<'}
+              {'<'}css javascript build custom slider
             </button>
             <button type='button' onClick={clickIncrease}>
               {'>'}

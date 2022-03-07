@@ -10,13 +10,41 @@
   background-color: white;
 }
 
-.animateRightToLeft {
-  animation: slideRightToLeft 1s;
-  position:relative;
+.enterLeftToRight {
+  animation: enterLeftToRight 0.5s;
+  position: relative;
   z-index: 100;
 }
 
-@keyframes slideRightToLeft {
+@keyframes enterLeftToRight {
+  from {
+    margin-left: -300%;
+  }
+  to {
+    margin-left: 0%;
+  }
+}
+
+.exitLeftToRight {
+  animation: exitLeftToRight 0.5s;
+  position: relative;
+}
+
+@keyframes exitLeftToRight {
+  from {
+    margin-left: -300%;
+  }
+  to {
+    margin-left: 0%;
+  }
+}
+
+.enterRightToLeft {
+  animation: enterRightToLeft 0.5s;
+  position: relative;
+}
+
+@keyframes enterRightToLeft {
   from {
     margin-left: 300%;
   }
@@ -25,17 +53,17 @@
   }
 }
 
-.animateLeftToRight {
-  animation: slideLeftToRight 1s;
-  position:relative;
+.exitRightToLeft {
+  animation: exitRightToLeft 0.5s;
+  position: relative;
 }
 
-@keyframes slideLeftToRight {
+@keyframes exitRightToLeft {
   from {
-    margin-left: -300%;
+    margin-left: -350%;
   }
   to {
-    margin-left: 0%;
+    margin-left: -650%;
   }
 }
 
@@ -48,6 +76,7 @@
 
 .notDisplayed {
   display: none;
+  background-color: red;
   /* visibility: hidden; */
 }
 
