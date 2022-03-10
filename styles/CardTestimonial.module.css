@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Revalia');
+@import url("https://fonts.googleapis.com/css?family=Revalia");
 
 .cardContainer {
   border: solid 1px white;
@@ -15,22 +15,21 @@
   .cardContainer {
     margin-left: calc((100% - 2 * 320px) / 3);
     margin-right: 0;
-
   }
 }
 
 @media (max-width: 1060px) {
   .cardContainer {
-   margin-left: calc((100% - 320px) / 2);
+    margin-left: calc((100% - 320px) / 2);
   }
 }
 
-/* @media (max-width: 720px) {
+@media (max-width: 720px) {
   .cardContainer {
-    width: 100%;
-    margin-top: 25px;
+    margin: 25px 0 0 0;
+    min-width: 100%;
   }
-} */
+}
 
 .cardContainer:hover .fadeOut {
   background: unset;
