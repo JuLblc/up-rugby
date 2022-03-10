@@ -3,10 +3,7 @@ import styles from '../styles/CardTestimonial.module.css'
 
 const CardTestimonial = props => {
   return (
-    // <div
-    //   className={`${styles.cardContainer} ${!props.display &&
-    //     styles.notDisplayed}`}
-    // >
+  
     <div className={`${styles.cardContainer}`}>
       <div className={styles.imageWrapper}>
         <Image src={props.img} alt='testimonial-picture' />

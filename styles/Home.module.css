@@ -162,18 +162,6 @@
   }
 }
 
-/* 
-@media (min-width: 720px) {
-  .testiContainer {
-    display: grid !important;
-    grid-auto-flow: column;
-    grid-gap: 32px;
-    overflow: auto;
-    flex-direction: unset;
-    align-items: unset;
-  }
-} */
-
 .sliderContainer {
   max-width: 1050px;
   overflow: hidden;
@@ -192,16 +180,8 @@
   }
 }
 
-/* @media (max-width: 1060px) {
-  .sliderContainer {
-    max-width: calc(100% - 350px);
-    margin: 0 auto;
-  }
-} */
-
 @media (max-width: 720px) {
   .sliderContainer {
-    /* max-width: 350px; */
     max-width: unset;
     width: 100%;
   }

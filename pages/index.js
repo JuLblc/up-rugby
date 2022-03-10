@@ -9,11 +9,12 @@ import testiPict4 from "../public/testi-4.jpg";
 import testiPict5 from "../public/testi-5.jpg";
 
 import { useWindowDimensions } from "../hooks/useWindowDimensions";
+import {getElementProperties} from "../utils/utilTestimonial"
 import CardTestimonial from "../components/CardTestimonial";
 import { useEffect, useState, useRef } from "react";
 
 const Home = () => {
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   const testimonials = [
     {
@@ -69,18 +70,7 @@ const Home = () => {
       return;
     }
 
-    const sliderStyle = window.getComputedStyle(sliderRef.current);
-    const sliderWidth = sliderStyle.getPropertyValue("width");
-    const sliderWidthNum = Number(
-      sliderWidth.substring(0, sliderWidth.length - 2)
-    );
-
-    const card = sliderRef.current.childNodes[0];
-    const cardStyle = window.getComputedStyle(card);
-    const cardMarginLeft = cardStyle.getPropertyValue("margin-left");
-    const cardMarginLeftNum = Number(
-      cardMarginLeft.substring(0, cardMarginLeft.length - 2)
-    );
+    const { cardMarginLeftNum, sliderWidthNum} = getElementProperties(sliderRef.current)
 
     if (width > 1060 && width <= 1420) {
       const width = (-100 * (1 - cardMarginLeftNum / sliderWidthNum)) / 2;
@@ -94,12 +84,6 @@ const Home = () => {
     }
 
     if (width <= 1060) {
-      console.log(
-        "cardMarginLeftNum: ",
-        cardMarginLeftNum,
-        "sliderWidthNum:",
-        sliderWidthNum
-      );
       const width = -100 * (1 - cardMarginLeftNum / sliderWidthNum);
       setDisplay({ items: 1, width });
       sliderRef.current.style.left = offset * display.width + "%";
