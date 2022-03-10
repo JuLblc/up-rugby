@@ -15,6 +15,12 @@ import { useEffect, useState, useRef } from "react";
 const Home = () => {
   const { width, height } = useWindowDimensions();
 
+  const titles = [
+    `<span>Améliorez</span> votre compréhension du rugby`,
+    `<span>Développez</span> des compétences spécifiques`,
+    `<span>Utilisez</span> les pour faire basculer les matchs`
+  ];
+
   const testimonials = [
     {
       id: 0,
@@ -94,12 +100,6 @@ const Home = () => {
     }
 
     if (width <= 1060) {
-      console.log(
-        "cardMarginLeftNum: ",
-        cardMarginLeftNum,
-        "sliderWidthNum:",
-        sliderWidthNum
-      );
       const width = -100 * (1 - cardMarginLeftNum / sliderWidthNum);
       setDisplay({ items: 1, width });
       sliderRef.current.style.left = offset * display.width + "%";
@@ -110,6 +110,18 @@ const Home = () => {
       setDisplay({ items: 1, width: -100 });
     }
   }, [width]);
+
+  const titleRef = useRef();
+  const countRef = useRef(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      countRef.current === 2 ? (countRef.current = 0) : countRef.current++;
+      titleRef.current.innerHTML = titles[countRef.current];
+      console.log("This will run every 10 seconds!");
+    }, 10000);
+    return () => clearInterval(interval);
+  }, []);
 
   const clickIncrease = () => {
     if (offset < testimonials.length - display.items) {
@@ -129,7 +141,7 @@ const Home = () => {
     <main className={styles.home}>
       <section className={styles.intro}>
         <div className={styles.body}>
-          <h1>
+          <h1 ref={titleRef}>
             <span>Améliorez</span> votre compréhension
             <br />
             du rugby
