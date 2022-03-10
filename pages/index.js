@@ -10,7 +10,7 @@ import testiPict5 from '../public/testi-5.jpg'
 
 import { useWindowDimensions } from '../hooks/useWindowDimensions'
 import CardTestimonial from '../components/CardTestimonial'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 
 const Home = () => {
   const { width, height } = useWindowDimensions()
@@ -58,29 +58,61 @@ const Home = () => {
     }
   ]
 
+  const [offset, setOffset] = useState(0)
+  const [display, setDisplay] = useState({ items: 3, width: -33.3333 })
+  const sliderRef = useRef()
+
   useEffect(() => {
     if (width > 1420) {
-      setItemsToDisplay([0, 1, 2])
+      setDisplay({ items: 3, width: -33.3333 })
+      sliderRef.current.style.left = offset * display.width + '%'
       return
     }
+
+    const sliderStyle = window.getComputedStyle(sliderRef.current)
+    const sliderWidth = sliderStyle.getPropertyValue('width')
+    const sliderWidthNum = Number(
+      sliderWidth.substring(0, sliderWidth.length - 2)
+    )
+
+    const card = sliderRef.current.childNodes[0]
+    const cardStyle = window.getComputedStyle(card)
+    const cardMarginLeft = cardStyle.getPropertyValue('margin-left')
+    const cardMarginLeftNum = Number(
+      cardMarginLeft.substring(0, cardMarginLeft.length - 2)
+    )
+
     if (width > 1060 && width <= 1420) {
-      setItemsToDisplay([0, 1])
+      const width = (-100 * (1 - cardMarginLeftNum / sliderWidthNum)) / 2
+
+      setDisplay({
+        items: 2,
+        width
+      })
+      sliderRef.current.style.left = offset * display.width + '%'
       return
     }
+    
     if (width <= 1060) {
-      setItemsToDisplay([0])
+      const width = (-100 * (1 - cardMarginLeftNum / sliderWidthNum))
+      setDisplay({ items: 1, width})
+      sliderRef.current.style.left = offset * display.width + '%'
       return
     }
   }, [width])
 
-  const [itemsToDisplay, setItemsToDisplay] = useState([0, 1, 2])
-
   const clickIncrease = () => {
-    setItemsToDisplay([...itemsToDisplay].map(item => item + 1))
+    if (offset < testimonials.length - display.items) {
+      sliderRef.current.style.left = (offset + 1) * display.width + '%'
+      setOffset(offset + 1)
+    }
   }
 
   const clickDecrease = () => {
-    setItemsToDisplay([...itemsToDisplay].map(item => item - 1))
+    if (offset > 0) {
+      sliderRef.current.style.left = (offset - 1) * display.width + '%'
+      setOffset(offset - 1)
+    }
   }
 
   return (
@@ -242,71 +274,72 @@ const Home = () => {
           {width > 720 && (
             <div className={styles.btnContainer}>
               <button
-                className={
-                  Math.min(...itemsToDisplay) === 0
-                    ? styles.btnDisabled
-                    : undefined
-                }
+                className={offset === 0 ? styles.btnDisabled : undefined}
                 type='button'
                 onClick={clickDecrease}
-                disabled={Math.min(...itemsToDisplay) === 0 ? true : false}
+                disabled={offset === 0 ? true : false}
               >
                 {'<'}
               </button>
               <button
                 className={
-                  Math.max(...itemsToDisplay) === 4
+                  offset === testimonials.length - display.items
                     ? styles.btnDisabled
                     : undefined
                 }
                 type='button'
                 onClick={clickIncrease}
-                disabled={Math.max(...itemsToDisplay) === 4 ? true : false}
+                disabled={
+                  offset === testimonials.length - display.items ? true : false
+                }
               >
                 {'>'}
               </button>
             </div>
           )}
         </div>
-        {testimonials.map(testimonial => (
-          <CardTestimonial
-            key={testimonial.id}
-            img={testimonial.img}
-            content={testimonial.content}
-            name={testimonial.name}
-            jobs={testimonial.jobs}
-            display={itemsToDisplay.includes(testimonial.id)}
-          />
-        ))}
+        <div className={styles.sliderContainer}>
+          <div ref={sliderRef} className={styles.slider}>
+            {testimonials.map(testimonial => (
+              <CardTestimonial
+                key={testimonial.id}
+                img={testimonial.img}
+                content={testimonial.content}
+                name={testimonial.name}
+                jobs={testimonial.jobs}
+              />
+            ))}
+          </div>
+        </div>
         {/* Displaying button below testimonial container */}
         {width <= 720 && (
-            <div className={styles.btnContainer}>
-              <button
-                className={
-                  Math.min(...itemsToDisplay) === 0
-                    ? styles.btnDisabled
-                    : undefined
-                }
-                type='button'
-                onClick={clickDecrease}
-                disabled={Math.min(...itemsToDisplay) === 0 ? true : false}
-              >
-                {'<'}
-              </button>
-              <button
-                className={
-                  Math.max(...itemsToDisplay) === 4
-                    ? styles.btnDisabled
-                    : undefined
-                }
-                type='button'
-                onClick={clickIncrease}
-                disabled={Math.max(...itemsToDisplay) === 4 ? true : false}
-              >
-                {'>'}
-              </button>
-            </div>
-          )}
+          <div className={styles.btnContainer}>
+            <button
+              // className={
+              //   Math.min(...itemsToDisplay) === 0
+              //     ? styles.btnDisabled
+              //     : undefined
+              // }
+              type='button'
+              onClick={clickDecrease}
+              // disabled={Math.min(...itemsToDisplay) === 0 ? true : false}
+            >
+              {'<'}
+            </button>
+            <button
+              // className={
+              //   Math.max(...itemsToDisplay) === 4
+              //     ? styles.btnDisabled
+              //     : undefined
+              // }
+              type='button'
+              onClick={clickIncrease}
+              // disabled={Math.max(...itemsToDisplay) === 4 ? true : false}
+            >
+              {'>'}
+            </button>
+          </div>
+        )}
       </section>
     </main>
   )
