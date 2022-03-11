@@ -21,6 +21,43 @@
   color: #0085ff;
 }
 
+.carouselTitleContainer {
+  width: 100%;
+  overflow: hidden;
+}
+
+.carouselTitle {
+  display: flex;
+  width: 300%;
+  animation: slidingLeft 18s infinite;
+}
+
+.carouselTitleItem{
+  width: 33.3333333%;
+  margin-right: 10px;
+}
+
+@keyframes slidingLeft {
+  30% {
+    transform: translateX(0);
+  }
+  35% {
+    transform: translateX(calc(-100% / 3));
+  }
+  65% {
+    transform: translateX(calc(-100% / 3));
+  }
+  70% {
+    transform: translateX(calc(-100% / 3 * 2));
+  }
+  98% {
+    transform: translateX(calc(-100% / 3 * 2));
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
 .body p {
   font-size: 1.5em;
   color: #808080;
@@ -67,27 +104,30 @@
   color: #0085ff;
 }
 
-.carouselWrapper{
+.carouselWrapper {
   /* background-color: gray; */
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
 
-.carouselContainer{
+.carouselContainer {
   overflow: hidden;
   max-width: 768px;
 }
 
-.carousel{
+.carousel {
   display: flex;
   width: 300%;
-  animation: sliding 18s infinite;
+  animation: slidingRight 18s infinite;
 }
 
-@keyframes sliding {
+@keyframes slidingRight {
+  0% {
+    transform: translateX(calc(-100% / 3 * 2));
+  }
   30% {
-    transform: translateX(0);
+    transform: translateX(calc(-100% / 3 * 2));
   }
   35% {
     transform: translateX(calc(-100% / 3));
@@ -96,13 +136,13 @@
     transform: translateX(calc(-100% / 3));
   }
   70% {
-    transform: translateX(calc(-100% / 3 * 2));
+    transform: translateX(0);
   }
   98% {
-    transform: translateX(calc(-100% / 3 * 2));
+    transform: translateX(0);
   }
   100% {
-    transform: translateX(0);
+    transform: translateX(calc(-100% / 3 * 2));
   }
 }
 

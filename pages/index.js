@@ -117,16 +117,44 @@ const Home = () => {
     <main className={styles.home}>
       <section className={styles.intro}>
         <div className={styles.body}>
-          <h1>
-            <span>Améliorez</span> votre compréhension
-            <br />
-            du rugby
-          </h1>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec
-            nisl vulputate, iaculis tortor quis, convallis ipsum. Duis consequat
-            fringilla condimentum.
-          </p>
+          <div className={styles.carouselTitleContainer}>
+            <div className={styles.carouselTitle}>
+              <div className={styles.carouselTitleItem}>
+                <h1>
+                  <span>Améliorez</span> votre compréhension du rugby
+                  {/* <br /> */}
+                  
+                </h1>
+                <p>
+                  Analyses précises expliquées à l'aide de montages vidéos et
+                  powerpoint modifiables. Basées sur les mouvements et
+                  comportements des joueurs et équipes du haut niveau.
+                </p>
+              </div>
+              <div className={styles.carouselTitleItem}>
+                <h1>
+                  <span>Développez</span> des compétences spécifiques
+                </h1>
+                <p>
+                  Il existe des coachs spécialisés pour chaque secteur de jeu.
+                  Devenir expert d'un domaine demande des connaissances.
+                  Approfondissez votre expertise sur des sujets précis.
+                </p>
+              </div>
+
+              <div className={styles.carouselTitleItem}>
+                <h1>
+                  <span>Transmettez</span> à vos joueurs pour gagner {width >= 1100 && ('les matchs')}
+                </h1>
+                <p>
+                  Au rugby, la différence se fait souvent sur des détails.
+                  Utilisez vos nouvelles compétences pour gagner en efficacité
+                  et faire basculer le match.
+                </p>
+              </div>
+            </div>
+          </div>
+
           <div className={styles.link}>
             <Link href='/login?login=signup'>
               <a>Créez votre compte</a>
@@ -140,9 +168,9 @@ const Home = () => {
           <div className={styles.carouselWrapper}>
             <div className={styles.carouselContainer}>
               <div className={styles.carousel}>
-                <Image src={img1} alt='img' />
-                <Image src={img2} alt='img' />
                 <Image src={img3} alt='img' />
+                <Image src={img2} alt='img' />
+                <Image src={img1} alt='img' />
               </div>
             </div>
           </div>
