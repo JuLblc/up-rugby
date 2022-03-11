@@ -29,7 +29,7 @@
 .carouselTitle {
   display: flex;
   width: 300%;
-  animation: slidingLeft 18s infinite;
+  animation: slidingLeft 30s infinite;
 }
 
 .carouselTitleItem{
@@ -99,7 +99,7 @@
   opacity: 0.8;
 }
 
-.link a:nth-child(2) {
+.link a:nth-child(1) {
   background-color: #f7fafb;
   color: #0085ff;
 }
@@ -119,7 +119,7 @@
 .carousel {
   display: flex;
   width: 300%;
-  animation: slidingRight 18s infinite;
+  animation: slidingRight 30s infinite;
 }
 
 @keyframes slidingRight {
@@ -256,6 +256,7 @@
   .sliderContainer {
     max-width: unset;
     width: 100%;
+    position: relative;
   }
 }
 
@@ -284,7 +285,7 @@
   margin: 25px 0;
 }
 
-.btnContainer button {
+.swipeBtn {
   color: #f7fafb;
   background-color: #0085ff;
   margin: 10px;
@@ -293,11 +294,20 @@
   font-size: 1.3em;
   font-weight: 900;
   border-radius: 5px;
-  opacity: 0.7;
+  opacity: 0.6;
+}
+
+.swipeBtnMob{
+  position: absolute;
+  top: 45%;
+  margin: 0;
+}
+.swipeBtnMobRight{
+  right: 0;
 }
 
 .btnDisabled {
-  opacity: 0.3 !important;
+  opacity: 0.2 !important;
 }
 
 @media (max-width: 767px) {

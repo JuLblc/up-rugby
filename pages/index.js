@@ -123,7 +123,6 @@ const Home = () => {
                 <h1>
                   <span>Améliorez</span> votre compréhension du rugby
                   {/* <br /> */}
-                  
                 </h1>
                 <p>
                   Analyses précises expliquées à l'aide de montages vidéos et
@@ -144,7 +143,8 @@ const Home = () => {
 
               <div className={styles.carouselTitleItem}>
                 <h1>
-                  <span>Transmettez</span> à vos joueurs pour gagner {width >= 1100 && ('les matchs')}
+                  <span>Transmettez</span> à vos joueurs pour gagner{' '}
+                  {width >= 1100 && 'les matchs'}
                 </h1>
                 <p>
                   Au rugby, la différence se fait souvent sur des détails.
@@ -156,9 +156,9 @@ const Home = () => {
           </div>
 
           <div className={styles.link}>
-            <Link href='/login?login=signup'>
+            {/* <Link href='/login?login=signup'>
               <a>Créez votre compte</a>
-            </Link>
+            </Link> */}
             <Link href='/courses'>
               <a>Voir les formations</a>
             </Link>
@@ -306,7 +306,9 @@ const Home = () => {
           {width > 720 && (
             <div className={styles.btnContainer}>
               <button
-                className={offset === 0 ? styles.btnDisabled : undefined}
+                className={`${styles.swipeBtn} ${
+                  offset === 0 ? styles.btnDisabled : undefined
+                }`}
                 type='button'
                 onClick={clickDecrease}
                 disabled={offset === 0 ? true : false}
@@ -314,11 +316,11 @@ const Home = () => {
                 {'<'}
               </button>
               <button
-                className={
+                className={`${styles.swipeBtn} ${
                   offset === testimonials.length - display.items
                     ? styles.btnDisabled
                     : undefined
-                }
+                }`}
                 type='button'
                 onClick={clickIncrease}
                 disabled={
@@ -342,34 +344,38 @@ const Home = () => {
               />
             ))}
           </div>
+          {/* Displaying button below testimonial container */}
+          {width <= 720 && (
+            // <div className={styles.btnContainer}>
+            <>
+              <button
+                className={`${styles.swipeBtn} ${styles.swipeBtnMob} ${
+                  offset === 0 ? styles.btnDisabled : undefined
+                }`}
+                type='button'
+                onClick={clickDecrease}
+                disabled={offset === 0 ? true : false}
+              >
+                {'<'}
+              </button>
+              <button
+                className={`${styles.swipeBtn} ${styles.swipeBtnMob} ${styles.swipeBtnMobRight} ${
+                  offset === testimonials.length - display.items
+                    ? styles.btnDisabled
+                    : undefined
+                }`}
+                type='button'
+                onClick={clickIncrease}
+                disabled={
+                  offset === testimonials.length - display.items ? true : false
+                }
+              >
+                {'>'}
+              </button>
+            </>
+            // </div>
+          )}
         </div>
-        {/* Displaying button below testimonial container */}
-        {width <= 720 && (
-          <div className={styles.btnContainer}>
-            <button
-              className={offset === 0 ? styles.btnDisabled : undefined}
-              type='button'
-              onClick={clickDecrease}
-              disabled={offset === 0 ? true : false}
-            >
-              {'<'}
-            </button>
-            <button
-              className={
-                offset === testimonials.length - display.items
-                  ? styles.btnDisabled
-                  : undefined
-              }
-              type='button'
-              onClick={clickIncrease}
-              disabled={
-                offset === testimonials.length - display.items ? true : false
-              }
-            >
-              {'>'}
-            </button>
-          </div>
-        )}
       </section>
     </main>
   )

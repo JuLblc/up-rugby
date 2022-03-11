@@ -91,6 +91,7 @@
 @media (max-width: 720px) {
   .testimonial {
     max-height: unset;
+    margin: 30px 20px;
   }
 }
 
