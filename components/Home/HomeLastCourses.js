@@ -4,12 +4,12 @@ import { useWindowDimensions } from '../../hooks/useWindowDimensions'
 import { getDeviceTypeInfo } from '../../utils/utilResponsive'
 import { getLecturesQty, getLecturesTime } from '../../utils/utilCourses'
 
-import CardFormation from '../../components/CardFormation'
+import CardFormation from '../CardFormation'
 
 import stylesCourses from '../../styles/Courses.module.css'
 import stylesHome from '../../styles/Home.module.css'
 
-const HomeLastCourse = props => {
+const HomeLastCourses = props => {
   const { width, height } = useWindowDimensions()
 
   const {
@@ -20,7 +20,9 @@ const HomeLastCourse = props => {
   } = getDeviceTypeInfo(width, height)
 
   return (
-    <section className={stylesCourses.cardFormationContainer}>
+    <section
+      className={`${stylesCourses.cardFormationContainer} ${stylesHome.sectionHomeLogged}`}
+    >
       <div
         className={`${stylesCourses.intro} ${!isMobile &&
           stylesCourses.introNotMobile}`}
@@ -61,4 +63,4 @@ const HomeLastCourse = props => {
   )
 }
 
-export default HomeLastCourse
+export default HomeLastCourses

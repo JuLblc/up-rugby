@@ -8,7 +8,9 @@ import HomeSupport from '../components/Home/HomeSupport'
 import HomeTestimonial from '../components/Home/HomeTestimonial'
 
 import styles from '../styles/Home.module.css'
-import HomeLastCourse from '../components/Home/HomeLastCourse'
+import HomeLastCourses from '../components/Home/HomeLastCourses'
+import HomeLastExercices from '../components/Home/HomeLastExercices'
+
 
 const Home = props => {
   const { width } = useWindowDimensions()
@@ -25,7 +27,9 @@ const Home = props => {
 
       {props.session && (
         <>
-          <HomeLastCourse courses={props.courses} session={props.session}/>
+          <HomeLastCourses courses={props.courses} session={props.session}/>
+          <HomeLastExercices session={props.session}/>
+
         </>
       )}
     </main>

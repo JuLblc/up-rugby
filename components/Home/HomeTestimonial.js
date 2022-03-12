@@ -71,7 +71,7 @@ const HomeTestimonial = (props) => {
       sliderRef.current
     )
 
-    if (props.width > 1060 && width <= 1420) {
+    if (props.width > 1060 && props.width <= 1420) {
       const width = (-100 * (1 - cardMarginLeftNum / sliderWidthNum)) / 2
       setDisplay({
         items: 2,

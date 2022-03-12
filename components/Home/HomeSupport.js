@@ -3,7 +3,7 @@ import styles from '../../styles/Home.module.css'
 
 const HomeSupport = () => {
   return (
-    <section className={styles.support}>
+    <section className={`${styles.support} ${styles.supportPadding}`}>
       <div className={styles.body}>
         <h1>
           <span>Plusieurs formats</span> adaptés à vos besoins et à votre budget

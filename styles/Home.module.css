@@ -32,7 +32,7 @@
   animation: slidingLeft 30s infinite;
 }
 
-.carouselTitleItem{
+.carouselTitleItem {
   width: 33.3333333%;
   margin-right: 10px;
 }
@@ -151,6 +151,8 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 70px;
+  }
+  .supportPadding {
     padding-top: 70px !important;
     padding-bottom: 70px !important;
   }
@@ -297,12 +299,12 @@
   opacity: 0.6;
 }
 
-.swipeBtnMob{
+.swipeBtnMob {
   position: absolute;
   top: 45%;
-  margin: 0;
+  margin: 0 10px;
 }
-.swipeBtnMobRight{
+.swipeBtnMobRight {
   right: 0;
 }
 
@@ -323,4 +325,22 @@
   .supportItemsContent p {
     font-size: 0.95em;
   }
+}
+
+/************ HOME LOGGED USER ****************/
+.sectionHomeLogged {
+  padding: 30px 0;
+}
+
+@media (min-width: 1100px) {
+  .sectionHomeLogged {
+    padding: 50px 0;
+  }
+  .sectionLastExercices {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+}
+.sectionLastExercices p {
+  width: 50%;
 }
