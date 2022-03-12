@@ -18,7 +18,7 @@ export default async function handler (req, res) {
             getAllCourses(req, res, session)
             break
           }
-          
+
           getCourse(req, res, session)
           break
 
@@ -67,6 +67,7 @@ const getAllCourses = (req, res, session) => {
   }
 
   Course.find(cond)
+    .sort({ _id: -1 }) //sort collection in descending order based on the date of insertion
     .then(coursesFromDB => {
       res.status(200).json({ coursesFromDB })
     })
