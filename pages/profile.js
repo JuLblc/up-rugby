@@ -51,20 +51,26 @@ const Profile = props => {
   }
 
   return (
-    <main>
-      <h1>Mon compte</h1>
-      <ul>
-        <li id='info' onClick={e => handleDisplay(e)}>
-          Mes informations
-        </li>
-        <li id='course' onClick={e => handleDisplay(e)}>
-          Mes formations
-        </li>
-      </ul>
+    <main className={styles.profile}>
+      
+        <h1>Mon compte</h1>
+
+        <div className={styles.profileContainer}>
+
+        <ul>
+          <p className={styles.menuTitle}>Tableau de bord</p>
+          <li id='info' onClick={e => handleDisplay(e)}>
+            Mes informations
+          </li>
+          <li id='course' onClick={e => handleDisplay(e)}>
+            Mes formations
+          </li>
+        </ul>
+      
 
       {displayInfo && (
         <>
-          <h2>Mes informations</h2>
+          {/* <h2>Mes informations</h2> */}
           <form className={styles.form} onSubmit={handleFormSubmit}>
             <label className={styles.label}>
               Prénom:
@@ -74,7 +80,7 @@ const Profile = props => {
                 value={userData.firstName}
                 onChange={onChange}
                 disabled={disableField}
-              />
+                />
             </label>
 
             <label className={styles.label}>
@@ -95,7 +101,7 @@ const Profile = props => {
                 value={userData.category}
                 onChange={onChange}
                 disabled={disableField}
-              >
+                >
                 <option value='Joueur'>Joueur</option>
                 <option value='Entraineur'>Entraineur</option>
               </select>
@@ -109,7 +115,7 @@ const Profile = props => {
                 value={userData.club}
                 onChange={onChange}
                 disabled={disableField}
-              />
+                />
             </label>
 
             {disableField ? (
@@ -129,18 +135,19 @@ const Profile = props => {
 
       {displayCourses && (
         <div>
-          <h2>Mes formations</h2>
+          {/* <h2>Mes formations</h2> */}
           {props.purchasedCourses.length > 0 ? (
             props.purchasedCourses.map(course => (
               <Link href={`/courses/${course.seoUrl}`} key={course._id}>
                 <a>{course.title}</a>
               </Link>
             ))
-          ) : (
-            <div>Vous n'avez pas encore acheté de formations</div>
-          )}
+            ) : (
+              <div>Vous n'avez pas encore acheté de formations</div>
+              )}
         </div>
       )}
+      </div>
     </main>
   )
 }
