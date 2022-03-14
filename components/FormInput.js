@@ -1,4 +1,6 @@
-import styles from '../styles/Login.module.css'
+import stylesLogin from '../styles/Login.module.css'
+import styles from '../styles/FormInput.module.css'
+
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
@@ -21,7 +23,7 @@ const FormInput = props => {
     type,
     label,
     chapterIdx,
-    lectureIdx, 
+    lectureIdx,
     getDuration,
     ...inputProps
   } = props
@@ -64,11 +66,7 @@ const FormInput = props => {
         })
         .then(response => {
           let durationToUpperMin = Math.ceil(response.data.duration / 60)
-          getDuration(
-            durationToUpperMin,
-            props.chapterIdx,
-            props.lectureIdx
-          )
+          getDuration(durationToUpperMin, props.chapterIdx, props.lectureIdx)
         })
         .catch(err => {
           setError(true)
@@ -78,7 +76,6 @@ const FormInput = props => {
   }
 
   const onEyeClick = () => {
-
     if (passwordShown.type === 'password') {
       setPasswordShown({
         type: 'text',
@@ -100,10 +97,11 @@ const FormInput = props => {
 
   return (
     <>
-      <label>
+      <label className={styles.label}>
         {svg && svg[0]}
         {label}
         <input
+          className={styles.input}
           {...inputProps}
           type={type === 'password' ? passwordShown.type : type}
           onChange={onChange}
@@ -115,12 +113,18 @@ const FormInput = props => {
         )}
       </label>
 
-      <div
+      {/* <div
+        className={`${stylesLogin.message} ${
+          error ? stylesLogin.onError : stylesLogin.onSuccessClient
+        }`}
+      > */}
+       <div
         className={`${styles.message} ${
           error ? styles.onError : styles.onSuccessClient
         }`}
       >
         <svg
+          // className={stylesLogin.icon}
           className={styles.icon}
           width='20'
           height='21'

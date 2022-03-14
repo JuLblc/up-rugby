@@ -88,7 +88,7 @@
   margin: 20px 0 40px;
 }
 
-.authContainer label {
+/* .authContainer label {
   position: relative;
   display: block;
   margin: 20px 0;
@@ -114,14 +114,16 @@
   border-color: transparent;
 }
 
+
+.onSuccessClient {
+  display: none;
+} 
+*/
+
 .onError {
   display: block;
   color: red;
   background-color: #f9dade;
-}
-
-.onSuccessClient {
-  display: none;
 }
 
 .onSuccessServer {

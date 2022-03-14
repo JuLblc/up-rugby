@@ -1,0 +1,44 @@
+.label {
+  position: relative;
+  display: block;
+  margin: 20px 0;
+}
+
+.input {
+  width: 100%;
+  border-color: transparent;
+  border-radius: 10px;
+  background-color: #f5f5f5;
+  padding: 12px 16px 12px 48px;
+}
+
+.input:invalid[focused='true'] {
+  border: 1px solid red;
+}
+
+.message {
+  position: relative;
+  padding: 8px 16px 8px 48px;
+  border-radius: 8px;
+  font-size: 0.8em;
+  border-color: transparent;
+}
+
+.onError {
+  display: block;
+  color: red;
+  background-color: #f9dade;
+}
+
+.onSuccessClient {
+  display: none;
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 16px;
+  width: 16px;
+  height: 16px;
+}
