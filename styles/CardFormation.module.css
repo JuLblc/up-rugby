@@ -1,6 +1,8 @@
 .cardFormation {
   border-radius: 5px;
   position: relative;
+  /* box-shadow: -2px -2px 1px 1px rgb(128, 128, 128, 0.2),
+    2px 2px 1px 1px rgb(128, 128, 128, 0.2); */
 }
 
 .cardFormation:hover {
@@ -16,9 +18,15 @@
 }
 
 .CardFormationWrapper {
-  border: 1px solid #d5e3ec;
+  /* border: 1px solid #d5e3ec; */
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
+  width: calc(100% - 2px);
+  margin: -1px auto;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -1px 0px 1px 1px rgb(128, 128, 128, 0.2),
+    1px 1px 1px 1px rgb(128, 128, 128, 0.2);
 }
 
 .formationInfo {
@@ -26,26 +34,81 @@
 }
 .formationTitle {
   font-weight: 500;
-  margin: 12px 0;
+  margin: 12px 0 0;
   color: inherit;
 }
 .formationDescription {
   color: #808080;
   font-weight: 300;
+  text-align: left;
 }
 .cardFooterContainer {
-  padding: 5px 15px;
+  padding: 5px 0;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  justify-content: center;
   color: #808080;
-  background-color: #dff0ff;
+  /* background-color: #dff0ff; */
 }
 
-.cardFooterInfo {
+.cardInfoWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+.priceContainer {
+  width: 40%;
+  display: flex;
+  align-items: center;
+}
+
+.price {
+  font-size: 2em;
+}
+.price span {
+  font-size: 0.5em;
+}
+
+.cardInfoContainer {
+  /* display: flex; */
+  /* justify-content: space-between; */
+  /* margin: 10px 0; */
+}
+
+.cardInfo {
+  display: flex;
+  margin: 5px 0;
+}
+
+.cardInfo span {
+  padding-left: 5px;
+}
+
+.CTA {
   display: flex;
 }
-.cardFooterInfo span {
-  padding-left: 5px;
+
+.CTA a {
+  display: inline-block;
+  text-decoration: none;
+  padding: 15px 20px;
+  white-space: nowrap;
+  font-size: 1.2em;
+  border: solid 1px #0085ff;
+  background-color: #0085ff;
+  border-radius: 5px;
+  color: #f7fafb;
+  margin-top: 20px;
+  margin-right: 20px;
+  font-weight: 500;
+}
+
+.CTA a:hover {
+  opacity: 0.8;
+}
+
+.CTA a:nth-child(1) {
+  background-color: #f7fafb;
+  color: #0085ff;
 }
 
 .link {
@@ -61,8 +124,7 @@
   z-index: 50;
 }
 
-.linkAdmin{
+.linkAdmin {
   z-index: 100;
   position: relative;
-
 }
