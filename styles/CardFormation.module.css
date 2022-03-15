@@ -5,11 +5,11 @@
     2px 2px 1px 1px rgb(128, 128, 128, 0.2); */
 }
 
-.cardFormation:hover {
+/* .cardFormation:hover {
   transition: all 0.2s ease-out;
   box-shadow: 0px 4px 8px rgba(38, 38, 38, 0.2);
   top: -2px;
-}
+} */
 
 .imgCard > span {
   border-top-left-radius: 4px;
@@ -18,7 +18,6 @@
 }
 
 .CardFormationWrapper {
-  /* border: 1px solid #d5e3ec; */
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   width: calc(100% - 2px);
@@ -30,13 +29,45 @@
 }
 
 .formationInfo {
-  margin: 0px 15px;
+  margin: 0px 15px;  
+  overflow: hidden;
+  height: 100px;
+
 }
+
+.unselected{
+  height: 100px;
+  animation: closeCard 1s;
+}
+@keyframes closeCard {
+  0% {
+    height: 225px;
+  }
+  100% {
+    height: 100px;
+  }
+}
+
+.selected{
+  height: 225px;
+  animation: openCard 1s;
+}
+
+@keyframes openCard {
+  0% {
+    height: 100px;
+  }
+  100% {
+    height: 225px;
+  }
+}
+
 .formationTitle {
   font-weight: 500;
   margin: 12px 0 0;
   color: inherit;
 }
+
 .formationDescription {
   color: #808080;
   font-weight: 300;
@@ -45,33 +76,34 @@
 .cardFooterContainer {
   padding: 5px 0;
   display: flex;
-  /* justify-content: space-between; */
   justify-content: center;
   color: #808080;
-  /* background-color: #dff0ff; */
 }
 
 .cardInfoWrapper {
   display: flex;
   justify-content: space-between;
 }
+
+.cardInfoContainer {
+  width: 50%;
+  margin-right: 10px;
+}
+
 .priceContainer {
-  width: 40%;
+  width: 50%;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .price {
   font-size: 2em;
+  color: #808080;
+  font-weight: 500;
 }
 .price span {
   font-size: 0.5em;
-}
-
-.cardInfoContainer {
-  /* display: flex; */
-  /* justify-content: space-between; */
-  /* margin: 10px 0; */
 }
 
 .cardInfo {
@@ -81,34 +113,45 @@
 
 .cardInfo span {
   padding-left: 5px;
+  color: #808080;
 }
 
 .CTA {
   display: flex;
+  margin-top: 16px;
 }
 
 .CTA a {
-  display: inline-block;
   text-decoration: none;
-  padding: 15px 20px;
-  white-space: nowrap;
-  font-size: 1.2em;
+  padding: 10px 0;
   border: solid 1px #0085ff;
-  background-color: #0085ff;
   border-radius: 5px;
-  color: #f7fafb;
-  margin-top: 20px;
-  margin-right: 20px;
-  font-weight: 500;
+  background-color: #f7fafb;
+  color: #0085ff;
+  width: 50%;
+  margin-right: 10px;
+  text-align: center;
 }
 
-.CTA a:hover {
+.CTA a:hover,
+.CTA button:hover {
   opacity: 0.8;
 }
 
-.CTA a:nth-child(1) {
-  background-color: #f7fafb;
-  color: #0085ff;
+.CTA button {
+  width: 50%;
+  background-color: #0085ff;
+  color: #f7fafb;
+  border: solid 1px #0085ff;
+  border-radius: 5px;
+  font-size: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.CTA button span {
+  margin: 5px;
+  padding-top: 5px;
 }
 
 .link {

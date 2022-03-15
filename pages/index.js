@@ -14,7 +14,6 @@ import HomeLastExercices from '../components/Home/HomeLastExercices'
 
 const Home = props => {
   const { width } = useWindowDimensions()
-
   return (
     <main className={styles.home}>
       {!props.session && (
