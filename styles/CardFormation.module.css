@@ -1,15 +1,7 @@
 .cardFormation {
   border-radius: 5px;
   position: relative;
-  /* box-shadow: -2px -2px 1px 1px rgb(128, 128, 128, 0.2),
-    2px 2px 1px 1px rgb(128, 128, 128, 0.2); */
 }
-
-/* .cardFormation:hover {
-  transition: all 0.2s ease-out;
-  box-shadow: 0px 4px 8px rgba(38, 38, 38, 0.2);
-  top: -2px;
-} */
 
 .imgCard > span {
   border-top-left-radius: 4px;
@@ -29,13 +21,12 @@
 }
 
 .formationInfo {
-  margin: 0px 15px;  
+  margin: 0px 15px;
   overflow: hidden;
   height: 100px;
-
 }
 
-.unselected{
+.unselected {
   height: 100px;
   animation: closeCard 1s;
 }
@@ -48,7 +39,7 @@
   }
 }
 
-.selected{
+.selected {
   height: 225px;
   animation: openCard 1s;
 }
@@ -152,19 +143,6 @@
 .CTA button span {
   margin: 5px;
   padding-top: 5px;
-}
-
-.link {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 100%;
-  width: 100%;
-  display: block;
-  color: transparent;
-  z-index: 50;
 }
 
 .linkAdmin {
