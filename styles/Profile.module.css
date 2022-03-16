@@ -1,44 +1,95 @@
-.profileContainer{
-    display: grid;
-    grid-template-columns: 500px 1fr;
-    grid-gap: 70px;
+.profileContainer {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  grid-gap: 70px;
 }
 
 .menuTitle {
-    background-color: #C5DCFA;
-    border: solid 1px #C5DCFA;
-    border-radius: 10px;
-    color: #0F56B3;
-    font-size: 1.5em;
-    line-height: 2em;
-    padding-left: 15px;
-    margin:0;
+  background-color: #deebfa;
+  border: solid 1px #deebfa;
+  border-radius: 10px;
+  color: #0085ff;
+  font-size: 1.5em;
+  line-height: 2em;
+  padding-left: 15px;
+  margin: 0;
 }
 
-.profile ul{
-    padding: 0;
-    margin: 0;
+.profile ul {
+  padding: 0;
+  margin: 0;
 }
 
-.profile li{
-    border-left: solid 1px lightgray;
-    list-style-type:none;
-    margin-left: 20px;
-    padding-left: 20px;
-    font-size: 1.3em;
-    line-height: 2.3em;
+.profile li {
+  list-style-type: none;
+  margin-left: 20px;
+  padding-left: 20px;
+  font-size: 1.3em;
+  line-height: 2.3em;
+}
 
+.selected {
+  border-left: solid 3px #0085ff;
+  padding-left: 17px;
+}
+
+.unselected {
+  border-left: solid 1px lightgrey;
 }
 
 .form {
-    width:100%;
-    line-height: 2em;
-    border: 1px solid darkgray;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 5px;
+  line-height: 2em;
 }
 
-.label{
-    display: block;
+.form label {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.form label span {
+  width: 100px;
+}
+
+.form label input,
+.form label select {
+  border-color: transparent;
+  border-radius: 10px;
+  background-color: #ecf3fa;
+  color: #0085ff;
+  padding: 8px 16px;
+  width: 200px;
+}
+
+.form label input:disabled {
+  opacity: 0.7;
+}
+
+.form button {
+  width: 300px;
+  border-radius: 10px;
+  padding: 8px 0;
+  cursor: pointer;
+  font-size: 1em;
+  display: block;
+  margin: 0 auto;
+}
+
+.edit {
+  background-color: #f7fafb;
+  color: #0085ff;
+  border: solid 1px #0085ff;
+}
+
+.save {
+  background-color: #0085ff;
+  color: #f7fafb;
+  border: solid 1px #0085ff;
+}
+
+.form button:hover {
+  opacity: 0.8;
+}
+
+.onSuccessClient {
+  display: none;
 }

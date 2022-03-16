@@ -1,54 +1,55 @@
-const { connectToDatabase } = require('../../../utils/mongodb')
+import User from "../../../models/User.model";
+import { getSession } from "next-auth/react";
 
-import User from '../../../models/User.model'
+const { connectToDatabase } = require("../../../utils/mongodb");
 
-import { getSession } from 'next-auth/react'
-
-export default async function handler (req, res) {
-  const session = await getSession({ req })
-  const { method } = req
+export default async function handler(req, res) {
+  const session = await getSession({ req });
+  const { method } = req;
 
   connectToDatabase()
     .then(() => {
       switch (method) {
-        case 'PUT':
-          addCourseToUser(req, res, session)
-          break
+        case "PUT":
+          addCourseToUser(req, res, session);
+          break;
+        default:
+          console.log("switch default");
       }
     })
-    .catch(err => {
-      console.log(err)
+    .catch((err) => {
+      console.log(err);
       res
         .status(400)
-        .json({ message: 'La connexion à la base de donnée a échoué' })
-    })
+        .json({ message: "La connexion à la base de donnée a échoué" });
+    });
 }
 
 const addCourseToUser = (req, res, session) => {
   if (!session) {
-    res.status(401).json({ message: 'Unauthorized' })
-    return
+    res.status(401).json({ message: "Unauthorized" });
+    return;
   }
 
-  const { courseId } = req.body
+  const { courseId } = req.body;
 
   User.findById(session.user.id)
-    .then(foundUser => {
+    .then((foundUser) => {
       // Check if course already in purchasedCourses
       if (foundUser.purchasedCourses.indexOf(courseId) === -1) {
-        foundUser.purchasedCourses.push(courseId)
+        foundUser.purchasedCourses.push(courseId);
 
         foundUser
           .save()
-          .then(updatedUser => {
-            res.status(201).json({ updatedUser })
+          .then((updatedUser) => {
+            res.status(201).json({ updatedUser });
           })
-          .catch(err => console.log('err : ', err))
+          .catch((err) => console.log("err : ", err));
 
-        return
+        return;
       }
 
-      res.status(400).json({ message: 'Cette formation a déjà été acheté' })
+      res.status(400).json({ message: "Cette formation a déjà été acheté" });
     })
-    .catch(err => console.log('err : ', err))
-}
+    .catch((err) => console.log("err : ", err));
+};

@@ -1,8 +1,7 @@
-const { connectToDatabase } = require("../../../utils/mongodb");
-
 import Course from "../../../models/Course.model";
-
 import { getSession } from "next-auth/react";
+
+const { connectToDatabase } = require("../../../utils/mongodb");
 
 export default async function handler(req, res) {
   const session = await getSession({ req });
@@ -18,7 +17,6 @@ export default async function handler(req, res) {
             getAllCourses(req, res, session);
             break;
           }
-
           getCourse(req, res, session);
           break;
 
@@ -31,6 +29,8 @@ export default async function handler(req, res) {
         case "DELETE":
           deleteCourse(req, res, session);
           break;
+        default:
+          console.log("switch default");
       }
     })
     .catch((err) => {
