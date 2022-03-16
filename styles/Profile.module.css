@@ -1,7 +1,9 @@
-.profileContainer {
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  grid-gap: 70px;
+@media (min-width: 706px) {
+  .profileContainer {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    grid-gap: 70px;
+  }
 }
 
 .menuTitle {
@@ -20,21 +22,55 @@
   margin: 0;
 }
 
+@media (max-width: 705px) {
+  .profile ul {
+    display: flex;
+  }
+}
+
 .profile li {
   list-style-type: none;
-  margin-left: 20px;
-  padding-left: 20px;
   font-size: 1.3em;
   line-height: 2.3em;
 }
 
-.selected {
-  border-left: solid 3px #0085ff;
-  padding-left: 17px;
+@media (min-width: 706px) {
+  .profile li {
+    margin-left: 20px;
+    padding-left: 20px;
+  }
+
+  .selected {
+    border-left: solid 3px #0085ff;
+  }
+
+  .unselected {
+    border-left: solid 1px lightgrey;
+  }
 }
 
-.unselected {
-  border-left: solid 1px lightgrey;
+@media (max-width: 705px) {
+  .profile li {
+    margin-right: 16px;
+  }
+
+  .selected {
+    color: #0085ff;
+    border-bottom: 2px solid #0085ff;
+  }
+}
+
+@media (max-width: 350px) {
+  .profile li {
+    font-size: 1em;
+  }
+}
+
+.break {
+  border-bottom: 1px solid lightgrey;
+  width: 100vw;
+  margin-left: calc((-100vw + 100%) / 2);
+  margin-bottom: 30px;
 }
 
 .form {
@@ -58,6 +94,7 @@
   color: #0085ff;
   padding: 8px 16px;
   width: 200px;
+  min-width: 150px;
 }
 
 .form label input:disabled {
@@ -65,7 +102,8 @@
 }
 
 .form button {
-  width: 300px;
+  width: 100%;
+  max-width: 300px;
   border-radius: 10px;
   padding: 8px 0;
   cursor: pointer;
