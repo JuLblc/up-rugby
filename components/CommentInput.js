@@ -4,6 +4,8 @@ import FormInput from './FormInput'
 import { putCommentToCourse } from '../apiCall/courses'
 import { postComment, postReply } from '../apiCall/comments'
 import styles from '../styles/CommentInput.module.css'
+import stylesInput from '../styles/Login.module.css'
+
 
 const CommentInput = props => {
   const router = useRouter()
@@ -76,6 +78,7 @@ const CommentInput = props => {
         required={true}
         value={commentData.authorname}
         onChange={onChange}
+        styles={stylesInput}
       />
       <label>
         VOTRE MESSAGE:

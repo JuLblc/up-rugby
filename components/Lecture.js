@@ -1,8 +1,9 @@
 import FormInput from './FormInput'
 import Tiptap from './Tiptap'
 
+import styles from '../styles/Chapter.module.css'
+
 const Lecture = props => {
-  //console.log('props Lecture: ', props)
 
   const inputs = [
     {
@@ -10,7 +11,8 @@ const Lecture = props => {
       label: 'Titre leçon:',
       name: 'title',
       type: 'text',
-      disabled: props.disableField
+      disabled: props.disableField,
+      styles: styles
     },
     {
       id: 2,
@@ -27,7 +29,8 @@ const Lecture = props => {
       disabled: props.disableField,
       chapterIdx: props.chapterIdx,
       lectureIdx: props.lectureIdx,
-      getDuration: props.getDuration
+      getDuration: props.getDuration,
+      styles: styles
     }
   ]
 

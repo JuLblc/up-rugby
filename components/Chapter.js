@@ -40,6 +40,7 @@ const Chapter = props => {
         value={props.courseData.chapters[props.chapterIdx].title || ''}
         onChange={e => props.onChangeChapter(e, props.chapterIdx)}
         disabled={props.disableField}
+        styles={styles}
       />
 
       {props.courseData.chapters[props.chapterIdx].lectures.map(

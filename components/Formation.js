@@ -220,6 +220,7 @@ const Formation = props => {
           value={courseData.title}
           onChange={onChange}
           disabled={disableField}
+          styles={styles}
         />
 
         <div>
@@ -245,6 +246,7 @@ const Formation = props => {
             value={courseData.price}
             onChange={onChange}
             disabled={disableField}
+            styles={styles}
           />
         </div>
 
