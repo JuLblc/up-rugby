@@ -1,20 +1,41 @@
 .form {
-    line-height: 2em;
-    border: 1px solid darkgray;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 5px;
+  line-height: 2em;
+  border: 1px solid darkgray;
+  padding: 5px;
 }
 
-.formationTitle {
-    width:500px;
+.form label span {
+  width: 150px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.form label input,
+.form label select {
+  border-color: transparent;
+  border-radius: 10px;
+  background-color: #ecf3fa;
+  color: #3a3a3a;
+  padding: 8px 16px;
+  width: 200px;
+  min-width: 150px;
+  margin-right: 20px;
+}
+
+.form label input:disabled,
+.form label select:disabled {
+  opacity: 0.7;
 }
 
 /* .tipTapContainer{
-    border: solid 1px darkgray;
-    padding: 5px;
+  border: solid 1px darkgray;
+  padding: 5px;
 } */
 
 .saveBtn {
-    display: block;
+  display: block;
+}
+
+.onSuccessClient {
+  display: none;
 }

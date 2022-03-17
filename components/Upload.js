@@ -35,37 +35,56 @@ const Upload = (props) => {
   };
 
   return (
-    <div className={styles.uploadContainer} ref={divRef}>
+    <div
+      className={`${styles.uploadContainer} ${
+        props.uploadFileName === "picture" && styles.photoContainer
+      }`}
+      ref={divRef}
+    >
       {/* Display exisiting picture */}
+      {props.uploadFileName === "picture" && <span>Photo: </span>}
+
       {props.uploadFileName === "picture" && props.courseData.img.fileName && (
-        <div>
+        <div className={styles.itemContainer}>
           <p>{props.courseData.img.fileName}</p>
           <button
+            className={styles.removeBtn}
             type="button"
             disabled={props.disabled}
             onClick={() => props.remove()}
           >
-            Supp photo!
+            Supprimer
           </button>
         </div>
       )}
 
       {/* Display exisiting attachements */}
       {props.uploadFileName === "file" &&
-        props.courseData.attachements.map((file, idx) => (
-          <div key={file.fileName}>
-            <p>{file.fileName}</p>
-            <button
-              type="button"
-              disabled={props.disabled}
-              onClick={() => props.remove(idx, file)}
-            >
-              Supp fichier!
-            </button>
-          </div>
+        (props.courseData.attachements.length === 0 ? (
+          <span>Fichier: </span>
+        ) : (
+          props.courseData.attachements.map((file, idx) => (
+            <div key={file.fileName} className={styles.itemContainer}>
+              <span>Fichier: </span>
+              <p>{file.fileName}</p>
+              <button
+                className={styles.removeBtn}
+                type="button"
+                disabled={props.disabled}
+                onClick={() => props.remove(idx, file)}
+              >
+                Supprimer
+              </button>
+            </div>
+          ))
         ))}
 
-      <button type="button" onClick={onClickHandler} disabled={props.disabled}>
+      <button
+        type="button"
+        onClick={onClickHandler}
+        disabled={props.disabled}
+        className={styles.addBtn}
+      >
         {props.label}
       </button>
       <input
@@ -75,7 +94,6 @@ const Upload = (props) => {
         type="file"
         accept={props.acceptedFileTypes}
       />
-      
     </div>
   );
 };

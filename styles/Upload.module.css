@@ -2,7 +2,50 @@
   display: none;
 }
 
-.uploadContainer p {
-  display: inline-block;
+.itemContainer,
+.photoContainer {
+  display: flex;
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+.uploadContainer button {
+  width: 100px;
+  border-radius: 10px;
+  padding: 5px 0;
+  cursor: pointer;
+  font-size: 1em;
   margin: 0;
+}
+
+.removeBtn {
+  background-color: #e44258;
+  border: solid 1px #e44258;
+  color: #ecf3fa;
+}
+
+.addBtn {
+  background-color: #0085ff;
+  border: solid 1px #0085ff;
+  color: #ecf3fa;
+  max-height: 32px;
+}
+
+.uploadContainer button:disabled {
+  opacity: 0.6;
+}
+
+.uploadContainer span,
+.itemContainer span {
+  width: 150px;
+  display: inline-block;
+}
+
+.itemContainer p {
+  width: 200px;
+  margin: 0 10px 0 0;
+  padding: 0 16px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
