@@ -3,7 +3,7 @@ import { getSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { getCourses } from '../../../../apiCall/courses'
 
-import Formation from '../../../../components/Formation'
+import Formation from '../../../../components/FormFormation/Formation'
 
 const UpdateCourseDetails = props => {
   const router = useRouter()

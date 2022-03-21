@@ -1,3 +1,4 @@
+
 .uploadContainer input {
   display: none;
 }
@@ -9,6 +10,15 @@
   margin-bottom: 10px;
 }
 
+.fileContainer {
+  margin: 20px 0;
+  padding: 10px 0;
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+
+}
+
+
 .uploadContainer button {
   width: 100px;
   border-radius: 10px;
@@ -18,16 +28,16 @@
   margin: 0;
 }
 
-.removeBtn {
-  background-color: #e44258;
+.primatyRemoveBtn {
+  background-color: #f7fafb;
   border: solid 1px #e44258;
-  color: #ecf3fa;
+  color: #e44258;
 }
 
-.addBtn {
-  background-color: #0085ff;
+.primaryAddBtn {
+  background-color: #f7fafb;
   border: solid 1px #0085ff;
-  color: #ecf3fa;
+  color: #0085ff;
   max-height: 32px;
 }
 

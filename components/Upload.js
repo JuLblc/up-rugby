@@ -37,7 +37,7 @@ const Upload = (props) => {
   return (
     <div
       className={`${styles.uploadContainer} ${
-        props.uploadFileName === "picture" && styles.photoContainer
+        props.uploadFileName === "picture" ? styles.photoContainer : styles.fileContainer
       }`}
       ref={divRef}
     >
@@ -48,7 +48,7 @@ const Upload = (props) => {
         <div className={styles.itemContainer}>
           <p>{props.courseData.img.fileName}</p>
           <button
-            className={styles.removeBtn}
+            className={styles.primatyRemoveBtn}
             type="button"
             disabled={props.disabled}
             onClick={() => props.remove()}
@@ -68,7 +68,7 @@ const Upload = (props) => {
               <span>Fichier: </span>
               <p>{file.fileName}</p>
               <button
-                className={styles.removeBtn}
+                className={styles.primatyRemoveBtn}
                 type="button"
                 disabled={props.disabled}
                 onClick={() => props.remove(idx, file)}
@@ -83,7 +83,7 @@ const Upload = (props) => {
         type="button"
         onClick={onClickHandler}
         disabled={props.disabled}
-        className={styles.addBtn}
+        className={styles.primaryAddBtn}
       >
         {props.label}
       </button>

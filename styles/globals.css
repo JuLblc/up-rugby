@@ -55,6 +55,7 @@ h2 {
 
 .ProseMirror {
   border: solid 1px darkgray;
+  border-radius: 5px;
   padding: 5px;
   font-family: "Roboto";
   font-size: 16px;

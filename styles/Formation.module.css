@@ -1,7 +1,7 @@
 .form {
   line-height: 2em;
-  border: 1px solid darkgray;
-  padding: 5px;
+  /* border: 1px solid darkgray;
+  padding: 5px; */
 }
 
 .form label span {
@@ -32,10 +32,102 @@
   padding: 5px;
 } */
 
-.saveBtn {
-  display: block;
+.icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.message {
+  position: relative;
+  padding: 0 16px 0 48px;
+  border-radius: 8px;
+  font-size: 0.8em;
+  margin-bottom: 10px;
 }
 
 .onSuccessClient {
   display: none;
+}
+
+.onError {
+  color: red;
+  background-color: #f9dade;
+}
+
+.chapterContainer {
+  border: 2px solid darkgray;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  padding: 5px;
+}
+
+.lectureContaier{
+  margin-bottom: 10px;
+
+}
+
+.button {
+  width: 170px;
+  border-radius: 10px;
+  padding: 5px 0;
+  cursor: pointer;
+  font-size: 1em;
+  margin: 0 10px 0 0;
+}
+
+.primatyRemoveBtn {
+  background-color: #f7fafb;
+  border: solid 1px #e44258;
+  color: #e44258;
+}
+
+.secondaryRemoveBtn {
+  background-color: #f9dade;
+  border: solid 1px #e44258;
+  color: #e44258;
+}
+
+.removeBtn {
+  background-color: #e44258;
+  border: solid 1px #e44258;
+  color: #ecf3fa;
+}
+
+.primaryAddBtn {
+  background-color: #f7fafb;
+  border: solid 1px #0085ff;
+  color: #0085ff;
+}
+
+.addBtn {
+  background-color: #0085ff;
+  border: solid 1px #0085ff;
+  color: #ecf3fa;
+}
+
+.modifyBtn {
+  background-color: #e6e9ef;
+  border: solid 1px #3a3a3a;
+  color: #3a3a3a;;
+}
+
+.saveBtn{
+  background-color: #f7fafb;
+  border: solid 1px #00a25b;
+  color: #00a25b;
+}
+
+.publishBtn {
+  background-color: #00a25b;
+  border: solid 1px #00a25b;
+  color: #f7fafb;
+}
+
+
+.button:disabled {
+  opacity: 0.6;
 }

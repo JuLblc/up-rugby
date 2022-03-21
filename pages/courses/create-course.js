@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import { getSession } from 'next-auth/react'
 import { useEffect } from 'react'
 
-import Formation from '../../components/Formation'
+import Formation from '../../components/FormFormation/Formation'
 
 const NewCourse = props => {
   const router = useRouter()
