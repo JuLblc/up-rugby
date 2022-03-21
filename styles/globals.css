@@ -36,9 +36,10 @@ h1 {
 
 h2 {
   font-size: 2em;
-  font-weight: 500;
+  font-weight: 400;
   margin-top: 0;
-  color: #002789;
+  color: #808080;
+
 }
 
 @media (max-width: 767px) {
@@ -77,7 +78,7 @@ ol li p {
 h3 {
   font-weight: 400;
   font-size: 1.5em;
-  color: #0f56b3;
+  color: #0085ff;
 }
 
 .ProseMirror h4,

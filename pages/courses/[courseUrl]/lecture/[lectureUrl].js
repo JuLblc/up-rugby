@@ -124,8 +124,7 @@ const Lectures = props => {
                   <path fill='none' d='M0 0h24v24H0z' />
                   <path
                     d='M12.9 6.858l4.242 4.243L7.242 21H3v-4.243l9.9-9.9zm1.414-1.414l2.121-2.122a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414l-2.122 2.121-4.242-4.242z'
-                    // fill='rgba(58,58,58,1)'
-                    fill={toggleMenu ? '#0f56b3' : 'rgba(58,58,58,1)'}
+                    fill={toggleMenu ? '#0085ff' : 'rgba(58,58,58,1)'}
                   />
                 </svg>
                 <span>Description</span>
@@ -144,7 +143,7 @@ const Lectures = props => {
                   <path
                     d='M19 22H5a3 3 0 0 1-3-3V3a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v12h4v4a3 3 0 0 1-3 3zm-1-5v2a1 1 0 0 0 2 0v-2h-2zm-2 3V4H4v15a1 1 0 0 0 1 1h11zM6 7h8v2H6V7zm0 4h8v2H6v-2zm0 4h5v2H6v-2z'
                     // fill='rgba(58,58,58,1)'
-                    fill={!toggleMenu ? '#0f56b3' : 'rgba(58,58,58,1)'}
+                    fill={!toggleMenu ? '#0085ff' : 'rgba(58,58,58,1)'}
                   />
                 </svg>
                 <span>Sommaire</span>
