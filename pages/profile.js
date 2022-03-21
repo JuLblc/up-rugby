@@ -3,11 +3,10 @@ import { useState } from 'react'
 
 import { getCourses } from '../apiCall/courses'
 import { getUser, putUser } from '../apiCall/users'
-import { useWindowDimensions } from '../hooks/useWindowDimensions'
 
-import Link from 'next/link'
-
-import FormInput from '../components/FormInput'
+import Sidebar from '../components/Profile/Sidebar'
+import UserCourses from '../components/Profile/UserCourses'
+import UserInfo from '../components/Profile/UserInfo'
 import styles from '../styles/Profile.module.css'
 
 const Profile = props => {
@@ -20,13 +19,14 @@ const Profile = props => {
     : props.userFromDB.lastName
   !props.userFromDB.club ? (props.userFromDB.club = '') : props.userFromDB.club
 
-  const [displayInfo, setDisplayInfo] = useState(true)
-  const [displayCourses, setDisplayCourses] = useState(false)
+  const [state, setState] = useState({
+    displayInfo: true,
+    displayCourses: false,
+    displayCart: false,
+    disableField: true
+  })
 
   const [userData, setUserData] = useState(props.userFromDB)
-  const [disableField, setDisableField] = useState(true)
-
-  const { width } = useWindowDimensions()
 
   const inputs = [
     {
@@ -49,28 +49,70 @@ const Profile = props => {
     }
   ]
 
+  const li = [
+    {
+      id: 'info',
+      styles: state.displayInfo ? styles.selected : styles.unselected,
+      label: 'Mes informations'
+    },
+    {
+      id: 'course',
+      styles: state.displayCourses ? styles.selected : styles.unselected,
+      label: 'Mes achats'
+    },
+    {
+      id: 'cart',
+      styles: state.displayCart ? styles.selected : styles.unselected,
+      label: 'Mon panier'
+    }
+  ]
+
   const onChange = e => {
     setUserData({ ...userData, [e.target.name]: e.target.value })
   }
 
   const handleDisplay = e => {
-    if (e.target.id === 'info' && !displayInfo) {
-      setDisplayInfo(!displayInfo)
-      setDisplayCourses(!displayCourses)
+    if (e.target.id === 'info' && !state.displayInfo) {
+      setState({
+        ...state,
+        displayInfo: true,
+        displayCourses: false,
+        displayCart: false
+      })
     }
-    if (e.target.id === 'course' && !displayCourses) {
-      setDisplayInfo(!displayInfo)
-      setDisplayCourses(!displayCourses)
+
+    if (e.target.id === 'course' && !state.displayCourses) {
+      setState({
+        ...state,
+        displayInfo: false,
+        displayCourses: true,
+        displayCart: false
+      })
+    }
+
+    if (e.target.id === 'cart' && !state.displayCart) {
+      setState({
+        ...state,
+        displayInfo: false,
+        displayCourses: false,
+        displayCart: true
+      })
     }
   }
 
   const editUserData = () => {
-    setDisableField(false)
+    setState({
+      ...state,
+      disableField: false
+    })
   }
 
   const handleFormSubmit = async e => {
     e.preventDefault()
-    setDisableField(true)
+    setState({
+      ...state,
+      disableField: true
+    })
 
     await putUser(userData)
   }
@@ -80,87 +122,22 @@ const Profile = props => {
       <h1>Mon compte</h1>
 
       <div className={styles.profileContainer}>
-        <ul>
-          {width > 705 && <p className={styles.menuTitle}>Tableau de bord</p>}
-          <li
-            id='info'
-            className={`${displayInfo ? styles.selected : styles.unselected}`}
-            onClick={e => handleDisplay(e)}
-          >
-            Mes informations
-          </li>
-          <li
-            className={`${!displayInfo ? styles.selected : styles.unselected}`}
-            id='course'
-            onClick={e => handleDisplay(e)}
-          >
-            Mes achats
-          </li>
-        </ul>
-        {width <= 705 && (<div className={styles.break}></div>)}
+        <Sidebar li={li} styles={styles} handleDisplay={handleDisplay} />
 
-        {displayInfo && (
-          <>
-            {/* <h2>Mes informations</h2> */}
-            <form className={styles.form} onSubmit={handleFormSubmit}>
-              {inputs.map(input => (
-                <FormInput
-                  key={input.id}
-                  {...input}
-                  value={userData[input.name]}
-                  onChange={onChange}
-                  disabled={disableField}
-                  styles={styles}
-                />
-              ))}
-
-              <label className={styles.label}>
-                <span>Catégorie: </span>
-                <select
-                  name='category'
-                  value={userData.category}
-                  onChange={onChange}
-                  disabled={disableField}
-                >
-                  <option value='Joueur'>Joueur</option>
-                  <option value='Entraineur'>Entraineur</option>
-                </select>
-              </label>
-
-              {disableField ? (
-                // Fields are disabled and buttons are displayed
-                <button
-                  className={styles.edit}
-                  type='button'
-                  onClick={editUserData}
-                >
-                  Editer mes informations
-                </button>
-              ) : (
-                <>
-                  {/* Fields are enabled and buttons are displayed */}
-                  <button className={styles.save} type='submit'>
-                    Enregistrer
-                  </button>
-                </>
-              )}
-            </form>
-          </>
+        {state.displayInfo && (
+          <UserInfo
+            styles={styles}
+            handleFormSubmit={handleFormSubmit}
+            inputs={inputs}
+            userData={userData}
+            onChange={onChange}
+            disableField={state.disableField}
+            editUserData={editUserData}
+          />
         )}
 
-        {displayCourses && (
-          <div>
-            {/* <h2>Mes formations</h2> */}
-            {props.purchasedCourses.length > 0 ? (
-              props.purchasedCourses.map(course => (
-                <Link href={`/courses/${course.seoUrl}`} key={course._id}>
-                  <a>{course.title}</a>
-                </Link>
-              ))
-            ) : (
-              <div>Vous n'avez pas encore acheté de formations</div>
-            )}
-          </div>
+        {state.displayCourses && (
+          <UserCourses purchasedCourses={props.purchasedCourses} />
         )}
       </div>
     </main>
