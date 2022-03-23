@@ -2,7 +2,13 @@
   .profileContainer {
     display: grid;
     grid-template-columns: 280px 1fr;
-    grid-gap: 70px;
+    grid-gap: 30px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .profileContainer {
+    grid-gap: 50px;
   }
 }
 
@@ -32,6 +38,12 @@
   list-style-type: none;
   font-size: 1.3em;
   line-height: 2.3em;
+}
+
+@media (max-width: 462px) {
+  .profile li {
+    line-height: 1.3em;
+  }
 }
 
 @media (min-width: 706px) {
@@ -132,4 +144,112 @@
 
 .onSuccessClient {
   display: none;
+}
+
+@media (max-width: 1100px) {
+  .coursesWrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-gap: 20px;
+  }
+}
+
+.courseContainer {
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between; */
+  margin-bottom: 20px;
+}
+
+.courseInfoContainer {
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 1100px) {
+  .courseContainer,
+  .courseInfoContainer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+/* <Image /> */
+.courseContainer span:nth-child(1) {
+  border-radius: 5px;
+  min-width: 145px;
+}
+
+@media (min-width: 1100px) {
+  .courseContainer span:nth-child(1) {
+    width: 150px !important;
+  }
+}
+
+.courseInfo {
+  margin-left: 20px;
+  margin-right: 30px;
+}
+
+@media (max-width: 1100px) {
+  .courseInfo {
+    margin: 20px 0;
+  }
+}
+
+.courseInfo h5 {
+  font-weight: 500;
+  font-size: 1.2em;
+  display: block;
+  margin-top: 0;
+  margin-bottom: 5px;
+  width: unset;
+}
+
+.courseInfo p {
+  color: #808080;
+  margin: 0;
+  text-align: left;
+}
+
+.courseDetailsWrapper {
+  display: flex;
+  align-items: flex-start;
+}
+
+@media (max-width: 1100px) {
+  .courseDetailsWrapper {
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+
+.courseDetailsContainer {
+  margin-right: 30px;
+  min-width: 105px;
+}
+
+@media (max-width: 1100px) {
+  .courseDetailsContainer {
+    margin-left: 0;
+  }
+}
+
+.courseDetails {
+  display: flex;
+  margin-bottom: 5px;
+}
+
+.courseDetails svg {
+  margin-right: 5px;
+}
+
+.start {
+  text-decoration: none;
+  padding: 10px 20px;
+  border: solid 1px #0085ff;
+  border-radius: 5px;
+  background-color: #f7fafb;
+  color: #0085ff;
+  margin-right: 10px;
+  text-align: center;
 }

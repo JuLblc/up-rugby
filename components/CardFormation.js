@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import styles from "../styles/CardFormation.module.css";
 
 import { useWindowDimensions } from "../hooks/useWindowDimensions";
