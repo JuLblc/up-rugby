@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 import { useWindowDimensions } from '../../hooks/useWindowDimensions'
 import { getDeviceTypeInfo } from '../../utils/utilResponsive'
-import { getLecturesQty, getLecturesTime } from '../../utils/utilCourses'
+import { getLecturesQty, getLecturesTime, isPurchased } from '../../utils/utilCourses'
 
 import CardFormation from '../CardFormation'
 
@@ -55,6 +55,7 @@ const HomeLastCourses = props => {
             role={props.session?.user.role}
             lecturesQty={getLecturesQty(course)}
             lecturesTimes={getLecturesTime(course)}
+            isPurchased={isPurchased(props.purchasedCourses, course._id)}
             img={course.img}
           />
         )

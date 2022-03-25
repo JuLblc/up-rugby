@@ -6,6 +6,7 @@ import Link from 'next/link'
 
 import { getCourses } from '../../../apiCall/courses'
 import { getUser, putCourseToUser } from '../../../apiCall/users'
+import { isPurchased } from '../../../utils/utilCourses'
 
 import SideCourseChapter from '../../../components/SideCourseChapter'
 
@@ -120,9 +121,7 @@ export const getServerSideProps = async context => {
   const resUser = await getUser(context)
   const purchasedCourses = resUser.data.userFromDB.purchasedCourses
 
-  purchasedCourses.indexOf(course._id) === -1
-    ? (course.isPurchased = false)
-    : (course.isPurchased = true)
+  course.isPurchased = isPurchased(purchasedCourses, course._id)
 
   return {
     props: {

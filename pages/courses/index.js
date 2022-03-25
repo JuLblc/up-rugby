@@ -1,9 +1,14 @@
 import { getSession } from 'next-auth/react'
 import Link from 'next/link'
 import { getCourses } from '../../apiCall/courses'
+import { getUser } from '../../apiCall/users'
 import { useWindowDimensions } from '../../hooks/useWindowDimensions'
 import { getDeviceTypeInfo } from '../../utils/utilResponsive'
-import { getLecturesQty , getLecturesTime } from '../../utils/utilCourses'
+import {
+  getLecturesQty,
+  getLecturesTime,
+  isPurchased
+} from '../../utils/utilCourses'
 
 import CardFormation from '../../components/CardFormation'
 
@@ -13,7 +18,7 @@ const Courses = props => {
   const { width, height } = useWindowDimensions()
 
   const {
-    isMobile,
+    isMobile
     // isTablet,
     // isDesktopOrLaptop,
     // isBigScreen
@@ -50,6 +55,7 @@ const Courses = props => {
             role={props.session?.user.role}
             lecturesQty={getLecturesQty(course)}
             lecturesTimes={getLecturesTime(course)}
+            isPurchased={isPurchased(props.purchasedCourses, course._id)}
             img={course.img}
           />
         )
@@ -66,10 +72,22 @@ export const getServerSideProps = async context => {
 
   const res = await getCourses(context)
 
+  if (!session) {
+    return {
+      props: {
+        session,
+        courses: res.data.coursesFromDB
+      }
+    }
+  }
+
+  const resUser = await getUser(context)
+
   return {
     props: {
       session,
-      courses: res.data.coursesFromDB
+      courses: res.data.coursesFromDB,
+      purchasedCourses: resUser.data.userFromDB.purchasedCourses
     }
   }
 }

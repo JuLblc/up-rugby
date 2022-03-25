@@ -17,6 +17,14 @@ export const getLecturesTime = course => {
   return convertTime(timeCourse)
 }
 
+export const isPurchased = (purchasedCourses, courseId) => {
+  if(!purchasedCourses) return false
+
+  return purchasedCourses.indexOf(courseId) === -1
+    ? false
+    : true
+}
+
 export const convertTime = totalMinutes => {
   let hours = Math.floor(totalMinutes / 60)
   let minutes = (totalMinutes %= 60)

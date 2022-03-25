@@ -1,5 +1,6 @@
 import { getSession } from 'next-auth/react'
 import { getCourses } from '../apiCall/courses'
+import { getUser } from '../apiCall/users'
 
 import { useWindowDimensions } from '../hooks/useWindowDimensions'
 
@@ -26,9 +27,8 @@ const Home = props => {
 
       {props.session && (
         <>
-          <HomeLastCourses courses={props.courses} session={props.session}/>
+          <HomeLastCourses courses={props.courses} session={props.session} purchasedCourses={props.purchasedCourses}/>
           <HomeLastExercices session={props.session}/>
-
         </>
       )}
     </main>
@@ -49,10 +49,13 @@ export const getServerSideProps = async context => {
   const res = await getCourses(context)
   const lastCourses = res.data.coursesFromDB.slice(0,2)
 
+  const resUser = await getUser(context)
+
   return {
     props: {
       session,
-      courses: lastCourses
+      courses: lastCourses,
+      purchasedCourses: resUser.data.userFromDB.purchasedCourses
     }
   }
 }
