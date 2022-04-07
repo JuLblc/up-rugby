@@ -1,18 +1,19 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useRef } from 'react'
+
 import styles from '../styles/CardFormation.module.css'
 
 import { useWindowDimensions } from '../hooks/useWindowDimensions'
 
 import { getDeviceTypeInfo } from '../utils/utilResponsive'
+import { putCourseToCart } from '../apiCall/users'
 
 const CardFormation = props => {
   const { width, height } = useWindowDimensions()
   const { isMobile, isTablet } = getDeviceTypeInfo(width, height)
 
   const [selected, setSelected] = useState(false)
-
   const divRef = useRef()
 
   const handleSelectedChange = () => {
@@ -32,6 +33,12 @@ const CardFormation = props => {
       $div.add('CardFormation_selected__IoyVY')
     }
     setSelected(!selected)
+  }
+
+  const buyCourse = async () => {
+    console.log(`${props.userId} bought ${props.courseId}!`)
+    if (props.userId) await putCourseToCart(props.courseId)
+
   }
 
   return (
@@ -117,13 +124,16 @@ const CardFormation = props => {
                     height='24'
                   >
                     <path fill='none' d='M0 0h24v24H0z' />
-                    <path fill='#F4F9FF' d='M7.752 5.439l10.508 6.13a.5.5 0 0 1 0 .863l-10.508 6.13A.5.5 0 0 1 7 18.128V5.871a.5.5 0 0 1 .752-.432z' />
+                    <path
+                      fill='#F4F9FF'
+                      d='M7.752 5.439l10.508 6.13a.5.5 0 0 1 0 .863l-10.508 6.13A.5.5 0 0 1 7 18.128V5.871a.5.5 0 0 1 .752-.432z'
+                    />
                   </svg>
                 )}
                 <span>Commencer</span>
               </button>
             ) : (
-              <button>
+              <button onClick={buyCourse}>
                 {width > 350 && (
                   <svg
                     xmlns='http://www.w3.org/2000/svg'

@@ -53,6 +53,7 @@ const HomeLastCourses = props => {
             price={course.price}
             isPublished={course.isPublished}
             role={props.session?.user.role}
+            userId={props.session?.user.id}
             lecturesQty={getLecturesQty(course)}
             lecturesTimes={getLecturesTime(course)}
             isPurchased={isPurchased(props.purchasedCourses, course._id)}

@@ -52,6 +52,7 @@ const Courses = props => {
             seoUrl={course.seoUrl}
             price={course.price}
             isPublished={course.isPublished}
+            userId={props.session?.user.id}
             role={props.session?.user.role}
             lecturesQty={getLecturesQty(course)}
             lecturesTimes={getLecturesTime(course)}
@@ -87,7 +88,8 @@ export const getServerSideProps = async context => {
     props: {
       session,
       courses: res.data.coursesFromDB,
-      purchasedCourses: resUser.data.userFromDB.purchasedCourses
+      purchasedCourses: resUser.data.userFromDB.purchasedCourses,
+      cart:resUser.data.userFromDB.cart,
     }
   }
 }

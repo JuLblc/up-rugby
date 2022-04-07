@@ -213,7 +213,7 @@
 
 .courseDetailsWrapper {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
 }
 
 @media (max-width: 1100px) {
@@ -236,7 +236,7 @@
 
 .courseDetails {
   display: flex;
-  margin-bottom: 5px;
+  margin-top: 5px;
 }
 
 .courseDetails svg {

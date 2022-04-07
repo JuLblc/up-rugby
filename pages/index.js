@@ -55,7 +55,8 @@ export const getServerSideProps = async context => {
     props: {
       session,
       courses: lastCourses,
-      purchasedCourses: resUser.data.userFromDB.purchasedCourses
+      purchasedCourses: resUser.data.userFromDB.purchasedCourses,
+      cart: resUser.data.userFromDB.cart,
     }
   }
 }

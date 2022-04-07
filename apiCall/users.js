@@ -22,3 +22,10 @@ export const putCourseToUser = async (courseId) => {
     courseId
   });
 };
+
+
+export const putCourseToCart = async (courseId) => {
+  await axios.put(`/api/users/add-course-to-cart`, {
+    courseId
+  });
+};

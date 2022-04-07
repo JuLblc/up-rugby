@@ -15,6 +15,7 @@ import styles from "../styles/Navbar.module.css";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
+
   const router = useRouter();
 
   const { width, height } = useWindowDimensions();
