@@ -1,123 +1,145 @@
-import { getSession } from 'next-auth/react'
+import { getSession } from "next-auth/react";
 
-import { useState } from 'react'
+import { useState, useEffect } from "react";
 
-import { getCourses } from '../apiCall/courses'
-import { getUser, putUser } from '../apiCall/users'
+import { getCourses } from "../apiCall/courses";
+import { getUser, putUser } from "../apiCall/users";
 
-import Sidebar from '../components/Profile/Sidebar'
-import UserCourses from '../components/Profile/UserCourses'
-import UserCart from '../components/Profile/UserCart'
-import UserInfo from '../components/Profile/UserInfo'
-import styles from '../styles/Profile.module.css'
+import Sidebar from "../components/Profile/Sidebar";
+import UserCourses from "../components/Profile/UserCourses";
+import UserCart from "../components/Profile/UserCart";
+import UserInfo from "../components/Profile/UserInfo";
+import styles from "../styles/Profile.module.css";
 
-const Profile = props => {
+const Profile = (props) => {
   // Prevent to be undefined
   !props.userFromDB.firstName
-    ? (props.userFromDB.firstName = '')
-    : props.userFromDB.firstName
+    ? (props.userFromDB.firstName = "")
+    : props.userFromDB.firstName;
   !props.userFromDB.lastName
-    ? (props.userFromDB.lastName = '')
-    : props.userFromDB.lastName
-  !props.userFromDB.club ? (props.userFromDB.club = '') : props.userFromDB.club
+    ? (props.userFromDB.lastName = "")
+    : props.userFromDB.lastName;
+  !props.userFromDB.club ? (props.userFromDB.club = "") : props.userFromDB.club;
 
   const [state, setState] = useState({
     displayInfo: true,
     displayCourses: false,
     displayCart: false,
     disableField: true
-  })
+  });
 
-  const [userData, setUserData] = useState(props.userFromDB)
-
-  const inputs = [
-    {
-      id: 1,
-      name: 'firstName',
-      type: 'text',
-      label: 'Prénom: '
-    },
-    {
-      id: 2,
-      name: 'lastName',
-      type: 'text',
-      label: 'Nom: '
-    },
-    {
-      id: 3,
-      name: 'club',
-      type: 'text',
-      label: 'Club: '
-    }
-  ]
-
-  const li = [
-    {
-      id: 'info',
-      styles: state.displayInfo ? styles.selected : styles.unselected,
-      label: 'Mes informations'
-    },
-    {
-      id: 'course',
-      styles: state.displayCourses ? styles.selected : styles.unselected,
-      label: 'Mes achats'
-    },
-    {
-      id: 'cart',
-      styles: state.displayCart ? styles.selected : styles.unselected,
-      label: 'Mon panier'
-    }
-  ]
-
-  const onChange = e => {
-    setUserData({ ...userData, [e.target.name]: e.target.value })
-  }
-
-  const handleDisplay = e => {
-    if (e.target.id === 'info' && !state.displayInfo) {
-      setState({
-        ...state,
-        displayInfo: true,
-        displayCourses: false,
-        displayCart: false
-      })
-    }
-
-    if (e.target.id === 'course' && !state.displayCourses) {
-      setState({
-        ...state,
-        displayInfo: false,
-        displayCourses: true,
-        displayCart: false
-      })
-    }
-
-    if (e.target.id === 'cart' && !state.displayCart) {
+  useEffect(() => {
+    if (props.profileOpt === "cart") {
       setState({
         ...state,
         displayInfo: false,
         displayCourses: false,
         displayCart: true
-      })
+      });
+      return;
     }
-  }
+
+    if (props.profileOpt === "userInfo") {
+      setState({
+        ...state,
+        displayInfo: true,
+        displayCourses: false,
+        displayCart: false
+      });
+      return;
+    }
+  }, []);
+
+  const [userData, setUserData] = useState(props.userFromDB);
+
+  const inputs = [
+    {
+      id: 1,
+      name: "firstName",
+      type: "text",
+      label: "Prénom: "
+    },
+    {
+      id: 2,
+      name: "lastName",
+      type: "text",
+      label: "Nom: "
+    },
+    {
+      id: 3,
+      name: "club",
+      type: "text",
+      label: "Club: "
+    }
+  ];
+
+  const li = [
+    {
+      id: "info",
+      styles: state.displayInfo ? styles.selected : styles.unselected,
+      label: "Mes informations"
+    },
+    {
+      id: "course",
+      styles: state.displayCourses ? styles.selected : styles.unselected,
+      label: "Mes achats"
+    },
+    {
+      id: "cart",
+      styles: state.displayCart ? styles.selected : styles.unselected,
+      label: "Mon panier"
+    }
+  ];
+
+  const onChange = (e) => {
+    setUserData({ ...userData, [e.target.name]: e.target.value });
+  };
+
+  const handleDisplay = (e) => {
+    if (e.target.id === "info" && !state.displayInfo) {
+      setState({
+        ...state,
+        displayInfo: true,
+        displayCourses: false,
+        displayCart: false
+      });
+    }
+
+    if (e.target.id === "course" && !state.displayCourses) {
+      setState({
+        ...state,
+        displayInfo: false,
+        displayCourses: true,
+        displayCart: false
+      });
+    }
+
+    if (e.target.id === "cart" && !state.displayCart) {
+      setState({
+        ...state,
+        displayInfo: false,
+        displayCourses: false,
+        displayCart: true
+      });
+    }
+  };
 
   const editUserData = () => {
     setState({
       ...state,
       disableField: false
-    })
-  }
+    });
+  };
 
-  const handleFormSubmit = async e => {
-    e.preventDefault()
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
     setState({
       ...state,
       disableField: true
-    })
+    });
 
-    await putUser(userData)
-  }
+    await putUser(userData);
+  };
 
   return (
     <main className={styles.profile}>
@@ -142,57 +164,58 @@ const Profile = props => {
           <UserCourses
             purchasedCourses={props.purchasedCourses}
             styles={styles}
-            CTA='start'
+            CTA="start"
           />
         )}
 
-        {state.displayCart && (
-          <UserCart cart={props.cart} styles={styles} />
-        )}
+        {state.displayCart && <UserCart cart={props.cart} styles={styles} />}
       </div>
     </main>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;
 
 //Server side rendering
-export const getServerSideProps = async context => {
-  const session = await getSession(context)
+export const getServerSideProps = async (context) => {
+  const session = await getSession(context);
 
   if (!session) {
     return {
       redirect: {
-        destination: '/login?login=signin',
+        destination: "/login?login=signin",
         permanent: false
       }
-    }
+    };
   }
 
-  const resUser = await getUser(context)
+  const profileOpt = context.query.profile;
+  console.log("profileOpt: ", profileOpt);
 
-  const userFromDB = resUser.data.userFromDB
-  const purchasedCoursesId = resUser.data.userFromDB.purchasedCourses
-  const cartCoursesId = resUser.data.userFromDB.cart
+  const resUser = await getUser(context);
 
-  let resCourses
+  const userFromDB = resUser.data.userFromDB;
+  const purchasedCoursesId = resUser.data.userFromDB.purchasedCourses;
+  const cartCoursesId = resUser.data.userFromDB.cart;
 
-  let purchasedCourses = []
+  let resCourses;
+
+  let purchasedCourses = [];
   if (purchasedCoursesId || cartCoursesId) {
-    resCourses = await getCourses(context)
+    resCourses = await getCourses(context);
   }
 
   if (purchasedCoursesId) {
-    purchasedCourses = resCourses.data.coursesFromDB.filter(course =>
+    purchasedCourses = resCourses.data.coursesFromDB.filter((course) =>
       purchasedCoursesId.includes(course._id)
-    )
+    );
   }
 
-  let cart = []
+  let cart = [];
   if (cartCoursesId) {
-    cart = resCourses.data.coursesFromDB.filter(course =>
+    cart = resCourses.data.coursesFromDB.filter((course) =>
       cartCoursesId.includes(course._id)
-    )
+    );
   }
 
   return {
@@ -200,7 +223,8 @@ export const getServerSideProps = async context => {
       session,
       userFromDB,
       purchasedCourses,
-      cart
+      cart,
+      profileOpt
     }
-  }
-}
+  };
+};

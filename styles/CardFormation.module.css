@@ -145,6 +145,11 @@
   padding-top: 5px;
 }
 
+.removeBtn {
+  background-color: #f7fafb !important;
+  border: solid 1px #e44258 !important;
+}
+
 .linkAdmin {
   z-index: 100;
   position: relative;
