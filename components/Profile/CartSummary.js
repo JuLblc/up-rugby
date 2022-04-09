@@ -4,9 +4,9 @@ const CartSummary = props => {
       <h3>Récapitulatif</h3>
       <div className={props.styles.cartSummaryDetails}>
         <div>
-          <p>{props.courses.length} formations</p>
-          <p>
-            Total:<span>{props.courses.map(course => course.price).reduce((prev, curr) => prev + curr, 0)} €</span>
+          <p>{props.courses.length} formation{props.courses.length > 1 && 's'}</p>
+          <p className={props.styles.cartSummaryTotal}>
+          <span>Total:</span><span>{props.courses.map(course => course.price).reduce((prev, curr) => prev + curr, 0)} €</span>
           </p>
         </div>
         <button className={props.styles.btnBuy}>Valider</button>

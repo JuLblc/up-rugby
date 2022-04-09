@@ -40,6 +40,7 @@
   list-style-type: none;
   font-size: 1.3em;
   line-height: 2.3em;
+  cursor: pointer;
 }
 
 @media (max-width: 462px) {
@@ -277,23 +278,50 @@
   background-color: transparent;
   padding: 0 10px;
   margin-left: 40px;
+  cursor: pointer;
 }
 
 .cartSummaryContainer{
   border-top: solid 1px lightgray;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  padding-top: 20px;
 }
+
+.cartSummaryContainer h3{
+  margin: 0;
+}
+
+@media (max-width: 450px) {
+  .cartSummaryContainer{
+    display: block;
+  }
+  .cartSummaryContainer h3{
+    margin-bottom: 20px!important;
+  }
+}
+
+
 
 .cartSummaryDetails{
   display: flex;
-  align-items: center;
+  align-items: stretch;
   min-width: 250px;
   justify-content: space-between;
 }
 
 .cartSummaryDetails div p {
-  margin: 0;
+  margin: 5px 0 0;
+}
+
+.cartSummaryTotal{
+  display: flex;
+  justify-content: space-between;
+}
+
+.cartSummaryTotal span:nth-child(2){
+  font-weight: 500;
 }
 
 .btnBuy {
@@ -305,6 +333,5 @@
   font-size: 1em;
   padding-top: 10px;
   padding-bottom: 10px;
-
-
+  cursor: pointer;
 }
