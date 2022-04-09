@@ -65,7 +65,6 @@ const removeCourseToCart = (req, res, session) => {
   }
 
   const courseId = req.body;
-  console.log("courseId: ", courseId);
 
   User.findById(session.user.id)
     .then((foundUser) => {

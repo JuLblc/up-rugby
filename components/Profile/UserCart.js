@@ -1,14 +1,17 @@
 import UserCourses from './UserCourses'
+import CartSummary from './CartSummary'
+
 
 const UserCart = props => {
   return (
     <>
       <UserCourses
-        purchasedCourses={props.cart}
+        courses={props.cart}
         styles={props.styles}
+        deleteCourseToCart={props.deleteCourseToCart}
         CTA='buy'
       />
-      <div>Calcul total</div>
+      <CartSummary styles={props.styles} courses={props.cart}/>
     </>
   )
 }
