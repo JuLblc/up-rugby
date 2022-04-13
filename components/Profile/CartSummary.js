@@ -1,4 +1,9 @@
 const CartSummary = props => {
+
+  const onCartValidate = () => {
+    console.log('carte bleu')
+  }
+
   return (
     <div className={props.styles.cartSummaryContainer}>
       <h3>Récapitulatif</h3>
@@ -9,7 +14,7 @@ const CartSummary = props => {
           <span>Total:</span><span>{props.courses.map(course => course.price).reduce((prev, curr) => prev + curr, 0)} €</span>
           </p>
         </div>
-        <button className={props.styles.btnBuy}>Valider</button>
+        <button onClick={onCartValidate} className={props.styles.btnBuy}>Valider</button>
       </div>
     </div>
   )
