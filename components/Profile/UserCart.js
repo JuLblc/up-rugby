@@ -1,7 +1,6 @@
 import UserCourses from './UserCourses'
 import CartSummary from './CartSummary'
 
-
 const UserCart = props => {
   return (
     <>
@@ -11,7 +10,11 @@ const UserCart = props => {
         deleteCourseToCart={props.deleteCourseToCart}
         CTA='buy'
       />
-      <CartSummary styles={props.styles} courses={props.cart}/>
+      <CartSummary
+        styles={props.styles}
+        courses={props.cart}
+        userEmail={props.userEmail}
+      />
     </>
   )
 }

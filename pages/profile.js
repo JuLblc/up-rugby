@@ -187,6 +187,7 @@ const Profile = props => {
             cart={state.cart}
             deleteCourseToCart={deleteCourseToCart}
             styles={styles}
+            userEmail={userData.email}
           />
         )}
       </div>
