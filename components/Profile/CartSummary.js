@@ -1,32 +1,33 @@
 import { getStripe } from '../../utils/utilStripe'
-import axios from 'axios'
+import { checkoutStripeSession } from '../../apiCall/stripe'
 
 const CartSummary = props => {
   const onCartValidate = async () => {
-    
     let stripeItems = props.courses.map(course => {
       return {
         price_data: {
           currency: 'eur',
           product_data: {
             name: course.title,
+            metadata:{
+              courseId: course._id
+            }
           },
-          unit_amount: course.price * 100,
+          unit_amount: course.price * 100
         },
         description: 'Lorem ipsum',
-        quantity: 1,
+        quantity: 1
       }
     })
 
-    const stripe = await getStripe();
-
-    const checkoutSession = await axios.post('/api/stripe', {items: stripeItems, email:props.userEmail});
+    const stripe = await getStripe()
+    const checkoutSession = await checkoutStripeSession(stripeItems, props.userEmail)
 
     const result = await stripe.redirectToCheckout({
-      sessionId: checkoutSession.data.id,
-    });
+      sessionId: checkoutSession.data.id
+    })
     if (result.error) {
-      alert(result.error.message);
+      alert(result.error.message)
     }
   }
 

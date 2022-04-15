@@ -40,6 +40,21 @@ const Profile = props => {
       return
     }
 
+    if (props.profileOpt === 'courses') {
+      setState({
+        ...state,
+        displayInfo: false,
+        displayCourses: true,
+        displayCart: false
+      })
+
+      if (props.sessionId){
+       
+      }
+
+      return
+    }
+
     if (props.profileOpt === 'userInfo') {
       setState({
         ...state,
@@ -211,6 +226,7 @@ export const getServerSideProps = async context => {
   }
 
   const profileOpt = context.query.profile
+  // const sessionId = context.query.session_id
 
   const resUser = await getUser(context)
 
@@ -244,7 +260,7 @@ export const getServerSideProps = async context => {
       userFromDB,
       purchasedCourses,
       cart,
-      profileOpt
+      profileOpt,
     }
   }
 }
