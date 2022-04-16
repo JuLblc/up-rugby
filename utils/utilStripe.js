@@ -1,4 +1,4 @@
-import { Stripe, loadStripe } from '@stripe/stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
 let stripePromise;
 export const getStripe = () => {
@@ -7,3 +7,26 @@ export const getStripe = () => {
   }
   return stripePromise;
 };
+
+export const cookiesToMetadata = (cookiesStr) => {
+
+  const cookies = cookiesStr.split('; ')
+ 
+  const cookieObj = {};
+ 
+  cookies.forEach(cookie => {
+    let keyValueCookie = cookie.split('=')
+    cookieObj[keyValueCookie[0]] = keyValueCookie[1]
+  })
+
+  return cookieObj;
+}
+
+export const cookiesToStr = (cookies) => {
+  let cookieStr = ''
+  for (const [key, value] of Object.entries(cookies)) {
+    cookieStr = cookieStr + `${key}=${value}; `
+  }
+
+  return cookieStr;
+}

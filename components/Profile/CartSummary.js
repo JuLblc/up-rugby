@@ -21,7 +21,7 @@ const CartSummary = props => {
     })
 
     const stripe = await getStripe()
-    const checkoutSession = await checkoutStripeSession(stripeItems, props.userEmail)
+    const checkoutSession = await checkoutStripeSession(stripeItems, props.userEmail, props.cookies)
 
     const result = await stripe.redirectToCheckout({
       sessionId: checkoutSession.data.id

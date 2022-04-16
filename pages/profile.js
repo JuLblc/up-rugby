@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 
 import { getCourses } from '../apiCall/courses'
 import { getUser, putUser, removeCourseToCart } from '../apiCall/users'
+import { cookiesToMetadata } from '../utils/utilStripe'
 
 import Sidebar from '../components/Profile/Sidebar'
 import UserCourses from '../components/Profile/UserCourses'
@@ -48,8 +49,7 @@ const Profile = props => {
         displayCart: false
       })
 
-      if (props.sessionId){
-       
+      if (props.sessionId) {
       }
 
       return
@@ -158,11 +158,10 @@ const Profile = props => {
   }
 
   const deleteCourseToCart = async id => {
-    
-    let newState = {...state}
+    let newState = { ...state }
     let idx = newState.cart.map(course => course._id).indexOf(id)
     newState.cart.splice(idx, 1)
-    
+
     setState({
       ...state,
       cart: newState.cart
@@ -203,6 +202,7 @@ const Profile = props => {
             deleteCourseToCart={deleteCourseToCart}
             styles={styles}
             userEmail={userData.email}
+            cookies={props.cookies}
           />
         )}
       </div>
@@ -226,7 +226,7 @@ export const getServerSideProps = async context => {
   }
 
   const profileOpt = context.query.profile
-  // const sessionId = context.query.session_id
+  const cookies = cookiesToMetadata(context.req.headers.cookie)
 
   const resUser = await getUser(context)
 
@@ -261,6 +261,7 @@ export const getServerSideProps = async context => {
       purchasedCourses,
       cart,
       profileOpt,
+      cookies
     }
   }
 }

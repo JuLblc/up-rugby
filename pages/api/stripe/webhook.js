@@ -9,10 +9,13 @@ export const config = {
   }
 }
 
-const fulfillOrder = async session => {
+const fulfillOrder = async stripeSession => {
+
+  const session = await stripe.checkout.sessions.retrieve(stripeSession.id)
+  const cookies = session.metadata
 
   const listLineItems = await stripe.checkout.sessions.listLineItems(
-    session.id,
+    stripeSession.id,
     {
       expand: ['data.price.product']
     }
@@ -23,14 +26,13 @@ const fulfillOrder = async session => {
   )
 
   for (let i = 0; i < courseIds.length; i++){
-    console.log('id: ',courseIds[i])
-    // await putCourseToUser(courseIds[i])
-    // await removeCourseToCart(courseIds[i])
+    await putCourseToUser(courseIds[i],cookies)
+    await removeCourseToCart(courseIds[i],cookies)
   }  
 }
 
 export default async function webhookHandler (req, res) {
-  //   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+
   if (req.method === 'POST') {
     const buf = await buffer(req)
     const sig = req.headers['stripe-signature']
@@ -48,11 +50,9 @@ export default async function webhookHandler (req, res) {
 
     console.log('event type: ', event.type)
     if (event.type === 'checkout.session.completed') {
-      // if (event.type === 'payment_intent.succeeded') {
 
-      const session = event.data.object
-      // Fulfill the purchase...
-      fulfillOrder(session)
+      const stripeSession = event.data.object
+      fulfillOrder(stripeSession)
     }
     res.status(200).send()
   }

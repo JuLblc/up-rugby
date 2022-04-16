@@ -6,7 +6,6 @@ const { connectToDatabase } = require("../../../utils/mongodb");
 export default async function handler(req, res) {
   const session = await getSession({ req });
   const { method } = req;
-  console.log('method: ', method)
 
   connectToDatabase()
     .then(() => {
@@ -19,7 +18,7 @@ export default async function handler(req, res) {
       }
     })
     .catch((err) => {
-      console.log('Grave erreur: ',err);
+      console.log(err);
       res
         .status(400)
         .json({ message: "La connexion à la base de donnée a échoué" });
@@ -33,7 +32,6 @@ const addCourseToUser = (req, res, session) => {
   }
 
   const { courseId } = req.body;
-  console.log('courseId: ', courseId)
 
   User.findById(session.user.id)
     .then((foundUser) => {

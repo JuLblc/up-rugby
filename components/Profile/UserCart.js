@@ -14,6 +14,7 @@ const UserCart = props => {
         styles={props.styles}
         courses={props.cart}
         userEmail={props.userEmail}
+        cookies={props.cookies}
       />
     </>
   )
