@@ -69,7 +69,7 @@ const UserCourses = props => {
                   </div>
                 </div>
                 {props.CTA === 'start' ? (
-                  <Link href={`/courses/${course.seoUrl}`}>
+                  <Link href={`/courses/${course.seoUrl}/lecture/${course.chapters[0].lectures[0].seoUrl}?chapter=${course.chapters[0].seoUrl}`}>
                     <a className={props.styles.start}>Commencer</a>
                   </Link>
                 ) : (

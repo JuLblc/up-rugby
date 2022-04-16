@@ -48,10 +48,6 @@ const Profile = props => {
         displayCourses: true,
         displayCart: false
       })
-
-      if (props.sessionId) {
-      }
-
       return
     }
 

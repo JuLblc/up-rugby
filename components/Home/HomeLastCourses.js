@@ -52,11 +52,7 @@ const HomeLastCourses = (props) => {
         return (
           <CardFormation
             key={course._id}
-            courseId={course._id}
-            title={course.title}
-            seoUrl={course.seoUrl}
-            price={course.price}
-            isPublished={course.isPublished}
+            course={course}
             role={props.session?.user.role}
             userId={props.session?.user.id}
             lecturesQty={getLecturesQty(course)}
@@ -66,7 +62,6 @@ const HomeLastCourses = (props) => {
               course._id
             )}
             isInCart={checkPurchaseStatus(props.cart, course._id)}
-            img={course.img}
           />
         );
       })}

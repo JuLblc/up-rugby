@@ -40,10 +40,15 @@ const CardFormation = (props) => {
     setSelected(!selected);
   };
 
+  const startCourse = () => {
+    router.push(`/courses/${props.course.seoUrl}/lecture/${props.course.chapters[0].lectures[0].seoUrl}?chapter=${props.course.chapters[0].seoUrl}`)
+  }
+
   const addCourseToCart = async () => {
     if (props.userId) {
       setisInCart(true);
-      await putCourseToCart(props.courseId);
+      console.log()
+      await putCourseToCart(props.course._id);
       return;
     }
 
@@ -56,7 +61,7 @@ const CardFormation = (props) => {
   const deleteCourseToCart = async () => {
     if (props.userId) {
       setisInCart(false);
-      await removeCourseToCart(props.courseId);
+      await removeCourseToCart(props.course._id);
     }
   };
 
@@ -68,18 +73,18 @@ const CardFormation = (props) => {
     >
       <span className={styles.imgCard}>
         <Image
-          src={props.img.url}
+          src={props.course.img.url}
           alt="img"
-          width={props.img.width}
-          height={props.img.height}
+          width={props.course.img.width}
+          height={props.course.img.height}
         />
       </span>
       <div className={styles.CardFormationWrapper}>
         <div ref={divRef} className={styles.formationInfo}>
-          <h3 className={styles.formationTitle}>{props.title}</h3>
+          <h3 className={styles.formationTitle}>{props.course.title}</h3>
           {/* if course is a draft, it still can be updated by ADMIN only */}
-          {props.role === "ADMIN" && !props.isPublished && (
-            <Link href={`/courses/update-course/${props.seoUrl}`}>
+          {props.role === "ADMIN" && !props.course.isPublished && (
+            <Link href={`/courses/update-course/${props.course.seoUrl}`}>
               <a className={styles.linkAdmin}>Modifier</a>
             </Link>
           )}
@@ -124,17 +129,17 @@ const CardFormation = (props) => {
 
             <div className={styles.priceContainer}>
               <div className={styles.price}>
-                {props.price}
+                {props.course.price}
                 <span>€</span>
               </div>
             </div>
           </div>
           <div className={styles.CTA}>
-            <Link href={`/courses/${props.seoUrl}`}>
-              <a className={styles.linkDetails}>Détails</a>
+            <Link href={`/courses/${props.course.seoUrl}`}>
+              <a>Détails</a>
             </Link>
             {props.isPurchased ? (
-              <button>
+              <button onClick={startCourse}>
                 {width > 350 && (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

@@ -39,6 +39,7 @@
 
 .imageWrapper {
   box-sizing: content-box;
+  cursor: pointer;
 }
 .imageWrapper > span {
   width: 60px !important;
