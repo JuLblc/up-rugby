@@ -15,7 +15,7 @@ const CartSummary = props => {
           },
           unit_amount: course.price * 100
         },
-        description: 'Lorem ipsum',
+        description: course.description,
         quantity: 1
       }
     })

@@ -19,6 +19,7 @@ const NewCourse = props => {
 
   const emptyCourse = {
     title: '',
+    description:'',
     seoUrl: '',
     overview: '',
     category: '',

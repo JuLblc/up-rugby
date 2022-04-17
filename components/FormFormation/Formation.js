@@ -134,8 +134,8 @@ const Formation = props => {
   const handleFormSubmit = async e => {
     e.preventDefault()
 
-    if (courseData.title === '') {
-      console.log('Titre ne peut pas être vide')
+    if (courseData.title === '' || courseData.description === '') {
+      console.log('Champs titre & description ne peuvent être vide')
       return
     }
 
@@ -205,7 +205,8 @@ const Formation = props => {
   }
 
   const errorMessages = {
-    valueMissing: 'Veuillez saisir le titre'
+    valueMissing: 'Veuillez saisir le titre',
+    descriptionMissing: 'Veuillez saisir la description'
   }
 
   return (
@@ -218,6 +219,18 @@ const Formation = props => {
           errorMessages={errorMessages}
           required={true}
           value={courseData.title}
+          onChange={onChange}
+          disabled={disableField}
+          styles={styles}
+        />
+
+        <FormInput
+          label='Description:'
+          type='text'
+          name='description'
+          errorMessages={errorMessages}
+          required={true}
+          value={courseData.description}
           onChange={onChange}
           disabled={disableField}
           styles={styles}
@@ -305,7 +318,10 @@ const Formation = props => {
 
         {/*  Display 'save' button until course is save in DB*/}
         {props.action === 'create' && (
-          <button type='submit' className={`${styles.button} ${styles.saveBtn}`}>
+          <button
+            type='submit'
+            className={`${styles.button} ${styles.saveBtn}`}
+          >
             Enregistrer
           </button>
         )}
@@ -315,18 +331,29 @@ const Formation = props => {
             {disableField ? (
               <>
                 {/* Fields are disabled and buttons are displayed */}
-                <button type='button' className={`${styles.button} ${styles.publishBtn}`} onClick={publishCourse}>
+                <button
+                  type='button'
+                  className={`${styles.button} ${styles.publishBtn}`}
+                  onClick={publishCourse}
+                >
                   Publier
                 </button>
 
-                <button type='button' className={`${styles.button} ${styles.modifyBtn}`} onClick={updateCourse}>
+                <button
+                  type='button'
+                  className={`${styles.button} ${styles.modifyBtn}`}
+                  onClick={updateCourse}
+                >
                   Modifier
                 </button>
               </>
             ) : (
               <>
                 {/* Fields are enabled and buttons are displayed */}
-                <button type='submit' className={`${styles.button} ${styles.saveBtn}`}>
+                <button
+                  type='submit'
+                  className={`${styles.button} ${styles.saveBtn}`}
+                >
                   Enregistrer
                 </button>
               </>
