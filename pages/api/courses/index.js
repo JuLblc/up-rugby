@@ -19,7 +19,6 @@ export default async function handler(req, res) {
           }
           getCourse(req, res, session);
           break;
-
         case "POST":
           addCourse(req, res, session);
           break;
