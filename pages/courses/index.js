@@ -78,7 +78,7 @@ export const getServerSideProps = async (context) => {
         session,
         courses: res.data.coursesFromDB
       }
-    };
+    }; 
   }
 
   const resUser = await getUser(context);
