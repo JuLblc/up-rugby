@@ -12,10 +12,10 @@ const emptyExercice = {
     width: 1528,
     height: 1004
   },
-  exercices: [
+  chapters: [
     {
-      chapter: "",
-      seoUrl: ""
+      title: "",
+      seoUrls: ['']
     }
   ],
   isPublished: false

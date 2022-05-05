@@ -10,10 +10,10 @@ const ExerciceSchema = new mongoose.Schema({
     width: Number,
     height: Number
   },
-  exercices: [
+  chapters: [
     {
-      chapter: String, //préhension pour la passe au rugby
-      url: String
+      title: String, //préhension pour la passe au rugby
+      urls: [String]
     }
   ],
   isPublished: {

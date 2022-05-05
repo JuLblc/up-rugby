@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { postExercice } from "../../apiCall/exercices";
 import { toSeoUrl } from "../../utils/utilSeoUrl";
 
+import Chapter from './Chapter'
 import FormInput from "../FormInput";
 import Upload from "../Upload";
 
@@ -18,6 +19,12 @@ const Category = (props) => {
   const onChange = (e) => {
     setExerciceData({ ...exerciceData, [e.target.name]: e.target.value });
   };
+
+  const onChangeChapter= (e, idx) => {
+    const newExerciceData = { ...exerciceData }
+    newExerciceData.chapters[idx][e.target.name] = e.target.value
+    setExerciceData(newExerciceData)
+  }
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -76,6 +83,18 @@ const Category = (props) => {
         disabled={disableField}
         acceptedFileTypes="image/*"
       /> */}
+
+      {exerciceData.chapters.map((chapter,chapterIdx) => (
+        <Chapter 
+        key={chapterIdx}
+        chapterIdx={chapterIdx}
+
+        title={chapter.title}
+        urls={chapter.seoUrls}
+        onChangeChapter={e => onChangeChapter(e, chapterIdx)}/>
+        
+
+      ))}
 
       {props.action === "create" && (
         <button type="submit" className={`${styles.button} ${styles.saveBtn}`}>

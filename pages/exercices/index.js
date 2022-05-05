@@ -6,7 +6,7 @@ import { getDeviceTypeInfo } from '../../utils/utilResponsive'
 
 import styles from '../../styles/Courses.module.css'
 
-const Exercices = (props) => {
+const Exercices = props => {
   const { width, height } = useWindowDimensions()
 
   const {
