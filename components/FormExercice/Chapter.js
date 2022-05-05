@@ -18,7 +18,6 @@ const Chapter = props => {
       {props.urls.map((url, idx) => (
         <div key={idx}>
           <FormInput
-            
             label='Video Url:'
             type='text'
             name='video'
@@ -31,6 +30,15 @@ const Chapter = props => {
           <button>Supprimer</button>
         </div>
       ))}
+
+      <button
+        className={`${styles.button} ${styles.secondaryRemoveBtn}`}
+        type='button'
+        onClick={() => props.removeChapter(props.chapterIdx)}
+        disabled={props.disableField}
+      >
+        Supprimer chap.
+      </button>
     </div>
   )
 }
