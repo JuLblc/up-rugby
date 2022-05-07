@@ -20,6 +20,11 @@ const Formation = props => {
   const [fileInput, setFileInput] = useState([])
   const [pictInput, setPictInput] = useState()
 
+  const errorMessages = {
+    titleMissing: 'Veuillez saisir le titre',
+    descriptionMissing: 'Veuillez saisir la description'
+  }
+
   const onChange = e => {
     setCourseData({ ...courseData, [e.target.name]: e.target.value })
   }
@@ -202,11 +207,6 @@ const Formation = props => {
         )
       }
     }
-  }
-
-  const errorMessages = {
-    valueMissing: 'Veuillez saisir le titre',
-    descriptionMissing: 'Veuillez saisir la description'
   }
 
   return (

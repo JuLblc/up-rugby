@@ -10,14 +10,23 @@ import Upload from '../Upload'
 
 import styles from '../../styles/Formation.module.css'
 
-const Category = props => {
+const Exercice = props => {
   const router = useRouter()
 
   const [exerciceData, setExerciceData] = useState(props.exerciceContent)
   const [disableField, setDisableField] = useState(props.disable)
 
+  const errorMessages = {
+    titleMissing: 'Veuillez saisir le titre',
+    descriptionMissing: 'Veuillez saisir la description'
+  }
+
   const onChange = e => {
     setExerciceData({ ...exerciceData, [e.target.name]: e.target.value })
+  }
+
+  const updateStateFromChild = newExerciceData => {
+    setExerciceData(newExerciceData)
   }
 
   const onChangeChapter = (e, idx) => {
@@ -30,7 +39,7 @@ const Category = props => {
     const newExerciceData = { ...exerciceData }
     newExerciceData.chapters.push({
       title: '',
-      seoUrls: ['']
+      videoUrls: ['']
     })
     setExerciceData(newExerciceData)
   }
@@ -41,17 +50,29 @@ const Category = props => {
     setExerciceData(newExerciceData)
   }
 
+  const addVideo = idx => {
+    const newExerciceData = { ...exerciceData }
+    newExerciceData.chapters[idx].lectures.push({ url: '', duration: 0 })
+    setExerciceData(newExerciceData)
+  }
+
+  // const removeVideo = (chapterIdx, videoIdx) => {
+  //   const newExerciceData = { ...exerciceData }
+  //   newExerciceData.chapters[chapterIdx].videoUrls.splice(videoIdx,1)
+  //   setExerciceData(newExerciceData)
+  // }
+
   const handleFormSubmit = async e => {
     e.preventDefault()
 
-    if (exerciceData.category === '' || exerciceData.description === '') {
+    if (exerciceData.title === '' || exerciceData.description === '') {
       console.log('Champs titre & description ne peuvent être vide')
       return
     }
 
     //Set Url for SEO
     const newExerciceData = { ...exerciceData }
-    newExerciceData.seoUrl = toSeoUrl(exerciceData.category)
+    newExerciceData.seoUrl = toSeoUrl(exerciceData.title)
 
     if (props.action === 'create') {
       const resCreate = await postExercice(newExerciceData)
@@ -67,10 +88,10 @@ const Category = props => {
       <FormInput
         label='Titre Catégorie:'
         type='text'
-        name='category'
-        // errorMessages={errorMessages}
+        name='title'
+        errorMessages={errorMessages}
         required={true}
-        value={exerciceData.category}
+        value={exerciceData.title}
         onChange={onChange}
         disabled={disableField}
         styles={styles}
@@ -80,7 +101,7 @@ const Category = props => {
         label='Description:'
         type='text'
         name='description'
-        // errorMessages={errorMessages}
+        errorMessages={errorMessages}
         required={true}
         value={exerciceData.description}
         onChange={onChange}
@@ -103,10 +124,12 @@ const Category = props => {
         <Chapter
           key={chapterIdx}
           chapterIdx={chapterIdx}
-          title={chapter.title}
-          urls={chapter.seoUrls}
+          urls={chapter.videoUrls}
+          exerciceData={exerciceData}
+          updateStateFromChild={updateStateFromChild}
           onChangeChapter={e => onChangeChapter(e, chapterIdx)}
           removeChapter={() => removeChapter(chapterIdx)}
+          addVideo={() => addVideo(chapterIdx)}
         />
       ))}
 
@@ -128,4 +151,4 @@ const Category = props => {
   )
 }
 
-export default Category
+export default Exercice

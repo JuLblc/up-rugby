@@ -42,8 +42,18 @@ const FormInput = (props) => {
       return;
     }
 
-    if (e.target.validity.valueMissing) {
-      setErrorMessage(errorMessages.valueMissing);
+    if (e.target.validity.valueMissing && e.target.name === 'title') {
+      setErrorMessage(errorMessages.titleMissing);
+      return;
+    }
+
+    if (e.target.validity.valueMissing && e.target.name === 'description') {
+      setErrorMessage(errorMessages.descriptionMissing);
+      return;
+    }
+
+    if (e.target.validity.valueMissing && e.target.name === 'url') {
+      setErrorMessage(errorMessages.urlMissing);
       return;
     }
 

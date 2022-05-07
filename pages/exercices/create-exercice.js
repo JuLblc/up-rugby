@@ -1,7 +1,7 @@
-import Category from "../../components/FormExercice/Category";
+import Exercice from "../../components/FormExercice/Exercice";
 
 const emptyExercice = {
-  category: "",
+  title: "",
   description: "",
   seoUrl: "",
   // set image by default
@@ -15,7 +15,10 @@ const emptyExercice = {
   chapters: [
     {
       title: "",
-      seoUrls: ['']
+      lectures: [{
+        url: "",
+        duration: 0,
+      }]
     }
   ],
   isPublished: false
@@ -25,7 +28,7 @@ const NewExercice = (props) => {
   return (
     <main>
       <h1>Ajouter Exercices</h1>
-      <Category
+      <Exercice
         exerciceContent={emptyExercice}
         action={"create"}
         disable={false}

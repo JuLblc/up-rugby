@@ -13,7 +13,10 @@ const ExerciceSchema = new mongoose.Schema({
   chapters: [
     {
       title: String, //préhension pour la passe au rugby
-      urls: [String]
+      urls: [{
+        url: String,
+        duration: Number,
+      }]
     }
   ],
   isPublished: {
