@@ -61,10 +61,10 @@ const getExercice = (req, res, session) => {
 const addExercice = (req, res, session) => {
   const { exercice } = req.body
 
-  // if (!session || session.user.role !== "ADMIN") {
-  //   res.status(401).json({ message: "Unauthorized" });
-  //   return;
-  // }
+  if (!session || session.user.role !== "ADMIN") {
+    res.status(401).json({ message: "Unauthorized" });
+    return;
+  }
 
   const newExercice = new Exercice(exercice)
 

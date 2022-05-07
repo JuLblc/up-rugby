@@ -1,0 +1,50 @@
+.formationInfo {
+  margin: 0px 15px;
+  overflow: hidden;
+  height: 100px;
+}
+
+.unselected {
+  height: 100px;
+  animation: closeCard 1s;
+}
+@keyframes closeCard {
+  0% {
+    height: 190px;
+  }
+  100% {
+    height: 100px;
+  }
+}
+
+.selected {
+  height: 190px;
+  animation: openCard 1s;
+}
+
+@keyframes openCard {
+  0% {
+    height: 100px;
+  }
+  100% {
+    height: 190px;
+  }
+}
+
+.CTA {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.CTA a {
+  text-decoration: none;
+  padding: 10px 0;
+  border: solid 1px #0085ff;
+  border-radius: 5px;
+  background-color: #f7fafb;
+  color: #0085ff;
+  width: 100%;
+  text-align: center;
+}

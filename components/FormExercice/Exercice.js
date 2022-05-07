@@ -15,7 +15,7 @@ const Exercice = props => {
   const router = useRouter()
 
   const [exerciceData, setExerciceData] = useState(props.exerciceContent)
-  const [disableField, setDisableField] = useState(props.disable)
+  // const [disableField, setDisableField] = useState(props.disable)
   const [pictInput, setPictInput] = useState()
 
 

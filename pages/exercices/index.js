@@ -5,7 +5,9 @@ import { getExercices } from '../../apiCall/exercices'
 
 import { useWindowDimensions } from '../../hooks/useWindowDimensions'
 import { getDeviceTypeInfo } from '../../utils/utilResponsive'
-import CardFormation from '../../components/CardFormation'
+import { getLecturesQty, getLecturesTime } from '../../utils/utilCourses'
+
+import CardExercice from '../../components/CardExercice'
 
 import styles from '../../styles/Courses.module.css'
 
@@ -36,13 +38,16 @@ const Exercices = props => {
             <a>Ajouter une catégorie d'exercices</a>
           </Link>
         )}
-
-        {props.exercices.map(exercice => 
-           (
-           <div key={exercice._id}>Titre: {exercice.title}</div>
-          )
-       )}
       </div>
+      
+      {props.exercices.map(exercice => (
+        <CardExercice
+          key={exercice._id}
+          exercice={exercice}
+          lecturesQty={getLecturesQty(exercice)}
+          lecturesTimes={getLecturesTime(exercice)}
+        />
+      ))}
     </main>
   )
 }

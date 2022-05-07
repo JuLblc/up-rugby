@@ -43,8 +43,7 @@ const Courses = (props) => {
         )}
       </div>
 
-      {props.courses.map((course) => {
-        return (
+      {props.courses.map((course) => 
           <CardFormation
             key={course._id}
             course={course}
@@ -58,8 +57,7 @@ const Courses = (props) => {
             )}
             isInCart={checkPurchaseStatus(props.cart, course._id)}
           />
-        );
-      })}
+        )}
     </main>
   );
 };
