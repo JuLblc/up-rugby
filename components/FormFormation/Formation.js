@@ -265,7 +265,7 @@ const Formation = props => {
 
         <Upload
           label='Ajouter'
-          courseData={courseData}
+          data={courseData}
           remove={removePict}
           updateStateFromChild={updateStateFromChild}
           onChange={onChangeUploadPict}
@@ -307,7 +307,7 @@ const Formation = props => {
 
         <Upload
           label='Ajouter'
-          courseData={courseData}
+          data={courseData}
           remove={removeAttachement}
           updateStateFromChild={updateStateFromChild}
           onChange={onChangeUploadFile}

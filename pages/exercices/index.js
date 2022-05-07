@@ -1,8 +1,11 @@
 import Link from 'next/link'
+import { getSession } from 'next-auth/react'
+
 import { getExercices } from '../../apiCall/exercices'
 
 import { useWindowDimensions } from '../../hooks/useWindowDimensions'
 import { getDeviceTypeInfo } from '../../utils/utilResponsive'
+import CardFormation from '../../components/CardFormation'
 
 import styles from '../../styles/Courses.module.css'
 
@@ -28,9 +31,17 @@ const Exercices = props => {
           nisl vulputate, iaculis tortor quis, convallis ipsum. Duis consequat
           fringilla condimentum.
         </p>
-        <Link href='/exercices/create-exercice'>
-          <a>Ajouter une catégorie d'exercices</a>
-        </Link>
+        {props.session?.user.role === 'ADMIN' && (
+          <Link href='/exercices/create-exercice'>
+            <a>Ajouter une catégorie d'exercices</a>
+          </Link>
+        )}
+
+        {props.exercices.map(exercice => 
+           (
+           <div key={exercice._id}>Titre: {exercice.title}</div>
+          )
+       )}
       </div>
     </main>
   )
@@ -38,12 +49,15 @@ const Exercices = props => {
 
 export default Exercices
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async context => {
+  const session = await getSession(context)
+
   const res = await getExercices()
   const exercices = res.data.exercicesFromDB
 
   return {
     props: {
+      session,
       exercices
     }
   }

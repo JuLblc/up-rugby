@@ -6,11 +6,11 @@ const emptyExercice = {
   seoUrl: "",
   // set image by default
   img: {
-    fileName: "logo.png",
+    fileName: "bloc-1331.jpg",
     url:
-      "https://res.cloudinary.com/dwznpgbcd/image/upload/v1646205285/uprugby-uploads-pict-formation/logo.png.png",
-    width: 1528,
-    height: 1004
+    "https://res.cloudinary.com/dwznpgbcd/image/upload/v1644428743/uprugby-uploads-pict-formation/bloc-1331.jpg.jpg",
+    width: 768,
+    height: 450
   },
   chapters: [
     {

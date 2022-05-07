@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 
 import { postExercice } from '../../apiCall/exercices'
 import { toSeoUrl } from '../../utils/utilSeoUrl'
+import { postUpload } from '../../apiCall/uploads'
 
 import Chapter from './Chapter'
 import FormInput from '../FormInput'
@@ -15,6 +16,8 @@ const Exercice = props => {
 
   const [exerciceData, setExerciceData] = useState(props.exerciceContent)
   const [disableField, setDisableField] = useState(props.disable)
+  const [pictInput, setPictInput] = useState()
+
 
   const errorMessages = {
     titleMissing: 'Veuillez saisir le titre',
@@ -59,18 +62,43 @@ const Exercice = props => {
     setExerciceData(newExerciceData)
   }
 
+  const onChangeUploadPict = picture => {
+    setPictInput(picture)
+  }
+
+  const removePict = () => {
+    //Remove from exerciceData
+    const newExerciceData = { ...exerciceData }
+    newExerciceData.img = {}
+    setExerciceData(newExerciceData)
+
+    setPictInput(undefined)
+  }
+
   const handleFormSubmit = async e => {
     e.preventDefault()
-
-    if (exerciceData.title === '' || exerciceData.description === '') {
-      console.log('Champs titre & description ne peuvent être vide')
-      return
-    }
 
     //Set Url for SEO
     const newExerciceData = { ...exerciceData }
     newExerciceData.seoUrl = toSeoUrl(exerciceData.title)
 
+    //1. Picture upload to Cloudinary & get secure urls
+    if (pictInput) {
+      const formDataPict = new FormData()
+      formDataPict.append('file', pictInput)
+
+      const resUploadPict = await postUpload(
+        formDataPict,
+        '/uprugby-uploads-pict-exercice',
+        'image'
+      )
+
+      newExerciceData.img.url = resUploadPict.data.url
+      newExerciceData.img.width = resUploadPict.data.width
+      newExerciceData.img.height = resUploadPict.data.height
+    }
+
+    //2. Save in DB
     if (props.action === 'create') {
       const resCreate = await postExercice(newExerciceData)
       console.log('resCreate: ', resCreate)
@@ -106,16 +134,16 @@ const Exercice = props => {
         styles={styles}
       />
 
-      {/* <Upload
+      <Upload
         label="Ajouter"
-        courseData={exerciceData}
-        // remove={removePict}
-        // updateStateFromChild={updateStateFromChild}
-        // onChange={onChangeUploadPict}
+        data={exerciceData}
+        remove={removePict}
+        updateStateFromChild={updateStateFromChild}
+        onChange={onChangeUploadPict}
         uploadFileName="picture"
-        disabled={disableField}
+        // disabled={disableField}
         acceptedFileTypes="image/*"
-      /> */}
+      />
 
       {exerciceData.chapters.map((chapter, chapterIdx) => (
         <Chapter

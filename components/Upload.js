@@ -19,17 +19,17 @@ const Upload = (props) => {
 
     props.onChange(fileInput.files[0]);
 
-    const newCourseData = { ...props.courseData };
+    const newData = { ...props.data };
 
     if (props.uploadFileName === "file") {
-      newCourseData.attachements.push({ fileName: fileInput.files[0].name });
+      newData.attachements.push({ fileName: fileInput.files[0].name });
     }
 
     if (props.uploadFileName === "picture") {
-      newCourseData.img.fileName = fileInput.files[0].name;
+      newData.img.fileName = fileInput.files[0].name;
     }
 
-    props.updateStateFromChild(newCourseData);
+    props.updateStateFromChild(newData);
 
     event.target.value = null;
   };
@@ -44,9 +44,9 @@ const Upload = (props) => {
       {/* Display exisiting picture */}
       {props.uploadFileName === "picture" && <span>Photo: </span>}
 
-      {props.uploadFileName === "picture" && props.courseData.img.fileName && (
+      {props.uploadFileName === "picture" && props.data.img.fileName && (
         <div className={styles.itemContainer}>
-          <p>{props.courseData.img.fileName}</p>
+          <p>{props.data.img.fileName}</p>
           <button
             className={styles.primatyRemoveBtn}
             type="button"
@@ -60,10 +60,10 @@ const Upload = (props) => {
 
       {/* Display exisiting attachements */}
       {props.uploadFileName === "file" &&
-        (props.courseData.attachements.length === 0 ? (
+        (props.data.attachements.length === 0 ? (
           <span>Fichier: </span>
         ) : (
-          props.courseData.attachements.map((file, idx) => (
+          props.data.attachements.map((file, idx) => (
             <div key={file.fileName} className={styles.itemContainer}>
               <span>Fichier: </span>
               <p>{file.fileName}</p>

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const ExerciceSchema = new mongoose.Schema({
-  category: String, //Attraper-passer
+  title: String, //Attraper-passer
   description: String,
   seoUrl: String,
   img: {
