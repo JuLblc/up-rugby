@@ -38,7 +38,7 @@ const Exercices = props => {
 
 export default Exercices
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   const res = await getExercices()
   const exercices = res.data.exercicesFromDB
 

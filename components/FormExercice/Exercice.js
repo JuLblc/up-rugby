@@ -38,8 +38,11 @@ const Exercice = props => {
   const addChapter = () => {
     const newExerciceData = { ...exerciceData }
     newExerciceData.chapters.push({
-      title: '',
-      videoUrls: ['']
+      title: "",
+      lectures: [{
+        url: "",
+        duration: 0,
+      }]
     })
     setExerciceData(newExerciceData)
   }
@@ -55,12 +58,6 @@ const Exercice = props => {
     newExerciceData.chapters[idx].lectures.push({ url: '', duration: 0 })
     setExerciceData(newExerciceData)
   }
-
-  // const removeVideo = (chapterIdx, videoIdx) => {
-  //   const newExerciceData = { ...exerciceData }
-  //   newExerciceData.chapters[chapterIdx].videoUrls.splice(videoIdx,1)
-  //   setExerciceData(newExerciceData)
-  // }
 
   const handleFormSubmit = async e => {
     e.preventDefault()
@@ -93,7 +90,7 @@ const Exercice = props => {
         required={true}
         value={exerciceData.title}
         onChange={onChange}
-        disabled={disableField}
+        // disabled={disableField}
         styles={styles}
       />
 
@@ -105,7 +102,7 @@ const Exercice = props => {
         required={true}
         value={exerciceData.description}
         onChange={onChange}
-        disabled={disableField}
+        // disabled={disableField}
         styles={styles}
       />
 
@@ -130,6 +127,7 @@ const Exercice = props => {
           onChangeChapter={e => onChangeChapter(e, chapterIdx)}
           removeChapter={() => removeChapter(chapterIdx)}
           addVideo={() => addVideo(chapterIdx)}
+          // disableField={disableField}
         />
       ))}
 
@@ -137,7 +135,7 @@ const Exercice = props => {
         className={`${styles.button} ${styles.addBtn}`}
         type='button'
         onClick={addChapter}
-        disabled={disableField}
+        // disabled={disableField}
       >
         Ajouter Chapitre
       </button>

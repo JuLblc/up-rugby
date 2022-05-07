@@ -31,7 +31,7 @@ const NewExercice = (props) => {
       <Exercice
         exerciceContent={emptyExercice}
         action={"create"}
-        disable={false}
+        // disable={false}
       />
     </main>
   );

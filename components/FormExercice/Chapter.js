@@ -14,7 +14,6 @@ const Chapter = props => {
   }
 
   const removeVideo = (chapterIdx, videoIdx) => {
-    console.log('params: ', chapterIdx, videoIdx)
     const newExerciceData = { ...props.exerciceData }
     newExerciceData.chapters[chapterIdx].lectures.splice(videoIdx, 1)
 
@@ -50,31 +49,9 @@ const Chapter = props => {
             chapter={props.exerciceData.chapters[props.chapterIdx]}
             onChangeVideo={e => onChangeVideo(e, props.chapterIdx, lectureIdx)}
             removeVideo={() => removeVideo(props.chapterIdx, lectureIdx)}
-            disableField={props.disableField}
+            // disableField={props.disableField}
             getDuration={getDuration}
           />
-          
-          // <div key={idx}>
-          //   <FormInput
-          //     label='Video Url:'
-          //     type='text'
-          //     name='url'
-          //     value={props.exerciceData.chapters[props.chapterIdx]['name'] || ''}
-          //     onChange={e => props.onChangeChapter(e, props.chapterIdx)}
-          //     // disabled={props.disableField}
-          //     styles={styles}
-          //   />
-          //   {idx !== props.urls.length - 1 && (
-          //   <button
-          //     className={`${styles.button} ${styles.secondaryRemoveBtn}`}
-          //     type='button'
-          //     onClick={() => removeVideo(props.chapterIdx, idx)}
-          //     disabled={props.disableField}
-          //   >
-          //     Supprimer
-          //   </button>
-          // )}
-          // </div>
         )
       )}
 
@@ -82,7 +59,7 @@ const Chapter = props => {
         className={`${styles.button} ${styles.primaryAddBtn}`}
         type='button'
         onClick={() => props.addVideo(props.chapterIdx)}
-        disabled={props.disableField}
+        // disabled={props.disableField}
       >
         Ajouter
       </button>
@@ -91,7 +68,7 @@ const Chapter = props => {
         className={`${styles.button} ${styles.secondaryRemoveBtn}`}
         type='button'
         onClick={() => props.removeChapter(props.chapterIdx)}
-        disabled={props.disableField}
+        // disabled={props.disableField}
       >
         Supprimer chap.
       </button>

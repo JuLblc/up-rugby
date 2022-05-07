@@ -24,6 +24,7 @@ const Lecture = props => {
         }
         required
         pattern='^https://player.vimeo.com/video/[0-9]+$'
+        // disabled={props.disableField}
         styles={styles}
       />
 
