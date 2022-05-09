@@ -15,10 +15,9 @@ const emptyExercice = {
   chapters: [
     {
       title: "",
-      lectures: [{
-        url: "",
-        duration: 0,
-      }]
+      // lectures: [{ url: '', duration: 0 }]
+      lectures: [],
+      subchapters:[]
     }
   ],
   isPublished: false

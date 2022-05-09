@@ -35,7 +35,7 @@ const Lecture = props => {
   ]
 
   return (
-    <div className={styles.lectureContaier}>
+    <div className={styles.lectureContainer}>
       {inputs.map(input => (
         <FormInput
           key={input.id}

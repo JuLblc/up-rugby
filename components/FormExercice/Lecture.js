@@ -9,7 +9,7 @@ const Lecture = props => {
   }
 
   return (
-    <div className={styles.lectureContaier}>
+    <div className={styles.lectureContainer}>
       <FormInput
         label='Video Url:'
         type='text'

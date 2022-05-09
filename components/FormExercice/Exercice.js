@@ -18,7 +18,6 @@ const Exercice = props => {
   // const [disableField, setDisableField] = useState(props.disable)
   const [pictInput, setPictInput] = useState()
 
-
   const errorMessages = {
     titleMissing: 'Veuillez saisir le titre',
     descriptionMissing: 'Veuillez saisir la description'
@@ -41,11 +40,9 @@ const Exercice = props => {
   const addChapter = () => {
     const newExerciceData = { ...exerciceData }
     newExerciceData.chapters.push({
-      title: "",
-      lectures: [{
-        url: "",
-        duration: 0,
-      }]
+      title: '',
+      lectures: [],
+      subchapters: []
     })
     setExerciceData(newExerciceData)
   }
@@ -59,6 +56,16 @@ const Exercice = props => {
   const addVideo = idx => {
     const newExerciceData = { ...exerciceData }
     newExerciceData.chapters[idx].lectures.push({ url: '', duration: 0 })
+    setExerciceData(newExerciceData)
+  }
+
+  const addSubChapter = idx => {
+    const newExerciceData = { ...exerciceData }
+    newExerciceData.chapters[idx].subchapters.push({
+      title: '',
+      lectures: [],
+      subchapters: []
+    })
     setExerciceData(newExerciceData)
   }
 
@@ -135,14 +142,14 @@ const Exercice = props => {
       />
 
       <Upload
-        label="Ajouter"
+        label='Ajouter'
         data={exerciceData}
         remove={removePict}
         updateStateFromChild={updateStateFromChild}
         onChange={onChangeUploadPict}
-        uploadFileName="picture"
+        uploadFileName='picture'
         // disabled={disableField}
-        acceptedFileTypes="image/*"
+        acceptedFileTypes='image/*'
       />
 
       {exerciceData.chapters.map((chapter, chapterIdx) => (
@@ -155,6 +162,7 @@ const Exercice = props => {
           onChangeChapter={e => onChangeChapter(e, chapterIdx)}
           removeChapter={() => removeChapter(chapterIdx)}
           addVideo={() => addVideo(chapterIdx)}
+          addSubChapter={() => addSubChapter(chapterIdx)}
           // disableField={disableField}
         />
       ))}
