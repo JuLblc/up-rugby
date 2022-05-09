@@ -167,6 +167,7 @@ const Profile = props => {
 
   return (
     <main className={styles.profile}>
+    
       <h1>Mon compte</h1>
 
       <div className={styles.profileContainer}>

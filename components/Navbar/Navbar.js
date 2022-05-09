@@ -1,17 +1,17 @@
 import Link from "next/link";
 import Image from "next/image";
-import logo from "../public/logo.png";
+import logo from "../../public/logo.png";
 
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useWindowDimensions } from "../hooks/useWindowDimensions";
-import { useScrollPosition } from "../hooks/useScrollPosition";
-import { useScrollY } from "../hooks/useScrollY";
-import { getDeviceTypeInfo } from "../utils/utilResponsive";
+import { useWindowDimensions } from "../../hooks/useWindowDimensions";
+import { useScrollPosition } from "../../hooks/useScrollPosition";
+import { useScrollY } from "../../hooks/useScrollY";
+import { getDeviceTypeInfo } from "../../utils/utilResponsive";
 
 import Burger from "./Burger";
 
-import styles from "../styles/Navbar.module.css";
+import styles from "../../styles/Navbar.module.css";
 
 const Navbar = () => {
   const { data: session, status } = useSession();

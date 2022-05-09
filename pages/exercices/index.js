@@ -7,7 +7,7 @@ import { useWindowDimensions } from '../../hooks/useWindowDimensions'
 import { getDeviceTypeInfo } from '../../utils/utilResponsive'
 import { getLecturesQty, getLecturesTime } from '../../utils/utilCourses'
 
-import CardExercice from '../../components/CardExercice'
+import CardExercice from '../../components/Exercice/CardExercice'
 
 import styles from '../../styles/Courses.module.css'
 

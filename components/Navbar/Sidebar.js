@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 
-import styles from '../styles/Sidebar.module.css'
+import styles from '../../styles/Sidebar.module.css'
 
 const Sidebar = props => {
   return (

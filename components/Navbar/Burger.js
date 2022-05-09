@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import styles from '../styles/Burger.module.css'
+import styles from '../../styles/Burger.module.css'
 
 import Sidebar from './Sidebar'
 

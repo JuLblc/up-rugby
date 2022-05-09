@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 import Loading from '../components/Loading'
-import Navbar from '../components/Navbar'
+import Navbar from '../components/Navbar/Navbar'
 import Footer from '../components/Footer'
 
 

@@ -2,13 +2,13 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useRef } from 'react'
 
-import styles from '../styles/CardFormation.module.css'
-import stylesExercice from '../styles/CardExercice.module.css'
+import styles from '../../styles/CardFormation.module.css'
+import stylesExercice from '../../styles/CardExercice.module.css'
 
 
-import { useWindowDimensions } from '../hooks/useWindowDimensions'
+import { useWindowDimensions } from '../../hooks/useWindowDimensions'
 
-import { getDeviceTypeInfo } from '../utils/utilResponsive'
+import { getDeviceTypeInfo } from '../../utils/utilResponsive'
 
 const CardExercice = props => {
   const { width, height } = useWindowDimensions()

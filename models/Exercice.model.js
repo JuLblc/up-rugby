@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const ExerciceSchema = new mongoose.Schema({
-  title: String, //Attraper-passer
+  title: String, //Circulation offensive
   description: String,
   seoUrl: String,
   img: {
@@ -12,7 +12,7 @@ const ExerciceSchema = new mongoose.Schema({
   },
   chapters: [
     {
-      title: String, //préhension pour la passe au rugby
+      title: String, //Joueur en avance
       lectures: [{
         url: String,
         duration: Number,
