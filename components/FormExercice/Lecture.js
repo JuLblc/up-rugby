@@ -8,14 +8,26 @@ const Lecture = props => {
     vimeo: "Cette vidéo n'est pas répertoriée sur Vimeo"
   }
 
+  const handleRemove = e => {
+    //Condition pour définir quelle fn remove appliquer
+    console.log('remove')
+    // props.removeVideo(e, props.chapterIdx, props.lectureIdx)
+    props.removeVideoSubChapter(
+      e,
+      props.chapterIdx,
+      props.subchapterIdx,
+      props.lectureIdx
+    )
+  }
+
   return (
     <div className={styles.lectureContainer}>
       <FormInput
         label='Video Url:'
         type='text'
         name='url'
-        chapterIdx={props.chapterIdx}
-        lectureIdx={props.lectureIdx}
+        // chapterIdx={props.chapterIdx}
+        // lectureIdx={props.lectureIdx}
         getDuration={props.getDuration}
         errorMessages={errorMessages}
         value={props.chapter.lectures[props.lectureIdx].url || ''}
@@ -31,7 +43,8 @@ const Lecture = props => {
       <button
         className={`${styles.button} ${styles.primatyRemoveBtn}`}
         type='button'
-        onClick={e => props.removeVideo(e, props.chapterIdx, props.lectureIdx)}
+        // onClick={e => props.removeVideo(e, props.chapterIdx, props.lectureIdx)}
+        onClick={handleRemove}
         // disabled={props.disableField}
       >
         Supp. vidéo

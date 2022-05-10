@@ -43,6 +43,13 @@ const Chapter = props => {
     props.updateStateFromChild(newExerciceData)
   }
 
+  const addVideoToSubChapter = (chapterIdx, subchapterIdx) => {
+    const newExerciceData = { ...props.exerciceData }
+    newExerciceData.chapters[chapterIdx].subchapters[subchapterIdx].lectures.push({ url: '', duration: 0 })
+    props.updateStateFromChild(newExerciceData)
+  }
+
+
   return (
     <div className={styles.chapterContainer}>
       <FormInput
@@ -76,9 +83,12 @@ const Chapter = props => {
             key={subchapterIdx}
             chapterIdx={props.chapterIdx}
             subchapterIdx={subchapterIdx}
+            exerciceData={props.exerciceData}
             chapter={props.exerciceData.chapters[props.chapterIdx]}
+            updateStateFromChild={props.updateStateFromChild}
             onChangeSubChapter={e => onChangeSubChapter(e, props.chapterIdx, subchapterIdx)}
             removeSubChapter={() => removeSubChapter(props.chapterIdx, subchapterIdx)}
+            addVideoToSubChapter={() => addVideoToSubChapter(props.chapterIdx, subchapterIdx)}
             // disableField={props.disableField}
           />
         )
