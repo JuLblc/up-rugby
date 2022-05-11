@@ -8,16 +8,32 @@ const Lecture = props => {
     vimeo: "Cette vidéo n'est pas répertoriée sur Vimeo"
   }
 
+  const handleChange = e => {
+    if (props.subchapterIdx !== undefined) {
+      props.onChangeVideoSubChapter(
+        e,
+        props.chapterIdx,
+        props.subchapterIdx,
+        props.lectureIdx
+      )
+      return
+    }
+
+    props.onChangeVideo(e, props.chapterIdx, props.lectureIdx)
+  }
+
   const handleRemove = e => {
-    //Condition pour définir quelle fn remove appliquer
-    console.log('remove')
-    // props.removeVideo(e, props.chapterIdx, props.lectureIdx)
-    props.removeVideoSubChapter(
-      e,
-      props.chapterIdx,
-      props.subchapterIdx,
-      props.lectureIdx
-    )
+    if (props.subchapterIdx !== undefined) {
+      props.removeVideoSubChapter(
+        e,
+        props.chapterIdx,
+        props.subchapterIdx,
+        props.lectureIdx
+      )
+      return
+    }
+
+    props.removeVideo(e, props.chapterIdx, props.lectureIdx)
   }
 
   return (
@@ -26,14 +42,13 @@ const Lecture = props => {
         label='Video Url:'
         type='text'
         name='url'
-        // chapterIdx={props.chapterIdx}
-        // lectureIdx={props.lectureIdx}
+        chapterIdx={props.chapterIdx}
+        lectureIdx={props.lectureIdx}
+        subchapterIdx={props.subchapterIdx}
         getDuration={props.getDuration}
         errorMessages={errorMessages}
         value={props.chapter.lectures[props.lectureIdx].url || ''}
-        onChange={e =>
-          props.onChangeVideo(e, props.chapterIdx, props.lectureIdx)
-        }
+        onChange={handleChange}
         required
         pattern='^https://player.vimeo.com/video/[0-9]+$'
         // disabled={props.disableField}
@@ -43,7 +58,6 @@ const Lecture = props => {
       <button
         className={`${styles.button} ${styles.primatyRemoveBtn}`}
         type='button'
-        // onClick={e => props.removeVideo(e, props.chapterIdx, props.lectureIdx)}
         onClick={handleRemove}
         // disabled={props.disableField}
       >

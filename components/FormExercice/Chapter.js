@@ -16,8 +16,9 @@ const Chapter = props => {
   const onChangeSubChapter = (e, chapterIdx, subchapterIdx) => {
     console.log('e: ', e.target)
     const newExerciceData = { ...props.exerciceData }
-    newExerciceData.chapters[chapterIdx].subchapters[subchapterIdx][e.target.name] =
-      e.target.value
+    newExerciceData.chapters[chapterIdx].subchapters[subchapterIdx][
+      e.target.name
+    ] = e.target.value
     props.updateStateFromChild(newExerciceData)
   }
 
@@ -35,20 +36,31 @@ const Chapter = props => {
     props.updateStateFromChild(newExerciceData)
   }
 
-  const getDuration = (duration, chapterIdx, lectureIdx) => {
+  const getDuration = (duration, chapterIdx, lectureIdx, subchapterIdx) => {
     const newExerciceData = { ...props.exerciceData }
+
+    if (subchapterIdx !== undefined) {
+      newExerciceData.chapters[chapterIdx].subchapters[subchapterIdx].lectures[
+        lectureIdx
+      ].duration = duration
+      props.updateStateFromChild(newExerciceData)
+      return
+    }
+
     newExerciceData.chapters[chapterIdx].lectures[
       lectureIdx
     ].duration = duration
     props.updateStateFromChild(newExerciceData)
+
   }
 
   const addVideoToSubChapter = (chapterIdx, subchapterIdx) => {
     const newExerciceData = { ...props.exerciceData }
-    newExerciceData.chapters[chapterIdx].subchapters[subchapterIdx].lectures.push({ url: '', duration: 0 })
+    newExerciceData.chapters[chapterIdx].subchapters[
+      subchapterIdx
+    ].lectures.push({ url: '', duration: 0 })
     props.updateStateFromChild(newExerciceData)
   }
-
 
   return (
     <div className={styles.chapterContainer}>
@@ -86,10 +98,17 @@ const Chapter = props => {
             exerciceData={props.exerciceData}
             chapter={props.exerciceData.chapters[props.chapterIdx]}
             updateStateFromChild={props.updateStateFromChild}
-            onChangeSubChapter={e => onChangeSubChapter(e, props.chapterIdx, subchapterIdx)}
-            removeSubChapter={() => removeSubChapter(props.chapterIdx, subchapterIdx)}
-            addVideoToSubChapter={() => addVideoToSubChapter(props.chapterIdx, subchapterIdx)}
+            onChangeSubChapter={e =>
+              onChangeSubChapter(e, props.chapterIdx, subchapterIdx)
+            }
+            removeSubChapter={() =>
+              removeSubChapter(props.chapterIdx, subchapterIdx)
+            }
+            addVideoToSubChapter={() =>
+              addVideoToSubChapter(props.chapterIdx, subchapterIdx)
+            }
             // disableField={props.disableField}
+            getDuration={getDuration}
           />
         )
       )}

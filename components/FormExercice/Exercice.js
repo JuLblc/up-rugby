@@ -28,7 +28,6 @@ const Exercice = props => {
   }
 
   const updateStateFromChild = newExerciceData => {
-    console.log('updateStateFromChild')
     setExerciceData(newExerciceData)
   }
 
