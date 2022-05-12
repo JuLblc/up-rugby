@@ -109,9 +109,9 @@ const Exercice = props => {
     if (props.action === 'create') {
       const resCreate = await postExercice(newExerciceData)
       console.log('resCreate: ', resCreate)
-      // router.push(
-      //   `/courses/update-exercice/${resCreate.data.newExerciceFromDB.seoUrl}`
-      // );
+      router.push(
+        `/exercices/update-exercice/${resCreate.data.newExerciceFromDB.seoUrl}`
+      );
     }
   }
 

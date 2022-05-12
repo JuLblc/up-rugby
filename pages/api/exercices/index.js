@@ -40,7 +40,12 @@ export default async function handler (req, res) {
 }
 
 const getAllExercices = (req, res, session) => {
-  Exercice.find({})
+  const cond = {};
+  if (!session || session.user.role !== "ADMIN") {
+    cond.isPublished = true;
+  }
+
+  Exercice.find(cond)
     .then(exercicesFromDB => {
       res.status(200).json({ exercicesFromDB })
     })
@@ -50,10 +55,13 @@ const getAllExercices = (req, res, session) => {
 const getExercice = (req, res, session) => {
   const seoUrl = req.query.url
   const cond = { seoUrl }
+  if (!session || session.user.role !== "ADMIN") {
+    cond.isPublished = true;
+  }
 
   Exercice.find(cond)
     .then(exerciceFromDB => {
-      res.status(200).json({ exerciceFromDB })
+      res.status(200).json({ exerciceFromDB : exerciceFromDB[0]})
     })
     .catch(err => console.log('err : ', err))
 }

@@ -57,7 +57,7 @@ export default Exercices
 export const getServerSideProps = async context => {
   const session = await getSession(context)
 
-  const res = await getExercices()
+  const res = await getExercices(context)
   const exercices = res.data.exercicesFromDB
 
   return {

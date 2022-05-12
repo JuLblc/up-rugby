@@ -52,7 +52,7 @@ export const getServerSideProps = async context => {
   }
 
   const res = await getCourses(context, context.query.courseUrl)
-
+  
   return {
     props: {
       session,
