@@ -33,7 +33,7 @@ const Login = (props) => {
       placeholder: "Email",
       errorMessages: {
         patternMismatch: null,
-        valueMissing: "Veuillez saisir votre adresse Email",
+        emailMissing: "Veuillez saisir votre adresse Email",
         valid: "Merci de saisir une adresse valide"
       },
       required: true,
@@ -64,7 +64,7 @@ const Login = (props) => {
       errorMessages: {
         patternMismatch:
           "Le mot de passe doit contenir au moins 6 caractères, un chiffre, une lettre et un caractère spécial",
-        valueMissing: "Veuillez saisir votre mot de passe",
+        passwordMissing: "Veuillez saisir votre mot de passe",
         valid: null
       },
       pattern: pattern,

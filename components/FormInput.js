@@ -42,6 +42,16 @@ const FormInput = props => {
       return
     }
 
+    if (e.target.validity.valueMissing && e.target.name === 'email') {
+      setErrorMessage(errorMessages.emailMissing)
+      return
+    }
+
+    if (e.target.validity.valueMissing && e.target.name === 'password') {
+      setErrorMessage(errorMessages.passwordMissing)
+      return
+    }
+
     if (e.target.validity.valueMissing && e.target.name === 'title') {
       setErrorMessage(errorMessages.titleMissing)
       return
