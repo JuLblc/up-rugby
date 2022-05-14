@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 
-import { postExercice } from '../../apiCall/exercices'
+import { postExercice, putExercice } from '../../apiCall/exercices'
 import { toSeoUrl } from '../../utils/utilSeoUrl'
 import { postUpload } from '../../apiCall/uploads'
 
@@ -15,7 +15,7 @@ const Exercice = props => {
   const router = useRouter()
 
   const [exerciceData, setExerciceData] = useState(props.exerciceContent)
-  // const [disableField, setDisableField] = useState(props.disable)
+  const [disableField, setDisableField] = useState(props.disable)
   const [pictInput, setPictInput] = useState()
 
   const errorMessages = {
@@ -82,6 +82,10 @@ const Exercice = props => {
     setPictInput(undefined)
   }
 
+  const updateExercice = () => {
+    setDisableField(false)
+  }
+
   const handleFormSubmit = async e => {
     e.preventDefault()
 
@@ -108,10 +112,17 @@ const Exercice = props => {
     //2. Save in DB
     if (props.action === 'create') {
       const resCreate = await postExercice(newExerciceData)
-      console.log('resCreate: ', resCreate)
       router.push(
         `/exercices/update-exercice/${resCreate.data.newExerciceFromDB.seoUrl}`
-      );
+      )
+    }
+
+    if (props.action === 'update') {
+      const resUpdate = await putExercice(newExerciceData)
+
+      router.push(
+        `/exercices/update-exercice/${resUpdate.data.updatedExerciceFromDB.seoUrl}`
+      )
     }
   }
 
@@ -180,6 +191,49 @@ const Exercice = props => {
         <button type='submit' className={`${styles.button} ${styles.saveBtn}`}>
           Enregistrer
         </button>
+      )}
+
+      {props.action === 'update' && (
+        <>
+          {disableField ? (
+            <>
+              {/* Fields are disabled and buttons are displayed */}
+              <button
+                type='button'
+                className={`${styles.button} ${styles.publishBtn}`}
+                // onClick={publishCourse}
+              >
+                Publier
+              </button>
+
+              <button
+                type='button'
+                className={`${styles.button} ${styles.modifyBtn}`}
+                onClick={updateExercice}
+              >
+                Modifier
+              </button>
+            </>
+          ) : (
+            <>
+              {/* Fields are enabled and buttons are displayed */}
+              <button
+                type='submit'
+                className={`${styles.button} ${styles.saveBtn}`}
+              >
+                Enregistrer
+              </button>
+            </>
+          )}
+
+          <button
+            className={`${styles.button} ${styles.removeBtn}`}
+            type='button'
+            // onClick={deleteCourse}
+          >
+            Supprimer formation
+          </button>
+        </>
       )}
     </form>
   )

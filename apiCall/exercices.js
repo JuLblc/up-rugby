@@ -15,3 +15,7 @@ export const getExercices = async (context, url) => {
 export const postExercice = async (exerciceData) => {
   return axios.post("/api/exercices", { exercice: exerciceData });
 };
+
+export const putExercice = async updatedExercice => {
+  return axios.put('/api/exercices', { exercice: updatedExercice })
+}

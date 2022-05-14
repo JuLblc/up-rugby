@@ -84,6 +84,21 @@ const addExercice = (req, res, session) => {
     .catch(err => console.log('err : ', err))
 }
 
-const updateExercice = (req, res, session) => {}
+
+const updateExercice = (req, res, session) => {
+  if (!session || session.user.role !== "ADMIN") {
+    res.status(401).json({ message: "Unauthorized" });
+    return;
+  }
+
+  const id = req.body.exercice._id;
+  const updatedExercice = req.body.exercice;
+
+  Exercice.findByIdAndUpdate(id, updatedExercice, { new: true })
+    .then((updatedExerciceFromDB) => {
+      res.status(200).json({ updatedExerciceFromDB });
+    })
+    .catch((err) => console.log("err : ", err));
+};
 
 const deleteExercice = (req, res, session) => {}

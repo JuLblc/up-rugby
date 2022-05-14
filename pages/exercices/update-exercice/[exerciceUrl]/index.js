@@ -27,7 +27,7 @@ const UpdateExerciceDetails = props => {
           <Exercice
             exerciceContent={props.exercice}
             action={'update'}
-            // disable={true}
+            disable={true}
           />
         </>
       )}
