@@ -70,7 +70,7 @@ const Chapter = props => {
         name='title'
         value={props.exerciceData.chapters[props.chapterIdx].title || ''}
         onChange={e => props.onChangeChapter(e, props.chapterIdx)}
-        // disabled={props.disableField}
+        disabled={props.disableField}
         styles={styles}
       />
 
@@ -83,7 +83,7 @@ const Chapter = props => {
             chapter={props.exerciceData.chapters[props.chapterIdx]}
             onChangeVideo={e => onChangeVideo(e, props.chapterIdx, lectureIdx)}
             removeVideo={() => removeVideo(props.chapterIdx, lectureIdx)}
-            // disableField={props.disableField}
+            disableField={props.disableField}
             getDuration={getDuration}
           />
         )
@@ -107,7 +107,7 @@ const Chapter = props => {
             addVideoToSubChapter={() =>
               addVideoToSubChapter(props.chapterIdx, subchapterIdx)
             }
-            // disableField={props.disableField}
+            disableField={props.disableField}
             getDuration={getDuration}
           />
         )
@@ -118,7 +118,7 @@ const Chapter = props => {
         className={`${styles.button} ${styles.primaryAddBtn}`}
         type='button'
         onClick={() => props.addSubChapter(props.chapterIdx)}
-        // disabled={props.disableField}
+        disabled={props.disableField}
       >
         Ajouter sous-chap.
       </button>
@@ -127,7 +127,7 @@ const Chapter = props => {
         className={`${styles.button} ${styles.primaryAddBtn}`}
         type='button'
         onClick={() => props.addVideo(props.chapterIdx)}
-        // disabled={props.disableField}
+        disabled={props.disableField}
       >
         Ajouter Video
       </button>
@@ -136,7 +136,7 @@ const Chapter = props => {
         className={`${styles.button} ${styles.secondaryRemoveBtn}`}
         type='button'
         onClick={() => props.removeChapter(props.chapterIdx)}
-        // disabled={props.disableField}
+        disabled={props.disableField}
       >
         Supprimer chap.
       </button>

@@ -37,7 +37,7 @@ const SubChapter = props => {
         onChange={e =>
           props.onChangeSubChapter(e, props.chapterIdx, props.subchapterIdx)
         }
-        // disabled={props.disableField}
+        disabled={props.disableField}
         styles={styles}
       />
 
@@ -57,7 +57,7 @@ const SubChapter = props => {
                 lectureIdx
               )
             }
-            // disableField={props.disableField}
+            disableField={props.disableField}
             getDuration={props.getDuration}
             />
         )
@@ -69,7 +69,7 @@ const SubChapter = props => {
         onClick={e =>
           props.addVideoToSubChapter(e, props.chapterIdx, props.subchapterIdx)
         }
-        // disabled={props.disableField}
+        disabled={props.disableField}
       >
         Ajouter Video
       </button>
@@ -80,7 +80,7 @@ const SubChapter = props => {
         onClick={e =>
           props.removeSubChapter(e, props.chapterIdx, props.subchapterIdx)
         }
-        // disabled={props.disableField}
+        disabled={props.disableField}
       >
         Supp. sous-chap.
       </button>

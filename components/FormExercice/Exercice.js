@@ -136,7 +136,7 @@ const Exercice = props => {
         required={true}
         value={exerciceData.title}
         onChange={onChange}
-        // disabled={disableField}
+        disabled={disableField}
         styles={styles}
       />
 
@@ -148,7 +148,7 @@ const Exercice = props => {
         required={true}
         value={exerciceData.description}
         onChange={onChange}
-        // disabled={disableField}
+        disabled={disableField}
         styles={styles}
       />
 
@@ -159,7 +159,7 @@ const Exercice = props => {
         updateStateFromChild={updateStateFromChild}
         onChange={onChangeUploadPict}
         uploadFileName='picture'
-        // disabled={disableField}
+        disabled={disableField}
         acceptedFileTypes='image/*'
       />
 
@@ -174,7 +174,7 @@ const Exercice = props => {
           removeChapter={() => removeChapter(chapterIdx)}
           addVideo={() => addVideo(chapterIdx)}
           addSubChapter={() => addSubChapter(chapterIdx)}
-          // disableField={disableField}
+          disableField={disableField}
         />
       ))}
 
@@ -182,7 +182,7 @@ const Exercice = props => {
         className={`${styles.button} ${styles.addBtn}`}
         type='button'
         onClick={addChapter}
-        // disabled={disableField}
+        disabled={disableField}
       >
         Ajouter Chapitre
       </button>

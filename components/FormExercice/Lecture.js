@@ -51,7 +51,7 @@ const Lecture = props => {
         onChange={handleChange}
         required
         pattern='^https://player.vimeo.com/video/[0-9]+$'
-        // disabled={props.disableField}
+        disabled={props.disableField}
         styles={styles}
       />
 
@@ -59,7 +59,7 @@ const Lecture = props => {
         className={`${styles.button} ${styles.primatyRemoveBtn}`}
         type='button'
         onClick={handleRemove}
-        // disabled={props.disableField}
+        disabled={props.disableField}
       >
         Supp. vidéo
       </button>

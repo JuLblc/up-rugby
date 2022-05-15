@@ -5,7 +5,6 @@ import { useState, useRef } from 'react'
 import styles from '../../styles/CardFormation.module.css'
 import stylesExercice from '../../styles/CardExercice.module.css'
 
-
 import { useWindowDimensions } from '../../hooks/useWindowDimensions'
 
 import { getDeviceTypeInfo } from '../../utils/utilResponsive'
@@ -53,8 +52,12 @@ const CardExercice = props => {
       <div className={styles.CardFormationWrapper}>
         <div ref={divRef} className={stylesExercice.formationInfo}>
           <h3 className={styles.formationTitle}>{props.exercice.title}</h3>
-          {/* if course is a draft, it still can be updated by ADMIN only */}
-          {/* Code to add here */}
+          {/* Can be updated by ADMIN only */}
+          {props.role === 'ADMIN' && (
+            <Link href={`/exercices/update-exercice/${props.exercice.seoUrl}`}>
+              <a className={styles.linkAdmin}>Modifier</a>
+            </Link>
+          )}
           <p className={styles.formationDescription}>
             {props.exercice.description}
           </p>
