@@ -19,3 +19,7 @@ export const postExercice = async (exerciceData) => {
 export const putExercice = async updatedExercice => {
   return axios.put('/api/exercices', { exercice: updatedExercice })
 }
+
+export const removeExercice = async deletedExercice => {
+  axios.delete('/api/exercices', { data: deletedExercice._id })
+}

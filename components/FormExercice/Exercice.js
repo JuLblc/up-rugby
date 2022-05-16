@@ -1,7 +1,12 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 
-import { postExercice, putExercice } from '../../apiCall/exercices'
+import {
+  postExercice,
+  putExercice,
+  removeExercice
+} from '../../apiCall/exercices'
+
 import { toSeoUrl } from '../../utils/utilSeoUrl'
 import { postUpload } from '../../apiCall/uploads'
 
@@ -82,8 +87,22 @@ const Exercice = props => {
     setPictInput(undefined)
   }
 
+  const deleteExercice = async () => {
+    await removeExercice(exerciceData)
+    router.push('/exercices')
+  }
+
   const updateExercice = () => {
     setDisableField(false)
+  }
+
+  const publishExercice = async () => {
+    const newExerciceData = { ...exerciceData }
+    newExerciceData.isPublished = true
+    setExerciceData(newExerciceData)
+
+    await putExercice(newExerciceData)
+    router.push('/exercices')
   }
 
   const handleFormSubmit = async e => {
@@ -201,7 +220,7 @@ const Exercice = props => {
               <button
                 type='button'
                 className={`${styles.button} ${styles.publishBtn}`}
-                // onClick={publishCourse}
+                onClick={publishExercice}
               >
                 Publier
               </button>
@@ -229,7 +248,7 @@ const Exercice = props => {
           <button
             className={`${styles.button} ${styles.removeBtn}`}
             type='button'
-            // onClick={deleteCourse}
+            onClick={deleteExercice}
           >
             Supprimer formation
           </button>

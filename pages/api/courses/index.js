@@ -114,7 +114,7 @@ const deleteCourse = (req, res, session) => {
 
   Course.findByIdAndDelete(id)
     .then(() => {
-      res.status(200).json({ message: "Formation supprimer" });
+      res.status(200).json({ message: "Formation supprimée" });
     })
     .catch((err) => console.log("err : ", err));
 };

@@ -101,4 +101,17 @@ const updateExercice = (req, res, session) => {
     .catch(err => console.log('err : ', err))
 }
 
-const deleteExercice = (req, res, session) => {}
+const deleteExercice = (req, res, session) => {
+  if (!session || session.user.role !== "ADMIN") {
+    res.status(401).json({ message: "Unauthorized" });
+    return;
+  }
+
+  const id = req.body;
+
+  Exercice.findByIdAndDelete(id)
+    .then(() => {
+      res.status(200).json({ message: "Exercice supprimé" });
+    })
+    .catch((err) => console.log("err : ", err));
+};
