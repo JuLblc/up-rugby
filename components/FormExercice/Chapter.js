@@ -6,7 +6,6 @@ import styles from '../../styles/Formation.module.css'
 
 const Chapter = props => {
   const onChangeVideo = (e, chapterIdx, lectureIdx) => {
-    console.log('e: ', e.target)
     const newExerciceData = { ...props.exerciceData }
     newExerciceData.chapters[chapterIdx].lectures[lectureIdx][e.target.name] =
       e.target.value
@@ -14,7 +13,6 @@ const Chapter = props => {
   }
 
   const onChangeSubChapter = (e, chapterIdx, subchapterIdx) => {
-    console.log('e: ', e.target)
     const newExerciceData = { ...props.exerciceData }
     newExerciceData.chapters[chapterIdx].subchapters[subchapterIdx][
       e.target.name
@@ -36,8 +34,17 @@ const Chapter = props => {
     props.updateStateFromChild(newExerciceData)
   }
 
-  const getDuration = (duration, chapterIdx, lectureIdx, subchapterIdx) => {
+  const getDuration = (duration, chapterIdx, lectureIdx, subchapterIdx, infrachapterIdx) => {
     const newExerciceData = { ...props.exerciceData }
+
+
+    if (infrachapterIdx !== undefined) {
+      newExerciceData.chapters[chapterIdx].subchapters[subchapterIdx].infrachapters[infrachapterIdx].lectures[
+        lectureIdx
+      ].duration = duration
+      props.updateStateFromChild(newExerciceData)
+      return
+    }
 
     if (subchapterIdx !== undefined) {
       newExerciceData.chapters[chapterIdx].subchapters[subchapterIdx].lectures[
@@ -59,6 +66,16 @@ const Chapter = props => {
     newExerciceData.chapters[chapterIdx].subchapters[
       subchapterIdx
     ].lectures.push({ url: '', duration: 0 })
+    props.updateStateFromChild(newExerciceData)
+  }
+
+  const addInfraChapter = (chapterIdx, subchapterIdx) => {
+    const newExerciceData = { ...props.exerciceData }
+    newExerciceData.chapters[chapterIdx].subchapters[subchapterIdx].infrachapters.push({
+      title: '',
+      lectures: [],
+      subchapters: []
+    })
     props.updateStateFromChild(newExerciceData)
   }
 
@@ -107,13 +124,13 @@ const Chapter = props => {
             addVideoToSubChapter={() =>
               addVideoToSubChapter(props.chapterIdx, subchapterIdx)
             }
+            addInfraChapter={() => addInfraChapter(props.chapterIdx, subchapterIdx)}
             disableField={props.disableField}
             getDuration={getDuration}
           />
         )
       )}
 
-      {/* <div> */}
       <button
         className={`${styles.button} ${styles.primaryAddBtn}`}
         type='button'
@@ -140,7 +157,6 @@ const Chapter = props => {
       >
         Supprimer chap.
       </button>
-      {/* </div> */}
     </div>
   )
 }

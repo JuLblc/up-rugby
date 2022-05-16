@@ -28,7 +28,7 @@ const ExerciceSchema = new mongoose.Schema({
             duration: Number,
           }],
           // Level 4
-          subchapters:[
+          infrachapters:[
             {
               title: String, //2vs1
               lectures: [{

@@ -22,6 +22,7 @@ const FormInput = props => {
     chapterIdx,
     lectureIdx,
     subchapterIdx,
+    infrachapterIdx,
     getDuration,
     styles,
     ...inputProps
@@ -86,7 +87,15 @@ const FormInput = props => {
         .then(response => {
           let durationToUpperMin = Math.ceil(response.data.duration / 60)
           // getDuration(durationToUpperMin, props.chapterIdx, props.lectureIdx);
-          if (props.subchapterIdx !== undefined) {
+          if (props.infrachapterIdx !== undefined) {
+            getDuration(
+              durationToUpperMin,
+              props.chapterIdx,
+              props.lectureIdx,
+              props.subchapterIdx,
+              props.infrachapterIdx
+            )
+          } else if (props.subchapterIdx !== undefined) {
             getDuration(
               durationToUpperMin,
               props.chapterIdx,
@@ -98,6 +107,7 @@ const FormInput = props => {
           }
         })
         .catch(err => {
+          console.log(err)
           setError(true)
           setErrorMessage(errorMessages.vimeo)
         })

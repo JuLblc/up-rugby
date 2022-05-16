@@ -9,6 +9,17 @@ const Lecture = props => {
   }
 
   const handleChange = e => {
+    if (props.infrachapterIdx !== undefined) {
+      props.onChangeVideoInfraChapter(
+        e,
+        props.chapterIdx,
+        props.subchapterIdx,
+        props.infrachapterIdx,
+        props.lectureIdx
+      )
+      return
+    }
+
     if (props.subchapterIdx !== undefined) {
       props.onChangeVideoSubChapter(
         e,
@@ -23,6 +34,17 @@ const Lecture = props => {
   }
 
   const handleRemove = e => {
+    if (props.infrachapterIdx !== undefined) {
+      props.removeVideoInfraChapter(
+        e,
+        props.chapterIdx,
+        props.subchapterIdx,
+        props.infrachapterIdx,
+        props.lectureIdx
+      )
+      return
+    }
+
     if (props.subchapterIdx !== undefined) {
       props.removeVideoSubChapter(
         e,
@@ -45,6 +67,7 @@ const Lecture = props => {
         chapterIdx={props.chapterIdx}
         lectureIdx={props.lectureIdx}
         subchapterIdx={props.subchapterIdx}
+        infrachapterIdx={props.infrachapterIdx}
         getDuration={props.getDuration}
         errorMessages={errorMessages}
         value={props.chapter.lectures[props.lectureIdx].url || ''}
