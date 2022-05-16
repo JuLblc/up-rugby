@@ -3,10 +3,14 @@ import stylesHome from '../../styles/Home.module.css'
 
 import Link from 'next/link'
 
+import CardExercice from '../Exercice/CardExercice'
+
 import { useWindowDimensions } from '../../hooks/useWindowDimensions'
 import { getDeviceTypeInfo } from '../../utils/utilResponsive'
 
-const HomeLastExercices = () => {
+import { getLecturesQty, getLecturesTime } from '../../utils/utilCourses'
+
+const HomeLastExercices = props => {
   const { width, height } = useWindowDimensions()
 
   const {
@@ -17,7 +21,9 @@ const HomeLastExercices = () => {
   } = getDeviceTypeInfo(width, height)
 
   return (
-    <section className={`${stylesHome.support} ${stylesHome.sectionLastExercices }`}>
+    <section
+      className={`${stylesCourses.cardFormationContainer} ${stylesHome.sectionHomeLogged}`}
+    >
       <div
         className={`${stylesCourses.intro} ${!isMobile &&
           stylesCourses.introNotMobile}`}
@@ -37,6 +43,15 @@ const HomeLastExercices = () => {
           </Link>
         </div>
       </div>
+
+      {props.exercices.map(exercice => (
+        <CardExercice
+          key={exercice._id}
+          exercice={exercice}
+          lecturesQty={getLecturesQty(exercice)}
+          lecturesTimes={getLecturesTime(exercice)}
+        />
+      ))}
     </section>
   )
 }

@@ -40,12 +40,13 @@ export default async function handler (req, res) {
 }
 
 const getAllExercices = (req, res, session) => {
-  const cond = {};
-  if (!session || session.user.role !== "ADMIN") {
-    cond.isPublished = true;
+  const cond = {}
+  if (!session || session.user.role !== 'ADMIN') {
+    cond.isPublished = true
   }
 
   Exercice.find(cond)
+    .sort({ _id: -1 }) //sort collection in descending order based on the date of insertion
     .then(exercicesFromDB => {
       res.status(200).json({ exercicesFromDB })
     })
@@ -55,13 +56,13 @@ const getAllExercices = (req, res, session) => {
 const getExercice = (req, res, session) => {
   const seoUrl = req.query.url
   const cond = { seoUrl }
-  if (!session || session.user.role !== "ADMIN") {
-    cond.isPublished = true;
+  if (!session || session.user.role !== 'ADMIN') {
+    cond.isPublished = true
   }
 
   Exercice.find(cond)
     .then(exerciceFromDB => {
-      res.status(200).json({ exerciceFromDB : exerciceFromDB[0]})
+      res.status(200).json({ exerciceFromDB: exerciceFromDB[0] })
     })
     .catch(err => console.log('err : ', err))
 }
@@ -69,9 +70,9 @@ const getExercice = (req, res, session) => {
 const addExercice = (req, res, session) => {
   const { exercice } = req.body
 
-  if (!session || session.user.role !== "ADMIN") {
-    res.status(401).json({ message: "Unauthorized" });
-    return;
+  if (!session || session.user.role !== 'ADMIN') {
+    res.status(401).json({ message: 'Unauthorized' })
+    return
   }
 
   const newExercice = new Exercice(exercice)
@@ -84,21 +85,20 @@ const addExercice = (req, res, session) => {
     .catch(err => console.log('err : ', err))
 }
 
-
 const updateExercice = (req, res, session) => {
-  if (!session || session.user.role !== "ADMIN") {
-    res.status(401).json({ message: "Unauthorized" });
-    return;
+  if (!session || session.user.role !== 'ADMIN') {
+    res.status(401).json({ message: 'Unauthorized' })
+    return
   }
 
-  const id = req.body.exercice._id;
-  const updatedExercice = req.body.exercice;
+  const id = req.body.exercice._id
+  const updatedExercice = req.body.exercice
 
   Exercice.findByIdAndUpdate(id, updatedExercice, { new: true })
-    .then((updatedExerciceFromDB) => {
-      res.status(200).json({ updatedExerciceFromDB });
+    .then(updatedExerciceFromDB => {
+      res.status(200).json({ updatedExerciceFromDB })
     })
-    .catch((err) => console.log("err : ", err));
-};
+    .catch(err => console.log('err : ', err))
+}
 
 const deleteExercice = (req, res, session) => {}
