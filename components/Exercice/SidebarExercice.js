@@ -4,51 +4,33 @@ const SidebarExercice = props => {
   const { width } = useWindowDimensions()
 
   return (
-    <ul>
-      <li>
-        <h4>Attraper-Passer</h4>
-        <ul>
-          <li>Exercices sur la préhension pour la passe au rugby</li>
-          <li>Exercices sur la proprioception</li>
-          <li>Motricité et coordination - Skills rugby</li>
-        </ul>
-      </li>
-      <li>
-        <h4>Circulation offensive</h4>
-        <ul>
-          <li>Joueurs en retard</li>
-          <li>
-            La cellule d'action
-            <ul>
-              <li>
-                Exercice sur le duel au rugby
-                <ul>
-                  <li>Duel de face avec vitesse exercices rugby</li>
-                  <li>Duel de face à l'arrêt</li>
-                  <li>Duel de côté - Exercices vidéos rugby</li>
-                </ul>
+    <ul className={props.styles.exerciceTitleUl}>
+      {props.exercices.map(exercice => (
+        <li key={exercice._id} className={props.styles.exerciceTitleLi}>
+          <div className={props.styles.exerciceTitle}>
+            <p >{exercice.title}</p>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              viewBox='0 0 24 24'
+              width='24'
+              height='24'
+            >
+              <path fill='none' d='M0 0h24v24H0z' />
+              <path
+                d='M12 13.172l4.95-4.95 1.414 1.414L12 16 5.636 9.636 7.05 8.222z'
+                fill='rgba(128,128,128,1)'
+              />
+            </svg>
+          </div>
+          <ul className={props.styles.chapterTitleUl} >
+            {exercice.chapters.map(chapter => (
+              <li key={chapter._id} className={props.styles.chapterTitleLi}>
+                {chapter.title}
               </li>
-              <li>L'action du +1 et du -1 ou -2</li>
-              <li>Le joueur axial dans la famille vie du ballon</li>
-            </ul>
-          </li>
-          <li>
-            Joueurs en avance
-            <ul>
-              <li>Occuper l'espace et se démarquer</li>
-              <li>
-                La gestion de surnombre
-                <ul>
-                  <li>2vs1</li>
-                  <li>3vs2</li>
-                </ul>
-              </li>
-              <li>Les égalités numériques</li>
-            </ul>
-          </li>
-          <li>Famille axe</li>
-        </ul>
-      </li>
+            ))}
+          </ul>
+        </li>
+      ))}
     </ul>
   )
 }

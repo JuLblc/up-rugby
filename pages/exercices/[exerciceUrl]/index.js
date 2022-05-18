@@ -4,11 +4,13 @@ import styles from '../../../styles/ExerciceDetails.module.css'
 
 const ExerciceDetails = props => {
   return (
-    <main className={styles.profile}>
-      <div className={styles.profileContainer}>
+    <main className={styles.exercice}>
+      <h1>Exercices</h1>
+      <div className={styles.exerciceContainer}>
         <SidebarExercice
           // li={li}
           styles={styles}
+          exercices={props.exercices}
           // handleDisplay={handleDisplay}
         />
       </div>
