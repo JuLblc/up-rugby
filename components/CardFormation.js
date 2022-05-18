@@ -49,7 +49,6 @@ const CardFormation = props => {
   const addCourseToCart = async () => {
     if (props.userId) {
       setisInCart(true)
-      console.log()
       await putCourseToCart(props.course._id)
       return
     }
@@ -85,7 +84,8 @@ const CardFormation = props => {
         <div ref={divRef} className={styles.formationInfo}>
           <h3 className={styles.formationTitle}>{props.course.title}</h3>
           {/* if course is a draft, it still can be updated by ADMIN only */}
-          {props.role === 'ADMIN' && !props.course.isPublished && (
+          {/* {props.role === 'ADMIN' && !props.course.isPublished && ( */}
+          {props.role === 'ADMIN' && (
             <Link href={`/courses/update-course/${props.course.seoUrl}`}>
               <a className={styles.linkAdmin}>Modifier</a>
             </Link>

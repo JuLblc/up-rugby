@@ -139,11 +139,6 @@ const Formation = props => {
   const handleFormSubmit = async e => {
     e.preventDefault()
 
-    if (courseData.title === '' || courseData.description === '') {
-      console.log('Champs titre & description ne peuvent être vide')
-      return
-    }
-
     //Set Url for SEO
     const newCourseData = { ...courseData }
     newCourseData.seoUrl = toSeoUrl(courseData.title)
@@ -192,7 +187,6 @@ const Formation = props => {
     }
 
     //3. Save in DB
-    if (!courseData.isPublished) {
       if (props.action === 'create') {
         const resCreate = await postCourse(newCourseData)
         router.push(
@@ -206,7 +200,6 @@ const Formation = props => {
           `/courses/update-course/${resUpdate.data.updatedCourseFromDB.seoUrl}`
         )
       }
-    }
   }
 
   return (
@@ -329,8 +322,10 @@ const Formation = props => {
         {props.action === 'update' && (
           <>
             {disableField ? (
-              <>
+              <span>
                 {/* Fields are disabled and buttons are displayed */}
+                {!courseData.isPublished && (
+
                 <button
                   type='button'
                   className={`${styles.button} ${styles.publishBtn}`}
@@ -338,6 +333,7 @@ const Formation = props => {
                 >
                   Publier
                 </button>
+                )}
 
                 <button
                   type='button'
@@ -346,7 +342,7 @@ const Formation = props => {
                 >
                   Modifier
                 </button>
-              </>
+              </span>
             ) : (
               <>
                 {/* Fields are enabled and buttons are displayed */}
