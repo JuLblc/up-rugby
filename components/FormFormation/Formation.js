@@ -187,19 +187,19 @@ const Formation = props => {
     }
 
     //3. Save in DB
-      if (props.action === 'create') {
-        const resCreate = await postCourse(newCourseData)
-        router.push(
-          `/courses/update-course/${resCreate.data.newCourseFromDB.seoUrl}`
-        )
-      }
+    if (props.action === 'create') {
+      const resCreate = await postCourse(newCourseData)
+      router.push(
+        `/courses/update-course/${resCreate.data.newCourseFromDB.seoUrl}`
+      )
+    }
 
-      if (props.action === 'update') {
-        const resUpdate = await putCourse(newCourseData)
-        router.push(
-          `/courses/update-course/${resUpdate.data.updatedCourseFromDB.seoUrl}`
-        )
-      }
+    if (props.action === 'update') {
+      const resUpdate = await putCourse(newCourseData)
+      router.push(
+        `/courses/update-course/${resUpdate.data.updatedCourseFromDB.seoUrl}`
+      )
+    }
   }
 
   return (
@@ -325,14 +325,13 @@ const Formation = props => {
               <span>
                 {/* Fields are disabled and buttons are displayed */}
                 {!courseData.isPublished && (
-
-                <button
-                  type='button'
-                  className={`${styles.button} ${styles.publishBtn}`}
-                  onClick={publishCourse}
-                >
-                  Publier
-                </button>
+                  <button
+                    type='button'
+                    className={`${styles.button} ${styles.publishBtn}`}
+                    onClick={publishCourse}
+                  >
+                    Publier
+                  </button>
                 )}
 
                 <button

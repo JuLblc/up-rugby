@@ -48,6 +48,7 @@ const HomeLastExercices = props => {
         <CardExercice
           key={exercice._id}
           exercice={exercice}
+          role={props.session?.user.role}
           lecturesQty={getLecturesQty(exercice)}
           lecturesTimes={getLecturesTime(exercice)}
         />
