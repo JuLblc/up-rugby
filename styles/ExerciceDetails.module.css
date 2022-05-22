@@ -12,12 +12,9 @@
   }
 }
 
-.exerciceTitle {
-  background-color: #deebfa;
-  border: solid 1px #deebfa;
+.exerciceTitle {  
   border-bottom-right-radius: 10px;
   border-top-right-radius: 10px;
-  color: #0085ff;
   font-size: 1.5em;
   height: 2em;
   padding-left: 15px;
@@ -26,6 +23,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.exerciceTitleSelected{
+  background-color: #deebfa;
+  border: solid 1px #deebfa;
+  color: #0085ff;
 }
 
 .exerciceMenuUl {
