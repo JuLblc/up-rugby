@@ -4,10 +4,41 @@ import ExerciceMenu from './ExerciceMenu'
 const SidebarExercice = props => {
   const [exercices, setExercices] = useState(props.exercices)
 
-  const handleDisplay = id => {
+  const handleTitleDisplay = id => {
     const newExercices = [...exercices]
-    newExercices.map(exercice => exercice._id === id ? exercice.selected = !exercice.selected : exercice.selected = false)
+
+    newExercices.map(exercice => {
+      exercice.chapters.map(chapter => (chapter.selected = false))
+      if (exercice._id === id) {
+        exercice.selected = !exercice.selected
+        exercice.chapters[0].selected = true
+        return
+      }
+      if (exercice._id !== id) {
+        exercice.selected = false
+        return
+      }
+    })
+
     setExercices(newExercices)
+  }
+
+  const handleChapterDisplay = (exerciceId, chapterId) => {
+    const newExercices = [...exercices]
+
+    newExercices.map(exercice => {
+      if (exercice._id === exerciceId) {
+        exercice.chapters.map(chapter => {
+          chapter.selected = false
+          if (chapter._id === chapterId) {
+            chapter.selected = true
+          }
+        })
+      }
+    })
+
+    setExercices(newExercices)
+
   }
 
   return (
@@ -17,7 +48,8 @@ const SidebarExercice = props => {
           key={exercice._id}
           styles={props.styles}
           exercice={exercice}
-          handleDisplay={handleDisplay}
+          handleTitleDisplay={handleTitleDisplay}
+          handleChapterDisplay={handleChapterDisplay}
         />
       ))}
     </ul>

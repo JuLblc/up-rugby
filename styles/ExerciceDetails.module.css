@@ -55,11 +55,18 @@
   display: none;
 }
 
-/* .chapterTitleUl {
-  display: none;
-} */
+.chapterTitleUl {
+  padding-left: 20px;
+}
 
 .chapterTitleLi {
   list-style-type: none;
   line-height: 2em;
+  padding-left: 10px;
+  border-left: solid 1px lightgrey;
+}
+
+.chapterTitleLiSelected {
+  border-left: solid 3px #0085ff !important;
+  font-weight: 500;
 }

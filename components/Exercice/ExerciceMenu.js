@@ -7,7 +7,7 @@ const ExerciceMenu = props => {
         id={props.exercice._id}
         className={`${props.styles.exerciceTitle} ${props.exercice.selected &&
           props.styles.exerciceTitleSelected}`}
-        onClick={() => props.handleDisplay(props.exercice._id)}
+        onClick={() => props.handleTitleDisplay(props.exercice._id)}
       >
         <p>{props.exercice.title}</p>
         {!props.exercice.selected && (
@@ -36,7 +36,7 @@ const ExerciceMenu = props => {
         )}
       </div>
       {props.exercice.selected && (
-        <ChapterMenu styles={props.styles} exercice={props.exercice} />
+        <ChapterMenu styles={props.styles} exercice={props.exercice} handleChapterDisplay={props.handleChapterDisplay}/>
       )}
     </li>
   )
