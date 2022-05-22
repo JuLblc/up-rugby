@@ -54,50 +54,49 @@ const ExerciceDetails = props => {
         />
 
         <div className={styles.videoContainer}>
-          {exercices.map(exercice => {
-            if (exercice.selected) {
-              return exercice.chapters.map(chapter => {
-                
-                if (chapter.selected) {
-                  if (chapter.subchapters.length > 0) {
-                    return chapter.subchapters.map(subchapter => (
-                      //Subchapter
-                      <div key={subchapter.title}>
-                        <span>{subchapter.title}</span>
-
-                        {/* If Subchapter has Infrachapter */}
-                        {subchapter.infrachapters.length > 0 &&
-                          subchapter.infrachapters.map(infrachapter => (
-                            <div key={infrachapter.title}>
-                              <span>{infrachapter.title}</span>
-                              {infrachapter.lectures.map(lecture => (
-                                <div key={lecture.url}>{lecture.url}</div>
-                              ))}
-                            </div>
-                          ))}
-
-                        {/* Subchapter */}
-                        {subchapter.infrachapters.length > 0 &&
-                          subchapter.lectures.map(lecture => (
-                            <div key={lecture.url}>{lecture.url}</div>
-                          ))}
-                      </div>
-                    ))
-                  }
-
-                  //{chapter.selected && ()}
-                  return (
-                    <>
-                      <div key={chapter.title}>{chapter.title}</div>
-                      {chapter.lectures.map(lecture => (
-                        <div key={lecture.url}>{lecture.url}</div>
+          {exercices.map(exercice => (
+            <>
+              {exercice.selected &&
+                exercice.chapters.map(chapter => (
+                  <>
+                    {/* Chapter has subchapters */}
+                    {chapter.selected &&
+                      chapter.subchapters.length > 0 &&
+                      chapter.subchapters.map(subchapter => (
+                        //Subchapter
+                        <div key={subchapter.title}>
+                          <span>{subchapter.title}</span>
+                          {/* Subchapter has Infrachapter */}
+                          {subchapter.infrachapters.length > 0 &&
+                            subchapter.infrachapters.map(infrachapter => (
+                              <div key={infrachapter.title}>
+                                <span>{infrachapter.title}</span>
+                                {infrachapter.lectures.map(lecture => (
+                                  <div key={lecture.url}>{lecture.url}</div>
+                                ))}
+                              </div>
+                            ))}
+                          {/* Subchapter */}
+                          {subchapter.infrachapters.length > 0 &&
+                            subchapter.lectures.map(lecture => (
+                              <div key={lecture.url}>{lecture.url}</div>
+                            ))}
+                        </div>
                       ))}
-                    </>
-                  )
-                }
-              })
-            }
-          })}
+
+                    {/* Chapter has NO subchapters */}
+                    {chapter.selected && chapter.subchapters.length === 0 && (
+                      <>
+                        <div key={chapter.title}>{chapter.title}</div>
+                        {chapter.lectures.map(lecture => (
+                          <div key={lecture.url}>{lecture.url}</div>
+                        ))}
+                      </>
+                    )}
+                  </>
+                ))}
+            </>
+          ))}
         </div>
       </div>
     </main>
