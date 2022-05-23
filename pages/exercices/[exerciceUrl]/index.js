@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import React from 'react';
 import { getExercices } from '../../../apiCall/exercices'
 import SidebarExercice from '../../../components/Exercice/SidebarExercice'
 import styles from '../../../styles/ExerciceDetails.module.css'
@@ -55,22 +56,22 @@ const ExerciceDetails = props => {
 
         <div className={styles.videoContainer}>
           {exercices.map(exercice => (
-            <>
+            <React.Fragment key={exercice._id}>
               {exercice.selected &&
                 exercice.chapters.map(chapter => (
-                  <>
+                  <React.Fragment  key={chapter._id}>
                     {/* Chapter has subchapters */}
                     {chapter.selected &&
                       chapter.subchapters.length > 0 &&
                       chapter.subchapters.map(subchapter => (
                         //Subchapter
                         <div key={subchapter.title}>
-                          <span>{subchapter.title}</span>
+                          <h4>{subchapter.title}</h4>
                           {/* Subchapter has Infrachapter */}
                           {subchapter.infrachapters.length > 0 &&
                             subchapter.infrachapters.map(infrachapter => (
                               <div key={infrachapter.title}>
-                                <span>{infrachapter.title}</span>
+                                <h5>{infrachapter.title}</h5>
                                 {infrachapter.lectures.map(lecture => (
                                   <div key={lecture.url}>{lecture.url}</div>
                                 ))}
@@ -87,15 +88,15 @@ const ExerciceDetails = props => {
                     {/* Chapter has NO subchapters */}
                     {chapter.selected && chapter.subchapters.length === 0 && (
                       <>
-                        <div key={chapter.title}>{chapter.title}</div>
+                        {/* <div key={chapter.title}>{chapter.title}</div> */}
                         {chapter.lectures.map(lecture => (
                           <div key={lecture.url}>{lecture.url}</div>
                         ))}
                       </>
                     )}
-                  </>
+                  </React.Fragment>
                 ))}
-            </>
+            </React.Fragment>
           ))}
         </div>
       </div>
