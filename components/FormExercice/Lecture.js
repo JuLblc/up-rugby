@@ -4,7 +4,7 @@ import styles from '../../styles/Formation.module.css'
 const Lecture = props => {
   const errorMessages = {
     urlMissing: 'Veuillez saisir le lien de la vidéo',
-    patternMismatch: `Le lien doit commencer par "https://player.vimeo.com/video/" et se terminer par l'id de la vidéo`,
+    patternMismatch: `Le lien doit commencer par "https://www.youtube.com/watch?v=" et se terminer par l'id de la vidéo`,
     vimeo: "Cette vidéo n'est pas répertoriée sur Vimeo"
   }
 
@@ -74,6 +74,7 @@ const Lecture = props => {
         onChange={handleChange}
         required
         pattern='^https://player.vimeo.com/video/[0-9]+$'
+        // pattern='^https://www\.youtube\.com/watch[a-zA-Z0-9=?_&]+$'
         disabled={props.disableField}
         styles={styles}
       />

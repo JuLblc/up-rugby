@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import {getVimeoVideo} from '../apiCall/vimeo'
 
 const FormInput = props => {
   const [focused, setFocused] = useState(false)
@@ -34,7 +34,7 @@ const FormInput = props => {
     setError(false)
   }, [reset])
 
-  const handleOnBlur = e => {
+  const handleOnBlur = async e => {
     setFocused(true)
 
     !e.target.validity.valid ? setError(true) : setError(false)
@@ -78,39 +78,40 @@ const FormInput = props => {
     if (e.target.name === 'url') {
       let vimeoId = e.target.value.substring(31, e.target.value.length)
 
-      axios
-        .get(`https://api.vimeo.com/videos/${vimeoId}`, {
-          headers: {
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_VIMEO_TOKEN}`
-          }
-        })
-        .then(response => {
-          let durationToUpperMin = Math.ceil(response.data.duration / 60)
-          // getDuration(durationToUpperMin, props.chapterIdx, props.lectureIdx);
-          if (props.infrachapterIdx !== undefined) {
-            getDuration(
-              durationToUpperMin,
-              props.chapterIdx,
-              props.lectureIdx,
-              props.subchapterIdx,
-              props.infrachapterIdx
-            )
-          } else if (props.subchapterIdx !== undefined) {
-            getDuration(
-              durationToUpperMin,
-              props.chapterIdx,
-              props.lectureIdx,
-              props.subchapterIdx
-            )
-          } else {
-            getDuration(durationToUpperMin, props.chapterIdx, props.lectureIdx)
-          }
-        })
-        .catch(err => {
-          console.log(err)
-          setError(true)
-          setErrorMessage(errorMessages.vimeo)
-        })
+      let resVimeo = await getVimeoVideo(vimeoId)
+      console.log('resVimeo: ', resVimeo)
+
+      if (!resVimeo){
+        setError(true)
+        setErrorMessage(errorMessages.vimeo)
+        return
+      }
+
+      let durationToUpperMin = Math.ceil(resVimeo.data.duration / 60)
+
+      // if (props.infrachapterIdx !== undefined) {
+      //   getDuration(
+      //     durationToUpperMin,
+      //     props.chapterIdx,
+      //     props.lectureIdx,
+      //     props.subchapterIdx,
+      //     props.infrachapterIdx
+      //   )
+      //   return
+      // } 
+      
+      // if (props.subchapterIdx !== undefined) {
+      //   getDuration(
+      //     durationToUpperMin,
+      //     props.chapterIdx,
+      //     props.lectureIdx,
+      //     props.subchapterIdx
+      //   )
+      //   return
+      // } 
+      
+      getDuration(durationToUpperMin, props.chapterIdx, props.lectureIdx)
+      
     }
   }
 
