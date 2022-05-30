@@ -65,22 +65,22 @@ const ExerciceDetails = props => {
                       chapter.subchapters.length > 0 &&
                       chapter.subchapters.map(subchapter => (
                         //Subchapter
-                        <div key={subchapter.title}>
+                        <div key={subchapter._id}>
                           <h4>{subchapter.title}</h4>
                           {/* Subchapter has Infrachapter */}
                           {subchapter.infrachapters.length > 0 &&
                             subchapter.infrachapters.map(infrachapter => (
-                              <div key={infrachapter.title}>
+                              <div key={infrachapter._id}>
                                 <h5>{infrachapter.title}</h5>
                                 {infrachapter.lectures.map(lecture => (
-                                  <div key={lecture.url}>{lecture.url}</div>
+                                  <div key={lecture._id}>{lecture.url}</div>
                                 ))}
                               </div>
                             ))}
                           {/* Subchapter */}
                           {subchapter.infrachapters.length > 0 &&
                             subchapter.lectures.map(lecture => (
-                              <div key={lecture.url}>{lecture.url}</div>
+                              <div key={lecture._id}>{lecture.url}</div>
                             ))}
                         </div>
                       ))}
@@ -90,7 +90,7 @@ const ExerciceDetails = props => {
                       <>
                         {/* <div key={chapter.title}>{chapter.title}</div> */}
                         {chapter.lectures.map(lecture => (
-                          <div key={lecture.url}>{lecture.url}</div>
+                          <div key={lecture._id}>{lecture.url}</div>
                         ))}
                       </>
                     )}

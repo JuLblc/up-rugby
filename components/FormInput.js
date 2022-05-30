@@ -83,7 +83,6 @@ const FormInput = props => {
       let vimeoId = e.target.value.substring(31, e.target.value.length)
 
       let resVimeo = await getVimeoVideo(vimeoId)
-      console.log('resVimeo: ', resVimeo.data.duration)
 
       if (!resVimeo) {
         setError(true)
@@ -101,7 +100,6 @@ const FormInput = props => {
       let youtubeId = e.target.value.substring(32, 43)
 
       let resYoutube = await getYoutubeVideo(youtubeId)
-      console.log('resYoutube: ', resYoutube)
 
       if (!resYoutube.data.items.length) {
         setError(true)
@@ -112,7 +110,6 @@ const FormInput = props => {
       let duration = resYoutube.data.items[0].contentDetails.duration
 
       let durationToUpperMin = Math.ceil(convertISO8601ToSec(duration) / 60)
-      console.log('durationToUpperMin: ', durationToUpperMin)
 
       if (props.infrachapterIdx !== undefined) {
         setDuration(
