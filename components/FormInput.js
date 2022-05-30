@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react'
-import {getVimeoVideo} from '../apiCall/vimeo'
+import { getVimeoVideo } from '../apiCall/vimeo'
+import { getYoutubeVideo } from '../apiCall/youtube'
+import { convertISO8601ToSec } from '../utils/utilCourses'
+
 
 const FormInput = props => {
   const [focused, setFocused] = useState(false)
@@ -23,7 +26,8 @@ const FormInput = props => {
     lectureIdx,
     subchapterIdx,
     infrachapterIdx,
-    getDuration,
+    mediaPlatform,
+    setDuration,
     styles,
     ...inputProps
   } = props
@@ -75,13 +79,13 @@ const FormInput = props => {
     }
 
     //Check video exist on vimeo
-    if (e.target.name === 'url') {
+    if (e.target.name === 'url' && mediaPlatform === 'vimeo') {
       let vimeoId = e.target.value.substring(31, e.target.value.length)
 
       let resVimeo = await getVimeoVideo(vimeoId)
-      console.log('resVimeo: ', resVimeo)
+      console.log('resVimeo: ', resVimeo.data.duration)
 
-      if (!resVimeo){
+      if (!resVimeo) {
         setError(true)
         setErrorMessage(errorMessages.vimeo)
         return
@@ -89,29 +93,49 @@ const FormInput = props => {
 
       let durationToUpperMin = Math.ceil(resVimeo.data.duration / 60)
 
-      // if (props.infrachapterIdx !== undefined) {
-      //   getDuration(
-      //     durationToUpperMin,
-      //     props.chapterIdx,
-      //     props.lectureIdx,
-      //     props.subchapterIdx,
-      //     props.infrachapterIdx
-      //   )
-      //   return
-      // } 
-      
-      // if (props.subchapterIdx !== undefined) {
-      //   getDuration(
-      //     durationToUpperMin,
-      //     props.chapterIdx,
-      //     props.lectureIdx,
-      //     props.subchapterIdx
-      //   )
-      //   return
-      // } 
-      
-      getDuration(durationToUpperMin, props.chapterIdx, props.lectureIdx)
-      
+      setDuration(durationToUpperMin, props.chapterIdx, props.lectureIdx)
+    }
+
+    //Check video exist on youtube
+    if (e.target.name === 'url' && mediaPlatform === 'youtube') {
+      let youtubeId = e.target.value.substring(32, 43)
+
+      let resYoutube = await getYoutubeVideo(youtubeId)
+      console.log('resYoutube: ', resYoutube)
+
+      if (!resYoutube.data.items.length) {
+        setError(true)
+        setErrorMessage(errorMessages.youtube)
+        return
+      }
+
+      let duration = resYoutube.data.items[0].contentDetails.duration
+
+      let durationToUpperMin = Math.ceil(convertISO8601ToSec(duration) / 60)
+      console.log('durationToUpperMin: ', durationToUpperMin)
+
+      if (props.infrachapterIdx !== undefined) {
+        setDuration(
+          durationToUpperMin,
+          props.chapterIdx,
+          props.lectureIdx,
+          props.subchapterIdx,
+          props.infrachapterIdx
+        )
+        return
+      }
+
+      if (props.subchapterIdx !== undefined) {
+        setDuration(
+          durationToUpperMin,
+          props.chapterIdx,
+          props.lectureIdx,
+          props.subchapterIdx
+        )
+        return
+      }
+
+      setDuration(durationToUpperMin, props.chapterIdx, props.lectureIdx)
     }
   }
 

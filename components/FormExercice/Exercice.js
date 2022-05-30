@@ -69,7 +69,7 @@ const Exercice = props => {
     newExerciceData.chapters[idx].subchapters.push({
       title: '',
       lectures: [],
-      subchapters: []
+      infrachapters: []
     })
     setExerciceData(newExerciceData)
   }

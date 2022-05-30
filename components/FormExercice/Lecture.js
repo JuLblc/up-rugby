@@ -5,7 +5,7 @@ const Lecture = props => {
   const errorMessages = {
     urlMissing: 'Veuillez saisir le lien de la vidéo',
     patternMismatch: `Le lien doit commencer par "https://www.youtube.com/watch?v=" et se terminer par l'id de la vidéo`,
-    vimeo: "Cette vidéo n'est pas répertoriée sur Vimeo"
+    youtube: "Cette vidéo n'est pas répertoriée sur youTube"
   }
 
   const handleChange = e => {
@@ -68,13 +68,13 @@ const Lecture = props => {
         lectureIdx={props.lectureIdx}
         subchapterIdx={props.subchapterIdx}
         infrachapterIdx={props.infrachapterIdx}
-        getDuration={props.getDuration}
+        setDuration={props.setDuration}
         errorMessages={errorMessages}
         value={props.chapter.lectures[props.lectureIdx].url || ''}
         onChange={handleChange}
         required
-        pattern='^https://player.vimeo.com/video/[0-9]+$'
-        // pattern='^https://www\.youtube\.com/watch[a-zA-Z0-9=?_&]+$'
+        pattern='^https://www\.youtube\.com/watch[a-zA-Z0-9=?_&-]+$'
+        mediaPlatform='youtube'
         disabled={props.disableField}
         styles={styles}
       />

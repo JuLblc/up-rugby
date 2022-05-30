@@ -78,7 +78,8 @@ const InfraChapter = props => {
                 lectureIdx
               )
             }
-            getDuration={props.getDuration}
+            setDuration={props.setDuration}
+            disableField={props.disableField}
           />
         )
       )}

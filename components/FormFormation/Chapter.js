@@ -14,7 +14,7 @@ const Chapter = props => {
     props.updateStateFromChild(newCourseData)
   }
 
-  const getDuration = (duration, chapterIdx, lectureIdx) => {
+  const setDuration = (duration, chapterIdx, lectureIdx) => {
     const newCourseData = { ...props.courseData }
     newCourseData.chapters[chapterIdx].lectures[lectureIdx].duration = duration
     props.updateStateFromChild(newCourseData)
@@ -56,7 +56,7 @@ const Chapter = props => {
             onChangeVideo={e => onChangeVideo(e, props.chapterIdx, lectureIdx)}
             removeVideo={() => removeVideo(props.chapterIdx, lectureIdx)}
             disableField={props.disableField}
-            getDuration={getDuration}
+            setDuration={setDuration}
             onChangeTipTap={content =>
               onChangeTipTapChapter(content, props.chapterIdx, lectureIdx)
             }

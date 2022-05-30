@@ -34,7 +34,7 @@ const Chapter = props => {
     props.updateStateFromChild(newExerciceData)
   }
 
-  const getDuration = (duration, chapterIdx, lectureIdx, subchapterIdx, infrachapterIdx) => {
+  const setDuration = (duration, chapterIdx, lectureIdx, subchapterIdx, infrachapterIdx) => {
     const newExerciceData = { ...props.exerciceData }
 
 
@@ -101,7 +101,7 @@ const Chapter = props => {
             onChangeVideo={e => onChangeVideo(e, props.chapterIdx, lectureIdx)}
             removeVideo={() => removeVideo(props.chapterIdx, lectureIdx)}
             disableField={props.disableField}
-            getDuration={getDuration}
+            setDuration={setDuration}
           />
         )
       )}
@@ -126,7 +126,7 @@ const Chapter = props => {
             }
             addInfraChapter={() => addInfraChapter(props.chapterIdx, subchapterIdx)}
             disableField={props.disableField}
-            getDuration={getDuration}
+            setDuration={setDuration}
           />
         )
       )}

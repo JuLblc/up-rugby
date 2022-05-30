@@ -26,10 +26,11 @@ const Lecture = props => {
       },
       required: true,
       pattern: '^https://player.vimeo.com/video/[0-9]+$',
+      mediaPlatform: 'vimeo',
       disabled: props.disableField,
       chapterIdx: props.chapterIdx,
       lectureIdx: props.lectureIdx,
-      getDuration: props.getDuration,
+      setDuration: props.setDuration,
       styles: styles
     }
   ]

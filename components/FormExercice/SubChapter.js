@@ -94,7 +94,7 @@ const SubChapter = props => {
               )
             }
             disableField={props.disableField}
-            getDuration={props.getDuration}
+            setDuration={props.setDuration}
           />
         )
       )}
@@ -127,7 +127,7 @@ const SubChapter = props => {
             addVideoToInfraChapter={() =>
               addVideoToInfraChapter(props.chapterIdx, props.subchapterIdx, infrachapterIdx)
             }
-            getDuration={props.getDuration}
+            setDuration={props.setDuration}
             disableField={props.disableField}
           />
         )
