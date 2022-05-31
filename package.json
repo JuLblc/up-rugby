@@ -12,6 +12,7 @@
     "@tiptap/react": "^2.0.0-beta.108",
     "@tiptap/starter-kit": "^2.0.0-beta.183",
     "@u-wave/react-vimeo": "^0.9.5",
+    "@u-wave/react-youtube": "0.7.4",
     "axios": "^0.26.0",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.28.1",
