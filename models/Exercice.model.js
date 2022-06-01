@@ -15,26 +15,35 @@ const ExerciceSchema = new mongoose.Schema({
   chapters: [
     {
       title: String, //Joueur en avance
-      lectures: [{
-        url: String,
-        duration: Number,
-      }],
+      lectures: [
+        {
+          url: String,
+          duration: Number,
+          youtubeId: String
+        }
+      ],
       // Level 3
-      subchapters:[
+      subchapters: [
         {
           title: String, //La gestion du surnombre
-          lectures: [{
-            url: String,
-            duration: Number,
-          }],
+          lectures: [
+            {
+              url: String,
+              duration: Number,
+              youtubeId: String
+            }
+          ],
           // Level 4
-          infrachapters:[
+          infrachapters: [
             {
               title: String, //2vs1
-              lectures: [{
-                url: String,
-                duration: Number,
-              }],
+              lectures: [
+                {
+                  url: String,
+                  duration: Number,
+                  youtubeId: String
+                }
+              ]
             }
           ]
         }

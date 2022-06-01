@@ -8,16 +8,16 @@ const emptyExercice = {
   img: {
     fileName: "bloc-1331.jpg",
     url:
-    "https://res.cloudinary.com/dwznpgbcd/image/upload/v1644428743/uprugby-uploads-pict-formation/bloc-1331.jpg.jpg",
+      "https://res.cloudinary.com/dwznpgbcd/image/upload/v1644428743/uprugby-uploads-pict-formation/bloc-1331.jpg.jpg",
     width: 768,
     height: 450
   },
   chapters: [
     {
       title: "",
-      // lectures: [{ url: '', duration: 0 }]
+      // lectures: [{ url: "", duration: 0 }],
       lectures: [],
-      subchapters:[]
+      subchapters: []
     }
   ],
   isPublished: false

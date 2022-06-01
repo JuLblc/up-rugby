@@ -13,13 +13,14 @@ export const getExercices = async (context, url) => {
 };
 
 export const postExercice = async (exerciceData) => {
+  console.log("exerciceData: ", exerciceData);
   return axios.post("/api/exercices", { exercice: exerciceData });
 };
 
-export const putExercice = async updatedExercice => {
-  return axios.put('/api/exercices', { exercice: updatedExercice })
-}
+export const putExercice = async (updatedExercice) => {
+  return axios.put("/api/exercices", { exercice: updatedExercice });
+};
 
-export const removeExercice = async deletedExercice => {
-  axios.delete('/api/exercices', { data: deletedExercice._id })
-}
+export const removeExercice = async (deletedExercice) => {
+  axios.delete("/api/exercices", { data: deletedExercice._id });
+};

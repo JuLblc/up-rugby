@@ -25,7 +25,7 @@ const ExerciceContent = (props) => {
                               {infrachapter.lectures.map((lecture) => (
                                 <div key={lecture._id}>
                                   <YouTube
-                                    video="oYr2IfwdKYw"
+                                    video={lecture.youtubeId}
                                     width={300}
                                     height={170}
                                   />
@@ -39,7 +39,7 @@ const ExerciceContent = (props) => {
                         {subchapter.lectures.map((lecture) => (
                           <div key={lecture._id}>
                             <YouTube
-                              video="oYr2IfwdKYw"
+                              video={lecture.youtubeId}
                               width={300}
                               height={170}
                             />
@@ -55,7 +55,11 @@ const ExerciceContent = (props) => {
                     {/* <div key={chapter.title}>{chapter.title}</div> */}
                     {chapter.lectures.map((lecture) => (
                       <div key={lecture._id}>
-                        <YouTube video="oYr2IfwdKYw" width={300} height={170} />
+                        <YouTube
+                          video={lecture.youtubeId}
+                          width={300}
+                          height={170}
+                        />
                       </div>
                     ))}
                   </div>

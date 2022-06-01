@@ -1,92 +1,115 @@
-import FormInput from '../FormInput'
-import Lecture from './Lecture'
-import SubChapter from './SubChapter'
+import FormInput from "../FormInput";
+import Lecture from "./Lecture";
+import SubChapter from "./SubChapter";
 
-import styles from '../../styles/Formation.module.css'
+import styles from "../../styles/Formation.module.css";
 
-const Chapter = props => {
+const Chapter = (props) => {
   const onChangeVideo = (e, chapterIdx, lectureIdx) => {
-    const newExerciceData = { ...props.exerciceData }
+    const newExerciceData = { ...props.exerciceData };
     newExerciceData.chapters[chapterIdx].lectures[lectureIdx][e.target.name] =
-      e.target.value
-    props.updateStateFromChild(newExerciceData)
-  }
+      e.target.value;
+    props.updateStateFromChild(newExerciceData);
+  };
 
   const onChangeSubChapter = (e, chapterIdx, subchapterIdx) => {
-    const newExerciceData = { ...props.exerciceData }
+    const newExerciceData = { ...props.exerciceData };
     newExerciceData.chapters[chapterIdx].subchapters[subchapterIdx][
       e.target.name
-    ] = e.target.value
-    props.updateStateFromChild(newExerciceData)
-  }
+    ] = e.target.value;
+    props.updateStateFromChild(newExerciceData);
+  };
 
   const removeVideo = (chapterIdx, videoIdx) => {
-    const newExerciceData = { ...props.exerciceData }
-    newExerciceData.chapters[chapterIdx].lectures.splice(videoIdx, 1)
+    const newExerciceData = { ...props.exerciceData };
+    newExerciceData.chapters[chapterIdx].lectures.splice(videoIdx, 1);
 
-    props.updateStateFromChild(newExerciceData)
-  }
+    props.updateStateFromChild(newExerciceData);
+  };
 
   const removeSubChapter = (chapterIdx, subchapterIdx) => {
-    const newExerciceData = { ...props.exerciceData }
-    newExerciceData.chapters[chapterIdx].subchapters.splice(subchapterIdx, 1)
+    const newExerciceData = { ...props.exerciceData };
+    newExerciceData.chapters[chapterIdx].subchapters.splice(subchapterIdx, 1);
 
-    props.updateStateFromChild(newExerciceData)
-  }
+    props.updateStateFromChild(newExerciceData);
+  };
 
-  const setDuration = (duration, chapterIdx, lectureIdx, subchapterIdx, infrachapterIdx) => {
-    const newExerciceData = { ...props.exerciceData }
-
+  const setDuration = (
+    duration,
+    youtubeId,
+    chapterIdx,
+    lectureIdx,
+    subchapterIdx,
+    infrachapterIdx
+  ) => {
+    const newExerciceData = { ...props.exerciceData };
 
     if (infrachapterIdx !== undefined) {
-      newExerciceData.chapters[chapterIdx].subchapters[subchapterIdx].infrachapters[infrachapterIdx].lectures[
+      newExerciceData.chapters[chapterIdx].subchapters[
+        subchapterIdx
+      ].infrachapters[infrachapterIdx].lectures[lectureIdx].duration = duration;
+
+      newExerciceData.chapters[chapterIdx].subchapters[
+        subchapterIdx
+      ].infrachapters[infrachapterIdx].lectures[
         lectureIdx
-      ].duration = duration
-      props.updateStateFromChild(newExerciceData)
-      return
+      ].youtubeId = youtubeId;
+
+      props.updateStateFromChild(newExerciceData);
+      return;
     }
 
     if (subchapterIdx !== undefined) {
       newExerciceData.chapters[chapterIdx].subchapters[subchapterIdx].lectures[
         lectureIdx
-      ].duration = duration
-      props.updateStateFromChild(newExerciceData)
-      return
+      ].duration = duration;
+
+      newExerciceData.chapters[chapterIdx].subchapters[subchapterIdx].lectures[
+        lectureIdx
+      ].youtubeId = youtubeId;
+      props.updateStateFromChild(newExerciceData);
+      return;
     }
 
     newExerciceData.chapters[chapterIdx].lectures[
       lectureIdx
-    ].duration = duration
-    props.updateStateFromChild(newExerciceData)
+    ].duration = duration;
 
-  }
+    newExerciceData.chapters[chapterIdx].lectures[
+      lectureIdx
+    ].youtubeId = youtubeId;
+
+    props.updateStateFromChild(newExerciceData);
+  };
 
   const addVideoToSubChapter = (chapterIdx, subchapterIdx) => {
-    const newExerciceData = { ...props.exerciceData }
+    const newExerciceData = { ...props.exerciceData };
     newExerciceData.chapters[chapterIdx].subchapters[
       subchapterIdx
-    ].lectures.push({ url: '', duration: 0 })
-    props.updateStateFromChild(newExerciceData)
-  }
+    ].lectures.push({ url: "", duration: 0, youtubeId: "" });
+    props.updateStateFromChild(newExerciceData);
+  };
 
   const addInfraChapter = (chapterIdx, subchapterIdx) => {
-    const newExerciceData = { ...props.exerciceData }
-    newExerciceData.chapters[chapterIdx].subchapters[subchapterIdx].infrachapters.push({
-      title: '',
+    const newExerciceData = { ...props.exerciceData };
+    newExerciceData.chapters[chapterIdx].subchapters[
+      subchapterIdx
+    ].infrachapters.push({
+      title: "",
       lectures: [],
       subchapters: []
-    })
-    props.updateStateFromChild(newExerciceData)
-  }
+    });
+    props.updateStateFromChild(newExerciceData);
+  };
 
   return (
     <div className={styles.chapterContainer}>
       <FormInput
-        label='Titre Chapitre:'
-        type='text'
-        name='title'
-        value={props.exerciceData.chapters[props.chapterIdx].title || ''}
-        onChange={e => props.onChangeChapter(e, props.chapterIdx)}
+        label="Titre Chapitre:"
+        type="text"
+        name="title"
+        value={props.exerciceData.chapters[props.chapterIdx].title || ""}
+        onChange={(e) => props.onChangeChapter(e, props.chapterIdx)}
         disabled={props.disableField}
         styles={styles}
       />
@@ -98,7 +121,9 @@ const Chapter = props => {
             chapterIdx={props.chapterIdx}
             lectureIdx={lectureIdx}
             chapter={props.exerciceData.chapters[props.chapterIdx]}
-            onChangeVideo={e => onChangeVideo(e, props.chapterIdx, lectureIdx)}
+            onChangeVideo={(e) =>
+              onChangeVideo(e, props.chapterIdx, lectureIdx)
+            }
             removeVideo={() => removeVideo(props.chapterIdx, lectureIdx)}
             disableField={props.disableField}
             setDuration={setDuration}
@@ -115,7 +140,7 @@ const Chapter = props => {
             exerciceData={props.exerciceData}
             chapter={props.exerciceData.chapters[props.chapterIdx]}
             updateStateFromChild={props.updateStateFromChild}
-            onChangeSubChapter={e =>
+            onChangeSubChapter={(e) =>
               onChangeSubChapter(e, props.chapterIdx, subchapterIdx)
             }
             removeSubChapter={() =>
@@ -124,7 +149,9 @@ const Chapter = props => {
             addVideoToSubChapter={() =>
               addVideoToSubChapter(props.chapterIdx, subchapterIdx)
             }
-            addInfraChapter={() => addInfraChapter(props.chapterIdx, subchapterIdx)}
+            addInfraChapter={() =>
+              addInfraChapter(props.chapterIdx, subchapterIdx)
+            }
             disableField={props.disableField}
             setDuration={setDuration}
           />
@@ -133,7 +160,7 @@ const Chapter = props => {
 
       <button
         className={`${styles.button} ${styles.primaryAddBtn}`}
-        type='button'
+        type="button"
         onClick={() => props.addSubChapter(props.chapterIdx)}
         disabled={props.disableField}
       >
@@ -142,7 +169,7 @@ const Chapter = props => {
 
       <button
         className={`${styles.button} ${styles.primaryAddBtn}`}
-        type='button'
+        type="button"
         onClick={() => props.addVideo(props.chapterIdx)}
         disabled={props.disableField}
       >
@@ -151,14 +178,14 @@ const Chapter = props => {
 
       <button
         className={`${styles.button} ${styles.secondaryRemoveBtn}`}
-        type='button'
+        type="button"
         onClick={() => props.removeChapter(props.chapterIdx)}
         disabled={props.disableField}
       >
         Supprimer chap.
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default Chapter
+export default Chapter;
