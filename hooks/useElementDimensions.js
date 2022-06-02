@@ -1,26 +1,25 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from "react";
 
-export const useElementDimensions = element => {
-
+export const useElementDimensions = (element) => {
   const [elementDimensions, setElementDimensions] = useState({
     elementWidth: undefined,
     elementHeight: undefined
-  })
+  });
 
   useEffect(() => {
-    function handleResize () {
+    function handleResize() {
       if (element) {
         setElementDimensions({
           elementWidth: element.offsetWidth,
           elementHeight: element.offsetHeight
-        })
+        });
       }
     }
 
-    handleResize()
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [element]) // Effect is only run on element change
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [element]); // Effect is only run on element change
 
-  return elementDimensions
-}
+  return elementDimensions;
+};
