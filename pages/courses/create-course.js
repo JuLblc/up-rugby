@@ -26,8 +26,8 @@ const NewCourse = props => {
     price: 0,
     // set image by default
     img: {
-      fileName: 'logo.png',
-      url: 'https://res.cloudinary.com/dwznpgbcd/image/upload/v1646205285/uprugby-uploads-pict-formation/logo.png.png',
+      fileName: 'defaut.jpeg',
+      url:'https://res.cloudinary.com/uprugby/image/upload/v1654247035/uprugby-uploads-pict-formation/defaut.jpeg.jpg',
       width: 1528,
       height: 1004
     },
