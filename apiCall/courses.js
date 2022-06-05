@@ -5,7 +5,7 @@ export const getCourses = async (context, url) => {
   if (context.req.headers.cookie) {
     headers.cookie = context.req.headers.cookie
   }
-
+  
   return await axios.get(`${process.env.DOMAIN_URL}/api/courses`, {
     params: { url },
     headers

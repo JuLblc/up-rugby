@@ -98,6 +98,15 @@ export const getServerSideProps = async context => {
   // Check if user already purchased this course. Pass the result as props
   const course = resCourse.data.courseFromDB
 
+  if(!course){
+    return {
+      props: {
+        session,
+        course
+      }
+    }
+  }
+
   if (!session) {
     course.isPurchased = false
     return {
