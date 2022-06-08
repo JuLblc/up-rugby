@@ -28,8 +28,8 @@ const NewCourse = props => {
     img: {
       fileName: 'defaut.jpeg',
       url:'https://res.cloudinary.com/uprugby/image/upload/v1654247035/uprugby-uploads-pict-formation/defaut.jpeg.jpg',
-      width: 1528,
-      height: 1004
+      width: 768,
+      height: 450
     },
     chapters: [
       {
