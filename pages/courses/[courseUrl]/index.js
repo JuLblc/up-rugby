@@ -84,7 +84,8 @@ const FormationDetails = (props) => {
                       }`}</li>
                     </ul>
                   </div>
-                  {(width >= 1100 || width <= 768) && (
+                  {/* {(width >= 1100 || width <= 768) && ( */}
+                  {(width >= 1100 || (width >= 620 && width <= 768)) && (
                     <CtaFormationDetails
                       course={props.course}
                       styles={styles}
@@ -104,7 +105,8 @@ const FormationDetails = (props) => {
                     </ul>
                   </div>
                 </div>
-                {width < 1100 && width > 768 && (
+                {/* {width < 1100 && width > 768 && ( */}
+                {((width < 1100 && width > 768) || width < 620) && (
                   <CtaFormationDetails
                     course={props.course}
                     styles={styles}
