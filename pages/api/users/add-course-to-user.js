@@ -14,7 +14,7 @@ export default async function handler(req, res) {
           addCourseToUser(req, res, session);
           break;
         default:
-          console.log("switch default");
+          res.status(405).end('Method not allowed')
       }
     })
     .catch((err) => {
@@ -26,6 +26,7 @@ export default async function handler(req, res) {
 }
 
 const addCourseToUser = (req, res, session) => {
+  console.log('session: ', session)
   if (!session) {
     res.status(401).json({ message: "Unauthorized" });
     return;

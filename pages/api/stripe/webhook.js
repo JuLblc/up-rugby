@@ -33,10 +33,15 @@ const fulfillOrder = async stripeSession => {
 
 export default async function webhookHandler (req, res) {
 
+  console.log('req headers: ', req.headers)
+
   if (req.method === 'POST') {
     const buf = await buffer(req)
     const sig = req.headers['stripe-signature']
     const webhookSecret = process.env.STRIPE_WEBHOOK_SIGNING_SECRET
+
+    console.log('sig: ', sig)
+    console.log('webhookSecret: ', webhookSecret)
 
     let event
 
@@ -55,5 +60,7 @@ export default async function webhookHandler (req, res) {
       fulfillOrder(stripeSession)
     }
     res.status(200).send()
+  } else {
+    res.status(405).end('Method not allowed')
   }
 }

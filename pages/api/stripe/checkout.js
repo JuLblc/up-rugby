@@ -2,11 +2,14 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
 export default async function handler (req, res) {
   switch (req.method) {
+    case 'GET':
+      res.status(200).json({STRIPE_PUBLISHABLE_KEY:process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY})
+      break
     case 'POST':
       postStripSession(req, res);
       break
     default:
-      console.log('switch default')
+      res.status(405).end('Method not allowed')
   } 
 }
 
@@ -25,5 +28,5 @@ const postStripSession = async (req, res) => {
 
   const checkoutStripeSession = await stripe.checkout.sessions.create(params)
 
-  res.json({ id: checkoutStripeSession.id })
+  res.status(200).json({ id: checkoutStripeSession.id })
 }

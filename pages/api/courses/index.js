@@ -29,7 +29,7 @@ export default async function handler(req, res) {
           deleteCourse(req, res, session);
           break;
         default:
-          console.log("switch default");
+          res.status(405).end('Method not allowed')
       }
     })
     .catch((err) => {
