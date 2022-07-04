@@ -9,25 +9,50 @@ export const config = {
   }
 }
 
+// const fulfillOrder = async stripeSession => {
+  // const session = await stripe.checkout.sessions.retrieve(stripeSession.id)
+  // const cookies = session.metadata
+
+  // const listLineItems = await stripe.checkout.sessions.listLineItems(
+  //   stripeSession.id,
+  //   {
+  //     expand: ['data.price.product']
+  //   }
+  // )
+
+  // const courseIds = listLineItems.data.map(
+  //   item => item.price.product.metadata.courseId
+  // )
+
+  // for (let i = 0; i < courseIds.length; i++) {
+  //   putCourseToUser(courseIds[i], cookies)
+  //   removeCourseToCart(courseIds[i], cookies)
+  // }
+// }
+
 const fulfillOrder = async stripeSession => {
-  const session = await stripe.checkout.sessions.retrieve(stripeSession.id)
-  const cookies = session.metadata
-
-  const listLineItems = await stripe.checkout.sessions.listLineItems(
-    stripeSession.id,
-    {
-      expand: ['data.price.product']
+  return new Promise(async resolve =>{
+    const session = await stripe.checkout.sessions.retrieve(stripeSession.id)
+    const cookies = session.metadata
+  
+    const listLineItems = await stripe.checkout.sessions.listLineItems(
+      stripeSession.id,
+      {
+        expand: ['data.price.product']
+      }
+    )
+  
+    const courseIds = listLineItems.data.map(
+      item => item.price.product.metadata.courseId
+    )
+  
+    for (let i = 0; i < courseIds.length; i++) {
+      await putCourseToUser(courseIds[i], cookies)
+      await removeCourseToCart(courseIds[i], cookies)
     }
-  )
 
-  const courseIds = listLineItems.data.map(
-    item => item.price.product.metadata.courseId
-  )
-
-  for (let i = 0; i < courseIds.length; i++) {
-    await putCourseToUser(courseIds[i], cookies)
-    await removeCourseToCart(courseIds[i], cookies)
-  }
+    resolve(true)
+  })
 }
 
 export default async function webhookHandler (req, res) {
@@ -48,10 +73,8 @@ export default async function webhookHandler (req, res) {
 
     console.log('event type: ', event.type)
     if (event.type === 'checkout.session.completed') {
-
       const stripeSession = event.data.object
-      fulfillOrder(stripeSession)
-
+      await fulfillOrder(stripeSession)
     }
     res.status(200).send()
   } else {
