@@ -31,6 +31,7 @@ const Profile = props => {
   })
 
   useEffect(() => {
+    console.log('props: ', props)
     if (props.profileOpt === 'cart') {
       setState({
         ...state,

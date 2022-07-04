@@ -10,7 +10,6 @@ export const config = {
 }
 
 const fulfillOrder = async stripeSession => {
-
   const session = await stripe.checkout.sessions.retrieve(stripeSession.id)
   const cookies = session.metadata
 
@@ -20,28 +19,22 @@ const fulfillOrder = async stripeSession => {
       expand: ['data.price.product']
     }
   )
-  
+
   const courseIds = listLineItems.data.map(
     item => item.price.product.metadata.courseId
   )
 
-  for (let i = 0; i < courseIds.length; i++){
-    await putCourseToUser(courseIds[i],cookies)
-    await removeCourseToCart(courseIds[i],cookies)
-  }  
+  for (let i = 0; i < courseIds.length; i++) {
+    await putCourseToUser(courseIds[i], cookies)
+    await removeCourseToCart(courseIds[i], cookies)
+  }
 }
 
 export default async function webhookHandler (req, res) {
-
-  console.log('req headers: ', req.headers)
-
   if (req.method === 'POST') {
     const buf = await buffer(req)
     const sig = req.headers['stripe-signature']
     const webhookSecret = process.env.STRIPE_WEBHOOK_SIGNING_SECRET
-
-    console.log('sig: ', sig)
-    console.log('webhookSecret: ', webhookSecret)
 
     let event
 
@@ -58,6 +51,7 @@ export default async function webhookHandler (req, res) {
 
       const stripeSession = event.data.object
       fulfillOrder(stripeSession)
+
     }
     res.status(200).send()
   } else {

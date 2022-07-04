@@ -20,9 +20,6 @@ export const putUser = async updatedUser => {
 
 export const putCourseToUser = async (courseId, cookies) => {
 
-  console.log('courseId: ', courseId,'cookies: ', cookies )
-  console.log('process.env.DOMAIN_URL: ', process.env.DOMAIN_URL)
-
   if (!process.env.DOMAIN_URL) {
     await axios.put(`/api/users/add-course-to-user`, {
       courseId
@@ -33,8 +30,7 @@ export const putCourseToUser = async (courseId, cookies) => {
   const headers = {
     cookie: cookiesToStr(cookies)
   }
-  console.log('headers: ', headers)
-  
+
   await axios.put(
     `${process.env.DOMAIN_URL}/api/users/add-course-to-user`,
     { courseId },
