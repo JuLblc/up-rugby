@@ -1,36 +1,3 @@
-.formationInfo {
-  margin: 0px 15px;
-  overflow: hidden;
-  height: 100px;
-}
-
-.unselected {
-  height: 100px;
-  animation: closeCard 1s;
-}
-@keyframes closeCard {
-  0% {
-    height: 190px;
-  }
-  100% {
-    height: 100px;
-  }
-}
-
-.selected {
-  height: 190px;
-  animation: openCard 1s;
-}
-
-@keyframes openCard {
-  0% {
-    height: 100px;
-  }
-  100% {
-    height: 190px;
-  }
-}
-
 .CTA {
   width: 50%;
   display: flex;

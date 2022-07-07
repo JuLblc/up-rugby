@@ -7,14 +7,12 @@ import styles from "../styles/CardFormation.module.css";
 
 import { useWindowDimensions } from "../hooks/useWindowDimensions";
 
-// import { getDeviceTypeInfo } from "../utils/utilResponsive";
 import { putCourseToCart, removeCourseToCart } from "../apiCall/users";
 
 const CardFormation = (props) => {
   const router = useRouter();
 
-  const { width, height } = useWindowDimensions();
-  // const { isMobile, isTablet } = getDeviceTypeInfo(width, height);
+  const { width } = useWindowDimensions();
 
   const divRef = useRef();
 

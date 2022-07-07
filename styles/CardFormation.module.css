@@ -65,6 +65,7 @@
   color: #808080;
   font-weight: 300;
   text-align: left;
+  min-height: 38px;
   max-height: 38px;
   overflow: hidden;
 }
