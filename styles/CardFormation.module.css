@@ -23,33 +23,35 @@
 .formationInfo {
   margin: 0px 15px;
   overflow: hidden;
-  height: 100px;
+  max-height: 100px;
+  /* height: auto; */
+  position: relative;
 }
 
 .unselected {
-  height: 100px;
+  max-height: 100px;
   animation: closeCard 1s;
 }
 @keyframes closeCard {
   0% {
-    height: 225px;
+    max-height: 255px;
   }
   100% {
-    height: 100px;
+    max-height: 100px;
   }
 }
 
 .selected {
-  height: 225px;
+  max-height: 255px;
   animation: openCard 1s;
 }
 
 @keyframes openCard {
   0% {
-    height: 100px;
+    max-height: 100px;
   }
   100% {
-    height: 225px;
+    max-height: 255px;
   }
 }
 
@@ -63,7 +65,63 @@
   color: #808080;
   font-weight: 300;
   text-align: left;
+  max-height: 38px;
+  overflow: hidden;
 }
+
+.selected .formationDescription {
+  max-height: unset;
+  overflow: unset;
+}
+
+.unselected .formationDescription {
+  animation: setSize 1s;
+}
+
+@keyframes setSize {
+  0% {
+    max-height: unset;
+  }
+  90% {
+    max-height: unset;
+  }
+  100% {
+    max-height: 38px;
+  }
+}
+
+.fadeOut {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  background: linear-gradient(
+    rgba(247, 250, 251, 0) 0%,
+    rgb(247, 250, 251) 100%
+  );
+}
+
+.selected .fadeOut {
+  height: 0;
+}
+
+.unselected .fadeOut {
+  animation: setFadeOut 1s;
+}
+
+@keyframes setFadeOut {
+  0% {
+    height: 0;
+  }
+  90% {
+    height: 0;
+  }
+  100% {
+    height: 20px;
+  }
+}
+
 .cardFooterContainer {
   padding: 5px 0;
   display: flex;
