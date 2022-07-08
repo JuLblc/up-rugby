@@ -9,27 +9,6 @@ export const config = {
   }
 }
 
-// const fulfillOrder = async stripeSession => {
-  // const session = await stripe.checkout.sessions.retrieve(stripeSession.id)
-  // const cookies = session.metadata
-
-  // const listLineItems = await stripe.checkout.sessions.listLineItems(
-  //   stripeSession.id,
-  //   {
-  //     expand: ['data.price.product']
-  //   }
-  // )
-
-  // const courseIds = listLineItems.data.map(
-  //   item => item.price.product.metadata.courseId
-  // )
-
-  // for (let i = 0; i < courseIds.length; i++) {
-  //   putCourseToUser(courseIds[i], cookies)
-  //   removeCourseToCart(courseIds[i], cookies)
-  // }
-// }
-
 const fulfillOrder = async stripeSession => {
   return new Promise(async resolve =>{
     const session = await stripe.checkout.sessions.retrieve(stripeSession.id)
