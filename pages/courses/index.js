@@ -1,49 +1,56 @@
-import { getSession } from "next-auth/react";
-import Link from "next/link";
-import { getCourses } from "../../apiCall/courses";
-import { getUser } from "../../apiCall/users";
-import { useWindowDimensions } from "../../hooks/useWindowDimensions";
-import { getDeviceTypeInfo } from "../../utils/utilResponsive";
+import { getSession } from 'next-auth/react'
+import Link from 'next/link'
+import Head from 'next/head'
+import { getCourses } from '../../apiCall/courses'
+import { getUser } from '../../apiCall/users'
+import { useWindowDimensions } from '../../hooks/useWindowDimensions'
+import { getDeviceTypeInfo } from '../../utils/utilResponsive'
 import {
   getLecturesQty,
   getLecturesTime,
   checkPurchaseStatus
-} from "../../utils/utilCourses";
+} from '../../utils/utilCourses'
 
-import CardFormation from "../../components/CardFormation";
+import CardFormation from '../../components/CardFormation'
 
-import styles from "../../styles/Courses.module.css";
+import styles from '../../styles/Courses.module.css'
 
-const Courses = (props) => {
-  const { width, height } = useWindowDimensions();
+const Courses = props => {
+  const { width, height } = useWindowDimensions()
 
   const {
     isMobile
     // isTablet,
     // isDesktopOrLaptop,
     // isBigScreen
-  } = getDeviceTypeInfo(width, height);
+  } = getDeviceTypeInfo(width, height)
 
   return (
-    <main className={styles.cardFormationContainer}>
-      <div className={`${styles.intro} ${!isMobile && styles.introNotMobile}`}>
-        <h1>
-          Toutes les <br />
-          <span className={styles.strong}> formations</span>
-        </h1>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec
-          nisl vulputate, iaculis tortor quis, convallis ipsum. Duis consequat
-          fringilla condimentum.
-        </p>
-        {props.session?.user.role === "ADMIN" && (
-          <Link href="/courses/create-course">
-            <a>Ajouter une formation</a>
-          </Link>
-        )}
-      </div>
+    <>
+      <Head>
+        <title>Formations - UpRugby</title>
+      </Head>
+      <main className={styles.cardFormationContainer}>
+        <div
+          className={`${styles.intro} ${!isMobile && styles.introNotMobile}`}
+        >
+          <h1>
+            Toutes les <br />
+            <span className={styles.strong}> formations</span>
+          </h1>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec
+            nisl vulputate, iaculis tortor quis, convallis ipsum. Duis consequat
+            fringilla condimentum.
+          </p>
+          {props.session?.user.role === 'ADMIN' && (
+            <Link href='/courses/create-course'>
+              <a>Ajouter une formation</a>
+            </Link>
+          )}
+        </div>
 
-      {props.courses.map((course) => 
+        {props.courses.map(course => (
           <CardFormation
             key={course._id}
             course={course}
@@ -57,18 +64,19 @@ const Courses = (props) => {
             )}
             isInCart={checkPurchaseStatus(props.cart, course._id)}
           />
-        )}
-    </main>
-  );
-};
+        ))}
+      </main>
+    </>
+  )
+}
 
-export default Courses;
+export default Courses
 
 //Server side rendering
-export const getServerSideProps = async (context) => {
-  const session = await getSession(context);
+export const getServerSideProps = async context => {
+  const session = await getSession(context)
 
-  const res = await getCourses(context);
+  const res = await getCourses(context)
 
   if (!session) {
     return {
@@ -76,10 +84,10 @@ export const getServerSideProps = async (context) => {
         session,
         courses: res.data.coursesFromDB
       }
-    }; 
+    }
   }
 
-  const resUser = await getUser(context);
+  const resUser = await getUser(context)
 
   return {
     props: {
@@ -88,5 +96,5 @@ export const getServerSideProps = async (context) => {
       purchasedCourses: resUser.data.userFromDB.purchasedCourses,
       cart: resUser.data.userFromDB.cart
     }
-  };
-};
+  }
+}

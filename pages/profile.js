@@ -1,5 +1,5 @@
 import { getSession } from 'next-auth/react'
-
+import Head from 'next/head'
 import { useState, useEffect } from 'react'
 
 import { getCourses } from '../apiCall/courses'
@@ -31,7 +31,6 @@ const Profile = props => {
   })
 
   useEffect(() => {
-    console.log('props: ', props)
     if (props.profileOpt === 'cart') {
       setState({
         ...state,
@@ -167,44 +166,48 @@ const Profile = props => {
   }
 
   return (
-    <main className={styles.profile}>
-    
-      <h1>Mon compte</h1>
+    <>
+      <Head>
+        <title>Mon compte - UpRugby</title>
+      </Head>
+      <main className={styles.profile}>
+        <h1>Mon compte</h1>
 
-      <div className={styles.profileContainer}>
-        <Sidebar li={li} styles={styles} handleDisplay={handleDisplay} />
+        <div className={styles.profileContainer}>
+          <Sidebar li={li} styles={styles} handleDisplay={handleDisplay} />
 
-        {state.displayInfo && (
-          <UserInfo
-            styles={styles}
-            handleFormSubmit={handleFormSubmit}
-            inputs={inputs}
-            userData={userData}
-            onChange={onChange}
-            disableField={state.disableField}
-            editUserData={editUserData}
-          />
-        )}
+          {state.displayInfo && (
+            <UserInfo
+              styles={styles}
+              handleFormSubmit={handleFormSubmit}
+              inputs={inputs}
+              userData={userData}
+              onChange={onChange}
+              disableField={state.disableField}
+              editUserData={editUserData}
+            />
+          )}
 
-        {state.displayCourses && (
-          <UserCourses
-            courses={props.purchasedCourses}
-            styles={styles}
-            CTA='start'
-          />
-        )}
+          {state.displayCourses && (
+            <UserCourses
+              courses={props.purchasedCourses}
+              styles={styles}
+              CTA='start'
+            />
+          )}
 
-        {state.displayCart && (
-          <UserCart
-            cart={state.cart}
-            deleteCourseToCart={deleteCourseToCart}
-            styles={styles}
-            userEmail={userData.email}
-            cookies={props.cookies}
-          />
-        )}
-      </div>
-    </main>
+          {state.displayCart && (
+            <UserCart
+              cart={state.cart}
+              deleteCourseToCart={deleteCourseToCart}
+              styles={styles}
+              userEmail={userData.email}
+              cookies={props.cookies}
+            />
+          )}
+        </div>
+      </main>
+    </>
   )
 }
 

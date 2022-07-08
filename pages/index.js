@@ -2,6 +2,7 @@ import { getSession } from 'next-auth/react'
 import { getCourses } from '../apiCall/courses'
 import { getExercices } from '../apiCall/exercices'
 import { getUser } from '../apiCall/users'
+import Head from 'next/head'
 
 import { useWindowDimensions } from '../hooks/useWindowDimensions'
 
@@ -16,30 +17,35 @@ import HomeLastExercices from '../components/Home/HomeLastExercices'
 const Home = props => {
   const { width } = useWindowDimensions()
   return (
-    <main className={styles.home}>
-      {!props.session && (
-        <>
-          <HomeIntro width={width} />
-          <HomeSupport />
-          <HomeTestimonial width={width} />
-        </>
-      )}
+    <>
+     <Head>
+        <title>UpRugby - Vidéo de formations, d'exercices et d'entrainements</title>
+      </Head>
+      <main className={styles.home}>
+        {!props.session && (
+          <>
+            <HomeIntro width={width} />
+            <HomeSupport />
+            <HomeTestimonial width={width} />
+          </>
+        )}
 
-      {props.session && (
-        <>
-          <HomeLastCourses
-            courses={props.courses}
-            session={props.session}
-            purchasedCourses={props.purchasedCourses}
-            cart={props.cart}
-          />
-          <HomeLastExercices
-            session={props.session}
-            exercices={props.exercices}
-          />
-        </>
-      )}
-    </main>
+        {props.session && (
+          <>
+            <HomeLastCourses
+              courses={props.courses}
+              session={props.session}
+              purchasedCourses={props.purchasedCourses}
+              cart={props.cart}
+            />
+            <HomeLastExercices
+              session={props.session}
+              exercices={props.exercices}
+            />
+          </>
+        )}
+      </main>
+    </>
   )
 }
 

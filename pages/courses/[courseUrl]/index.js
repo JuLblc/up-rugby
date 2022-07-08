@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import parse from "html-react-parser";
+import Head from "next/head";
 
 import { getCourses } from "../../../apiCall/courses";
 import {
@@ -62,6 +63,9 @@ const FormationDetails = (props) => {
 
   return (
     <>
+      <Head>
+        <title>{props.course.title} - UpRugby</title>
+      </Head>
       {props.course && (
         <main>
           <h1>{props.course.title}</h1>
