@@ -10,7 +10,7 @@ const ExerciceMenu = props => {
         onClick={() => props.handleTitleDisplay(props.exercice._id)}
       >
         <p>{props.exercice.title}</p>
-        {!props.exercice.selected && (
+        {!props.exercice.displayed && (
           <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24'>
             <path fill='none' d='M0 0h24v24H0z' />
             <path
@@ -20,7 +20,7 @@ const ExerciceMenu = props => {
           </svg>
         )}
 
-        {props.exercice.selected && (
+        {props.exercice.displayed && (
           <svg
             xmlns='http://www.w3.org/2000/svg'
             viewBox='0 0 24 24'
@@ -35,7 +35,7 @@ const ExerciceMenu = props => {
           </svg>
         )}
       </div>
-      {props.exercice.selected && (
+      {props.exercice.displayed && (
         <ChapterMenu styles={props.styles} exercice={props.exercice} handleChapterDisplay={props.handleChapterDisplay}/>
       )}
     </li>

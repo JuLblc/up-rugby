@@ -15,14 +15,8 @@ const ExerciceDetails = props => {
     const newExercices = [...exercices]
 
     newExercices.map(exercice => {
-      exercice.chapters.map(chapter => (chapter.selected = false))
       if (exercice._id === id) {
-        exercice.selected = !exercice.selected
-        exercice.chapters[0].selected = true
-        return
-      }
-      if (exercice._id !== id) {
-        exercice.selected = false
+        exercice.displayed = !exercice.displayed
         return
       }
     })
@@ -34,9 +28,12 @@ const ExerciceDetails = props => {
     const newExercices = [...exercices]
 
     newExercices.map(exercice => {
+      //RAZ
+      exercice.selected = false;
+      exercice.chapters.map(chapter => (chapter.selected = false))
       if (exercice._id === exerciceId) {
+        exercice.selected = true;
         exercice.chapters.map(chapter => {
-          chapter.selected = false
           if (chapter._id === chapterId) {
             chapter.selected = true
           }
@@ -77,10 +74,11 @@ export const getServerSideProps = async context => {
 
   const exercices = resAllExercices.data.exercicesFromDB
 
-  //Set selected attritube to handle display in sidebarExercice
+  //Set selected & displayed attritube to handle display in sidebarExercice & exerciceContent
   exercices.map(exercice => {
     if (exercice.seoUrl === context.query.exerciceUrl) {
       exercice.selected = true
+      exercice.displayed = true
       exercice.chapters.map((chapter, idx) =>
         idx === 0 ? (chapter.selected = true) : (chapter.selected = false)
       )

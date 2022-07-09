@@ -25,11 +25,11 @@ const ExerciceContent = (props) => {
       width = (elementWidth - 64) / 3;
     }
 
-    if (elementWidth > 632 && elementWidth <= 964) {
+    if (elementWidth > 665 && elementWidth <= 964) {
       width = (elementWidth - 32) / 2;
     }
 
-    if (elementWidth > 300 && elementWidth <= 632) {
+    if (elementWidth > 300 && elementWidth <= 665) {
       width = elementWidth;
     }
 

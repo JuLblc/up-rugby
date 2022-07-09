@@ -25,11 +25,11 @@ const Sidebar = props => {
           <a>Blog</a>
         </Link>
       </li>
-      <li>
+      {/* <li>
         <Link href='#'>
           <a>Prestation</a>
         </Link>
-      </li>
+      </li> */}
       <li>
         <Link href='/about'>
           <a>A propos</a>
