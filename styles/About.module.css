@@ -1,0 +1,56 @@
+.main h1 {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.main h1 span {
+  color: #0085ff;
+}
+
+.main section {
+  display: flex;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: space-between;
+}
+
+.main section article {
+  width: 70%;
+  margin-right: 10px;
+}
+
+.main section article p {
+  margin-top: 0;
+}
+
+.imgWrapper {
+  width: 30%;
+  margin-left: 10px;
+  max-width: 250px;
+}
+
+@media (max-width: 815px) {
+  .main h1 {
+    max-width: 600px;
+  }
+
+  .main section{
+    display: block;
+    max-width: 600px;
+  }
+
+  .main section article {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .imgWrapper {
+    margin-left: 0;
+    width: unset;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

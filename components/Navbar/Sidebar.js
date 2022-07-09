@@ -31,7 +31,7 @@ const Sidebar = props => {
         </Link>
       </li>
       <li>
-        <Link href='#'>
+        <Link href='/about'>
           <a>A propos</a>
         </Link>
       </li>
