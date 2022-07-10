@@ -21,8 +21,8 @@ const Sidebar = props => {
         </Link>
       </li>
       <li>
-        <Link href='/blog'>
-          <a>Blog</a>
+        <Link href='/webinar'>
+          <a>Webinar</a>
         </Link>
       </li>
       {/* <li>

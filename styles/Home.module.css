@@ -189,6 +189,7 @@
   display: flex;
   align-items: center;
   padding: 20px 15px;
+  cursor: pointer;
 }
 
 .supportItemsContent div {
