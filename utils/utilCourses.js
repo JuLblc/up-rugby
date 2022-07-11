@@ -22,7 +22,7 @@ export const getLecturesTime = course => {
     chapter.lectures.map(lecture => {
       timeCourse = timeCourse + lecture.duration
     })
-    
+
     if (chapter.subchapters && chapter.subchapters.length > 0) {
       chapter.subchapters.map(subchapter => {
         subchapter.lectures.map(lecture => {
@@ -30,8 +30,8 @@ export const getLecturesTime = course => {
         })
 
         if (subchapter.infrachapters && subchapter.infrachapters.length > 0) {
-          subchapter.infrachapters.map(infrachapter =>{
-            infrachapter.lectures.map(lecture=>{
+          subchapter.infrachapters.map(infrachapter => {
+            infrachapter.lectures.map(lecture => {
               timeCourse = timeCourse + lecture.duration
             })
           })
@@ -114,4 +114,85 @@ export const convertISO8601ToSec = iso8601Duration => {
     Number(iso8601Obj.minutes) * 60 +
     Number(iso8601Obj.seconds)
   return totalSeconds
+}
+
+export const filterObj = obj => {
+  // Convert `obj` to a key/value array
+  const asArray = Object.entries(obj)
+  const filtered = asArray.filter(
+    ([key, value]) => key === 'title' || key === 'seoUrl' || key === '_id'
+  )
+  // Convert the key/value array back to an object
+  return Object.fromEntries(filtered);
+}
+
+export const getRandomCourses = (currentId, allCourses, idsPurchasedCourses) => {
+
+  let randomCourses = []
+
+  // Keep only title seoUrl & id
+  let filteredCourses = [...allCourses].map(obj => filterObj(obj))
+  filteredCourses.map(obj => obj.seoUrl = `/courses/${obj.seoUrl}`)
+
+  // Remove current course
+  let idx = filteredCourses.map(course => course._id).indexOf(currentId)
+  if (idx !== -1) {
+    filteredCourses.splice(idx, 1)
+  }
+
+  // Remove courses already purchased
+  if (idsPurchasedCourses) {
+    idsPurchasedCourses.forEach(id => {
+      idx = filteredCourses.map(course => course._id).indexOf(id)
+      if (idx !== -1) {
+        filteredCourses.splice(idx, 1)
+      }
+    })
+  }
+
+  // Set courses
+  if (filteredCourses.length <= 2) {
+    return filteredCourses
+  }
+
+  for (let i = 0; i < 2; i++) {
+    let randomIdx = Math.floor(Math.random() * filteredCourses.length)
+    randomCourses.push(filteredCourses[randomIdx])
+    filteredCourses.splice(randomIdx, 1)
+  }
+
+  return randomCourses
+}
+
+export const getRandomExercices = (qty, allExercices) => {
+
+  let randomExercices = []
+  let filteredExercices = [...allExercices].map(obj => filterObj(obj))
+  filteredExercices.map(obj => obj.seoUrl = `/exercices/${obj.seoUrl}`)
+
+  for (let i = 0; i < qty ; i++){
+    let randomIdx = Math.floor(Math.random() * filteredExercices.length)
+    randomExercices.push(filteredExercices[randomIdx])
+    filteredExercices.splice(randomIdx, 1)
+  }
+  
+  return randomExercices
+}
+
+export const getRandomContent = (currentCourseId, allCourses, allExercices, idsPurchasedCourses) => {
+
+  let randomCourses = getRandomCourses(
+    currentCourseId,
+    allCourses,
+    idsPurchasedCourses
+  )
+
+  let exercicesToFetch = 3 - randomCourses.length
+  let randomExercices = getRandomExercices(
+    exercicesToFetch,
+    allExercices
+  )
+
+  let randomContent = randomCourses.concat(randomExercices)
+  return randomContent
 }

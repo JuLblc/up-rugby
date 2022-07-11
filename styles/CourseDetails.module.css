@@ -108,6 +108,10 @@
   .argumentsContainer {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .CTA button {
+    width: 50%!important;
+  }
 }
 
 @media (max-width: 480px) {
@@ -130,12 +134,28 @@
 
 .argument span {
   font-weight: 500;
+  font-size: 18px;
 }
 
 .argument ul {
   padding-inline-start: 20px;
   margin-block-end: 0;
+  /* list-style-type: none; */
 }
+
+.argument ul li{
+  margin-bottom: 5px;
+}
+
+.argument a{
+  text-decoration: none;
+  color: #3a3a3a;
+}
+
+.argument a:hover{
+  text-decoration: underline;
+}
+
 .CTA {
   display: flex;
   flex-direction: column;

@@ -227,7 +227,7 @@ const Login = props => {
       </Head>
       <main className={styles.authContainer}>
         {loginOpt === 'signin' ? <h1>Se connecter</h1> : <h1>S'inscrire</h1>}
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <p>Connecte-toi avec ton réseau social préféré.</p>
         <div className={styles.socialMediaContainer}>
           {/* With Facebook */}
           <Link href='#'>
