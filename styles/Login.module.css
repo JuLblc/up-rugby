@@ -27,6 +27,7 @@
   position: relative;
   text-decoration: none;
   margin: 20px 0;
+  cursor: pointer;
 }
 
 .btnFacebook {
@@ -135,6 +136,8 @@
   margin: 10px 0 0;
   color: #676879;
   font-size: 0.8em;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .authContainer button {
@@ -158,7 +161,7 @@
   margin: 20px 0 10px;
 }
 
-.register a {
+.signUp {
   font-weight: 500;
   padding: 0 5px;
   text-decoration: underline;
