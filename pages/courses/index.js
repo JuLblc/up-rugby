@@ -39,9 +39,9 @@ const Courses = props => {
             <span className={styles.strong}> formations</span>
           </h1>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec
-            nisl vulputate, iaculis tortor quis, convallis ipsum. Duis consequat
-            fringilla condimentum.
+          Envie d'améliorer ta compréhension du rugby ou de développer des
+            compétences spécifiques sur des secteurs de jeu? Voici les
+            formations qu'il te faut!
           </p>
           {props.session?.user.role === 'ADMIN' && (
             <Link href='/courses/create-course'>
