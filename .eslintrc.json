@@ -1,7 +1,139 @@
 {
-  "extends": "next/core-web-vitals",
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:security/recommended",
+    "plugin:typescript-sort-keys/recommended",
+    "plugin:eslint-comments/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": [
+    "security",
+    "sort-destructure-keys",
+    "sort-keys-fix",
+    "typescript-sort-keys",
+    "@typescript-eslint",
+    "immutable",
+    "use-encapsulation"
+  ],
   "rules": {
+    "curly": "error",
+    "@next/next/no-page-custom-font": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/ban-ts-ignore": "off",
+    "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/camelcase": "off",
+    "@typescript-eslint/class-name-casing": "off",
+    "@typescript-eslint/consistent-type-definitions": ["error", "type"],
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/explicit-member-accessibility": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/interface-name-prefix": "off",
+    "@typescript-eslint/member-ordering": "error",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-floating-promises": "off",
+    "@typescript-eslint/no-non-null-assertion": "error",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "ignoreRestSiblings": true
+      }
+    ],
+    "@typescript-eslint/prefer-optional-chain": "error",
+    "@typescript-eslint/prefer-ts-expect-error": "error",
+    "@typescript-eslint/no-var-requires": "off",
+    "immutable/no-let": 2,
+    "immutable/no-this": 2,
+    "react/react-in-jsx-scope": "off",
     "react/no-unescaped-entities": "off",
-    "@next/next/no-page-custom-font": "off"
+    "react/no-unused-prop-types": [2],
+    "react/prefer-stateless-function": "off",
+    "react/prop-types": "off",
+    "react/require-default-props": "off",
+    "security/detect-eval-with-expression": "error",
+    "security/detect-non-literal-regexp": "off",
+    "security/detect-non-literal-require": "error",
+    "security/detect-unsafe-regex": "error",
+    "security/detect-object-injection": "off",
+    "security/detect-non-literal-fs-filename": "off",
+    "sort-destructure-keys/sort-destructure-keys": 2,
+    "sort-keys": [
+      "error",
+      "asc",
+      { "caseSensitive": true, "natural": false, "minKeys": 2 }
+    ],
+    "sort-keys-fix/sort-keys-fix": "warn",
+    "use-encapsulation/prefer-custom-hooks": [
+      "warn",
+      {
+        "allow": [
+          "useMemo",
+          "useCallback",
+          "useContext",
+          "useDebugValue",
+          "useState",
+          "useRef"
+        ]
+      }
+    ],
+    "eslint-comments/no-unused-disable": "error",
+    "eslint-comments/no-unlimited-disable": "error",
+    "new-cap": "off",
+    "newline-after-var": ["error", "always"],
+    "no-console": "off",
+    "no-else-return": "error",
+    "no-eval": "error",
+    "no-undef": "error",
+    "no-mixed-operators": "off",
+    "no-nested-ternary": "error",
+    "no-param-reassign": "error",
+    "no-underscore-dangle": "off",
+    "no-unused-vars": "off",
+    "object-shorthand": "error",
+    "ods-use-this": "off",
+    "padding-line-between-statements": [
+      "error",
+      {
+        "blankLine": "always",
+        "next": "return",
+        "prev": "*"
+      },
+      {
+        "blankLine": "always",
+        "next": "*",
+        "prev": "directive"
+      },
+      {
+        "blankLine": "any",
+        "next": "directive",
+        "prev": "directive"
+      },
+      {
+        "blankLine": "always",
+        "next": "*",
+        "prev": ["case", "default"]
+      },
+      {
+        "blankLine": "never",
+        "next": "case",
+        "prev": ["case", "default"]
+      }
+    ],
+    "prefer-const": "error",
+    "prefer-destructuring": ["error"],
+    "prefer-template": "error",
+    "quotes": ["warn", "double", "avoid-escape"]
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   }
 }
