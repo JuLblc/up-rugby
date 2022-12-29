@@ -1,29 +1,29 @@
-import { getSession } from 'next-auth/react'
-import Link from 'next/link'
-import Head from 'next/head'
-import { getCourses } from '../../apiCall/courses'
-import { getUser } from '../../apiCall/users'
-import { useWindowDimensions } from '../../hooks/useWindowDimensions'
-import { getDeviceTypeInfo } from '../../utils/utilResponsive'
+import { getSession } from "next-auth/react";
+import Link from "next/link";
+import Head from "next/head";
+import { getCourses } from "../../apiCall/courses";
+import { getUser } from "../../apiCall/users";
+import { useWindowDimensions } from "../../hooks/useWindowDimensions";
+import { getDeviceTypeInfo } from "../../utils/utilResponsive";
 import {
   getLecturesQty,
   getLecturesTime,
-  checkPurchaseStatus
-} from '../../utils/utilCourses'
+  checkPurchaseStatus,
+} from "../../utils/utilCourses";
 
-import CardFormation from '../../components/CardFormation'
+import CardFormation from "../../components/CardFormation";
 
-import styles from '../../styles/Courses.module.css'
+import styles from "../../styles/Courses.module.css";
 
-const Courses = props => {
-  const { width, height } = useWindowDimensions()
+const Courses = (props) => {
+  const { height, width } = useWindowDimensions();
 
   const {
-    isMobile
+    isMobile,
     // isTablet,
     // isDesktopOrLaptop,
     // isBigScreen
-  } = getDeviceTypeInfo(width, height)
+  } = getDeviceTypeInfo(width, height);
 
   return (
     <>
@@ -39,18 +39,18 @@ const Courses = props => {
             <span className={styles.strong}> formations</span>
           </h1>
           <p>
-          Envie d'améliorer ta compréhension du rugby ou de développer des
+            Envie d'améliorer ta compréhension du rugby ou de développer des
             compétences spécifiques sur des secteurs de jeu? Voici les
             formations qu'il te faut!
           </p>
-          {props.session?.user.role === 'ADMIN' && (
-            <Link href='/courses/create-course'>
+          {props.session?.user.role === "ADMIN" && (
+            <Link href="/courses/create-course">
               <a>Ajouter une formation</a>
             </Link>
           )}
         </div>
 
-        {props.courses.map(course => (
+        {props.courses.map((course) => (
           <CardFormation
             key={course._id}
             course={course}
@@ -67,34 +67,34 @@ const Courses = props => {
         ))}
       </main>
     </>
-  )
-}
+  );
+};
 
-export default Courses
+export default Courses;
 
 //Server side rendering
-export const getServerSideProps = async context => {
-  const session = await getSession(context)
+export const getServerSideProps = async (context) => {
+  const session = await getSession(context);
 
-  const res = await getCourses(context)
+  const res = await getCourses(context);
 
   if (!session) {
     return {
       props: {
+        courses: res.data.coursesFromDB,
         session,
-        courses: res.data.coursesFromDB
-      }
-    }
+      },
+    };
   }
 
-  const resUser = await getUser(context)
+  const resUser = await getUser(context);
 
   return {
     props: {
-      session,
+      cart: resUser.data.userFromDB.cart,
       courses: res.data.coursesFromDB,
       purchasedCourses: resUser.data.userFromDB.purchasedCourses,
-      cart: resUser.data.userFromDB.cart
-    }
-  }
-}
+      session,
+    },
+  };
+};

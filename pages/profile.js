@@ -1,169 +1,173 @@
-import { getSession } from 'next-auth/react'
-import Head from 'next/head'
-import { useState, useEffect } from 'react'
+import { getSession } from "next-auth/react";
+import Head from "next/head";
+import { useState, useEffect } from "react";
 
-import { getCourses } from '../apiCall/courses'
-import { getUser, putUser, removeCourseToCart } from '../apiCall/users'
-import { cookiesToMetadata } from '../utils/utilStripe'
+import { getCourses } from "../apiCall/courses";
+import { getUser, putUser, removeCourseToCart } from "../apiCall/users";
+import { cookiesToMetadata } from "../utils/utilStripe";
 
-import Sidebar from '../components/Profile/Sidebar'
-import UserCourses from '../components/Profile/UserCourses'
-import UserCart from '../components/Profile/UserCart'
-import UserInfo from '../components/Profile/UserInfo'
-import styles from '../styles/Profile.module.css'
+import Sidebar from "../components/Profile/Sidebar";
+import UserCourses from "../components/Profile/UserCourses";
+import UserCart from "../components/Profile/UserCart";
+import UserInfo from "../components/Profile/UserInfo";
+import styles from "../styles/Profile.module.css";
 
-const Profile = props => {
+const Profile = (props) => {
   // Prevent to be undefined
   !props.userFromDB.firstName
-    ? (props.userFromDB.firstName = '')
-    : props.userFromDB.firstName
+    ? (props.userFromDB.firstName = "")
+    : props.userFromDB.firstName;
   !props.userFromDB.lastName
-    ? (props.userFromDB.lastName = '')
-    : props.userFromDB.lastName
-  !props.userFromDB.club ? (props.userFromDB.club = '') : props.userFromDB.club
+    ? (props.userFromDB.lastName = "")
+    : props.userFromDB.lastName;
+  !props.userFromDB.club ? (props.userFromDB.club = "") : props.userFromDB.club;
 
   const [state, setState] = useState({
-    displayInfo: true,
-    displayCourses: false,
-    displayCart: false,
+    cart: props.cart,
     disableField: true,
-    cart: props.cart
-  })
+    displayCart: false,
+    displayCourses: false,
+    displayInfo: true,
+  });
 
   useEffect(() => {
-    if (props.profileOpt === 'cart') {
+    if (props.profileOpt === "cart") {
       setState({
         ...state,
-        displayInfo: false,
+        displayCart: true,
         displayCourses: false,
-        displayCart: true
-      })
-      return
+        displayInfo: false,
+      });
+
+      return;
     }
 
-    if (props.profileOpt === 'courses') {
+    if (props.profileOpt === "courses") {
       setState({
         ...state,
-        displayInfo: false,
+        displayCart: false,
         displayCourses: true,
-        displayCart: false
-      })
-      return
+        displayInfo: false,
+      });
+
+      return;
     }
 
-    if (props.profileOpt === 'userInfo') {
+    if (props.profileOpt === "userInfo") {
       setState({
         ...state,
-        displayInfo: true,
+        displayCart: false,
         displayCourses: false,
-        displayCart: false
-      })
-      return
-    }
-  }, [])
+        displayInfo: true,
+      });
 
-  const [userData, setUserData] = useState(props.userFromDB)
+      return;
+    }
+  }, []);
+
+  const [userData, setUserData] = useState(props.userFromDB);
 
   const inputs = [
     {
       id: 1,
-      name: 'firstName',
-      type: 'text',
-      label: 'Prénom: '
+      label: "Prénom: ",
+      name: "firstName",
+      type: "text",
     },
     {
       id: 2,
-      name: 'lastName',
-      type: 'text',
-      label: 'Nom: '
+      label: "Nom: ",
+      name: "lastName",
+      type: "text",
     },
     {
       id: 3,
-      name: 'club',
-      type: 'text',
-      label: 'Club: '
-    }
-  ]
+      label: "Club: ",
+      name: "club",
+      type: "text",
+    },
+  ];
 
   const li = [
     {
-      id: 'info',
+      id: "info",
+      label: "Mes informations",
       styles: state.displayInfo ? styles.selected : styles.unselected,
-      label: 'Mes informations'
     },
     {
-      id: 'course',
+      id: "course",
+      label: "Mes achats",
       styles: state.displayCourses ? styles.selected : styles.unselected,
-      label: 'Mes achats'
     },
     {
-      id: 'cart',
+      id: "cart",
+      label: "Mon panier",
       styles: state.displayCart ? styles.selected : styles.unselected,
-      label: 'Mon panier'
-    }
-  ]
+    },
+  ];
 
-  const onChange = e => {
-    setUserData({ ...userData, [e.target.name]: e.target.value })
-  }
+  const onChange = (e) => {
+    setUserData({ ...userData, [e.target.name]: e.target.value });
+  };
 
-  const handleDisplay = e => {
-    if (e.target.id === 'info' && !state.displayInfo) {
+  const handleDisplay = (e) => {
+    if (e.target.id === "info" && !state.displayInfo) {
       setState({
         ...state,
+        displayCart: false,
+        displayCourses: false,
         displayInfo: true,
-        displayCourses: false,
-        displayCart: false
-      })
+      });
     }
 
-    if (e.target.id === 'course' && !state.displayCourses) {
+    if (e.target.id === "course" && !state.displayCourses) {
       setState({
         ...state,
-        displayInfo: false,
+        displayCart: false,
         displayCourses: true,
-        displayCart: false
-      })
+        displayInfo: false,
+      });
     }
 
-    if (e.target.id === 'cart' && !state.displayCart) {
+    if (e.target.id === "cart" && !state.displayCart) {
       setState({
         ...state,
-        displayInfo: false,
+        displayCart: true,
         displayCourses: false,
-        displayCart: true
-      })
+        displayInfo: false,
+      });
     }
-  }
+  };
 
   const editUserData = () => {
     setState({
       ...state,
-      disableField: false
-    })
-  }
+      disableField: false,
+    });
+  };
 
-  const handleFormSubmit = async e => {
-    e.preventDefault()
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
     setState({
       ...state,
-      disableField: true
-    })
+      disableField: true,
+    });
 
-    await putUser(userData)
-  }
+    await putUser(userData);
+  };
 
-  const deleteCourseToCart = async id => {
-    let newState = { ...state }
-    let idx = newState.cart.map(course => course._id).indexOf(id)
-    newState.cart.splice(idx, 1)
+  const deleteCourseToCart = async (id) => {
+    const newState = { ...state };
+    const idx = newState.cart.map((course) => course._id).indexOf(id);
+
+    newState.cart.splice(idx, 1);
 
     setState({
       ...state,
-      cart: newState.cart
-    })
-    await removeCourseToCart(id)
-  }
+      cart: newState.cart,
+    });
+    await removeCourseToCart(id);
+  };
 
   return (
     <>
@@ -192,7 +196,7 @@ const Profile = props => {
             <UserCourses
               courses={props.purchasedCourses}
               styles={styles}
-              CTA='start'
+              CTA="start"
             />
           )}
 
@@ -208,61 +212,66 @@ const Profile = props => {
         </div>
       </main>
     </>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;
 
 //Server side rendering
-export const getServerSideProps = async context => {
-  const session = await getSession(context)
+export const getServerSideProps = async (context) => {
+  const session = await getSession(context);
 
   if (!session) {
     return {
       redirect: {
-        destination: '/login?login=signin',
-        permanent: false
-      }
-    }
+        destination: "/login?login=signin",
+        permanent: false,
+      },
+    };
   }
 
-  const profileOpt = context.query.profile
-  const cookies = cookiesToMetadata(context.req.headers.cookie)
+  const profileOpt = context.query.profile;
+  const cookies = cookiesToMetadata(context.req.headers.cookie);
 
-  const resUser = await getUser(context)
+  const resUser = await getUser(context);
 
-  const userFromDB = resUser.data.userFromDB
-  const purchasedCoursesId = resUser.data.userFromDB.purchasedCourses
-  const cartCoursesId = resUser.data.userFromDB.cart
+  const { userFromDB } = resUser.data;
+  const purchasedCoursesId = resUser.data.userFromDB.purchasedCourses;
+  const cartCoursesId = resUser.data.userFromDB.cart;
 
-  let resCourses
+  // eslint-disable-next-line immutable/no-let
+  let resCourses;
 
-  let purchasedCourses = []
+  // eslint-disable-next-line immutable/no-let
+  let purchasedCourses = [];
+
   if (purchasedCoursesId || cartCoursesId) {
-    resCourses = await getCourses(context)
+    resCourses = await getCourses(context);
   }
 
   if (purchasedCoursesId) {
-    purchasedCourses = resCourses.data.coursesFromDB.filter(course =>
+    purchasedCourses = resCourses.data.coursesFromDB.filter((course) =>
       purchasedCoursesId.includes(course._id)
-    )
+    );
   }
 
-  let cart = []
+  // eslint-disable-next-line immutable/no-let
+  let cart = [];
+
   if (cartCoursesId) {
-    cart = resCourses.data.coursesFromDB.filter(course =>
+    cart = resCourses.data.coursesFromDB.filter((course) =>
       cartCoursesId.includes(course._id)
-    )
+    );
   }
 
   return {
     props: {
+      cart,
+      cookies,
+      profileOpt,
+      purchasedCourses,
       session,
       userFromDB,
-      purchasedCourses,
-      cart,
-      profileOpt,
-      cookies
-    }
-  }
-}
+    },
+  };
+};

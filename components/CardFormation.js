@@ -21,7 +21,9 @@ const CardFormation = (props) => {
   const [isInCart, setisInCart] = useState(props.isInCart);
 
   useEffect(() => {
+    // eslint-disable-next-line prefer-destructuring
     const $p = divRef.current.children[1];
+
     if ($p.clientHeight < $p.scrollHeight) {
       setIsOverflowing(true);
     }
@@ -56,11 +58,13 @@ const CardFormation = (props) => {
     if (props.userId) {
       setisInCart(true);
       await putCourseToCart(props.course._id);
+
       return;
     }
 
     if (!props.userId) {
       router.push("/login?login=signin");
+
       return;
     }
   };
@@ -143,6 +147,7 @@ const CardFormation = (props) => {
             <Link href={`/courses/${props.course.seoUrl}`}>
               <a>Détails</a>
             </Link>
+            {/* eslint-disable-next-line no-nested-ternary */}
             {props.isPurchased ? (
               <button onClick={startCourse}>
                 {width > 350 && (

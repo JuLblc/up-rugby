@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import {
   postExercice,
   putExercice,
-  removeExercice
+  removeExercice,
 } from "../../apiCall/exercices";
 
 import { toSeoUrl } from "../../utils/utilSeoUrl";
@@ -24,8 +24,8 @@ const Exercice = (props) => {
   const [pictInput, setPictInput] = useState();
 
   const errorMessages = {
+    descriptionMissing: "Veuillez saisir la description",
     titleMissing: "Veuillez saisir le titre",
-    descriptionMissing: "Veuillez saisir la description"
   };
 
   const onChange = (e) => {
@@ -38,42 +38,47 @@ const Exercice = (props) => {
 
   const onChangeChapter = (e, idx) => {
     const newExerciceData = { ...exerciceData };
+
     newExerciceData.chapters[idx][e.target.name] = e.target.value;
     setExerciceData(newExerciceData);
   };
 
   const addChapter = () => {
     const newExerciceData = { ...exerciceData };
+
     newExerciceData.chapters.push({
-      title: "",
       lectures: [],
-      subchapters: []
+      subchapters: [],
+      title: "",
     });
     setExerciceData(newExerciceData);
   };
 
   const removeChapter = (idx) => {
     const newExerciceData = { ...exerciceData };
+
     newExerciceData.chapters.splice(idx, 1);
     setExerciceData(newExerciceData);
   };
 
   const addVideo = (idx) => {
     const newExerciceData = { ...exerciceData };
+
     newExerciceData.chapters[idx].lectures.push({
-      url: "",
       duration: 0,
-      youtubeId: ""
+      url: "",
+      youtubeId: "",
     });
     setExerciceData(newExerciceData);
   };
 
   const addSubChapter = (idx) => {
     const newExerciceData = { ...exerciceData };
+
     newExerciceData.chapters[idx].subchapters.push({
-      title: "",
+      infrachapters: [],
       lectures: [],
-      infrachapters: []
+      title: "",
     });
     setExerciceData(newExerciceData);
   };
@@ -85,6 +90,7 @@ const Exercice = (props) => {
   const removePict = () => {
     //Remove from exerciceData
     const newExerciceData = { ...exerciceData };
+
     newExerciceData.img = {};
     setExerciceData(newExerciceData);
 
@@ -102,6 +108,7 @@ const Exercice = (props) => {
 
   const publishExercice = async () => {
     const newExerciceData = { ...exerciceData };
+
     newExerciceData.isPublished = true;
     setExerciceData(newExerciceData);
 
@@ -114,11 +121,13 @@ const Exercice = (props) => {
 
     //Set Url for SEO
     const newExerciceData = { ...exerciceData };
+
     newExerciceData.seoUrl = toSeoUrl(exerciceData.title);
 
     //1. Picture upload to Cloudinary & get secure urls
     if (pictInput) {
       const formDataPict = new FormData();
+
       formDataPict.append("file", pictInput);
 
       const resUploadPict = await postUpload(
@@ -135,6 +144,7 @@ const Exercice = (props) => {
     //2. Save in DB
     if (props.action === "create") {
       const resCreate = await postExercice(newExerciceData);
+
       router.push(
         `/exercices/update-exercice/${resCreate.data.newExerciceFromDB.seoUrl}`
       );

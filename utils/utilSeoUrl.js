@@ -1,5 +1,4 @@
 export const toSeoUrl = (url) => {
-
   return url
     .toString() // Convert to string
     .normalize("NFD") // Change diacritics

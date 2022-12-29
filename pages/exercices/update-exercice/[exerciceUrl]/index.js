@@ -1,22 +1,23 @@
-import { useEffect } from 'react'
-import { getSession } from 'next-auth/react'
-import { useRouter } from 'next/router'
-import { getExercices } from '../../../../apiCall/exercices'
-import Exercice from '../../../../components/FormExercice/Exercice'
+import { useEffect } from "react";
+import { getSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { getExercices } from "../../../../apiCall/exercices";
+import Exercice from "../../../../components/FormExercice/Exercice";
 
-const UpdateExerciceDetails = props => {
-  const router = useRouter()
+const UpdateExerciceDetails = (props) => {
+  const router = useRouter();
 
   useEffect(() => {
     if (!props.session) {
-      router.push('/login?login=signin')
-      return
+      router.push("/login?login=signin");
+
+      return;
     }
 
-    if (props.session.user.role !== 'ADMIN') {
-      router.back()
+    if (props.session.user.role !== "ADMIN") {
+      router.back();
     }
-  }, [])
+  }, []);
 
   return (
     <main>
@@ -26,37 +27,36 @@ const UpdateExerciceDetails = props => {
 
           <Exercice
             exerciceContent={props.exercice}
-            action={'update'}
+            action={"update"}
             disable={true}
           />
         </>
       )}
     </main>
-  )
-}
+  );
+};
 
-
-export default UpdateExerciceDetails
+export default UpdateExerciceDetails;
 
 //Server side rendering
-export const getServerSideProps = async context => {
-  const session = await getSession(context)
+export const getServerSideProps = async (context) => {
+  const session = await getSession(context);
 
   // Check if user is authorized before sending request
-  if (!session || session.user.role !== 'ADMIN') {
+  if (!session || session.user.role !== "ADMIN") {
     return {
       props: {
-        session
-      }
-    }
+        session,
+      },
+    };
   }
 
-  const res = await getExercices(context, context.query.exerciceUrl)
+  const res = await getExercices(context, context.query.exerciceUrl);
 
   return {
     props: {
+      exercice: res.data.exerciceFromDB,
       session,
-      exercice: res.data.exerciceFromDB
-    }
-  }
-}
+    },
+  };
+};

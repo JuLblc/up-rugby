@@ -1,163 +1,173 @@
-const { connectToDatabase } = require('../../../utils/mongodb')
+const { connectToDatabase } = require("../../../utils/mongodb");
 
-import NextAuth from 'next-auth'
-import CredentialsProvider from 'next-auth/providers/credentials'
-import FacebookProvider from 'next-auth/providers/facebook'
-import GoogleProvider from 'next-auth/providers/google'
+import NextAuth from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import FacebookProvider from "next-auth/providers/facebook";
+import GoogleProvider from "next-auth/providers/google";
 
-import User from '../../../models/User.model'
+import User from "../../../models/User.model";
 
-const bcrypt = require('bcryptjs')
+const bcrypt = require("bcryptjs");
 
 export default NextAuth({
+  callbacks: {
+    async jwt({ token, user }) {
+      // console.log('callbacks jwt: ', { token, user })
+      if (user) {
+        token.id = user.id;
+        token.firstName = user.firstName;
+        token.lastName = user.lastName;
+        token.role = user.role;
+      }
+
+      return token;
+    },
+    async session({ session, token }) {
+      // console.log('callbacks session: ', { session, token })
+      session.user.id = token.id;
+      session.user.firstName = token.firstName;
+      session.user.lastName = token.lastName;
+      session.user.role = token.role;
+
+      return session;
+    },
+  },
+  jwt: {
+    maxAge: 60 * 60 * 24 * 1,
+    secret: process.env.NEXTAUTH_SECRET, // 1 jour
+  },
   providers: [
     CredentialsProvider({
-      async authorize (credentials, req) {
-        await connectToDatabase()
+      async authorize(credentials) {
+        await connectToDatabase();
 
         const user = await User.findOne({
-          $and: [{ email: credentials.email }, { isEmailVerified: true }]
-        })
+          $and: [{ email: credentials.email }, { isEmailVerified: true }],
+        });
 
         const bcryptValidation = await bcrypt.compare(
           credentials.password,
           user.password
-        )
+        );
 
         if (bcryptValidation && user) {
           // Any object returned will be saved in `user` property of the JWT
-          return user
+          return user;
         }
 
         // If you return null or false then the credentials will be rejected
-        return null
-      }
+        return null;
+      },
     }),
     FacebookProvider({
       clientId: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-      userinfo: {
-        params: {
-          fields: 'id,email,first_name,last_name,picture'
-        }
-      },
-
-      profile: async profile => {
-        await connectToDatabase()
+      profile: async (profile) => {
+        await connectToDatabase();
 
         const profileFromFB = {
-          id: profile.id,
-          firstName: profile.first_name,
-          lastName: profile.last_name,
           email: profile.email,
-          image: profile.picture.data.url
-        }
+          firstName: profile.first_name,
+          id: profile.id,
+          image: profile.picture.data.url,
+          lastName: profile.last_name,
+        };
 
         // 1. Check if user with FB_id already in DB
-        let user = await User.findOne({ facebookID: profileFromFB.id })
+        // eslint-disable-next-line immutable/no-let
+        let user = await User.findOne({ facebookID: profileFromFB.id });
+
         if (user) {
-          return user
+          return user;
         }
 
         //2. Check if email from FB has been utilized to create an account
-        user = await User.findOne({ email: profileFromFB.email })
+        user = await User.findOne({ email: profileFromFB.email });
         if (user) {
-          user.facebookID = profileFromFB.id
+          user.facebookID = profileFromFB.id;
           user.firstName
             ? user.firstName
-            : (user.firstName = profileFromFB.firstName)
+            : (user.firstName = profileFromFB.firstName);
           user.lastName
             ? user.lastName
-            : (user.lastName = profileFromFB.lastName)
-          await user.save()
-          return user
+            : (user.lastName = profileFromFB.lastName);
+          await user.save();
+
+          return user;
         }
-        
+
         //3. Create user
         const newUser = await User.create({
-          facebookID: profileFromFB.id,
           email: profileFromFB.email,
+          facebookID: profileFromFB.id,
           firstName: profileFromFB.firstName,
+          isEmailVerified: true,
           lastName: profileFromFB.lastName,
-          isEmailVerified: true
-        })
-        return newUser
-      }
+        });
+
+        return newUser;
+      },
+
+      userinfo: {
+        params: {
+          fields: "id,email,first_name,last_name,picture",
+        },
+      },
     }),
 
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
 
-      profile: async profile => {
-        await connectToDatabase()
+      profile: async (profile) => {
+        await connectToDatabase();
 
         const profileFromGoogle = {
-          id: profile.sub,
-          firstName: profile.given_name,
-          lastName: profile.family_name,
           email: profile.email,
-          image: profile.picture
-        }
+          firstName: profile.given_name,
+          id: profile.sub,
+          image: profile.picture,
+          lastName: profile.family_name,
+        };
 
         // 1. Check if user with Google_id already in DB
-        let user = await User.findOne({ googleID: profileFromGoogle.id })
+        // eslint-disable-next-line immutable/no-let
+        let user = await User.findOne({ googleID: profileFromGoogle.id });
+
         if (user) {
-          return user
+          return user;
         }
 
         //2. Check if email from Google has been utilized to create an account
-        user = await User.findOne({ email: profileFromGoogle.email })
+        user = await User.findOne({ email: profileFromGoogle.email });
         if (user) {
-          user.googleID = profileFromGoogle.id
+          user.googleID = profileFromGoogle.id;
           user.firstName
             ? user.firstName
-            : (user.firstName = profileFromGoogle.firstName)
+            : (user.firstName = profileFromGoogle.firstName);
           user.lastName
             ? user.lastName
-            : (user.lastName = profileFromGoogle.lastName)
-          await user.save()
-          return user
+            : (user.lastName = profileFromGoogle.lastName);
+          await user.save();
+
+          return user;
         }
 
         //3. Create user
         const newUser = await User.create({
-          googleID: profileFromGoogle.id,
           email: profileFromGoogle.email,
           firstName: profileFromGoogle.firstName,
+          googleID: profileFromGoogle.id,
+          isEmailVerified: true,
           lastName: profileFromGoogle.lastName,
-          isEmailVerified: true
-        })
-        return newUser
-      }
-    })
+        });
+
+        return newUser;
+      },
+    }),
   ],
-  jwt: {
-    secret: process.env.NEXTAUTH_SECRET,
-    maxAge: 60 * 60 * 24 * 1 // 1 jour
-  },
+  secret: process.env.NEXTAUTH_SECRET,
   session: {
-    maxAge: 60 * 60 * 24 * 1 // 1 jour
+    maxAge: 60 * 60 * 24 * 1, // 1 jour
   },
-  callbacks: {
-    async jwt ({ token, user }) {
-      // console.log('callbacks jwt: ', { token, user })
-      if (user) {
-        token.id = user.id
-        token.firstName = user.firstName
-        token.lastName = user.lastName
-        token.role = user.role
-      }
-      return token
-    },
-    async session ({ session, token }) {
-      // console.log('callbacks session: ', { session, token })
-      session.user.id = token.id
-      session.user.firstName = token.firstName
-      session.user.lastName = token.lastName
-      session.user.role = token.role
-      return session
-    }
-  },
-  secret: process.env.NEXTAUTH_SECRET
-})
+});

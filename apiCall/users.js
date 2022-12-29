@@ -1,61 +1,63 @@
-import axios from 'axios'
-import { cookiesToStr } from '../utils/utilStripe'
+import axios from "axios";
+import { cookiesToStr } from "../utils/utilStripe";
 
-export const getUser = async context => {
-  const headers = {}
+export const getUser = async (context) => {
+  const headers = {};
+
   if (context.req.headers.cookie) {
-    headers.cookie = context.req.headers.cookie
+    headers.cookie = context.req.headers.cookie;
   }
 
   return await axios.get(`${process.env.DOMAIN_URL}/api/users/`, {
-    headers
-  })
-}
+    headers,
+  });
+};
 
-export const putUser = async updatedUser => {
-  await axios.put(`/api/users`, {
-    updatedUser
-  })
-}
+export const putUser = async (updatedUser) => {
+  await axios.put("/api/users", {
+    updatedUser,
+  });
+};
 
 export const putCourseToUser = async (courseId, cookies) => {
-
   if (!process.env.DOMAIN_URL) {
-    await axios.put(`/api/users/add-course-to-user`, {
-      courseId
-    })
-    return
+    await axios.put("/api/users/add-course-to-user", {
+      courseId,
+    });
+
+    return;
   }
 
   const headers = {
-    cookie: cookiesToStr(cookies)
-  }
+    cookie: cookiesToStr(cookies),
+  };
 
   await axios.put(
     `${process.env.DOMAIN_URL}/api/users/add-course-to-user`,
     { courseId },
     { headers }
-  )
-}
+  );
+};
 
-export const putCourseToCart = async courseId => {
-  await axios.put(`/api/users/course-to-cart`, {
-    courseId
-  })
-}
+export const putCourseToCart = async (courseId) => {
+  await axios.put("/api/users/course-to-cart", {
+    courseId,
+  });
+};
 
 export const removeCourseToCart = async (courseId, cookies) => {
-
   if (!process.env.DOMAIN_URL) {
-    await axios.delete(`/api/users/course-to-cart`, { data: courseId })
-    return
+    await axios.delete("/api/users/course-to-cart", { data: courseId });
+
+    return;
   }
 
   const headers = {
-    cookie: cookiesToStr(cookies)
-  }
+    cookie: cookiesToStr(cookies),
+  };
+
   await axios.delete(`${process.env.DOMAIN_URL}/api/users/course-to-cart`, {
+    data: courseId,
     headers,
-    data: courseId
-  })
-}
+  });
+};

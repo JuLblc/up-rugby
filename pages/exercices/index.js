@@ -1,27 +1,27 @@
-import Link from 'next/link'
-import Head from 'next/head'
+import Link from "next/link";
+import Head from "next/head";
 
-import { getSession } from 'next-auth/react'
+import { getSession } from "next-auth/react";
 
-import { getExercices } from '../../apiCall/exercices'
+import { getExercices } from "../../apiCall/exercices";
 
-import { useWindowDimensions } from '../../hooks/useWindowDimensions'
-import { getDeviceTypeInfo } from '../../utils/utilResponsive'
-import { getLecturesQty, getLecturesTime } from '../../utils/utilCourses'
+import { useWindowDimensions } from "../../hooks/useWindowDimensions";
+import { getDeviceTypeInfo } from "../../utils/utilResponsive";
+import { getLecturesQty, getLecturesTime } from "../../utils/utilCourses";
 
-import CardExercice from '../../components/Exercice/CardExercice'
+import CardExercice from "../../components/Exercice/CardExercice";
 
-import styles from '../../styles/Courses.module.css'
+import styles from "../../styles/Courses.module.css";
 
-const Exercices = props => {
-  const { width, height } = useWindowDimensions()
+const Exercices = (props) => {
+  const { height, width } = useWindowDimensions();
 
   const {
-    isMobile
+    isMobile,
     // isTablet,
     // isDesktopOrLaptop,
     // isBigScreen
-  } = getDeviceTypeInfo(width, height)
+  } = getDeviceTypeInfo(width, height);
 
   return (
     <>
@@ -41,14 +41,14 @@ const Exercices = props => {
             nisl vulputate, iaculis tortor quis, convallis ipsum. Duis consequat
             fringilla condimentum.
           </p>
-          {props.session?.user.role === 'ADMIN' && (
-            <Link href='/exercices/create-exercice'>
+          {props.session?.user.role === "ADMIN" && (
+            <Link href="/exercices/create-exercice">
               <a>Ajouter une catégorie d'exercices</a>
             </Link>
           )}
         </div>
 
-        {props.exercices.map(exercice => (
+        {props.exercices.map((exercice) => (
           <CardExercice
             key={exercice._id}
             exercice={exercice}
@@ -59,21 +59,21 @@ const Exercices = props => {
         ))}
       </main>
     </>
-  )
-}
+  );
+};
 
-export default Exercices
+export default Exercices;
 
-export const getServerSideProps = async context => {
-  const session = await getSession(context)
+export const getServerSideProps = async (context) => {
+  const session = await getSession(context);
 
-  const res = await getExercices(context)
-  const exercices = res.data.exercicesFromDB
+  const res = await getExercices(context);
+  const exercices = res.data.exercicesFromDB;
 
   return {
     props: {
+      exercices,
       session,
-      exercices
-    }
-  }
-}
+    },
+  };
+};

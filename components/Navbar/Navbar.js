@@ -18,22 +18,18 @@ const Navbar = () => {
 
   const router = useRouter();
 
-  const { width, height } = useWindowDimensions();
+  const { height, width } = useWindowDimensions();
 
   const goingUp = useScrollY();
   const scrollPositionY = useScrollPosition();
 
-  const {
-    isMobile,
-    isTablet,
-    isDesktopOrLaptop,
-    isBigScreen
-  } = getDeviceTypeInfo(width, height);
+  const { isBigScreen, isDesktopOrLaptop, isMobile, isTablet } =
+    getDeviceTypeInfo(width, height);
 
   const handleSignOut = (e) => {
     e.preventDefault();
     signOut({
-      callbackUrl: "/login?login=signin"
+      callbackUrl: "/login?login=signin",
     });
   };
 

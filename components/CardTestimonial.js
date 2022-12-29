@@ -1,12 +1,11 @@
-import Image from 'next/image'
-import styles from '../styles/CardTestimonial.module.css'
+import Image from "next/image";
+import styles from "../styles/CardTestimonial.module.css";
 
-const CardTestimonial = props => {
+const CardTestimonial = (props) => {
   return (
-  
     <div className={`${styles.cardContainer}`}>
       <div className={styles.imageWrapper}>
-        <Image src={props.img} alt='testimonial-picture' />
+        <Image src={props.img} alt="testimonial-picture" />
         <div className={styles.quote}>"</div>
       </div>
 
@@ -18,7 +17,7 @@ const CardTestimonial = props => {
       <div className={styles.signatureContainer}>
         <div className={styles.signature}>
           <p className={styles.name}>{props.name}</p>
-          {props.jobs.map(job => (
+          {props.jobs.map((job) => (
             <p className={styles.jobTitle} key={job}>
               {job}
             </p>
@@ -26,7 +25,7 @@ const CardTestimonial = props => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CardTestimonial
+export default CardTestimonial;

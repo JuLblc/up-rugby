@@ -15,31 +15,30 @@ const Login = (props) => {
 
   const [formData, setFormData] = useState({
     email: "",
-    password: "",
     messageAPI: "",
-    messageType: ""
+    messageType: "",
+    password: "",
   });
   const [loginOpt, setLoginOpt] = useState(props.loginOpt);
   const [reset, doReset] = useState(0);
 
   const [pattern, setPattern] = useState(props.patternStr);
 
-  const { email, password, messageAPI, messageType } = formData;
+  const { email, messageAPI, messageType, password } = formData;
 
   const inputs = [
     {
+      errorMessages: {
+        emailMissing: "Veuillez saisir votre adresse Email",
+        patternMismatch: null,
+        valid: "Merci de saisir une adresse valide",
+      },
       id: 1,
       name: "email",
-      type: "email",
       placeholder: "Email",
-      errorMessages: {
-        patternMismatch: null,
-        emailMissing: "Veuillez saisir votre adresse Email",
-        valid: "Merci de saisir une adresse valide"
-      },
       required: true,
-      reset: reset,
-      styles: styles,
+      reset,
+      styles,
       svg: [
         <svg
           className={styles.icon}
@@ -54,24 +53,24 @@ const Login = (props) => {
             d="M3 3h18a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm9.06 8.683L5.648 6.238 4.353 7.762l7.72 6.555 7.581-6.56-1.308-1.513-6.285 5.439z"
             fill="rgba(103,104,121,1)"
           />
-        </svg>
-      ]
+        </svg>,
+      ],
+      type: "email",
     },
     {
-      id: 2,
-      name: "password",
-      type: "password",
-      placeholder: "Mot de passe",
       errorMessages: {
+        passwordMissing: "Veuillez saisir votre mot de passe",
         patternMismatch:
           "Le mot de passe doit contenir au moins 6 caractères, un chiffre, une lettre et un caractère spécial",
-        passwordMissing: "Veuillez saisir votre mot de passe",
-        valid: null
+        valid: null,
       },
-      pattern: pattern,
+      id: 2,
+      name: "password",
+      pattern,
+      placeholder: "Mot de passe",
       required: true,
-      reset: reset,
-      styles: styles,
+      reset,
+      styles,
       svg: [
         <svg
           className={styles.icon}
@@ -114,9 +113,10 @@ const Login = (props) => {
             d="M17.882 19.297A10.949 10.949 0 0 1 12 21c-5.392 0-9.878-3.88-10.819-9a10.982 10.982 0 0 1 3.34-6.066L1.392 2.808l1.415-1.415 19.799 19.8-1.415 1.414-3.31-3.31zM5.935 7.35A8.965 8.965 0 0 0 3.223 12a9.005 9.005 0 0 0 13.201 5.838l-2.028-2.028A4.5 4.5 0 0 1 8.19 9.604L5.935 7.35zm6.979 6.978l-3.242-3.242a2.5 2.5 0 0 0 3.241 3.241zm7.893 2.264l-1.431-1.43A8.935 8.935 0 0 0 20.777 12 9.005 9.005 0 0 0 9.552 5.338L7.974 3.76C9.221 3.27 10.58 3 12 3c5.392 0 9.878 3.88 10.819 9a10.947 10.947 0 0 1-2.012 4.592zm-9.084-9.084a4.5 4.5 0 0 1 4.769 4.769l-4.77-4.769z"
             fill="rgba(128,128,128,1)"
           />
-        </svg>
-      ]
-    }
+        </svg>,
+      ],
+      type: "password",
+    },
   ];
 
   const onChange = (e) =>
@@ -124,7 +124,7 @@ const Login = (props) => {
       ...formData,
       [e.target.name]: e.target.value,
       messageAPI: "",
-      messageType: ""
+      messageType: "",
     });
 
   const onClick = () => {
@@ -133,7 +133,7 @@ const Login = (props) => {
     if (loginOpt === "signin") {
       setLoginOpt("signup");
       setPattern(
-        `^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,20}$`
+        "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,20}$"
       );
     }
 
@@ -144,9 +144,9 @@ const Login = (props) => {
 
     setFormData({
       email: "",
-      password: "",
       messageAPI: "",
-      messageType: ""
+      messageType: "",
+      password: "",
     });
   };
 
@@ -156,22 +156,24 @@ const Login = (props) => {
     /* --------------------------- SIGN IN ---------------------------*/
     if (loginOpt === "signin") {
       signIn("credentials", {
-        redirect: false,
         email,
-        password
+        password,
+        redirect: false,
       })
         .then((response) => {
           if (!response.error) {
             router.push("/");
+
             return;
           }
 
-          if (response.error === `Cannot read property 'password' of null`) {
+          if (response.error === "Cannot read property 'password' of null") {
             setFormData({
               ...formData,
               messageAPI: "Cette adresse E-mail est introuvable ou non validée",
-              messageType: "error"
+              messageType: "error",
             });
+
             return;
           }
 
@@ -180,8 +182,9 @@ const Login = (props) => {
               ...formData,
               messageAPI:
                 "Cette adresse E-mail et ce mot de passe ne correspondent pas",
-              messageType: "error"
+              messageType: "error",
             });
+
             return;
           }
         })
@@ -190,20 +193,22 @@ const Login = (props) => {
           setFormData({
             ...formData,
             messageAPI: err.response.data.message,
-            messageType: "error"
+            messageType: "error",
           });
         });
+
       return;
     }
 
     /* --------------------------- SIGN UP ---------------------------*/
     if (loginOpt === "signup") {
       const resPostAuth = await postAuth(email, password);
+
       console.log("resPostAuth: ", resPostAuth);
       setFormData({
         ...formData,
         messageAPI: resPostAuth.data.message,
-        messageType: resPostAuth.data.messageType
+        messageType: resPostAuth.data.messageType,
       });
     }
   };
@@ -441,21 +446,25 @@ export const getServerSideProps = async (context) => {
     return {
       redirect: {
         destination: "/",
-        permanent: false
-      }
+        permanent: false,
+      },
     };
   }
 
   const loginOpt = context.query.login;
+  // eslint-disable-next-line immutable/no-let
   let patternStr;
+
   loginOpt === "signin"
     ? (patternStr = null)
-    : (patternStr = `^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,20}$`);
+    : (patternStr =
+        "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,20}$");
+
   return {
     props: {
-      session,
       loginOpt,
-      patternStr
-    }
+      patternStr,
+      session,
+    },
   };
 };

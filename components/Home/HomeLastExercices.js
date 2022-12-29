@@ -1,32 +1,33 @@
-import stylesCourses from '../../styles/Courses.module.css'
-import stylesHome from '../../styles/Home.module.css'
+import stylesCourses from "../../styles/Courses.module.css";
+import stylesHome from "../../styles/Home.module.css";
 
-import Link from 'next/link'
+import Link from "next/link";
 
-import CardExercice from '../Exercice/CardExercice'
+import CardExercice from "../Exercice/CardExercice";
 
-import { useWindowDimensions } from '../../hooks/useWindowDimensions'
-import { getDeviceTypeInfo } from '../../utils/utilResponsive'
+import { useWindowDimensions } from "../../hooks/useWindowDimensions";
+import { getDeviceTypeInfo } from "../../utils/utilResponsive";
 
-import { getLecturesQty, getLecturesTime } from '../../utils/utilCourses'
+import { getLecturesQty, getLecturesTime } from "../../utils/utilCourses";
 
-const HomeLastExercices = props => {
-  const { width, height } = useWindowDimensions()
+const HomeLastExercices = (props) => {
+  const { height, width } = useWindowDimensions();
 
   const {
-    isMobile
+    isMobile,
     // isTablet,
     // isDesktopOrLaptop,
     // isBigScreen
-  } = getDeviceTypeInfo(width, height)
+  } = getDeviceTypeInfo(width, height);
 
   return (
     <section
       className={`${stylesCourses.cardFormationContainer} ${stylesHome.sectionHomeLogged}`}
     >
       <div
-        className={`${stylesCourses.intro} ${!isMobile &&
-          stylesCourses.introNotMobile}`}
+        className={`${stylesCourses.intro} ${
+          !isMobile && stylesCourses.introNotMobile
+        }`}
       >
         <h1>
           Les derniers <br />
@@ -38,13 +39,13 @@ const HomeLastExercices = props => {
           fringilla condimentum.
         </p>
         <div className={stylesHome.link}>
-          <Link href='/exercices'>
+          <Link href="/exercices">
             <a>Tous les exercices</a>
           </Link>
         </div>
       </div>
 
-      {props.exercices.map(exercice => (
+      {props.exercices.map((exercice) => (
         <CardExercice
           key={exercice._id}
           exercice={exercice}
@@ -54,7 +55,7 @@ const HomeLastExercices = props => {
         />
       ))}
     </section>
-  )
-}
+  );
+};
 
-export default HomeLastExercices
+export default HomeLastExercices;

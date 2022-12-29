@@ -28,8 +28,9 @@ export default async function handler(req, res) {
         case "DELETE":
           deleteCourse(req, res, session);
           break;
+
         default:
-          res.status(405).end('Method not allowed')
+          res.status(405).end("Method not allowed");
       }
     })
     .catch((err) => {
@@ -46,6 +47,7 @@ const addCourse = (req, res, session) => {
 
   if (!session || session.user.role !== "ADMIN") {
     res.status(401).json({ message: "Unauthorized" });
+
     return;
   }
 
@@ -61,6 +63,7 @@ const addCourse = (req, res, session) => {
 
 const getAllCourses = (req, res, session) => {
   const cond = {};
+
   if (!session || session.user.role !== "ADMIN") {
     cond.isPublished = true;
   }
@@ -77,6 +80,7 @@ const getCourse = (req, res, session) => {
   const seoUrl = req.query.url;
 
   const cond = { seoUrl };
+
   if (!session || session.user.role !== "ADMIN") {
     cond.isPublished = true;
   }
@@ -91,6 +95,7 @@ const getCourse = (req, res, session) => {
 const updateCourse = (req, res, session) => {
   if (!session || session.user.role !== "ADMIN") {
     res.status(401).json({ message: "Unauthorized" });
+
     return;
   }
 
@@ -107,6 +112,7 @@ const updateCourse = (req, res, session) => {
 const deleteCourse = (req, res, session) => {
   if (!session || session.user.role !== "ADMIN") {
     res.status(401).json({ message: "Unauthorized" });
+
     return;
   }
 

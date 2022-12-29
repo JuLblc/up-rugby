@@ -1,4 +1,4 @@
-import Head from 'next/head'
+import Head from "next/head";
 
 const Webinar = () => {
   return (
@@ -9,10 +9,13 @@ const Webinar = () => {
       <main>
         <h1>Webinar</h1>
         <h2>En construction</h2>
-        <p>N'hésite pas à te créer un compte pour être tenu au courant des évolutions UpRugby!!</p>
+        <p>
+          N'hésite pas à te créer un compte pour être tenu au courant des
+          évolutions UpRugby!!
+        </p>
       </main>
     </>
-  )
-}
+  );
+};
 
-export default Webinar
+export default Webinar;

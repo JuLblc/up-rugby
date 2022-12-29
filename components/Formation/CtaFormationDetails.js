@@ -5,6 +5,7 @@ const CtaFormationDetails = (props) => {
         {props.course.price}
         <span>€</span>
       </div>
+      {/* eslint-disable-next-line no-nested-ternary */}
       {props.course.isPurchased ? (
         <button onClick={props.startCourse}>
           <svg

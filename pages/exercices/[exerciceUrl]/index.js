@@ -1,48 +1,49 @@
-import { useState } from 'react'
-import React from 'react'
-import Head from 'next/head'
+import { useState } from "react";
+import React from "react";
+import Head from "next/head";
 
-import { getExercices } from '../../../apiCall/exercices'
-import SidebarExercice from '../../../components/Exercice/SidebarExercice'
-import ExerciceContent from '../../../components/Exercice/ExerciceContent'
+import { getExercices } from "../../../apiCall/exercices";
+import SidebarExercice from "../../../components/Exercice/SidebarExercice";
+import ExerciceContent from "../../../components/Exercice/ExerciceContent";
 
-import styles from '../../../styles/ExerciceDetails.module.css'
+import styles from "../../../styles/ExerciceDetails.module.css";
 
-const ExerciceDetails = props => {
-  const [exercices, setExercices] = useState(props.exercices)
+const ExerciceDetails = (props) => {
+  const [exercices, setExercices] = useState(props.exercices);
 
-  const handleTitleDisplay = id => {
-    const newExercices = [...exercices]
+  const handleTitleDisplay = (id) => {
+    const newExercices = [...exercices];
 
-    newExercices.map(exercice => {
+    newExercices.map((exercice) => {
       if (exercice._id === id) {
-        exercice.displayed = !exercice.displayed
-        return
-      }
-    })
+        exercice.displayed = !exercice.displayed;
 
-    setExercices(newExercices)
-  }
+        return;
+      }
+    });
+
+    setExercices(newExercices);
+  };
 
   const handleChapterDisplay = (exerciceId, chapterId) => {
-    const newExercices = [...exercices]
+    const newExercices = [...exercices];
 
-    newExercices.map(exercice => {
+    newExercices.map((exercice) => {
       //RAZ
       exercice.selected = false;
-      exercice.chapters.map(chapter => (chapter.selected = false))
+      exercice.chapters.map((chapter) => (chapter.selected = false));
       if (exercice._id === exerciceId) {
         exercice.selected = true;
-        exercice.chapters.map(chapter => {
+        exercice.chapters.map((chapter) => {
           if (chapter._id === chapterId) {
-            chapter.selected = true
+            chapter.selected = true;
           }
-        })
+        });
       }
-    })
+    });
 
-    setExercices(newExercices)
-  }
+    setExercices(newExercices);
+  };
 
   return (
     <>
@@ -63,38 +64,40 @@ const ExerciceDetails = props => {
         </div>
       </main>
     </>
-  )
-}
+  );
+};
 
-export default ExerciceDetails
+export default ExerciceDetails;
 
 //Server side rendering
-export const getServerSideProps = async context => {
-  const resAllExercices = await getExercices(context)
+export const getServerSideProps = async (context) => {
+  const resAllExercices = await getExercices(context);
 
-  const exercices = resAllExercices.data.exercicesFromDB
+  const exercices = resAllExercices.data.exercicesFromDB;
 
   //Set selected & displayed attritube to handle display in sidebarExercice & exerciceContent
-  exercices.map(exercice => {
+  exercices.map((exercice) => {
     if (exercice.seoUrl === context.query.exerciceUrl) {
-      exercice.selected = true
-      exercice.displayed = true
+      exercice.selected = true;
+      exercice.displayed = true;
       exercice.chapters.map((chapter, idx) =>
         idx === 0 ? (chapter.selected = true) : (chapter.selected = false)
-      )
-      return
+      );
+
+      return;
     }
 
     if (exercice.seoUrl !== context.query.exerciceUrl) {
-      exercice.selected = false
-      exercice.chapters.map(chapter => (chapter.selected = false))
-      return
+      exercice.selected = false;
+      exercice.chapters.map((chapter) => (chapter.selected = false));
+
+      return;
     }
-  })
+  });
 
   return {
     props: {
-      exercices
-    }
-  }
-}
+      exercices,
+    },
+  };
+};

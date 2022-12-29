@@ -1,47 +1,50 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const CourseSchema = new mongoose.Schema({
-    overview: String,
-    title: String,
-    description:String,
-    seoUrl:String,
-    category: String,
-    price:Number,
-    img: {
-        fileName: String,
-        url: String,
-        width:Number,
-        height:Number
+  attachements: [
+    {
+      fileName: String,
+      url: String,
     },
-    chapters: [
+  ],
+  category: String,
+  chapters: [
+    {
+      lectures: [
         {
-            title: String,
-            seoUrl:String,
-            lectures: [
-                {
-                    title: String,
-                    seoUrl:String,
-                    description: String,
-                    url: String,
-                    duration: Number,
-                    comments:[
-                        {
-                          type: mongoose.Schema.Types.ObjectId,
-                          ref: 'Comment'
-                        }
-                      ]
-                }
-            ]
-        }
-    ],
-    isPublished: {
-        type: Boolean,
-        default: false
+          comments: [
+            {
+              ref: "Comment",
+              type: mongoose.Schema.Types.ObjectId,
+            },
+          ],
+          description: String,
+          duration: Number,
+          seoUrl: String,
+          title: String,
+          url: String,
+        },
+      ],
+      seoUrl: String,
+      title: String,
     },
-    attachements:[{
-        fileName: String,
-        url: String
-    }]
-})
+  ],
+  description: String,
+  img: {
+    fileName: String,
+    height: Number,
+    url: String,
+    width: Number,
+  },
+  isPublished: {
+    default: false,
+    type: Boolean,
+  },
+  overview: String,
+  price: Number,
+  seoUrl: String,
+  title: String,
+});
 
-module.exports = mongoose.models.Course || mongoose.model('Course', CourseSchema)
+module.exports =
+  mongoose.models.Course || mongoose.model("Course", CourseSchema);

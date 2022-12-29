@@ -1,55 +1,52 @@
-import { getSession } from 'next-auth/react'
-import Image from 'next/image'
-import parse from 'html-react-parser'
-import Head from 'next/head'
+import { getSession } from "next-auth/react";
+import Image from "next/image";
+import parse from "html-react-parser";
+import Head from "next/head";
 
-import Vimeo from '@u-wave/react-vimeo'
+import Vimeo from "@u-wave/react-vimeo";
 
-import Link from 'next/link'
-import { useWindowDimensions } from '../../../../hooks/useWindowDimensions'
-import { getDeviceTypeInfo } from '../../../../utils/utilResponsive'
-import { getCourses } from '../../../../apiCall/courses'
-import { getUser } from '../../../../apiCall/users'
+import Link from "next/link";
+import { useWindowDimensions } from "../../../../hooks/useWindowDimensions";
+import { getDeviceTypeInfo } from "../../../../utils/utilResponsive";
+import { getCourses } from "../../../../apiCall/courses";
+import { getUser } from "../../../../apiCall/users";
 
-import SideCourseChapter from '../../../../components/SideCourseChapter'
-import CommentInput from '../../../../components/CommentInput'
-import CommentDisplay from '../../../../components/CommentDisplay'
+import SideCourseChapter from "../../../../components/SideCourseChapter";
+import CommentInput from "../../../../components/CommentInput";
+import CommentDisplay from "../../../../components/CommentDisplay";
 
-import styles from '../../../../styles/Lectures.module.css'
+import styles from "../../../../styles/Lectures.module.css";
 
-import blockedImg from '../../../../public/blocked.jpg'
-import { useEffect, useState } from 'react'
+import blockedImg from "../../../../public/blocked.jpg";
+import { useEffect, useState } from "react";
 
-const Lectures = props => {
-  const { width, height } = useWindowDimensions()
+const Lectures = (props) => {
+  const { height, width } = useWindowDimensions();
 
-  const {
-    isMobile,
-    isTablet,
-    isDesktopOrLaptop,
-    isBigScreen
-  } = getDeviceTypeInfo(width, height)
+  const { isBigScreen, isDesktopOrLaptop, isMobile, isTablet } =
+    getDeviceTypeInfo(width, height);
 
-  const [toggleMenu, setToggleMenu] = useState(true) // true => description / false => sommaire
+  const [toggleMenu, setToggleMenu] = useState(true); // true => description / false => sommaire
   const [toggleOnPlayMsg, setToggleOnPlayMsg] = useState({
     isFirstLoad: true,
-    user: 'visitor'
-  })
+    user: "visitor",
+  });
 
   const onTryToPlay = () => {
     if (!props.session) {
-      setToggleOnPlayMsg({ isFirstLoad: false, user: 'visitor' })
-      return
+      setToggleOnPlayMsg({ isFirstLoad: false, user: "visitor" });
+
+      return;
     }
 
-    setToggleOnPlayMsg({ isFirstLoad: false, user: 'member' })
-  }
+    setToggleOnPlayMsg({ isFirstLoad: false, user: "member" });
+  };
 
   useEffect(() => {
     if (isDesktopOrLaptop || isBigScreen) {
-      setToggleMenu(true)
+      setToggleMenu(true);
     }
-  }, [width, height])
+  }, [width, height]);
 
   return (
     <>
@@ -64,22 +61,23 @@ const Lectures = props => {
           ) : (
             <div className={styles.blockedContentWrapper} onClick={onTryToPlay}>
               <div className={styles.blockedImageWrapper}>
-                <Image src={blockedImg} alt='blockedImg' />
+                <Image src={blockedImg} alt="blockedImg" />
               </div>
 
               <div className={styles.blockedContent}>
                 {/* Display message according to user */}
+                {/* eslint-disable-next-line no-nested-ternary */}
                 {toggleOnPlayMsg.isFirstLoad ? (
                   <>
                     <svg
                       className={styles.svgPlayBlocked}
-                      xmlns='http://www.w3.org/2000/svg'
-                      viewBox='0 0 24 24'
-                      width='64'
-                      height='64'
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      width="64"
+                      height="64"
                     >
-                      <path fill='none' d='M0 0h24v24H0z' />
-                      <path d='M19.376 12.416L8.777 19.482A.5.5 0 0 1 8 19.066V4.934a.5.5 0 0 1 .777-.416l10.599 7.066a.5.5 0 0 1 0 .832z' />
+                      <path fill="none" d="M0 0h24v24H0z" />
+                      <path d="M19.376 12.416L8.777 19.482A.5.5 0 0 1 8 19.066V4.934a.5.5 0 0 1 .777-.416l10.599 7.066a.5.5 0 0 1 0 .832z" />
                     </svg>
 
                     <span className={styles.textPlay}>Lire la vidéo</span>
@@ -87,18 +85,18 @@ const Lectures = props => {
                       ({props.lecture.duration} min)
                     </span>
                   </>
-                ) : toggleOnPlayMsg.user === 'visitor' ? (
+                ) : toggleOnPlayMsg.user === "visitor" ? (
                   <span className={styles.textPlay}>
-                    <Link href='/login?login=signin'>
+                    <Link href="/login?login=signin">
                       <a>Connectez-vous</a>
-                    </Link>{' '}
+                    </Link>{" "}
                     pour acheter cette formation
                   </span>
                 ) : (
                   <span className={styles.textPlay}>
-                    <Link href='#'>
+                    <Link href="#">
                       <a>Acheter</a>
-                    </Link>{' '}
+                    </Link>{" "}
                     cette formation pour lire la vidéo
                   </span>
                 )}
@@ -121,15 +119,15 @@ const Lectures = props => {
                   onClick={() => !toggleMenu && setToggleMenu(!toggleMenu)}
                 >
                   <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    viewBox='0 0 24 24'
-                    width='24'
-                    height='24'
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
                   >
-                    <path fill='none' d='M0 0h24v24H0z' />
+                    <path fill="none" d="M0 0h24v24H0z" />
                     <path
-                      d='M12.9 6.858l4.242 4.243L7.242 21H3v-4.243l9.9-9.9zm1.414-1.414l2.121-2.122a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414l-2.122 2.121-4.242-4.242z'
-                      fill={toggleMenu ? '#0085ff' : 'rgba(58,58,58,1)'}
+                      d="M12.9 6.858l4.242 4.243L7.242 21H3v-4.243l9.9-9.9zm1.414-1.414l2.121-2.122a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414l-2.122 2.121-4.242-4.242z"
+                      fill={toggleMenu ? "#0085ff" : "rgba(58,58,58,1)"}
                     />
                   </svg>
                   <span>Description</span>
@@ -139,16 +137,16 @@ const Lectures = props => {
                   onClick={() => toggleMenu && setToggleMenu(!toggleMenu)}
                 >
                   <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    viewBox='0 0 24 24'
-                    width='24'
-                    height='24'
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
                   >
-                    <path fill='none' d='M0 0h24v24H0z' />
+                    <path fill="none" d="M0 0h24v24H0z" />
                     <path
-                      d='M19 22H5a3 3 0 0 1-3-3V3a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v12h4v4a3 3 0 0 1-3 3zm-1-5v2a1 1 0 0 0 2 0v-2h-2zm-2 3V4H4v15a1 1 0 0 0 1 1h11zM6 7h8v2H6V7zm0 4h8v2H6v-2zm0 4h5v2H6v-2z'
+                      d="M19 22H5a3 3 0 0 1-3-3V3a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v12h4v4a3 3 0 0 1-3 3zm-1-5v2a1 1 0 0 0 2 0v-2h-2zm-2 3V4H4v15a1 1 0 0 0 1 1h11zM6 7h8v2H6V7zm0 4h8v2H6v-2zm0 4h5v2H6v-2z"
                       // fill='rgba(58,58,58,1)'
-                      fill={!toggleMenu ? '#0085ff' : 'rgba(58,58,58,1)'}
+                      fill={!toggleMenu ? "#0085ff" : "rgba(58,58,58,1)"}
                     />
                   </svg>
                   <span>Sommaire</span>
@@ -190,7 +188,7 @@ const Lectures = props => {
                     ></div>
                   )}
 
-                {props.lecture.comments.map(comment => (
+                {props.lecture.comments.map((comment) => (
                   <CommentDisplay
                     key={comment}
                     id={comment}
@@ -207,77 +205,89 @@ const Lectures = props => {
         </section>
       </main>
     </>
-  )
-}
+  );
+};
 
-export default Lectures
+export default Lectures;
 
 //Server side rendering
-export const getServerSideProps = async context => {
-  const session = await getSession(context)
-  const { chapter, lectureUrl } = context.query
+export const getServerSideProps = async (context) => {
+  const session = await getSession(context);
+  const { chapter, lectureUrl } = context.query;
 
-  const resCourse = await getCourses(context, context.query.courseUrl)
+  const resCourse = await getCourses(context, context.query.courseUrl);
   // console.log('resCourse: ', resCourse.data.courseFromDB)
 
   // Check if user already purchased this course. Pass the result as props
-  const course = resCourse.data.courseFromDB
+  const course = resCourse.data.courseFromDB;
 
   // Display only the current lecture
-  let chapterIdx
+  // eslint-disable-next-line immutable/no-let
+  let chapterIdx;
+  // eslint-disable-next-line prefer-destructuring
   const currentChapter = resCourse.data.courseFromDB.chapters.filter(
     (chapt, idx) => {
-      if (chapt.seoUrl === chapter) chapterIdx = idx
-      return chapt.seoUrl === chapter
-    }
-  )[0]
+      if (chapt.seoUrl === chapter) {
+        chapterIdx = idx;
+      }
 
-  let lectureIdx
+      return chapt.seoUrl === chapter;
+    }
+  )[0];
+
+  // eslint-disable-next-line immutable/no-let
+  let lectureIdx;
+  // eslint-disable-next-line prefer-destructuring
   const lecture = currentChapter.lectures.filter((lecture, idx) => {
-    if (lecture.seoUrl === lectureUrl) lectureIdx = idx
-    return lecture.seoUrl === lectureUrl
-  })[0]
+    if (lecture.seoUrl === lectureUrl) {
+      lectureIdx = idx;
+    }
+
+    return lecture.seoUrl === lectureUrl;
+  })[0];
 
   if (!session) {
-    course.isPurchased = false
+    course.isPurchased = false;
+
     return {
       props: {
-        session,
+        chapterIdx,
         course,
         lecture,
-        chapterIdx,
-        lectureIdx
-      }
-    }
+        lectureIdx,
+        session,
+      },
+    };
   }
 
-  if (session.user.role === 'ADMIN') {
-    course.isPurchased = true
+  if (session.user.role === "ADMIN") {
+    course.isPurchased = true;
+
     return {
       props: {
-        session,
+        chapterIdx,
         course,
         lecture,
-        chapterIdx,
-        lectureIdx
-      }
-    }
+        lectureIdx,
+        session,
+      },
+    };
   }
 
-  const resUser = await getUser(context)
-  const purchasedCourses = resUser.data.userFromDB.purchasedCourses
+  const resUser = await getUser(context);
+  const { purchasedCourses } = resUser.data.userFromDB;
 
   purchasedCourses.indexOf(course._id) === -1
     ? (course.isPurchased = false)
-    : (course.isPurchased = true)
+    : (course.isPurchased = true);
 
   return {
     props: {
-      session,
+      chapterIdx,
       course,
       lecture,
-      chapterIdx,
-      lectureIdx
-    }
-  }
-}
+      lectureIdx,
+      session,
+    },
+  };
+};

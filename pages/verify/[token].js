@@ -1,23 +1,24 @@
-import { useRouter } from 'next/router'
-import { useState, useEffect, useCallback } from 'react'
-import { getAuthVerify } from '../../apiCall/auth'
-import Head from 'next/head'
+import { useRouter } from "next/router";
+import { useState, useEffect, useCallback } from "react";
+import { getAuthVerify } from "../../apiCall/auth";
+import Head from "next/head";
 
 const Verify = () => {
-  const [message, setMessage] = useState()
-  const router = useRouter()
-  const { token } = router.query
+  const [message, setMessage] = useState();
+  const router = useRouter();
+  const { token } = router.query;
 
   const verifyToken = useCallback(async () => {
     if (token) {
-      const resGetAuthVerify = await getAuthVerify(token)
-      setMessage(resGetAuthVerify.data.message)
+      const resGetAuthVerify = await getAuthVerify(token);
+
+      setMessage(resGetAuthVerify.data.message);
     }
-  }, [token])
+  }, [token]);
 
   useEffect(() => {
-    verifyToken()
-  }, [verifyToken]) // if changes, useEffect will run again
+    verifyToken();
+  }, [verifyToken]); // if changes, useEffect will run again
   // if you want to run only once, just leave array empty []
 
   return (
@@ -25,9 +26,9 @@ const Verify = () => {
       <Head>
         <title>Vérification - UpRugby</title>
       </Head>
-      <main>{message && <p className='message'>{message}</p>}</main>
+      <main>{message && <p className="message">{message}</p>}</main>
     </>
-  )
-}
+  );
+};
 
-export default Verify
+export default Verify;

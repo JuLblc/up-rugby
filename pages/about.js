@@ -1,13 +1,14 @@
-import styles from '../styles/About.module.css'
-import Image from 'next/image'
-import imgPortrait from '../public/Charles.PNG'
-import imgPaysage from '../public/charles_paysage.png'
-import Head from 'next/head'
+import styles from "../styles/About.module.css";
+import Image from "next/image";
+import imgPortrait from "../public/Charles.PNG";
+import imgPaysage from "../public/charles_paysage.png";
+import Head from "next/head";
 
-import { useWindowDimensions } from '../hooks/useWindowDimensions'
+import { useWindowDimensions } from "../hooks/useWindowDimensions";
 
 const About = () => {
-  const { width } = useWindowDimensions()
+  const { width } = useWindowDimensions();
+
   return (
     <>
       <Head>
@@ -40,12 +41,15 @@ const About = () => {
             </p>
           </article>
           <div className={styles.imgWrapper}>
-            <Image src={width < 815 ? imgPaysage : imgPortrait} alt={'charles'} />
+            <Image
+              src={width < 815 ? imgPaysage : imgPortrait}
+              alt={"charles"}
+            />
           </div>
         </section>
       </main>
     </>
-  )
-}
+  );
+};
 
-export default About
+export default About;

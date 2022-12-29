@@ -1,14 +1,15 @@
-import FormInput from '../FormInput'
-import styles from '../../styles/Formation.module.css'
+import FormInput from "../FormInput";
+import styles from "../../styles/Formation.module.css";
 
-const Lecture = props => {
+const Lecture = (props) => {
   const errorMessages = {
-    urlMissing: 'Veuillez saisir le lien de la vidéo',
-    patternMismatch: `Le lien doit commencer par "https://www.youtube.com/watch?v=" et se terminer par l'id de la vidéo`,
-    youtube: "Cette vidéo n'est pas répertoriée sur youTube"
-  }
+    patternMismatch:
+      'Le lien doit commencer par "https://www.youtube.com/watch?v=" et se terminer par l\'id de la vidéo',
+    urlMissing: "Veuillez saisir le lien de la vidéo",
+    youtube: "Cette vidéo n'est pas répertoriée sur youTube",
+  };
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     if (props.infrachapterIdx !== undefined) {
       props.onChangeVideoInfraChapter(
         e,
@@ -16,8 +17,9 @@ const Lecture = props => {
         props.subchapterIdx,
         props.infrachapterIdx,
         props.lectureIdx
-      )
-      return
+      );
+
+      return;
     }
 
     if (props.subchapterIdx !== undefined) {
@@ -26,14 +28,15 @@ const Lecture = props => {
         props.chapterIdx,
         props.subchapterIdx,
         props.lectureIdx
-      )
-      return
+      );
+
+      return;
     }
 
-    props.onChangeVideo(e, props.chapterIdx, props.lectureIdx)
-  }
+    props.onChangeVideo(e, props.chapterIdx, props.lectureIdx);
+  };
 
-  const handleRemove = e => {
+  const handleRemove = (e) => {
     if (props.infrachapterIdx !== undefined) {
       props.removeVideoInfraChapter(
         e,
@@ -41,8 +44,9 @@ const Lecture = props => {
         props.subchapterIdx,
         props.infrachapterIdx,
         props.lectureIdx
-      )
-      return
+      );
+
+      return;
     }
 
     if (props.subchapterIdx !== undefined) {
@@ -51,44 +55,45 @@ const Lecture = props => {
         props.chapterIdx,
         props.subchapterIdx,
         props.lectureIdx
-      )
-      return
+      );
+
+      return;
     }
 
-    props.removeVideo(e, props.chapterIdx, props.lectureIdx)
-  }
+    props.removeVideo(e, props.chapterIdx, props.lectureIdx);
+  };
 
   return (
     <div className={styles.lectureContainer}>
       <FormInput
-        label='Video Url:'
-        type='text'
-        name='url'
+        label="Video Url:"
+        type="text"
+        name="url"
         chapterIdx={props.chapterIdx}
         lectureIdx={props.lectureIdx}
         subchapterIdx={props.subchapterIdx}
         infrachapterIdx={props.infrachapterIdx}
         setDuration={props.setDuration}
         errorMessages={errorMessages}
-        value={props.chapter.lectures[props.lectureIdx].url || ''}
+        value={props.chapter.lectures[props.lectureIdx].url || ""}
         onChange={handleChange}
         required
-        pattern='^https://www\.youtube\.com/watch[a-zA-Z0-9=?_&-]+$'
-        mediaPlatform='youtube'
+        pattern="^https://www\.youtube\.com/watch[a-zA-Z0-9=?_&-]+$"
+        mediaPlatform="youtube"
         disabled={props.disableField}
         styles={styles}
       />
 
       <button
         className={`${styles.button} ${styles.primatyRemoveBtn}`}
-        type='button'
+        type="button"
         onClick={handleRemove}
         disabled={props.disableField}
       >
         Supp. vidéo
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default Lecture
+export default Lecture;

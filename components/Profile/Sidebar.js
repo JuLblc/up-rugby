@@ -1,7 +1,7 @@
-import { useWindowDimensions } from '../../hooks/useWindowDimensions'
+import { useWindowDimensions } from "../../hooks/useWindowDimensions";
 
-const Sidebar = props => {
-  const { width } = useWindowDimensions()
+const Sidebar = (props) => {
+  const { width } = useWindowDimensions();
 
   return (
     <>
@@ -9,12 +9,12 @@ const Sidebar = props => {
         {width > 705 && (
           <p className={props.styles.menuTitle}>Tableau de bord</p>
         )}
-        {props.li.map(li => (
+        {props.li.map((li) => (
           <li
             key={li.id}
             id={li.id}
             className={li.styles}
-            onClick={e => props.handleDisplay(e)}
+            onClick={(e) => props.handleDisplay(e)}
           >
             {li.label}
           </li>
@@ -22,7 +22,7 @@ const Sidebar = props => {
       </ul>
       {width <= 705 && <div className={props.styles.break}></div>}
     </>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;

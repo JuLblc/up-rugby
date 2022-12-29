@@ -16,8 +16,9 @@ export default async function handler(req, res) {
         case "DELETE":
           removeCourseToCart(req, res, session);
           break;
+
         default:
-          res.status(405).end('Method not allowed')
+          res.status(405).end("Method not allowed");
       }
     })
     .catch((err) => {
@@ -31,6 +32,7 @@ export default async function handler(req, res) {
 const addCourseToCart = (req, res, session) => {
   if (!session) {
     res.status(401).json({ message: "Unauthorized" });
+
     return;
   }
 
@@ -61,6 +63,7 @@ const addCourseToCart = (req, res, session) => {
 const removeCourseToCart = (req, res, session) => {
   if (!session) {
     res.status(401).json({ message: "Unauthorized" });
+
     return;
   }
 
@@ -70,6 +73,7 @@ const removeCourseToCart = (req, res, session) => {
     .then((foundUser) => {
       // Check if course already in cart
       const idx = foundUser.cart.indexOf(courseId);
+
       if (idx !== -1) {
         foundUser.cart.splice(idx, 1);
         foundUser
@@ -78,6 +82,7 @@ const removeCourseToCart = (req, res, session) => {
             res.status(201).json({ updatedUser });
           })
           .catch((err) => console.log("err : ", err));
+
         return;
       }
       res.status(200).json({ message: "Formation supprimer du panier" });

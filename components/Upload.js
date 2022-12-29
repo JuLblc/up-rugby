@@ -37,7 +37,9 @@ const Upload = (props) => {
   return (
     <div
       className={`${styles.uploadContainer} ${
-        props.uploadFileName === "picture" ? styles.photoContainer : styles.fileContainer
+        props.uploadFileName === "picture"
+          ? styles.photoContainer
+          : styles.fileContainer
       }`}
       ref={divRef}
     >

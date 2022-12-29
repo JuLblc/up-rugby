@@ -1,47 +1,49 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema({
+  cart: [
+    {
+      ref: "Course",
+      type: mongoose.Schema.Types.ObjectId,
+    },
+  ],
+
+  category: {
+    enum: ["Joueur", "Entraineur"],
+    type: String,
+  },
+
+  club: String,
   // unique index sparse => allowed several email === null
   email: {
-    type: String,
-    unique: true,
     index: true,
     lowercase: true,
-    sparse: true
+    sparse: true,
+    type: String,
+    unique: true,
   },
-  password: String,
+  facebookID: String,
+  firstName: String,
+  googleID: String,
   isEmailVerified: {
+    default: false,
     type: Boolean,
-    default: false
+  },
+  lastName: String,
+  password: String,
+  purchasedCourses: [
+    {
+      ref: "Course",
+      type: mongoose.Schema.Types.ObjectId,
+    },
+  ],
+  role: {
+    default: "USER",
+    enum: ["USER", "ADMIN"],
+    type: String,
   },
   token: String,
   tokenExpires: Date,
-  facebookID: String,
-  googleID: String,
-  firstName: String,
-  lastName: String,
-  club: String,
-  category:{
-    type: String,
-    enum: ['Joueur', 'Entraineur'],
-  },
-  role: {
-    type: String,
-    enum: ['USER', 'ADMIN'],
-    default: 'USER'
-  },
-  purchasedCourses: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Course'
-    }
-  ],
-  cart: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Course'
-    }
-  ]
-})
+});
 
-module.exports = mongoose.models.User || mongoose.model('User', UserSchema)
+module.exports = mongoose.models.User || mongoose.model("User", UserSchema);

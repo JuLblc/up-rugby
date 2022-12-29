@@ -1,10 +1,9 @@
-import ExerciceMenu from './ExerciceMenu'
+import ExerciceMenu from "./ExerciceMenu";
 
-const SidebarExercice = props => {
-
+const SidebarExercice = (props) => {
   return (
     <ul className={props.styles.exerciceMenuUl}>
-      {props.exercices.map(exercice => (
+      {props.exercices.map((exercice) => (
         <ExerciceMenu
           key={exercice._id}
           styles={props.styles}
@@ -14,7 +13,7 @@ const SidebarExercice = props => {
         />
       ))}
     </ul>
-  )
-}
+  );
+};
 
-export default SidebarExercice
+export default SidebarExercice;

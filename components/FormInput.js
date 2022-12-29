@@ -8,26 +8,26 @@ const FormInput = (props) => {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [passwordShown, setPasswordShown] = useState({
-    type: props.type,
+    eyeType: 1,
     show: false,
-    eyeType: 1
+    type: props.type,
   });
 
   const {
-    errorMessages,
-    onChange,
-    id,
-    svg,
-    reset,
-    type,
-    label,
     chapterIdx,
-    lectureIdx,
-    subchapterIdx,
+    errorMessages,
+    id,
     infrachapterIdx,
+    label,
+    lectureIdx,
     mediaPlatform,
+    onChange,
+    reset,
     setDuration,
     styles,
+    subchapterIdx,
+    svg,
+    type,
     ...inputProps
   } = props;
 
@@ -44,71 +44,80 @@ const FormInput = (props) => {
 
     if (e.target.validity.patternMismatch) {
       setErrorMessage(errorMessages.patternMismatch);
+
       return;
     }
 
     if (e.target.validity.valueMissing && e.target.name === "email") {
       setErrorMessage(errorMessages.emailMissing);
+
       return;
     }
 
     if (e.target.validity.valueMissing && e.target.name === "password") {
       setErrorMessage(errorMessages.passwordMissing);
+
       return;
     }
 
     if (e.target.validity.valueMissing && e.target.name === "title") {
       setErrorMessage(errorMessages.titleMissing);
+
       return;
     }
 
     if (e.target.validity.valueMissing && e.target.name === "description") {
       setErrorMessage(errorMessages.descriptionMissing);
+
       return;
     }
 
     if (e.target.validity.valueMissing && e.target.name === "url") {
       setErrorMessage(errorMessages.urlMissing);
+
       return;
     }
 
     if (!e.target.validity.valid) {
       setErrorMessage(errorMessages.valid);
+
       return;
     }
 
     //Check video exist on vimeo
     if (e.target.name === "url" && mediaPlatform === "vimeo") {
-      let vimeoId = e.target.value.substring(31, e.target.value.length);
+      const vimeoId = e.target.value.substring(31, e.target.value.length);
 
-      let resVimeo = await getVimeoVideo(vimeoId);
+      const resVimeo = await getVimeoVideo(vimeoId);
 
       if (!resVimeo) {
         setError(true);
         setErrorMessage(errorMessages.vimeo);
+
         return;
       }
 
-      let durationToUpperMin = Math.ceil(resVimeo.data.duration / 60);
+      const durationToUpperMin = Math.ceil(resVimeo.data.duration / 60);
 
       setDuration(durationToUpperMin, props.chapterIdx, props.lectureIdx);
     }
 
     //Check video exist on youtube
     if (e.target.name === "url" && mediaPlatform === "youtube") {
-      let youtubeId = e.target.value.substring(32, 43);
+      const youtubeId = e.target.value.substring(32, 43);
 
-      let resYoutube = await getYoutubeVideo(youtubeId);
+      const resYoutube = await getYoutubeVideo(youtubeId);
 
       if (!resYoutube.data.items.length) {
         setError(true);
         setErrorMessage(errorMessages.youtube);
+
         return;
       }
 
-      let duration = resYoutube.data.items[0].contentDetails.duration;
+      const { duration } = resYoutube.data.items[0].contentDetails;
 
-      let durationToUpperMin = Math.ceil(convertISO8601ToSec(duration) / 60);
+      const durationToUpperMin = Math.ceil(convertISO8601ToSec(duration) / 60);
 
       if (props.infrachapterIdx !== undefined) {
         setDuration(
@@ -119,6 +128,7 @@ const FormInput = (props) => {
           props.subchapterIdx,
           props.infrachapterIdx
         );
+
         return;
       }
 
@@ -130,6 +140,7 @@ const FormInput = (props) => {
           props.lectureIdx,
           props.subchapterIdx
         );
+
         return;
       }
 
@@ -145,19 +156,21 @@ const FormInput = (props) => {
   const onEyeClick = () => {
     if (passwordShown.type === "password") {
       setPasswordShown({
-        type: "text",
+        eyeType: 2,
         show: !passwordShown.show,
-        eyeType: 2
+        type: "text",
       });
+
       return;
     }
 
     if (passwordShown.type !== "password") {
       setPasswordShown({
-        type: "password",
+        eyeType: 1,
         show: !passwordShown.show,
-        eyeType: 1
+        type: "password",
       });
+
       return;
     }
   };
@@ -165,6 +178,7 @@ const FormInput = (props) => {
   return (
     <>
       <label>
+        {/* eslint-disable-next-line @typescript-eslint/prefer-optional-chain */}
         {svg && svg[0]}
         <span>{label}</span>
         <input
@@ -173,6 +187,7 @@ const FormInput = (props) => {
           type={type === "password" ? passwordShown.type : type}
           onChange={onChange}
           onBlur={handleOnBlur}
+          // eslint-disable-next-line react/no-unknown-property
           focused={focused.toString()}
         />
         {svg && svg.length > 1 && (

@@ -1,8 +1,8 @@
-import styles from '../../styles/Formation.module.css'
-import FormInput from '../FormInput'
-import Lecture from './Lecture'
+import styles from "../../styles/Formation.module.css";
+import FormInput from "../FormInput";
+import Lecture from "./Lecture";
 
-const InfraChapter = props => {
+const InfraChapter = (props) => {
   const onChangeVideoInfraChapter = (
     e,
     chapterIdx,
@@ -10,12 +10,14 @@ const InfraChapter = props => {
     infrachapterIdx,
     lectureIdx
   ) => {
-    const newExerciceData = { ...props.exerciceData }
-    newExerciceData.chapters[chapterIdx].subchapters[subchapterIdx].infrachapters[infrachapterIdx].lectures[
-      lectureIdx
-    ][e.target.name] = e.target.value
-    props.updateStateFromChild(newExerciceData)
-  }
+    const newExerciceData = { ...props.exerciceData };
+
+    newExerciceData.chapters[chapterIdx].subchapters[
+      subchapterIdx
+    ].infrachapters[infrachapterIdx].lectures[lectureIdx][e.target.name] =
+      e.target.value;
+    props.updateStateFromChild(newExerciceData);
+  };
 
   const removeVideoInfraChapter = (
     chapterIdx,
@@ -23,24 +25,25 @@ const InfraChapter = props => {
     infrachapterIdx,
     videoIdx
   ) => {
-    const newExerciceData = { ...props.exerciceData }
+    const newExerciceData = { ...props.exerciceData };
+
     newExerciceData.chapters[chapterIdx].subchapters[
       subchapterIdx
-    ].infrachapters[infrachapterIdx].lectures.splice(videoIdx, 1)
+    ].infrachapters[infrachapterIdx].lectures.splice(videoIdx, 1);
 
-    props.updateStateFromChild(newExerciceData)
-  }
+    props.updateStateFromChild(newExerciceData);
+  };
 
   return (
     <div className={styles.chapterContainer}>
       <FormInput
-        label='Titre Infra-Chap.:'
-        type='text'
-        name='title'
+        label="Titre Infra-Chap.:"
+        type="text"
+        name="title"
         value={
-          props.subchapter.infrachapters[props.infrachapterIdx].title || ''
+          props.subchapter.infrachapters[props.infrachapterIdx].title || ""
         }
-        onChange={e =>
+        onChange={(e) =>
           props.onChangeInfraChapter(
             e,
             props.chapterIdx,
@@ -61,15 +64,15 @@ const InfraChapter = props => {
             infrachapterIdx={props.infrachapterIdx}
             lectureIdx={lectureIdx}
             chapter={props.subchapter.infrachapters[props.infrachapterIdx]}
-            onChangeVideoInfraChapter={e =>
-                onChangeVideoInfraChapter(
-                  e,
-                  props.chapterIdx,
-                  props.subchapterIdx,
-                  props.infrachapterIdx,
-                  lectureIdx
-                )
-              }
+            onChangeVideoInfraChapter={(e) =>
+              onChangeVideoInfraChapter(
+                e,
+                props.chapterIdx,
+                props.subchapterIdx,
+                props.infrachapterIdx,
+                lectureIdx
+              )
+            }
             removeVideoInfraChapter={() =>
               removeVideoInfraChapter(
                 props.chapterIdx,
@@ -86,8 +89,8 @@ const InfraChapter = props => {
 
       <button
         className={`${styles.button} ${styles.primaryAddBtn}`}
-        type='button'
-        onClick={e =>
+        type="button"
+        onClick={(e) =>
           props.addVideoToInfraChapter(
             e,
             props.chapterIdx,
@@ -102,8 +105,8 @@ const InfraChapter = props => {
 
       <button
         className={`${styles.button} ${styles.secondaryRemoveBtn}`}
-        type='button'
-        onClick={e =>
+        type="button"
+        onClick={(e) =>
           props.removeInfraChapter(
             e,
             props.chapterIdx,
@@ -116,7 +119,7 @@ const InfraChapter = props => {
         Supp. infra-chap.
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default InfraChapter
+export default InfraChapter;

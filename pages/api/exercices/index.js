@@ -27,8 +27,9 @@ export default async function handler(req, res) {
         case "DELETE":
           deleteExercice(req, res, session);
           break;
+
         default:
-          res.status(405).end('Method not allowed')
+          res.status(405).end("Method not allowed");
       }
     })
     .catch((err) => {
@@ -41,6 +42,7 @@ export default async function handler(req, res) {
 
 const getAllExercices = (req, res, session) => {
   const cond = {};
+
   if (!session || session.user.role !== "ADMIN") {
     cond.isPublished = true;
   }
@@ -56,6 +58,7 @@ const getAllExercices = (req, res, session) => {
 const getExercice = (req, res, session) => {
   const seoUrl = req.query.url;
   const cond = { seoUrl };
+
   if (!session || session.user.role !== "ADMIN") {
     cond.isPublished = true;
   }
@@ -72,6 +75,7 @@ const addExercice = (req, res, session) => {
 
   if (!session || session.user.role !== "ADMIN") {
     res.status(401).json({ message: "Unauthorized" });
+
     return;
   }
 
@@ -88,6 +92,7 @@ const addExercice = (req, res, session) => {
 const updateExercice = (req, res, session) => {
   if (!session || session.user.role !== "ADMIN") {
     res.status(401).json({ message: "Unauthorized" });
+
     return;
   }
 
@@ -104,6 +109,7 @@ const updateExercice = (req, res, session) => {
 const deleteExercice = (req, res, session) => {
   if (!session || session.user.role !== "ADMIN") {
     res.status(401).json({ message: "Unauthorized" });
+
     return;
   }
 

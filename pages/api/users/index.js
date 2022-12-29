@@ -16,8 +16,9 @@ export default async function handler(req, res) {
         case "PUT":
           updateUser(req, res, session);
           break;
+
         default:
-          res.status(405).end('Method not allowed')
+          res.status(405).end("Method not allowed");
       }
     })
     .catch((err) => {
@@ -31,6 +32,7 @@ export default async function handler(req, res) {
 const getUser = (req, res, session) => {
   if (!session) {
     res.status(401).json({ message: "Unauthorized" });
+
     return;
   }
 
@@ -46,6 +48,7 @@ const getUser = (req, res, session) => {
 const updateUser = (req, res, session) => {
   if (!session) {
     res.status(401).json({ message: "Unauthorized" });
+
     return;
   }
 

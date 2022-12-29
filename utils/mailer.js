@@ -1,14 +1,15 @@
-const nodemailer = require('nodemailer')
+const nodemailer = require("nodemailer");
 
-let transporter = nodemailer.createTransport(process.env.SMTP_URI)
+const transporter = nodemailer.createTransport(process.env.SMTP_URI);
 
 // verify connection configuration
 transporter.verify(function (error, success) {
   if (error) {
-    console.log('error Nodemailer', error)
-    return
-  }
-  console.log('Server is ready to take our messages')
-})
+    console.log("error Nodemailer", error);
 
-module.exports = transporter
+    return;
+  }
+  console.log("Server is ready to take our messages");
+});
+
+module.exports = transporter;

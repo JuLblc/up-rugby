@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
-import Link from 'next/link'
+import Link from "next/link";
 
-import styles from '../../styles/Sidebar.module.css'
+import styles from "../../styles/Sidebar.module.css";
 
-const Sidebar = props => {
+const Sidebar = (props) => {
   return (
     <ul
       className={`${styles.sidebar} ${
@@ -11,17 +10,17 @@ const Sidebar = props => {
       }`}
     >
       <li>
-        <Link href='/courses'>
+        <Link href="/courses">
           <a>Formations</a>
         </Link>
       </li>
       <li>
-        <Link href='/exercices'>
+        <Link href="/exercices">
           <a>Exercices</a>
         </Link>
       </li>
       <li>
-        <Link href='/webinar'>
+        <Link href="/webinar">
           <a>Webinar</a>
         </Link>
       </li>
@@ -31,12 +30,12 @@ const Sidebar = props => {
         </Link>
       </li> */}
       <li>
-        <Link href='/about'>
+        <Link href="/about">
           <a>A propos</a>
         </Link>
       </li>
     </ul>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;

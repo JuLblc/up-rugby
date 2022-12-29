@@ -1,80 +1,84 @@
-import { useRouter } from 'next/router'
-import { useState, useRef, useEffect } from 'react'
-import FormInput from './FormInput'
-import { putCommentToCourse } from '../apiCall/courses'
-import { postComment, postReply } from '../apiCall/comments'
-import styles from '../styles/CommentInput.module.css'
-import stylesInput from '../styles/Login.module.css'
+import { useRouter } from "next/router";
+import { useState, useRef, useEffect } from "react";
+import FormInput from "./FormInput";
+import { putCommentToCourse } from "../apiCall/courses";
+import { postComment, postReply } from "../apiCall/comments";
+import styles from "../styles/CommentInput.module.css";
+import stylesInput from "../styles/Login.module.css";
 
+const CommentInput = (props) => {
+  const router = useRouter();
 
-const CommentInput = props => {
-  const router = useRouter()
-
-  const myRef = useRef(null)
+  const myRef = useRef(null);
   const executeScroll = () =>
     myRef.current.scrollIntoView({
-      behavior: 'smooth',
-      block: 'center'
-    })
+      behavior: "smooth",
+      block: "center",
+    });
 
   useEffect(() => {
-    if (props.isReply) executeScroll()
-  }, [])
+    if (props.isReply) {
+      executeScroll();
+    }
+  }, []);
 
   const [commentData, setCommentData] = useState({
     author: props.session.user.id,
     authorname: props.session.user.firstName,
-    comment: ''
-  })
+    comment: "",
+  });
 
-  const onChange = e => {
-    setCommentData({ ...commentData, [e.target.name]: e.target.value })
-  }
+  const onChange = (e) => {
+    setCommentData({ ...commentData, [e.target.name]: e.target.value });
+  };
 
   const handleCancel = () => {
-    props.updateStateFromChild(false)
-  }
+    props.updateStateFromChild(false);
+  };
 
-  const handleFormSubmit = async e => {
-    e.preventDefault()
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
 
     //convert /n into <br>
-    const regex = /\n/gi
-    const convertedCommentData = { ...commentData }
+    const regex = /\n/gi;
+    const convertedCommentData = { ...commentData };
+
     convertedCommentData.comment = convertedCommentData.comment.replace(
       regex,
-      '<br>'
-    )
+      "<br>"
+    );
 
     if (!props.isReply) {
-      const resComment = await postComment(convertedCommentData)
+      const resComment = await postComment(convertedCommentData);
 
-      const updatedCourse = { ...props.course }
+      const updatedCourse = { ...props.course };
+
       updatedCourse.chapters[props.chapterIdx].lectures[
         props.lectureIdx
-      ].comments.push(resComment.data.newCommentFromDB)
+      ].comments.push(resComment.data.newCommentFromDB);
 
-      await putCommentToCourse(updatedCourse)
+      await putCommentToCourse(updatedCourse);
     }
 
     if (props.isReply) {
-      await postReply(props.id, convertedCommentData)
+      await postReply(props.id, convertedCommentData);
     }
 
-    router.push(router.asPath)
-  }
+    router.push(router.asPath);
+  };
 
   return (
     <form
       ref={myRef}
       onSubmit={handleFormSubmit}
-      className={`${styles.commentForm} ${props.isReply &&
-        styles.commentFormIsReply}`}
+      className={`${styles.commentForm} ${
+        props.isReply && styles.commentFormIsReply
+      }`}
     >
       <FormInput
         label="NOM D'UTILISATEUR:"
-        type='text'
-        name='authorname'
+        type="text"
+        name="authorname"
         required={true}
         value={commentData.authorname}
         onChange={onChange}
@@ -83,7 +87,7 @@ const CommentInput = props => {
       <label>
         VOTRE MESSAGE:
         <textarea
-          name='comment'
+          name="comment"
           value={commentData.comment}
           required={true}
           onChange={onChange}
@@ -91,15 +95,15 @@ const CommentInput = props => {
       </label>
 
       <div className={styles.btnContainer}>
-        <button type='submit'>Envoyer</button>
+        <button type="submit">Envoyer</button>
         {props.isReply && (
-          <button type='button' onClick={handleCancel}>
+          <button type="button" onClick={handleCancel}>
             Annuler
           </button>
         )}
       </div>
     </form>
-  )
-}
+  );
+};
 
-export default CommentInput
+export default CommentInput;

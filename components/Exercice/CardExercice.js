@@ -10,7 +10,9 @@ const CardExercice = (props) => {
   const [isOverflowing, setIsOverflowing] = useState(false);
 
   useEffect(() => {
+    // eslint-disable-next-line prefer-destructuring
     const $p = divRef.current.children[1];
+
     if ($p.clientHeight < $p.scrollHeight) {
       setIsOverflowing(true);
     }

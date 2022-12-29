@@ -1,32 +1,38 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-export default async function handler (req, res) {
+export default async function handler(req, res) {
   switch (req.method) {
-    case 'GET':
-      res.status(200).json({STRIPE_PUBLISHABLE_KEY:process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY})
-      break
-    case 'POST':
+    case "GET":
+      res
+        .status(200)
+        .json({
+          STRIPE_PUBLISHABLE_KEY:
+            process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
+        });
+      break;
+    case "POST":
       postStripSession(req, res);
-      break
+      break;
+
     default:
-      res.status(405).end('Method not allowed')
-  } 
+      res.status(405).end("Method not allowed");
+  }
 }
 
 const postStripSession = async (req, res) => {
-  const { items, email, cookies } = req.body
+  const { cookies, email, items } = req.body;
 
   const params = {
-    payment_method_types: ['card'],
-    line_items: items,
-    customer_email: email,
-    mode: 'payment',
-    success_url: `${req.headers.origin}/profile?profile=courses`,
     cancel_url: `${req.headers.origin}/profile?profile=cart`,
+    customer_email: email,
+    line_items: items,
     metadata: cookies,
-  }
+    mode: "payment",
+    payment_method_types: ["card"],
+    success_url: `${req.headers.origin}/profile?profile=courses`,
+  };
 
-  const checkoutStripeSession = await stripe.checkout.sessions.create(params)
+  const checkoutStripeSession = await stripe.checkout.sessions.create(params);
 
-  res.status(200).json({ id: checkoutStripeSession.id })
-}
+  res.status(200).json({ id: checkoutStripeSession.id });
+};

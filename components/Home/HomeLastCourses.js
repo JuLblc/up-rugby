@@ -5,7 +5,7 @@ import { getDeviceTypeInfo } from "../../utils/utilResponsive";
 import {
   getLecturesQty,
   getLecturesTime,
-  checkPurchaseStatus
+  checkPurchaseStatus,
 } from "../../utils/utilCourses";
 
 import CardFormation from "../CardFormation";
@@ -14,10 +14,10 @@ import stylesCourses from "../../styles/Courses.module.css";
 import stylesHome from "../../styles/Home.module.css";
 
 const HomeLastCourses = (props) => {
-  const { width, height } = useWindowDimensions();
+  const { height, width } = useWindowDimensions();
 
   const {
-    isMobile
+    isMobile,
     // isTablet,
     // isDesktopOrLaptop,
     // isBigScreen

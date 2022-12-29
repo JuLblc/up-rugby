@@ -1,44 +1,46 @@
-import { useCallback, useEffect, useState } from 'react'
-import { getComment } from '../apiCall/comments'
+import { useCallback, useEffect, useState } from "react";
+import { getComment } from "../apiCall/comments";
 
-import CommentInput from './CommentInput'
-import Comment from './Comment'
+import CommentInput from "./CommentInput";
+import Comment from "./Comment";
 
-const CommentDisplay = props => {
-
+const CommentDisplay = (props) => {
   const [commentData, setCommentData] = useState({
-    authorname: '',
-    comment: '',
-    date: '',
-    replies:[]
-  })
+    authorname: "",
+    comment: "",
+    date: "",
+    replies: [],
+  });
 
   const fetchComment = useCallback(async () => {
-    const resComment = await getComment(props.id)
-    setCommentData(resComment.data.commentFromDB)
-  }, [])
+    const resComment = await getComment(props.id);
+
+    setCommentData(resComment.data.commentFromDB);
+  }, []);
 
   useEffect(() => {
-    fetchComment()
-  }, [fetchComment])
+    fetchComment();
+  }, [fetchComment]);
 
+  const [replyVisible, setReplyVisible] = useState(false);
 
-  const [replyVisible, setReplyVisible] = useState(false)
-
-  const updateStateFromChild = isVisible => {
-    setReplyVisible(isVisible)
-  }
+  const updateStateFromChild = (isVisible) => {
+    setReplyVisible(isVisible);
+  };
 
   return (
     <>
-      <Comment 
-      id={props.id}
-      session={props.session}
-      updateStateFromChild={updateStateFromChild}
-      commentData = {commentData}
-      isPurchased={props.isPurchased}/>
+      <Comment
+        id={props.id}
+        session={props.session}
+        updateStateFromChild={updateStateFromChild}
+        commentData={commentData}
+        isPurchased={props.isPurchased}
+      />
 
-      {commentData.replies.map(reply => <Comment key={props.id} commentData={reply} isReply={true}/>)}
+      {commentData.replies.map((reply) => (
+        <Comment key={props.id} commentData={reply} isReply={true} />
+      ))}
 
       {replyVisible && (
         <CommentInput
@@ -49,7 +51,7 @@ const CommentDisplay = props => {
         />
       )}
     </>
-  )
-}
+  );
+};
 
-export default CommentDisplay
+export default CommentDisplay;

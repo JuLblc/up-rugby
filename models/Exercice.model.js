@@ -1,3 +1,6 @@
+/* eslint-disable eslint-comments/disable-enable-pair */
+/* eslint-disable sort-keys-fix/sort-keys-fix */
+/* eslint-disable sort-keys */
 import mongoose from "mongoose";
 
 const ExerciceSchema = new mongoose.Schema({
@@ -7,9 +10,9 @@ const ExerciceSchema = new mongoose.Schema({
   seoUrl: String,
   img: {
     fileName: String,
+    height: Number,
     url: String,
     width: Number,
-    height: Number
   },
   // Level 2
   chapters: [
@@ -17,10 +20,10 @@ const ExerciceSchema = new mongoose.Schema({
       title: String, //Joueur en avance
       lectures: [
         {
-          url: String,
           duration: Number,
-          youtubeId: String
-        }
+          url: String,
+          youtubeId: String,
+        },
       ],
       // Level 3
       subchapters: [
@@ -28,10 +31,10 @@ const ExerciceSchema = new mongoose.Schema({
           title: String, //La gestion du surnombre
           lectures: [
             {
-              url: String,
               duration: Number,
-              youtubeId: String
-            }
+              url: String,
+              youtubeId: String,
+            },
           ],
           // Level 4
           infrachapters: [
@@ -39,21 +42,21 @@ const ExerciceSchema = new mongoose.Schema({
               title: String, //2vs1
               lectures: [
                 {
-                  url: String,
                   duration: Number,
-                  youtubeId: String
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
+                  url: String,
+                  youtubeId: String,
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
   ],
   isPublished: {
+    default: false,
     type: Boolean,
-    default: false
-  }
+  },
 });
 
 module.exports =

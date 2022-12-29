@@ -1,17 +1,17 @@
-import UserCourses from './UserCourses'
-import CartSummary from './CartSummary'
+import UserCourses from "./UserCourses";
+import CartSummary from "./CartSummary";
 
-const UserCart = props => {
+const UserCart = (props) => {
   return (
     <>
       {props.cart.length === 0 ? (
-         <div>Votre panier est vide</div>
+        <div>Votre panier est vide</div>
       ) : (
         <UserCourses
           courses={props.cart}
           styles={props.styles}
           deleteCourseToCart={props.deleteCourseToCart}
-          CTA='buy'
+          CTA="buy"
         />
       )}
       {props.cart.length > 0 && (
@@ -23,7 +23,7 @@ const UserCart = props => {
         />
       )}
     </>
-  )
-}
+  );
+};
 
-export default UserCart
+export default UserCart;

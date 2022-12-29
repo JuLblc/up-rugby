@@ -13,8 +13,9 @@ export default async function handler(req, res) {
         case "PUT":
           addCourseToUser(req, res, session);
           break;
+
         default:
-          res.status(405).end('Method not allowed')
+          res.status(405).end("Method not allowed");
       }
     })
     .catch((err) => {
@@ -28,6 +29,7 @@ export default async function handler(req, res) {
 const addCourseToUser = (req, res, session) => {
   if (!session) {
     res.status(401).json({ message: "Unauthorized" });
+
     return;
   }
 

@@ -7,6 +7,7 @@ import styles from "../../styles/Formation.module.css";
 const Chapter = (props) => {
   const onChangeVideo = (e, chapterIdx, lectureIdx) => {
     const newExerciceData = { ...props.exerciceData };
+
     newExerciceData.chapters[chapterIdx].lectures[lectureIdx][e.target.name] =
       e.target.value;
     props.updateStateFromChild(newExerciceData);
@@ -14,6 +15,7 @@ const Chapter = (props) => {
 
   const onChangeSubChapter = (e, chapterIdx, subchapterIdx) => {
     const newExerciceData = { ...props.exerciceData };
+
     newExerciceData.chapters[chapterIdx].subchapters[subchapterIdx][
       e.target.name
     ] = e.target.value;
@@ -22,6 +24,7 @@ const Chapter = (props) => {
 
   const removeVideo = (chapterIdx, videoIdx) => {
     const newExerciceData = { ...props.exerciceData };
+
     newExerciceData.chapters[chapterIdx].lectures.splice(videoIdx, 1);
 
     props.updateStateFromChild(newExerciceData);
@@ -29,6 +32,7 @@ const Chapter = (props) => {
 
   const removeSubChapter = (chapterIdx, subchapterIdx) => {
     const newExerciceData = { ...props.exerciceData };
+
     newExerciceData.chapters[chapterIdx].subchapters.splice(subchapterIdx, 1);
 
     props.updateStateFromChild(newExerciceData);
@@ -51,11 +55,11 @@ const Chapter = (props) => {
 
       newExerciceData.chapters[chapterIdx].subchapters[
         subchapterIdx
-      ].infrachapters[infrachapterIdx].lectures[
-        lectureIdx
-      ].youtubeId = youtubeId;
+      ].infrachapters[infrachapterIdx].lectures[lectureIdx].youtubeId =
+        youtubeId;
 
       props.updateStateFromChild(newExerciceData);
+
       return;
     }
 
@@ -68,36 +72,37 @@ const Chapter = (props) => {
         lectureIdx
       ].youtubeId = youtubeId;
       props.updateStateFromChild(newExerciceData);
+
       return;
     }
 
-    newExerciceData.chapters[chapterIdx].lectures[
-      lectureIdx
-    ].duration = duration;
+    newExerciceData.chapters[chapterIdx].lectures[lectureIdx].duration =
+      duration;
 
-    newExerciceData.chapters[chapterIdx].lectures[
-      lectureIdx
-    ].youtubeId = youtubeId;
+    newExerciceData.chapters[chapterIdx].lectures[lectureIdx].youtubeId =
+      youtubeId;
 
     props.updateStateFromChild(newExerciceData);
   };
 
   const addVideoToSubChapter = (chapterIdx, subchapterIdx) => {
     const newExerciceData = { ...props.exerciceData };
+
     newExerciceData.chapters[chapterIdx].subchapters[
       subchapterIdx
-    ].lectures.push({ url: "", duration: 0, youtubeId: "" });
+    ].lectures.push({ duration: 0, url: "", youtubeId: "" });
     props.updateStateFromChild(newExerciceData);
   };
 
   const addInfraChapter = (chapterIdx, subchapterIdx) => {
     const newExerciceData = { ...props.exerciceData };
+
     newExerciceData.chapters[chapterIdx].subchapters[
       subchapterIdx
     ].infrachapters.push({
-      title: "",
       lectures: [],
-      subchapters: []
+      subchapters: [],
+      title: "",
     });
     props.updateStateFromChild(newExerciceData);
   };

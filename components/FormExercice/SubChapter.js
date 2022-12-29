@@ -11,6 +11,7 @@ const SubChapter = (props) => {
     lectureIdx
   ) => {
     const newExerciceData = { ...props.exerciceData };
+
     newExerciceData.chapters[chapterIdx].subchapters[subchapterIdx].lectures[
       lectureIdx
     ][e.target.name] = e.target.value;
@@ -24,6 +25,7 @@ const SubChapter = (props) => {
     infrachapterIdx
   ) => {
     const newExerciceData = { ...props.exerciceData };
+
     newExerciceData.chapters[chapterIdx].subchapters[
       subchapterIdx
     ].infrachapters[infrachapterIdx][e.target.name] = e.target.value;
@@ -32,6 +34,7 @@ const SubChapter = (props) => {
 
   const removeVideoSubChapter = (chapterIdx, subchapterIdx, videoIdx) => {
     const newExerciceData = { ...props.exerciceData };
+
     newExerciceData.chapters[chapterIdx].subchapters[
       subchapterIdx
     ].lectures.splice(videoIdx, 1);
@@ -41,6 +44,7 @@ const SubChapter = (props) => {
 
   const removeInfraChapter = (chapterIdx, subchapterIdx, infrachapterIdx) => {
     const newExerciceData = { ...props.exerciceData };
+
     newExerciceData.chapters[chapterIdx].subchapters[
       subchapterIdx
     ].infrachapters.splice(infrachapterIdx, 1);
@@ -54,12 +58,13 @@ const SubChapter = (props) => {
     infrachapterIdx
   ) => {
     const newExerciceData = { ...props.exerciceData };
+
     newExerciceData.chapters[chapterIdx].subchapters[
       subchapterIdx
     ].infrachapters[infrachapterIdx].lectures.push({
-      url: "",
       duration: 0,
-      youtubeId: ""
+      url: "",
+      youtubeId: "",
     });
     props.updateStateFromChild(newExerciceData);
   };

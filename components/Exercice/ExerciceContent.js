@@ -6,8 +6,8 @@ import { useElementDimensions } from "../../hooks/useElementDimensions";
 
 const ExerciceContent = (props) => {
   const [youtubePlayerDimension, setYoutubePlayerDimension] = useState({
+    height: undefined,
     width: undefined,
-    height: undefined
   });
 
   const divRef = useRef();
@@ -17,9 +17,11 @@ const ExerciceContent = (props) => {
 
   // Set youtube player according to videoContainer width
   useEffect(() => {
+    // eslint-disable-next-line immutable/no-let
     let width;
+    // eslint-disable-next-line immutable/no-let
     let height;
-    let ratio = 9 / 16; // YouTube Video have a ratio 16:9
+    const ratio = 9 / 16; // YouTube Video have a ratio 16:9
 
     if (elementWidth > 964) {
       width = (elementWidth - 64) / 3;
@@ -33,8 +35,9 @@ const ExerciceContent = (props) => {
       width = elementWidth;
     }
 
+    // eslint-disable-next-line prefer-const
     height = width * ratio;
-    setYoutubePlayerDimension({ width, height });
+    setYoutubePlayerDimension({ height, width });
   }, [elementWidth]);
 
   return (
