@@ -20,11 +20,24 @@ import styles from "../../../../styles/Lectures.module.css";
 import blockedImg from "../../../../public/blocked.jpg";
 import { useEffect, useState } from "react";
 
+const useDeviceSize = ({
+  isBigScreen,
+  isDesktopOrLaptop,
+  setToggleMenu,
+  width,
+}) => {
+  useEffect(() => {
+    if (isDesktopOrLaptop || isBigScreen) {
+      setToggleMenu(true);
+    }
+  }, [width]);
+};
+
 const Lectures = (props) => {
-  const { height, width } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   const { isBigScreen, isDesktopOrLaptop, isMobile, isTablet } =
-    getDeviceTypeInfo(width, height);
+    getDeviceTypeInfo(width);
 
   const [toggleMenu, setToggleMenu] = useState(true); // true => description / false => sommaire
   const [toggleOnPlayMsg, setToggleOnPlayMsg] = useState({
@@ -42,11 +55,7 @@ const Lectures = (props) => {
     setToggleOnPlayMsg({ isFirstLoad: false, user: "member" });
   };
 
-  useEffect(() => {
-    if (isDesktopOrLaptop || isBigScreen) {
-      setToggleMenu(true);
-    }
-  }, [width, height]);
+  useDeviceSize({ isBigScreen, isDesktopOrLaptop, setToggleMenu, width });
 
   return (
     <>

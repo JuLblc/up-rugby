@@ -26,17 +26,21 @@ import CtaFormationDetails from "../../../components/Formation/CtaFormationDetai
 
 import styles from "../../../styles/CourseDetails.module.css";
 
+const useProtectAdmin = (router, course) => {
+  useEffect(() => {
+    // To prevent 'USER' to see 'ADMIN' courses
+    if (!course) {
+      router.back();
+    }
+  }, []);
+};
+
 const FormationDetails = (props) => {
   const router = useRouter();
   const { width } = useWindowDimensions();
   const [isInCart, setisInCart] = useState(props.isInCart);
 
-  useEffect(() => {
-    // To prevent 'USER' to see 'ADMIN' courses
-    if (!props.course) {
-      router.back();
-    }
-  }, []);
+  useProtectAdmin(router, props.course);
 
   const startCourse = () => {
     router.push(
