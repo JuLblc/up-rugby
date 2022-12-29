@@ -3,6 +3,14 @@ import { getVimeoVideo } from "../apiCall/vimeo";
 import { getYoutubeVideo } from "../apiCall/youtube";
 import { convertISO8601ToSec } from "../utils/utilCourses";
 
+const useResetState = ({ reset, setError, setErrorMessage, setFocused }) => {
+  useEffect(() => {
+    setErrorMessage("");
+    setFocused(false);
+    setError(false);
+  }, [reset]);
+};
+
 const FormInput = (props) => {
   const [focused, setFocused] = useState(false);
   const [error, setError] = useState(false);
@@ -31,62 +39,57 @@ const FormInput = (props) => {
     ...inputProps
   } = props;
 
-  useEffect(() => {
-    setErrorMessage("");
-    setFocused(false);
-    setError(false);
-  }, [reset]);
+  useResetState({ setError, setErrorMessage, setFocused });
+
+  const selectErrorMessage = (e, messages) => {
+    const { patternMismatch, valid, valueMissing } = e.target.validity;
+    const { name } = e.target;
+
+    if (patternMismatch) {
+      return messages.patternMismatch;
+    }
+
+    if (valueMissing && name === "email") {
+      return messages.emailMissing;
+    }
+
+    if (valueMissing && name === "password") {
+      return messages.passwordMissing;
+    }
+
+    if (valueMissing && name === "title") {
+      return messages.titleMissing;
+    }
+
+    if (valueMissing && name === "description") {
+      return messages.descriptionMissing;
+    }
+
+    if (valueMissing && name === "url") {
+      return messages.urlMissing;
+    }
+
+    if (!valid) {
+      return messages.valid;
+    }
+  };
 
   const handleOnBlur = async (e) => {
+    console.log(e.target.validity);
+    const { valid } = e.target.validity;
+    const { name, value } = e.target;
+
     setFocused(true);
 
-    !e.target.validity.valid ? setError(true) : setError(false);
+    !valid ? setError(true) : setError(false);
 
-    if (e.target.validity.patternMismatch) {
-      setErrorMessage(errorMessages.patternMismatch);
+    const message = selectErrorMessage(e, errorMessages);
 
-      return;
-    }
-
-    if (e.target.validity.valueMissing && e.target.name === "email") {
-      setErrorMessage(errorMessages.emailMissing);
-
-      return;
-    }
-
-    if (e.target.validity.valueMissing && e.target.name === "password") {
-      setErrorMessage(errorMessages.passwordMissing);
-
-      return;
-    }
-
-    if (e.target.validity.valueMissing && e.target.name === "title") {
-      setErrorMessage(errorMessages.titleMissing);
-
-      return;
-    }
-
-    if (e.target.validity.valueMissing && e.target.name === "description") {
-      setErrorMessage(errorMessages.descriptionMissing);
-
-      return;
-    }
-
-    if (e.target.validity.valueMissing && e.target.name === "url") {
-      setErrorMessage(errorMessages.urlMissing);
-
-      return;
-    }
-
-    if (!e.target.validity.valid) {
-      setErrorMessage(errorMessages.valid);
-
-      return;
-    }
+    setErrorMessage(message);
 
     //Check video exist on vimeo
-    if (e.target.name === "url" && mediaPlatform === "vimeo") {
-      const vimeoId = e.target.value.substring(31, e.target.value.length);
+    if (name === "url" && mediaPlatform === "vimeo") {
+      const vimeoId = value.substring(31, value.length);
 
       const resVimeo = await getVimeoVideo(vimeoId);
 
@@ -103,8 +106,8 @@ const FormInput = (props) => {
     }
 
     //Check video exist on youtube
-    if (e.target.name === "url" && mediaPlatform === "youtube") {
-      const youtubeId = e.target.value.substring(32, 43);
+    if (name === "url" && mediaPlatform === "youtube") {
+      const youtubeId = value.substring(32, 43);
 
       const resYoutube = await getYoutubeVideo(youtubeId);
 
