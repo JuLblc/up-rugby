@@ -30,4 +30,10 @@ Here started the journey!!
 
 ## Give it a try
 
-Please follow this link: https://up-rugby.vercel.app/ 
+Please follow this link: https://up-rugby.vercel.app/
+
+https://user-images.githubusercontent.com/76005217/210181485-59a8007e-ae8d-47e8-a1c4-13e46b39eb9b.mov
+
+https://user-images.githubusercontent.com/76005217/210181486-a99b7d76-0d38-4655-8bea-83c48da26e2c.mov
+
+https://user-images.githubusercontent.com/76005217/210181484-a4dbeafd-6e36-4d59-9744-2c32a2fdff49.mov
