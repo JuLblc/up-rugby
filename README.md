@@ -1,34 +1,33 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<img alt="coding" src="https://github.com/JuLblc/up-rugby/blob/main/public/logo.png" width="300">
 
-## Getting Started
+# Project: Up-Rugby
 
-First, run the development server:
+## Introduction
+After having successfully completed the Ironhack Wed Developement Bootcamp, I wanted to keep praticing and learning new things while I was applying for job position in the meantime.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+For project I decided to usethe following technologies: 
+- Next JS,
+- MongoDB & Mongoose, 
+- Axios,
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Pitch
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+Up-rugby is an educational content platform for rugby players, coaches and fans. There is both free and paid content.</br>
+A friend of mine created the whole content and has a wordpress version of the application.
+As the <a href="https://www.up-rugby.fr/">current version</a> doesn't look that great and the perfomance should be improve, my friend ask me to redesign it.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+Here started the journey!!
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Features
 
-## Learn More
+- Mobile-first interface
+- Authentication with NextAuth (Credentials & social Network)
+- E-mail verification with Nodemailer
+- Password reset email with Nodemailer
+- Accessing video's stored on vimeo and youtube
+- Checkout with Stripe
+- Profil Admin for the back office
 
-To learn more about Next.js, take a look at the following resources:
+## Give it a try
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Please follow this link: https://up-rugby.vercel.app/ 
