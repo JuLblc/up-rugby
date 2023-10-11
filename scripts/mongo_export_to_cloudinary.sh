@@ -2,7 +2,7 @@
 source ../.env.local
 
 # Declare variables
-DATE_HOUR=$(date +"%Y-%m-%d-%H:%M")
+DATE_HOUR=$(date +"%Y-%m-%d-%H-%M")
 FOLDERNAME="mongo-backup-$DATE_HOUR"
 FILENAME_ZIP="$FOLDERNAME.zip"
 CLOUDINARY_DESTINATION_FOLDER="up-rugby-mongo-backup"

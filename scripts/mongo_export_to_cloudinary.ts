@@ -13,12 +13,19 @@ const generateDateHour = () => {
   const hours = String(currentDate.getHours()).padStart(2, "0");
   const minutes = String(currentDate.getMinutes()).padStart(2, "0");
 
-  return `${year}-${month}-${day}-${hours}:${minutes}`;
+  return `${year}-${month}-${day}-${hours}-${minutes}`;
 };
 
 const createFolder = (folderPath: string) => {
-  fs.mkdir(folderPath, () => {
-    console.log(`Dossier '${folderPath}' créé avec succès.`);
+  fs.mkdir(folderPath, { recursive: true }, (err) => {
+    if (err) {
+      console.error(
+        `Erreur lors de la création du dossier '${folderPath}' :`,
+        err
+      );
+    } else {
+      console.log(`Dossier '${folderPath}' créé avec succès.`);
+    }
   });
 };
 
@@ -115,7 +122,7 @@ const uploadToCloudinary = async ({
     throw new Error("Le fichier backup n'existe pas");
   }
 
-  await cloudinary.uploader.upload(
+  const cloudinaryResponse = await cloudinary.uploader.upload(
     fileNameZip,
     {
       folder,
@@ -130,6 +137,8 @@ const uploadToCloudinary = async ({
       }
     }
   );
+
+  return cloudinaryResponse;
 };
 
 const removePath = (path: string) => {
@@ -142,20 +151,24 @@ const removePath = (path: string) => {
   });
 };
 
-const exportToCloudinary = async () => {
+export const exportToCloudinary = async () => {
   const dateHour = generateDateHour();
   const folderName = `mongo-backup-${dateHour}`;
-  const folderPath = `./${folderName}`;
+  const folderPath = path.join(process.cwd(), folderName);
   const fileNameZip = `${folderName}.zip`;
   const cloudinaryDestinationFolder = "up-rugby-mongo-backup";
 
-  createFolder(folderPath);
+  console.log({ folderPath });
+
+  if (!fs.existsSync(folderPath)) {
+    createFolder(folderPath);
+  }
 
   await extractJSONCollectionFromMongo(folderPath);
 
   await zipData(fileNameZip, folderName);
 
-  await uploadToCloudinary({
+  const cloudinaryResponse = await uploadToCloudinary({
     fileNameZip,
     folder: cloudinaryDestinationFolder,
     publicId: folderName,
@@ -163,6 +176,6 @@ const exportToCloudinary = async () => {
 
   removePath(fileNameZip);
   removePath(folderName);
-};
 
-exportToCloudinary();
+  return cloudinaryResponse;
+};

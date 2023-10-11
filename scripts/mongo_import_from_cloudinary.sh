@@ -4,7 +4,7 @@ source ../.env.local
 # Declare variables
 CLOUDINARY_SOURCE_FOLDER="up-rugby-mongo-backup"
 # BACKUP_FOLDERNAME is available in cloudinary -> zip file name you wish to import
-BACKUP_FOLDERNAME="mongo-backup-2023-10-10-14:24"
+BACKUP_FOLDERNAME="mongo-backup-2023-10-11-14-43"
 FILENAME_ZIP="$BACKUP_FOLDERNAME.zip"
 # BACKUP_SECURE_URL_VERSION is available in cloudinary -> select zip file -> original URL -> vXXXXXX
 SECURE_URL="https://res.cloudinary.com/$CLOUDINARY_NAME/raw/upload/$BACKUP_SECURE_URL_VERSION/$CLOUDINARY_SOURCE_FOLDER/$FILENAME_ZIP"
