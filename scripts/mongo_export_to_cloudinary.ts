@@ -111,20 +111,20 @@ const zipData = async (sourcePath: string, zipFilePath: string) => {
 };
 
 const uploadToCloudinary = async ({
-  fileNameZip,
   folder,
   publicId,
+  zipFilePath,
 }: {
-  fileNameZip: string;
   folder: string;
   publicId: string;
+  zipFilePath: string;
 }) => {
-  if (!fs.existsSync(fileNameZip) || fs.statSync(fileNameZip).size === 0) {
+  if (!fs.existsSync(zipFilePath) || fs.statSync(zipFilePath).size === 0) {
     throw new Error("Le fichier backup n'existe pas");
   }
 
   const cloudinaryResponse = await cloudinary.uploader.upload(
-    fileNameZip,
+    zipFilePath,
     {
       folder,
       public_id: publicId,
@@ -145,11 +145,9 @@ const uploadToCloudinary = async ({
 export const exportToCloudinary = async () => {
   const dateHour = generateDateHour();
   const folderName = `mongo-backup-${dateHour}`;
-  const folderPath = path.join(process.cwd(), folderName);
-  const fileNameZip = `${folderName}.zip`;
+  const folderPath = `/tmp/${folderName}`;
+  const zipFilePath = `/tmp/${folderName}.zip`;
   const cloudinaryDestinationFolder = "up-rugby-mongo-backup";
-
-  console.log({ folderPath });
 
   if (!fs.existsSync(folderPath)) {
     createFolder(folderPath);
@@ -157,16 +155,16 @@ export const exportToCloudinary = async () => {
 
   await extractJSONCollectionFromMongo(folderPath);
 
-  await zipData(fileNameZip, folderName);
+  await zipData(zipFilePath, folderPath);
 
   const cloudinaryResponse = await uploadToCloudinary({
-    fileNameZip,
     folder: cloudinaryDestinationFolder,
     publicId: folderName,
+    zipFilePath,
   });
 
-  removePath(fileNameZip);
-  removePath(folderName);
+  removePath(folderPath);
+  removePath(zipFilePath);
 
   return cloudinaryResponse;
 };

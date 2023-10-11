@@ -95,7 +95,7 @@ const importJSONCollectionToMongo = async (uri: string, folderName: string) => {
 };
 
 export const importFromCloudinary = async () => {
-  const folderName = "mongo-backup-2023-10-11-16-27";
+  const folderName = "mongo-backup-2023-10-11-19-11";
   const fileNameZip = `${folderName}.zip`;
   const cloudinarySourceFolder = "up-rugby-mongo-backup";
 
