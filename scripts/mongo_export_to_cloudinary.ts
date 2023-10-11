@@ -4,6 +4,7 @@ import path from "path";
 import fs from "fs";
 import archiver from "archiver";
 import { v2 as cloudinary } from "cloudinary";
+import { removePath } from "./utils";
 
 const generateDateHour = () => {
   const currentDate = new Date();
@@ -139,16 +140,6 @@ const uploadToCloudinary = async ({
   );
 
   return cloudinaryResponse;
-};
-
-const removePath = (path: string) => {
-  fs.rm(path, { recursive: true }, (err) => {
-    if (err) {
-      console.error(`Erreur lors de la suppression de ${path} :`, err);
-    } else {
-      console.log(`${path} supprimé avec succès.`);
-    }
-  });
 };
 
 export const exportToCloudinary = async () => {

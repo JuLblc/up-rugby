@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "@types/archiver": "^5.3.3",
+    "@types/unzipper": "^0.10.7",
     "@typescript-eslint/eslint-plugin": "^5.47.1",
     "add": "^2.0.6",
     "archiver": "^6.0.1",
