@@ -14,8 +14,6 @@ export const getExercices = async (context, url) => {
 };
 
 export const postExercice = async (exerciceData) => {
-  console.log("exerciceData: ", exerciceData);
-
   return axios.post("/api/exercices", { exercice: exerciceData });
 };
 

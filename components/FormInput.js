@@ -75,7 +75,6 @@ const FormInput = (props) => {
   };
 
   const handleOnBlur = async (e) => {
-    console.log(e.target.validity);
     const { valid } = e.target.validity;
     const { name, value } = e.target;
 
