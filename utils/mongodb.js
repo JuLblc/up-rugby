@@ -6,11 +6,9 @@ const { MONGODB_URI } = process.env;
 if (!MONGODB_URI) {
   throw new Error("Define the MONGODB_URI environmental variable");
 }
-let cached = global.mongoose;
-
-if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
-}
+const cached = global.mongoose
+  ? global.mongoose
+  : (global.mongoose = { conn: null, promise: null });
 
 export async function connectToDatabase() {
   if (cached.conn) {
@@ -25,6 +23,8 @@ export async function connectToDatabase() {
     };
 
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+      mongoose.set("strictQuery", true);
+
       return mongoose;
     });
   }
