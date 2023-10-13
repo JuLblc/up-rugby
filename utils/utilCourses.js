@@ -220,8 +220,13 @@ export const getRandomContent = (
     idsPurchasedCourses
   );
 
-  const exercicesToFetch = 3 - randomCourses.length;
-  const randomExercices = getRandomExercices(exercicesToFetch, allExercices);
+  const contentToDisplay = 3;
+  const exercicesQtyToFetch =
+    allExercices.length >= contentToDisplay - randomCourses.length
+      ? contentToDisplay - randomCourses.length
+      : allExercices.length;
+
+  const randomExercices = getRandomExercices(exercicesQtyToFetch, allExercices);
 
   const randomContent = randomCourses.concat(randomExercices);
 
