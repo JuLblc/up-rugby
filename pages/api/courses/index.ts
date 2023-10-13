@@ -1,10 +1,18 @@
 import Course from "../../../models/Course.model";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]";
+import { NextApiRequest, NextApiResponse } from "next";
+import { connectToDatabase } from "../../../utils/mongodb";
 
-const { connectToDatabase } = require("../../../utils/mongodb");
+type CourseFilter = {
+  isPublished?: boolean;
+  seoUrl?: string | string[];
+};
 
-export default async function handler(req, res) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const session = await getServerSession(req, res, authOptions);
   const { method, query } = req;
 
@@ -32,15 +40,19 @@ export default async function handler(req, res) {
           res.status(405).end("Method not allowed");
       }
     })
-    .catch((err) => {
-      console.log("ERR: ", err);
+    .catch((err: Error) => {
+      console.error("err : ", err);
       res
         .status(400)
         .json({ message: "La connexion à la base de donnée a échoué" });
     });
 }
 
-const addCourse = (req, res, session) => {
+const addCourse = (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  session: { user: { role: string } }
+) => {
   const { course } = req.body;
 
   if (!session || session.user.role !== "ADMIN") {
@@ -56,41 +68,53 @@ const addCourse = (req, res, session) => {
     .then((newCourseFromDB) => {
       res.status(200).json({ newCourseFromDB });
     })
-    .catch((err) => console.log("err : ", err));
+    .catch((err: Error) => console.error("err : ", err));
 };
 
-const getAllCourses = (req, res, session) => {
-  const cond = {};
+const getAllCourses = (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  session: { user: { role: string } }
+) => {
+  const filter: CourseFilter = {};
 
   if (!session || session.user.role !== "ADMIN") {
-    cond.isPublished = true;
+    filter.isPublished = true;
   }
 
-  Course.find(cond)
+  Course.find(filter)
     .sort({ _id: -1 }) //sort collection in descending order based on the date of insertion
     .then((coursesFromDB) => {
       res.status(200).json({ coursesFromDB });
     })
-    .catch((err) => console.log("err : ", err));
+    .catch((err: Error) => console.error("err : ", err));
 };
 
-const getCourse = (req, res, session) => {
+const getCourse = (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  session: { user: { role: string } }
+) => {
   const seoUrl = req.query.url;
 
-  const cond = { seoUrl };
+  const filter: CourseFilter = { seoUrl };
 
   if (!session || session.user.role !== "ADMIN") {
-    cond.isPublished = true;
+    filter.isPublished = true;
   }
 
-  Course.findOne(cond)
+  Course.findOne(filter)
     .then((courseFromDB) => {
       res.status(200).json({ courseFromDB });
     })
-    .catch((err) => console.log("err : ", err));
+    .catch((err: Error) => console.error("err : ", err));
 };
 
-const updateCourse = (req, res, session) => {
+const updateCourse = (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  session: { user: { role: string } }
+) => {
   if (!session || session.user.role !== "ADMIN") {
     res.status(401).json({ message: "Unauthorized" });
 
@@ -104,10 +128,14 @@ const updateCourse = (req, res, session) => {
     .then((updatedCourseFromDB) => {
       res.status(200).json({ updatedCourseFromDB });
     })
-    .catch((err) => console.log("err : ", err));
+    .catch((err: Error) => console.error("err : ", err));
 };
 
-const deleteCourse = (req, res, session) => {
+const deleteCourse = (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  session: { user: { role: string } }
+) => {
   if (!session || session.user.role !== "ADMIN") {
     res.status(401).json({ message: "Unauthorized" });
 
@@ -120,5 +148,5 @@ const deleteCourse = (req, res, session) => {
     .then(() => {
       res.status(200).json({ message: "Formation supprimée" });
     })
-    .catch((err) => console.log("err : ", err));
+    .catch((err: Error) => console.error("err : ", err));
 };

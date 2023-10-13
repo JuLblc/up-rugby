@@ -1,9 +1,14 @@
 import Course from "../../../models/Course.model";
-import { getSession } from "next-auth/react";
-const { connectToDatabase } = require("../../../utils/mongodb");
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../auth/[...nextauth]";
+import { NextApiRequest, NextApiResponse } from "next";
+import { connectToDatabase } from "../../../utils/mongodb";
 
-export default async function handler(req, res) {
-  const session = await getSession({ req });
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const session = await getServerSession(req, res, authOptions);
   const { method } = req;
 
   connectToDatabase()
@@ -17,7 +22,7 @@ export default async function handler(req, res) {
           res.status(405).end("Method not allowed");
       }
     })
-    .catch((err) => {
+    .catch((err: Error) => {
       console.log(err);
       res
         .status(400)
@@ -25,7 +30,11 @@ export default async function handler(req, res) {
     });
 }
 
-const addCommentToCourse = (req, res, session) => {
+const addCommentToCourse = (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  session: any
+) => {
   if (!session) {
     res.status(401).json({ message: "Unauthorized" });
 
