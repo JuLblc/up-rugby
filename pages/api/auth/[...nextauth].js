@@ -9,10 +9,9 @@ import User from "../../../models/User.model";
 
 const bcrypt = require("bcryptjs");
 
-export default NextAuth({
+export const authOptions = {
   callbacks: {
     async jwt({ token, user }) {
-      // console.log('callbacks jwt: ', { token, user })
       if (user) {
         token.id = user.id;
         token.firstName = user.firstName;
@@ -23,7 +22,6 @@ export default NextAuth({
       return token;
     },
     async session({ session, token }) {
-      // console.log('callbacks session: ', { session, token })
       session.user.id = token.id;
       session.user.firstName = token.firstName;
       session.user.lastName = token.lastName;
@@ -170,4 +168,6 @@ export default NextAuth({
   session: {
     maxAge: 60 * 60 * 24 * 1, // 1 jour
   },
-});
+};
+
+export default NextAuth(authOptions);

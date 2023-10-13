@@ -1,13 +1,12 @@
 import Course from "../../../models/Course.model";
-import { getSession } from "next-auth/react";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../auth/[...nextauth]";
 
 const { connectToDatabase } = require("../../../utils/mongodb");
 
 export default async function handler(req, res) {
-  const session = await getSession({ req });
+  const session = await getServerSession(req, res, authOptions);
   const { method, query } = req;
-
-  // console.log('session API: ', session)
 
   connectToDatabase()
     .then(() => {
@@ -42,7 +41,6 @@ export default async function handler(req, res) {
 }
 
 const addCourse = (req, res, session) => {
-  //console.log('req: ', req)
   const { course } = req.body;
 
   if (!session || session.user.role !== "ADMIN") {
