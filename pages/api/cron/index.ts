@@ -1,6 +1,10 @@
+import { NextApiRequest, NextApiResponse } from "next";
 import { exportToCloudinary } from "../../../scripts/mongo_export_to_cloudinary";
 
-export default async function handler(req, res) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   try {
     const cloudinaryResponse = await exportToCloudinary();
 
