@@ -1,10 +1,14 @@
 import User from "../../../models/User.model";
-import { getSession } from "next-auth/react";
+import { NextApiRequest, NextApiResponse } from "next";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../auth/[...nextauth]";
+import { connectToDatabase } from "../../../utils/mongodb";
 
-const { connectToDatabase } = require("../../../utils/mongodb");
-
-export default async function handler(req, res) {
-  const session = await getSession({ req });
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const session = await getServerSession(req, res, authOptions);
   const { method } = req;
 
   connectToDatabase()
@@ -29,7 +33,11 @@ export default async function handler(req, res) {
     });
 }
 
-const addCourseToCart = (req, res, session) => {
+const addCourseToCart = (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  session: { user: { id: string } }
+) => {
   if (!session) {
     res.status(401).json({ message: "Unauthorized" });
 
@@ -49,7 +57,7 @@ const addCourseToCart = (req, res, session) => {
           .then((updatedUser) => {
             res.status(201).json({ updatedUser });
           })
-          .catch((err) => console.log("err : ", err));
+          .catch((err: Error) => console.error("err : ", err));
 
         return;
       }
@@ -57,10 +65,14 @@ const addCourseToCart = (req, res, session) => {
         .status(400)
         .json({ message: "Cette formation a déjà été ajouté au panier" });
     })
-    .catch((err) => console.log("err : ", err));
+    .catch((err: Error) => console.error("err : ", err));
 };
 
-const removeCourseToCart = (req, res, session) => {
+const removeCourseToCart = (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  session: { user: { id: string } }
+) => {
   if (!session) {
     res.status(401).json({ message: "Unauthorized" });
 
@@ -81,11 +93,11 @@ const removeCourseToCart = (req, res, session) => {
           .then((updatedUser) => {
             res.status(201).json({ updatedUser });
           })
-          .catch((err) => console.log("err : ", err));
+          .catch((err: Error) => console.error("err : ", err));
 
         return;
       }
       res.status(200).json({ message: "Formation supprimer du panier" });
     })
-    .catch((err) => console.log("err : ", err));
+    .catch((err: Error) => console.error("err : ", err));
 };

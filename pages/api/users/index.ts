@@ -1,10 +1,14 @@
 import User from "../../../models/User.model";
-import { getSession } from "next-auth/react";
+import { NextApiRequest, NextApiResponse } from "next";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../auth/[...nextauth]";
+import { connectToDatabase } from "../../../utils/mongodb";
 
-const { connectToDatabase } = require("../../../utils/mongodb");
-
-export default async function handler(req, res) {
-  const session = await getSession({ req });
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const session = await getServerSession(req, res, authOptions);
   const { method } = req;
 
   connectToDatabase()
@@ -29,7 +33,11 @@ export default async function handler(req, res) {
     });
 }
 
-const getUser = (req, res, session) => {
+const getUser = (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  session: { user: { id: string } }
+) => {
   if (!session) {
     res.status(401).json({ message: "Unauthorized" });
 
@@ -42,10 +50,14 @@ const getUser = (req, res, session) => {
     .then((userFromDB) => {
       res.status(200).json({ userFromDB });
     })
-    .catch((err) => console.log("err : ", err));
+    .catch((err: Error) => console.error("err : ", err));
 };
 
-const updateUser = (req, res, session) => {
+const updateUser = (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  session: any
+) => {
   if (!session) {
     res.status(401).json({ message: "Unauthorized" });
 
@@ -58,5 +70,5 @@ const updateUser = (req, res, session) => {
     .then((updatedUserFromDB) => {
       res.status(201).json({ updatedUserFromDB });
     })
-    .catch((err) => console.log("err : ", err));
+    .catch((err: Error) => console.error("err : ", err));
 };

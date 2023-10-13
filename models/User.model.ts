@@ -1,20 +1,36 @@
-import mongoose from "mongoose";
+import mongoose, { Schema, Document, Model } from "mongoose";
 
-const UserSchema = new mongoose.Schema({
+type Course = mongoose.Schema.Types.ObjectId;
+
+type User = Document & {
+  cart: Course[];
+  category: "Joueur" | "Entraineur";
+  club: string;
+  email: string;
+  facebookID: string;
+  firstName: string;
+  googleID: string;
+  isEmailVerified: boolean;
+  lastName: string;
+  password: string;
+  purchasedCourses: Course[];
+  role: "USER" | "ADMIN";
+  token: string;
+  tokenExpires: Date;
+};
+
+const UserSchema: Schema = new mongoose.Schema({
   cart: [
     {
       ref: "Course",
       type: mongoose.Schema.Types.ObjectId,
     },
   ],
-
   category: {
     enum: ["Joueur", "Entraineur"],
     type: String,
   },
-
   club: String,
-  // unique index sparse => allowed several email === null
   email: {
     index: true,
     lowercase: true,
@@ -46,4 +62,7 @@ const UserSchema = new mongoose.Schema({
   tokenExpires: Date,
 });
 
-module.exports = mongoose.models.User || mongoose.model("User", UserSchema);
+const User: Model<User> =
+  mongoose.models.User || mongoose.model<User>("User", UserSchema);
+
+export default User;

@@ -1,10 +1,14 @@
 import User from "../../../models/User.model";
-import { getSession } from "next-auth/react";
+import { NextApiRequest, NextApiResponse } from "next";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../auth/[...nextauth]";
+import { connectToDatabase } from "../../../utils/mongodb";
 
-const { connectToDatabase } = require("../../../utils/mongodb");
-
-export default async function handler(req, res) {
-  const session = await getSession({ req });
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const session = await getServerSession(req, res, authOptions);
   const { method } = req;
 
   connectToDatabase()
@@ -26,7 +30,11 @@ export default async function handler(req, res) {
     });
 }
 
-const addCourseToUser = (req, res, session) => {
+const addCourseToUser = (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  session: { user: { id: string } }
+) => {
   if (!session) {
     res.status(401).json({ message: "Unauthorized" });
 
@@ -46,12 +54,12 @@ const addCourseToUser = (req, res, session) => {
           .then((updatedUser) => {
             res.status(201).json({ updatedUser });
           })
-          .catch((err) => console.log("err : ", err));
+          .catch((err: Error) => console.error("err : ", err));
 
         return;
       }
 
       res.status(400).json({ message: "Cette formation a déjà été acheté" });
     })
-    .catch((err) => console.log("err : ", err));
+    .catch((err: Error) => console.error("err : ", err));
 };
