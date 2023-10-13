@@ -1,11 +1,15 @@
-const { connectToDatabase } = require("../../../utils/mongodb");
-
 import Comment from "../../../models/Comment.model";
+import { NextApiRequest, NextApiResponse } from "next";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../auth/[...nextauth]";
+import { connectToDatabase } from "../../../utils/mongodb";
 
-import { getSession } from "next-auth/react";
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const session = await getServerSession(req, res, authOptions);
 
-export default async function handler(req, res) {
-  const session = await getSession({ req });
   const { method } = req;
 
   connectToDatabase()
@@ -19,19 +23,23 @@ export default async function handler(req, res) {
           }
           break;
         case "GET":
-          getComment(req, res, session);
+          getComment(req, res);
           break;
       }
     })
-    .catch((err) => {
-      console.log(err);
+    .catch((err: Error) => {
+      console.error("err : ", err);
       res
         .status(400)
         .json({ message: "La connexion à la base de donnée a échoué" });
     });
 }
 
-const addComment = (req, res, session) => {
+const addComment = (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  session: any
+) => {
   const { comment } = req.body;
 
   if (!session) {
@@ -47,21 +55,27 @@ const addComment = (req, res, session) => {
     .then((newCommentFromDB) => {
       res.status(200).json({ newCommentFromDB });
     })
-    .catch((err) => console.log("err : ", err));
+    .catch((err: Error) => console.error("err : ", err));
 };
 
-const getComment = (req, res) => {
+const getComment = (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
 
   Comment.findById(id)
     .then((commentFromDB) => {
       res.status(200).json({ commentFromDB });
     })
-    .catch((err) => console.log("err : ", err));
+    .catch((err: Error) => console.error("err : ", err));
 };
 
-const addReply = (req, res) => {
+const addReply = (req: NextApiRequest, res: NextApiResponse, session: any) => {
   const { id, reply } = req.body;
+
+  if (!session) {
+    res.status(401).json({ message: "Unauthorized" });
+
+    return;
+  }
 
   Comment.findById(id)
     .then((commentFromDB) => {
@@ -71,7 +85,7 @@ const addReply = (req, res) => {
         .then((newCommentFromDB) => {
           res.status(200).json({ newCommentFromDB });
         })
-        .catch((err) => console.log("err : ", err));
+        .catch((err: Error) => console.error("err : ", err));
     })
-    .catch((err) => console.log("err : ", err));
+    .catch((err: Error) => console.error("err : ", err));
 };
