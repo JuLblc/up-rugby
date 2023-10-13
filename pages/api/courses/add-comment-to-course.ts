@@ -48,5 +48,5 @@ const addCommentToCourse = (
     .then((updatedCourseFromDB) => {
       res.status(200).json({ updatedCourseFromDB });
     })
-    .catch((err) => console.log("err : ", err));
+    .catch((err: Error) => console.error("err : ", err));
 };

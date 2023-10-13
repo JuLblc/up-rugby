@@ -1,11 +1,19 @@
 import Exercice from "../../../models/Exercice.model";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../auth/[...nextauth]";
+import { NextApiRequest, NextApiResponse } from "next";
+import { connectToDatabase } from "../../../utils/mongodb";
 
-import { getSession } from "next-auth/react";
+type CourseFilter = {
+  isPublished?: boolean;
+  seoUrl?: string | string[];
+};
 
-const { connectToDatabase } = require("../../../utils/mongodb");
-
-export default async function handler(req, res) {
-  const session = await getSession({ req });
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const session = await getServerSession(req, res, authOptions);
   const { method, query } = req;
 
   connectToDatabase()
@@ -32,45 +40,57 @@ export default async function handler(req, res) {
           res.status(405).end("Method not allowed");
       }
     })
-    .catch((err) => {
-      console.log("ERR: ", err);
+    .catch((err: Error) => {
+      console.error("err : ", err);
       res
         .status(400)
         .json({ message: "La connexion à la base de donnée a échoué" });
     });
 }
 
-const getAllExercices = (req, res, session) => {
-  const cond = {};
+const getAllExercices = (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  session: { user: { role: string } }
+) => {
+  const filter: CourseFilter = {};
 
   if (!session || session.user.role !== "ADMIN") {
-    cond.isPublished = true;
+    filter.isPublished = true;
   }
 
-  Exercice.find(cond)
+  Exercice.find(filter)
     .sort({ _id: -1 }) //sort collection in descending order based on the date of insertion
     .then((exercicesFromDB) => {
       res.status(200).json({ exercicesFromDB });
     })
-    .catch((err) => console.log("err : ", err));
+    .catch((err: Error) => console.error("err : ", err));
 };
 
-const getExercice = (req, res, session) => {
+const getExercice = (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  session: { user: { role: string } }
+) => {
   const seoUrl = req.query.url;
-  const cond = { seoUrl };
+  const filter: CourseFilter = { seoUrl };
 
   if (!session || session.user.role !== "ADMIN") {
-    cond.isPublished = true;
+    filter.isPublished = true;
   }
 
-  Exercice.find(cond)
+  Exercice.find(filter)
     .then((exerciceFromDB) => {
       res.status(200).json({ exerciceFromDB: exerciceFromDB[0] });
     })
-    .catch((err) => console.log("err : ", err));
+    .catch((err: Error) => console.error("err : ", err));
 };
 
-const addExercice = (req, res, session) => {
+const addExercice = (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  session: { user: { role: string } }
+) => {
   const { exercice } = req.body;
 
   if (!session || session.user.role !== "ADMIN") {
@@ -86,10 +106,14 @@ const addExercice = (req, res, session) => {
     .then((newExerciceFromDB) => {
       res.status(200).json({ newExerciceFromDB });
     })
-    .catch((err) => console.log("err : ", err));
+    .catch((err: Error) => console.error("err : ", err));
 };
 
-const updateExercice = (req, res, session) => {
+const updateExercice = (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  session: { user: { role: string } }
+) => {
   if (!session || session.user.role !== "ADMIN") {
     res.status(401).json({ message: "Unauthorized" });
 
@@ -103,10 +127,14 @@ const updateExercice = (req, res, session) => {
     .then((updatedExerciceFromDB) => {
       res.status(200).json({ updatedExerciceFromDB });
     })
-    .catch((err) => console.log("err : ", err));
+    .catch((err: Error) => console.error("err : ", err));
 };
 
-const deleteExercice = (req, res, session) => {
+const deleteExercice = (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  session: { user: { role: string } }
+) => {
   if (!session || session.user.role !== "ADMIN") {
     res.status(401).json({ message: "Unauthorized" });
 
@@ -119,5 +147,5 @@ const deleteExercice = (req, res, session) => {
     .then(() => {
       res.status(200).json({ message: "Exercice supprimé" });
     })
-    .catch((err) => console.log("err : ", err));
+    .catch((err: Error) => console.error("err : ", err));
 };
