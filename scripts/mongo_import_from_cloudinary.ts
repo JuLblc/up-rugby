@@ -1,4 +1,4 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 import dotenv from "dotenv";
 import path from "path";
 import { v2 as cloudinary } from "cloudinary";
@@ -6,6 +6,7 @@ import axios from "axios";
 import fs from "fs";
 import unzipper from "unzipper";
 import { removePath } from "./utils";
+import { ObjectIdLike } from "bson";
 
 const loadEnvironmentConfig = () => {
   const envPath = path.resolve(__dirname, "..", ".env.local");
@@ -78,9 +79,39 @@ const importJSONCollectionToMongo = async (uri: string, folderName: string) => {
         const filePath = path.join(folderName, file);
         const jsonData = JSON.parse(fs.readFileSync(filePath, "utf8"));
 
+        const modifiedData = jsonData.map(
+          (item: {
+            _id:
+              | string
+              | number
+              | Buffer
+              | Uint8Array
+              | ObjectId
+              | ObjectIdLike
+              | undefined;
+            author:
+              | string
+              | number
+              | Buffer
+              | Uint8Array
+              | ObjectId
+              | ObjectIdLike
+              | undefined;
+          }) => {
+            if (item._id) {
+              item._id = new ObjectId(item._id);
+            }
+            if (item.author) {
+              item.author = new ObjectId(item.author);
+            }
+
+            return item;
+          }
+        );
+
         const collection = destinationDB.collection(collectionName);
 
-        const insertResult = await collection.insertMany(jsonData);
+        const insertResult = await collection.insertMany(modifiedData);
 
         console.log(
           `Import réussi dans la collection "${collectionName}". ${insertResult.insertedCount} documents insérés.`
@@ -95,7 +126,7 @@ const importJSONCollectionToMongo = async (uri: string, folderName: string) => {
 };
 
 export const importFromCloudinary = async () => {
-  const folderName = "mongo-backup-2023-10-11-19-11";
+  const folderName = "mongo-backup-2023-10-13-09-39";
   const fileNameZip = `${folderName}.zip`;
   const cloudinarySourceFolder = "up-rugby-mongo-backup";
 
