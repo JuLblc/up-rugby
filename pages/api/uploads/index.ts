@@ -1,18 +1,38 @@
+import { NextApiRequest, NextApiResponse } from "next";
 import nc from "next-connect";
 import multer from "multer";
-import { v2 as cloudinary } from "cloudinary";
+import {
+  v2 as cloudinary,
+  UploadApiResponse,
+  UploadApiOptions,
+} from "cloudinary";
 
 const upload = multer({ dest: "/tmp" });
 
-const handler = nc();
+const handler = nc<NextApiRequest, NextApiResponse>();
+
+const { CLOUDINARY_KEY, CLOUDINARY_NAME, CLOUDINARY_SECRET } = process.env;
+
+if (!CLOUDINARY_KEY || !CLOUDINARY_SECRET || !CLOUDINARY_NAME) {
+  throw new Error("Cloudinary credentials are not provided.");
+}
 
 cloudinary.config({
-  api_key: process.env.CLOUDINARY_KEY,
-  api_secret: process.env.CLOUDINARY_SECRET,
-  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: CLOUDINARY_KEY,
+  api_secret: CLOUDINARY_SECRET,
+  cloud_name: CLOUDINARY_NAME,
 });
 
-const uploads = async (file, folder, resource_type) => {
+type File = {
+  originalname: string;
+  path: string;
+};
+
+const uploads = (
+  file: File,
+  folder: UploadApiOptions["folder"],
+  resource_type: UploadApiOptions["resource_type"]
+): Promise<any> => {
   return new Promise((resolve) => {
     cloudinary.uploader.upload(
       file.path,
@@ -21,7 +41,7 @@ const uploads = async (file, folder, resource_type) => {
         public_id: file.originalname,
         resource_type,
       },
-      function (error, result) {
+      function (error: Error, result: UploadApiResponse) {
         if (resource_type === "raw") {
           resolve(result.secure_url);
         }
@@ -41,15 +61,21 @@ const uploads = async (file, folder, resource_type) => {
 
 handler.post(upload.array("file"), async (req, res) => {
   const { folder, resource_type } = req.query;
-  const uploader = async (file) => await uploads(file, folder, resource_type);
+
+  const uploader = async (file: File) => {
+    return await uploads(
+      file,
+      folder as UploadApiOptions["folder"],
+      resource_type as UploadApiOptions["resource_type"]
+    );
+  };
+
   const { files } = req;
 
-  // console.log('files: ', files)
-
   if (resource_type === "raw") {
-    const secureUrls = [];
+    const secureUrls: string[] = [];
 
-    for (const file of files) {
+    for (const file of files as File[]) {
       const secureUrl = await uploader(file);
 
       secureUrls.push(secureUrl);
@@ -61,7 +87,6 @@ handler.post(upload.array("file"), async (req, res) => {
   if (resource_type === "image") {
     const imgInfo = await uploader(files[0]);
 
-    // console.log('imgInfo: ', imgInfo)
     res.status(200).json(imgInfo);
   }
 });
