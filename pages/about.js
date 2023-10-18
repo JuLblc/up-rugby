@@ -21,23 +21,35 @@ const About = () => {
         <section>
           <article>
             <h2>A propros de moi</h2>
+
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. In
-              ultrices metus nisl. Sed ultrices urna sit amet libero pretium
-              placerat. Praesent venenatis, neque nec ultricies malesuada, arcu
-              tortor porta odio, id ullamcorper turpis justo et nibh. Integer id
-              ex sit amet justo lobortis fringilla eget non erat. Vestibulum sed
-              gravida diam. Etiam ullamcorper, erat id mollis tincidunt, tortor
-              dui lacinia eros, at euismod dolor velit in arcu.
+              En commençant par la préparation physique et en entraînant sur
+              toutes les catégories, de l'analyse vidéo avec les pros au
+              management de club avec 700 licenciés j'ai découvert cette passion
+              qui peut être dure pour les entraîneurs.
             </p>
 
             <p>
-              Vivamus sem mauris, consectetur eu feugiat a, pharetra vel sem.
-              Donec scelerisque purus ac leo maximus, id lacinia orci lacinia.
-              Integer purus elit, tempor a gravida quis, aliquam consectetur
-              ante. Donec mollis tellus eget mauris egestas molestie. Quisque
-              pretium ex turpis, eget gravida ipsum tincidunt at. Fusce interdum
-              ligula in justo varius auctor.
+              Le rugby est un sport complexe, et je crois que c'est difficile
+              d'être un expert dans tous les domaines du rugby. Il y a des
+              spécialistes des secteurs de jeu et du jeu au poste.
+            </p>
+
+            <p>
+              La transmission des compétences se fait de façon empirique et il
+              faut trouver quelqu'un qui accepte de partager son projet de jeu !
+              Au rugby ce n'est pas évident de donner ses astuces au village d'à
+              côté ! Je crée des formations sur des domaines de jeu spécifiques
+              en apportant une analyse sur du rugby professionnel ! Les premiers
+              retours (entraîneurs allant de U14 jusqu'à la National Senior) ont
+              été merveilleux et je vais continuer à produire ces formations !
+            </p>
+
+            <p>
+              Si vous vous demandez pourquoi les formations sont payantes, c'est
+              parce que j'y consacre du temps, de l'énergie et de l'argent. Il
+              s'agit juste d'équilibrer le budget du site tout en proposant un
+              contenu de haute qualité
             </p>
           </article>
           <div className={styles.imgWrapper}>
