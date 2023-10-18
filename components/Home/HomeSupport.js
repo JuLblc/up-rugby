@@ -9,9 +9,9 @@ const HomeSupport = () => {
           <span>Plusieurs formats</span> adaptés à vos besoins et à votre budget
         </h1>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec
-          nisl vulputate, iaculis tortor quis, convallis ipsum. Duis consequat
-          fringilla condimentum.
+          Une banque d'exercices variés 100% gratuite, des formations
+          approfondies sur différents thèmes ou un coaching particulier à la
+          demande!
         </p>
       </div>
       <div className={styles.supportWrapper}>
@@ -41,7 +41,9 @@ const HomeSupport = () => {
               </svg>
               <div>
                 <a>Formations uniques et innovantes</a>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <p>
+                  Des formations pour développer des compétences spécifiques.
+                </p>
               </div>
             </div>
           </Link>
@@ -78,7 +80,7 @@ const HomeSupport = () => {
               </svg>
               <div>
                 <a>Une banque d'exercices</a>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <p>Des exercices variés et ludique pour animer ses séances.</p>
               </div>
             </div>
           </Link>
@@ -104,7 +106,10 @@ const HomeSupport = () => {
               </svg>
               <div>
                 <a>Webinar</a>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <p>
+                  Besoin d'un regard extérieur et de conseils sur un projet de
+                  jeu?
+                </p>
               </div>
             </div>
           </Link>

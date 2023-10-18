@@ -34,9 +34,10 @@ const HomeLastExercices = (props) => {
           <span className={stylesCourses.strong}> exercices</span>
         </h1>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec
-          nisl vulputate, iaculis tortor quis, convallis ipsum. Duis consequat
-          fringilla condimentum.
+          Ma passion pour le rugby m'a poussé à créer cette banque d'exercices.
+          Comme le rugby est un sport de partage, n'hésite pas à en t'inspirer
+          pour animer tes séances. J'attends avec impatience de connaître tes
+          exercices favoris !
         </p>
         <div className={stylesHome.link}>
           <Link href="/exercices">
