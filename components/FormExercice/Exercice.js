@@ -229,16 +229,17 @@ const Exercice = (props) => {
       {props.action === "update" && (
         <>
           {disableField ? (
-            <>
+            <span>
               {/* Fields are disabled and buttons are displayed */}
-              <button
-                type="button"
-                className={`${styles.button} ${styles.publishBtn}`}
-                onClick={publishExercice}
-              >
-                Publier
-              </button>
-
+              {!exerciceData.isPublished && (
+                <button
+                  type="button"
+                  className={`${styles.button} ${styles.publishBtn}`}
+                  onClick={publishExercice}
+                >
+                  Publier
+                </button>
+              )}
               <button
                 type="button"
                 className={`${styles.button} ${styles.modifyBtn}`}
@@ -246,7 +247,7 @@ const Exercice = (props) => {
               >
                 Modifier
               </button>
-            </>
+            </span>
           ) : (
             <>
               {/* Fields are enabled and buttons are displayed */}
