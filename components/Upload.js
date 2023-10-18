@@ -22,7 +22,7 @@ const Upload = (props) => {
     const newData = { ...props.data };
 
     if (props.uploadFileName === "file") {
-      newData.attachements.push({ fileName: fileInput.files[0].name });
+      newData.attachments.push({ fileName: fileInput.files[0].name });
     }
 
     if (props.uploadFileName === "picture") {
@@ -60,12 +60,12 @@ const Upload = (props) => {
         </div>
       )}
 
-      {/* Display exisiting attachements */}
+      {/* Display exisiting attachments */}
       {props.uploadFileName === "file" &&
-        (props.data.attachements.length === 0 ? (
+        (props.data.attachments.length === 0 ? (
           <span>Fichier: </span>
         ) : (
-          props.data.attachements.map((file, idx) => (
+          props.data.attachments.map((file, idx) => (
             <div key={file.fileName} className={styles.itemContainer}>
               <span>Fichier: </span>
               <p>{file.fileName}</p>

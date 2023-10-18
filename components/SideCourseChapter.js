@@ -37,10 +37,11 @@ const SideCourseChapter = (props) => {
           ))}
         </div>
       ))}
-      {props.course.attachements.length > 0 && (
+
+      {props.course.attachments.length > 0 && (
         <h3 className={styles.chapterTitle}>Téléchargement</h3>
       )}
-      {props.course.attachements.map((file) => (
+      {props.course.attachments.map((file) => (
         <div className={styles.download} key={file._id}>
           <span>{file.fileName}</span>
           {props.course.isPurchased ? (

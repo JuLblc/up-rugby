@@ -88,7 +88,7 @@ const Formation = (props) => {
     //Remove from courseData
     const newCourseData = { ...courseData };
 
-    newCourseData.attachements.splice(idx, 1);
+    newCourseData.attachments.splice(idx, 1);
     setCourseData(newCourseData);
 
     //Remove from fileInput
@@ -175,7 +175,7 @@ const Formation = (props) => {
         "raw"
       );
 
-      newCourseData.attachements
+      newCourseData.attachments
         .filter((file) => file.url === undefined)
         .map((file, idx) => (file.url = resUploadFile.data.secureUrls[idx]));
     }

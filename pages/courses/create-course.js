@@ -19,7 +19,7 @@ const NewCourse = (props) => {
   }, []);
 
   const emptyCourse = {
-    attachements: [],
+    attachments: [],
     category: "",
 
     chapters: [
