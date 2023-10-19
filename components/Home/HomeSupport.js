@@ -85,7 +85,7 @@ const HomeSupport = () => {
             </div>
           </Link>
           <div className={styles.break}></div>
-          <Link href="#">
+          <Link href="/coaching">
             <div className={styles.supportItemsContent}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -105,7 +105,7 @@ const HomeSupport = () => {
                 />
               </svg>
               <div>
-                <a>Webinar</a>
+                <a>Accompagnement personnalisé</a>
                 <p>
                   Besoin d'un regard extérieur et de conseils sur un projet de
                   jeu?

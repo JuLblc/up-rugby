@@ -48,9 +48,6 @@ const HomeIntro = (props) => {
         </div>
 
         <div className={styles.link}>
-          {/* <Link href='/login?login=signup'>
-              <a>Créez votre compte</a>
-            </Link> */}
           <Link href="/courses">
             <a>Voir les formations</a>
           </Link>

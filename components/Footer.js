@@ -168,8 +168,8 @@ const Footer = () => {
               </Link>
             </li>
             <li>
-              <Link href="/webinar">
-                <a>Webinar</a>
+              <Link href="/coaching">
+                <a>Accompagnement</a>
               </Link>
             </li>
             {/* <li>
