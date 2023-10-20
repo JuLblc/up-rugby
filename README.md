@@ -8,7 +8,6 @@ After having successfully completed the Ironhack Wed Developement Bootcamp, I wa
 For project I decided to usethe following technologies: 
 - Next JS,
 - MongoDB & Mongoose, 
-- Axios,
 
 ## Pitch
 
@@ -37,3 +36,43 @@ https://user-images.githubusercontent.com/76005217/210181485-59a8007e-ae8d-47e8-
 https://user-images.githubusercontent.com/76005217/210181486-a99b7d76-0d38-4655-8bea-83c48da26e2c.mov
 
 https://user-images.githubusercontent.com/76005217/210181484-a4dbeafd-6e36-4d59-9744-2c32a2fdff49.mov
+
+
+# For developer
+
+## How to use with docker compose
+
+### Prerequisites
+
+Install [Docker Desktop](https://docs.docker.com/get-docker) for Mac, Windows, or Linux. Docker Desktop includes Docker Compose as part of the installation.
+
+### Development
+
+First, run the development server:
+
+```bash
+# Create a network, which allows containers to communicate
+# with each other, by using their container name as a hostname
+docker network create my_network
+
+# Build dev
+docker compose -f docker-compose.dev.yml build
+
+# Up dev
+docker compose -f docker-compose.dev.yml up
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+
+### Useful commands
+
+```bash
+# Stop all running containers
+docker kill $(docker ps -aq) && docker rm $(docker ps -aq)
+
+# Free space
+docker system prune -af --volumes
+```
+
