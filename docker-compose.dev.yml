@@ -1,0 +1,40 @@
+version: "3.8"
+services:
+  up-rugby:
+    build:
+      context: ./
+      dockerfile: dev.Dockerfile
+
+    # Set envrionment variables based on the .env file
+    env_file:
+      - .env.local
+    volumes:
+      - ./:/app
+    restart: always
+    ports:
+      - 3000:3000
+    networks:
+      - my_network
+
+  maildev:
+    image: maildev/maildev
+    restart: always
+    environment:
+      - TZ=Europe/Paris
+      - MAILDEV_WEB_PORT=1080
+      - MAILDEV_SMTP_PORT=1025
+    ports:
+      - "1080:1080"
+      - "1025:1025"
+    networks:
+      - my_network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+
+# Define a network, which allows containers to communicate
+# with each other, by using their container name as a hostname
+networks:
+  my_network:
+    external: true
