@@ -3,11 +3,13 @@
 # Project: Up-Rugby
 
 ## Introduction
+
 After having successfully completed the Ironhack Wed Developement Bootcamp, I wanted to keep praticing and learning new things while I was applying for job position in the meantime.
 
-For project I decided to usethe following technologies: 
+For project I decided to usethe following technologies:
+
 - Next JS,
-- MongoDB & Mongoose, 
+- MongoDB & Mongoose,
 
 ## Pitch
 
@@ -37,7 +39,6 @@ https://user-images.githubusercontent.com/76005217/210181486-a99b7d76-0d38-4655-
 
 https://user-images.githubusercontent.com/76005217/210181484-a4dbeafd-6e36-4d59-9744-2c32a2fdff49.mov
 
-
 # For developer
 
 ## How to use with docker compose
@@ -53,13 +54,19 @@ First, run the development server:
 ```bash
 # Create a network, which allows containers to communicate
 # with each other, by using their container name as a hostname
-docker network create my_network
-
-# Build dev
-docker compose -f docker-compose.dev.yml build
+docker network create up-rugby_network
 
 # Up dev
-docker compose -f docker-compose.dev.yml up
+npm run docker:dev:up
+
+# Down dev
+npm run docker:dev:down
+
+# Restart dev
+npm run docker:dev:start
+
+# Stop dev
+npm run docker:dev:stop
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -75,4 +82,3 @@ docker kill $(docker ps -aq) && docker rm $(docker ps -aq)
 # Free space
 docker system prune -af --volumes
 ```
-
