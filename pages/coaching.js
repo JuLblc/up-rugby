@@ -24,7 +24,7 @@ const Coaching = () => {
         </h1>
         <section>
           <article>
-            <h2>Echange par visio</h2>
+            <h2>Echange par visio - 50€/h</h2>
             <p>
               Séquences de 1h30 autour de votre système de jeu. <br /> <br />
               J’ai une base de données avec des micro attaques, relances de jeu
@@ -33,8 +33,8 @@ const Coaching = () => {
               le rendre plus efficace et efficient.
             </p>
             <div className={styles.link}>
-              <Link href="#">
-                <a>Je prends rendez vous</a>
+              <Link href="https://calendly.com/julien-leblanc">
+                <a target="_blank">Je prends rendez vous</a>
               </Link>
             </div>
           </article>
