@@ -98,14 +98,14 @@ const Lectures = (props) => {
                   <span className={styles.textPlay}>
                     <Link href="/login?login=signin">
                       <a>Connectez-vous</a>
-                    </Link>{" "}
+                    </Link>
                     pour acheter cette formation
                   </span>
                 ) : (
                   <span className={styles.textPlay}>
-                    <Link href="#">
+                    <Link href={`/courses/${props.course.seoUrl}`}>
                       <a>Acheter</a>
-                    </Link>{" "}
+                    </Link>
                     cette formation pour lire la vidéo
                   </span>
                 )}
