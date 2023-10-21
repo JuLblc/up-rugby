@@ -333,7 +333,7 @@ const Login = (props) => {
           </Link>
 
           {/* With Linkedin */}
-          <Link href="#">
+          {/* <Link href="#">
             <span className={`${styles.btnSocial} ${styles.btnLinkedin}`}>
               <svg
                 className={styles.icon}
@@ -359,7 +359,7 @@ const Login = (props) => {
                 <>S'inscrire avec Linkedin</>
               )}
             </span>
-          </Link>
+          </Link> */}
         </div>
 
         <div className={styles.break}>
