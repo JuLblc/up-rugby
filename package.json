@@ -6,9 +6,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "docker:dev:up": "docker compose -f docker-compose.dev.yml up -d && sleep 1 && xdg-open http://localhost:3000 && xdg-open http://localhost:1080",
+    "docker:dev:up": "docker compose -f docker-compose.dev.yml up",
     "docker:dev:down": "docker compose -f docker-compose.dev.yml down",
-    "docker:dev:start": "docker compose -f docker-compose.dev.yml restart && sleep 1 && xdg-open http://localhost:3000 && xdg-open http://localhost:1080",
+    "docker:dev:start": "docker compose -f docker-compose.dev.yml restart",
     "docker:dev:stop": "docker compose -f docker-compose.dev.yml stop"
   },
   "dependencies": {

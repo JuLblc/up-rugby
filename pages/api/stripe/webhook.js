@@ -1,4 +1,4 @@
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const stripe = require("stripe")(process.env.STRIPE_API_KEY);
 
 import { buffer } from "micro";
 
@@ -52,12 +52,11 @@ export default async function webhookHandler(req, res) {
       }
       event = stripe.webhooks.constructEvent(buf, sig, webhookSecret);
     } catch (error) {
-      console.log(`Webhook error: ${error.message}`);
+      console.error(`Webhook error: ${error.message}`);
 
       return res.status(400).send(`Webhook error: ${error.message}`);
     }
 
-    console.log("event type: ", event.type);
     if (event.type === "checkout.session.completed") {
       const stripeSession = event.data.object;
 

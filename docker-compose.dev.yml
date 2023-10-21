@@ -32,6 +32,14 @@ services:
       options:
         max-size: "1m"
 
+  stripe-listen:
+    image: stripe/stripe-cli
+    env_file:
+      - .env.local
+    command: listen --forward-to http://up-rugby_container:3000/api/stripe/webhook
+    networks:
+      - up-rugby_network
+
 # Define a network, which allows containers to communicate
 # with each other, by using their container name as a hostname
 networks:
