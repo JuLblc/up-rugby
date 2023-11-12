@@ -27,6 +27,7 @@ Here started the journey!!
 - Password reset email with Nodemailer
 - Accessing video's stored on vimeo and youtube
 - Checkout with Stripe
+- Automatic database backup
 - Profil Admin for the back office
 
 ## Give it a try
