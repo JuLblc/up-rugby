@@ -30,6 +30,16 @@ Here started the journey!!
 - Automatic database backup
 - Profil Admin for the back office
 
+## Next steps
+
+The current status is that the project is ready  for deployment to production.
+This would involve testing the website's SEO and improving it.
+
+As I started this project right after my bootcamp and that I have made significant progress since:
+- test coverage definitely needs to be improve
+- code could use some refactoring
+- migration to typescript would improve developer experience
+
 ## Give it a try
 
 Please follow this link: https://up-rugby.vercel.app/
