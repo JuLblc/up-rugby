@@ -32,12 +32,14 @@ Here started the journey!!
 
 ## Next steps
 
-The current status is that the project is ready  for deployment to production.
+The current status is that the project is ready for deployment to production.
 This would involve testing the website's SEO and improving it.
 
 As I started this project right after my bootcamp and that I have made significant progress since:
+- avoid hardcoding values and store them in variables for better flexibility and code maintenance
 - test coverage definitely needs to be improve
 - code could use some refactoring
+- consistency in code conventions
 - migration to typescript would improve developer experience
 
 ## Give it a try
