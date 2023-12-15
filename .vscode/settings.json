@@ -39,5 +39,8 @@
     "titleBar.inactiveForeground": "#e7e7e799",
     "commandCenter.border": "#e7e7e799"
   },
-  "peacock.color": "#007fff"
+  "peacock.color": "#007fff",
+  "[svg]": {
+    "editor.defaultFormatter": "jock.svg"
+  }
 }
