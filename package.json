@@ -38,6 +38,8 @@
   "devDependencies": {
     "@types/archiver": "^5.3.3",
     "@types/multer": "^1.4.8",
+    "@types/node": "^20.10.4",
+    "@types/react": "^18.2.45",
     "@types/unzipper": "^0.10.7",
     "@typescript-eslint/eslint-plugin": "^5.47.1",
     "add": "^2.0.6",
