@@ -10,7 +10,7 @@ const cached = global.mongoose
   ? global.mongoose
   : (global.mongoose = { conn: null, promise: null });
 
-export async function connectToDatabase() {
+export const connectToDatabase = async () => {
   if (cached.conn) {
     return cached.conn;
   }
@@ -31,4 +31,4 @@ export async function connectToDatabase() {
   cached.conn = await cached.promise;
 
   return cached.conn;
-}
+};
