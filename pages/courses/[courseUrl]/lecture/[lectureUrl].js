@@ -16,10 +16,10 @@ import CommentInput from "../../../../components/CommentInput";
 import CommentDisplay from "../../../../components/CommentDisplay";
 
 import styles from "../../../../styles/Lectures.module.css";
-import { UserRole } from "../../../../constants";
 
 import blockedImg from "../../../../public/blocked.jpg";
 import { useEffect, useState } from "react";
+import { isAdmin } from "../../../../utils/session";
 
 const useDeviceSize = ({
   isBigScreen,
@@ -224,6 +224,7 @@ export default Lectures;
 export const getServerSideProps = async (context) => {
   const session = await getSession(context);
   const { chapter, lectureUrl } = context.query;
+  const isRoleAdmin = isAdmin(session?.user.role);
 
   const resCourse = await getCourses(context, context.query.courseUrl);
   // console.log('resCourse: ', resCourse.data.courseFromDB)
@@ -270,7 +271,7 @@ export const getServerSideProps = async (context) => {
     };
   }
 
-  if (session.user.role === UserRole.ADMIN) {
+  if (isRoleAdmin) {
     course.isPurchased = true;
 
     return {

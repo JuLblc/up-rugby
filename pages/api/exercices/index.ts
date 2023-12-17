@@ -4,6 +4,7 @@ import { authOptions } from "../auth/[...nextauth]";
 import { NextApiRequest, NextApiResponse } from "next";
 import { connectToDatabase } from "../../../utils/mongodb";
 import { UserRole } from "../../../constants";
+import { isAdmin } from "../../../utils/session";
 
 type CourseFilter = {
   isPublished?: boolean;
@@ -52,11 +53,12 @@ export default async function handler(
 const getAllExercices = (
   req: NextApiRequest,
   res: NextApiResponse,
-  session: { user: { role: UserRole } }
+  session: { user: { role: UserRole } } | null
 ) => {
   const filter: CourseFilter = {};
+  const isRoleAdmin = isAdmin(session?.user.role);
 
-  if (!session || session.user.role !== UserRole.ADMIN) {
+  if (!session || !isRoleAdmin) {
     filter.isPublished = true;
   }
 
@@ -71,12 +73,13 @@ const getAllExercices = (
 const getExercice = (
   req: NextApiRequest,
   res: NextApiResponse,
-  session: { user: { role: UserRole } }
+  session: { user: { role: UserRole } } | null
 ) => {
   const seoUrl = req.query.url;
   const filter: CourseFilter = { seoUrl };
+  const isRoleAdmin = isAdmin(session?.user.role);
 
-  if (!session || session.user.role !== UserRole.ADMIN) {
+  if (!session || !isRoleAdmin) {
     filter.isPublished = true;
   }
 
@@ -90,11 +93,12 @@ const getExercice = (
 const addExercice = (
   req: NextApiRequest,
   res: NextApiResponse,
-  session: { user: { role: UserRole } }
+  session: { user: { role: UserRole } } | null
 ) => {
   const { exercice } = req.body;
+  const isRoleAdmin = isAdmin(session?.user.role);
 
-  if (!session || session.user.role !== UserRole.ADMIN) {
+  if (!session || !isRoleAdmin) {
     res.status(401).json({ message: "Unauthorized" });
 
     return;
@@ -113,9 +117,11 @@ const addExercice = (
 const updateExercice = (
   req: NextApiRequest,
   res: NextApiResponse,
-  session: { user: { role: UserRole } }
+  session: { user: { role: UserRole } } | null
 ) => {
-  if (!session || session.user.role !== UserRole.ADMIN) {
+  const isRoleAdmin = isAdmin(session?.user.role);
+
+  if (!session || !isRoleAdmin) {
     res.status(401).json({ message: "Unauthorized" });
 
     return;
@@ -134,9 +140,11 @@ const updateExercice = (
 const deleteExercice = (
   req: NextApiRequest,
   res: NextApiResponse,
-  session: { user: { role: UserRole } }
+  session: { user: { role: UserRole } } | null
 ) => {
-  if (!session || session.user.role !== UserRole.ADMIN) {
+  const isRoleAdmin = isAdmin(session?.user.role);
+
+  if (!session || !isRoleAdmin) {
     res.status(401).json({ message: "Unauthorized" });
 
     return;

@@ -1,14 +1,15 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
-
-import { UserRole } from "../../constants";
+import { isAdmin } from "../../utils/session";
 import styles from "../../styles/CardFormation.module.css";
 import stylesExercice from "../../styles/CardExercice.module.css";
 
 const CardExercice = (props) => {
   const [selected, setSelected] = useState(false);
   const [isOverflowing, setIsOverflowing] = useState(false);
+
+  const isRoleAdmin = isAdmin(props.role);
 
   useEffect(() => {
     // eslint-disable-next-line prefer-destructuring
@@ -55,7 +56,7 @@ const CardExercice = (props) => {
           {/* <div ref={divRef} className={styles.formationInfo}> */}
           <h3 className={styles.formationTitle}>{props.exercice.title}</h3>
           {/* Can be updated by ADMIN only */}
-          {props.role === UserRole.ADMIN && (
+          {isRoleAdmin && (
             <Link href={`/exercices/update-exercice/${props.exercice.seoUrl}`}>
               <a className={styles.linkAdmin}>Modifier</a>
             </Link>

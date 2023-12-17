@@ -3,9 +3,8 @@ import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
 
-import { UserRole } from "../constants";
 import styles from "../styles/CardFormation.module.css";
-
+import { isAdmin } from "../utils/session";
 import { useWindowDimensions } from "../hooks/useWindowDimensions";
 
 import { putCourseToCart, removeCourseToCart } from "../apiCall/users";
@@ -20,6 +19,8 @@ const CardFormation = (props) => {
   const [selected, setSelected] = useState(false);
   const [isOverflowing, setIsOverflowing] = useState(false);
   const [isInCart, setisInCart] = useState(props.isInCart);
+
+  const isRoleAdmin = isAdmin(props.role);
 
   useEffect(() => {
     // eslint-disable-next-line prefer-destructuring
@@ -92,7 +93,7 @@ const CardFormation = (props) => {
           <h3 className={styles.formationTitle}>{props.course.title}</h3>
           {/* if course is a draft, it still can be updated by ADMIN only */}
           {/* {props.role === 'ADMIN' && !props.course.isPublished && ( */}
-          {props.role === UserRole.ADMIN && (
+          {isRoleAdmin && (
             <Link href={`/courses/update-course/${props.course.seoUrl}`}>
               <a className={styles.linkAdmin}>Modifier</a>
             </Link>

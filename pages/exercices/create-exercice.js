@@ -2,10 +2,11 @@ import Exercice from "../../components/FormExercice/Exercice";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { UserRole } from "../../constants";
+import { isAdmin } from "../../utils/session";
 
 const NewExercice = (props) => {
   const router = useRouter();
+  const isRoleAdmin = isAdmin(props.session?.user.role);
 
   useEffect(() => {
     if (!props.session) {
@@ -13,7 +14,7 @@ const NewExercice = (props) => {
 
       return;
     }
-    if (props.session.user.role !== UserRole.ADMIN) {
+    if (!isRoleAdmin) {
       router.back();
     }
   }, []);
@@ -45,7 +46,7 @@ const NewExercice = (props) => {
 
   return (
     <main>
-      {props.session && props.session.user.role === UserRole.ADMIN && (
+      {props.session && isRoleAdmin && (
         <>
           <h1>Ajouter Exercices</h1>
 

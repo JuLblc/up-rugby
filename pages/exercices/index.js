@@ -11,11 +11,13 @@ import { getLecturesQty, getLecturesTime } from "../../utils/utilCourses";
 
 import CardExercice from "../../components/Exercice/CardExercice";
 
-import { UserRole } from "../../constants";
 import styles from "../../styles/Courses.module.css";
+import { isAdmin } from "../../utils/session";
 
 const Exercices = (props) => {
   const { height, width } = useWindowDimensions();
+
+  const isRoleAdmin = isAdmin(props.session?.user.role);
 
   const {
     isMobile,
@@ -43,7 +45,7 @@ const Exercices = (props) => {
             en t'inspirer pour animer tes séances. J'attends avec impatience de
             connaître tes exercices favoris !
           </p>
-          {props.session?.user.role === UserRole.ADMIN && (
+          {isRoleAdmin && (
             <Link href="/exercices/create-exercice">
               <a>Ajouter une catégorie d'exercices</a>
             </Link>
