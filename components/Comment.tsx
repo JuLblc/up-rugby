@@ -1,18 +1,33 @@
+import React from "react";
 import Image from "next/image";
 import styles from "../styles/Comment.module.css";
 import avatar from "../public/avatar_default.png";
 import parse from "html-react-parser";
-import PropTypes from "prop-types";
 import { diffTime } from "../utils/utilCourses";
 import { useWindowDimensions } from "../hooks/useWindowDimensions";
 import { getDeviceTypeInfo } from "../utils/utilResponsive";
+import { Session } from "next-auth";
 
-const Comment = (props) => {
-  const { height, width } = useWindowDimensions();
-  const { isMobile, isTablet } = getDeviceTypeInfo(width, height);
+type CommentData = {
+  authorname: string;
+  comment: string;
+  date: string;
+};
+
+type CommentProps = {
+  commentData: CommentData;
+  isPurchased?: boolean;
+  isReply?: boolean;
+  session: Session | null;
+  updateStateFromChild?: (state: boolean) => void;
+};
+
+const Comment: React.FC<CommentProps> = (props) => {
+  const { width } = useWindowDimensions();
+  const { isMobile, isTablet } = getDeviceTypeInfo(width);
 
   const handleReply = () => {
-    props.updateStateFromChild(true);
+    props.updateStateFromChild?.(true);
   };
 
   const { authorname, comment, date } = props.commentData;
@@ -59,18 +74,6 @@ const Comment = (props) => {
       <div className={styles.content}>{parse(comment)}</div>
     </div>
   );
-};
-
-Comment.propTypes = {
-  commentData: PropTypes.PropTypes.shape({
-    authorname: PropTypes.string.isRequired,
-    comment: PropTypes.string.isRequired,
-    date: PropTypes.string.isRequired,
-  }).isRequired,
-  isPurchased: PropTypes.bool,
-  isReply: PropTypes.bool,
-  session: PropTypes.object,
-  updateStateFromChild: PropTypes.func,
 };
 
 export default Comment;
