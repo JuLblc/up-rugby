@@ -55,7 +55,7 @@
     "react/no-unescaped-entities": "off",
     "react/no-unused-prop-types": [2],
     "react/prefer-stateless-function": "off",
-    "react/prop-types": "off",
+    "react/prop-types": "warn",
     "react/require-default-props": "off",
     "security/detect-eval-with-expression": "error",
     "security/detect-non-literal-regexp": "off",

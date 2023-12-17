@@ -2,6 +2,7 @@ import Image from "next/image";
 import styles from "../styles/Comment.module.css";
 import avatar from "../public/avatar_default.png";
 import parse from "html-react-parser";
+import PropTypes from "prop-types";
 import { diffTime } from "../utils/utilCourses";
 import { useWindowDimensions } from "../hooks/useWindowDimensions";
 import { getDeviceTypeInfo } from "../utils/utilResponsive";
@@ -58,6 +59,18 @@ const Comment = (props) => {
       <div className={styles.content}>{parse(comment)}</div>
     </div>
   );
+};
+
+Comment.propTypes = {
+  commentData: PropTypes.PropTypes.shape({
+    authorname: PropTypes.string.isRequired,
+    comment: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+  }).isRequired,
+  isPurchased: PropTypes.bool,
+  isReply: PropTypes.bool,
+  session: PropTypes.object,
+  updateStateFromChild: PropTypes.func,
 };
 
 export default Comment;
