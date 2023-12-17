@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]";
 import { NextApiRequest, NextApiResponse } from "next";
 import { connectToDatabase } from "../../../utils/mongodb";
+import { UserRole } from "../../../constants";
 
 type CourseFilter = {
   isPublished?: boolean;
@@ -51,11 +52,11 @@ export default async function handler(
 const addCourse = (
   req: NextApiRequest,
   res: NextApiResponse,
-  session: { user: { role: string } }
+  session: { user: { role: UserRole } }
 ) => {
   const { course } = req.body;
 
-  if (!session || session.user.role !== "ADMIN") {
+  if (!session || session.user.role !== UserRole.ADMIN) {
     res.status(401).json({ message: "Unauthorized" });
 
     return;
@@ -74,11 +75,11 @@ const addCourse = (
 const getAllCourses = (
   req: NextApiRequest,
   res: NextApiResponse,
-  session: { user: { role: string } }
+  session: { user: { role: UserRole } }
 ) => {
   const filter: CourseFilter = {};
 
-  if (!session || session.user.role !== "ADMIN") {
+  if (!session || session.user.role !== UserRole.ADMIN) {
     filter.isPublished = true;
   }
 
@@ -93,13 +94,13 @@ const getAllCourses = (
 const getCourse = (
   req: NextApiRequest,
   res: NextApiResponse,
-  session: { user: { role: string } }
+  session: { user: { role: UserRole } }
 ) => {
   const seoUrl = req.query.url;
 
   const filter: CourseFilter = { seoUrl };
 
-  if (!session || session.user.role !== "ADMIN") {
+  if (!session || session.user.role !== UserRole.ADMIN) {
     filter.isPublished = true;
   }
 
@@ -113,9 +114,9 @@ const getCourse = (
 const updateCourse = (
   req: NextApiRequest,
   res: NextApiResponse,
-  session: { user: { role: string } }
+  session: { user: { role: UserRole } }
 ) => {
-  if (!session || session.user.role !== "ADMIN") {
+  if (!session || session.user.role !== UserRole.ADMIN) {
     res.status(401).json({ message: "Unauthorized" });
 
     return;
@@ -134,9 +135,9 @@ const updateCourse = (
 const deleteCourse = (
   req: NextApiRequest,
   res: NextApiResponse,
-  session: { user: { role: string } }
+  session: { user: { role: UserRole } }
 ) => {
-  if (!session || session.user.role !== "ADMIN") {
+  if (!session || session.user.role !== UserRole.ADMIN) {
     res.status(401).json({ message: "Unauthorized" });
 
     return;

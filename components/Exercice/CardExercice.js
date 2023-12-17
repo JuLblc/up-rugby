@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 
+import { UserRole } from "../../constants";
 import styles from "../../styles/CardFormation.module.css";
 import stylesExercice from "../../styles/CardExercice.module.css";
 
@@ -54,7 +55,7 @@ const CardExercice = (props) => {
           {/* <div ref={divRef} className={styles.formationInfo}> */}
           <h3 className={styles.formationTitle}>{props.exercice.title}</h3>
           {/* Can be updated by ADMIN only */}
-          {props.role === "ADMIN" && (
+          {props.role === UserRole.ADMIN && (
             <Link href={`/exercices/update-exercice/${props.exercice.seoUrl}`}>
               <a className={styles.linkAdmin}>Modifier</a>
             </Link>

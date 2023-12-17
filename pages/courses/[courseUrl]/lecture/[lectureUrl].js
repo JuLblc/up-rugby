@@ -16,6 +16,7 @@ import CommentInput from "../../../../components/CommentInput";
 import CommentDisplay from "../../../../components/CommentDisplay";
 
 import styles from "../../../../styles/Lectures.module.css";
+import { UserRole } from "../../../../constants";
 
 import blockedImg from "../../../../public/blocked.jpg";
 import { useEffect, useState } from "react";
@@ -269,7 +270,7 @@ export const getServerSideProps = async (context) => {
     };
   }
 
-  if (session.user.role === "ADMIN") {
+  if (session.user.role === UserRole.ADMIN) {
     course.isPurchased = true;
 
     return {

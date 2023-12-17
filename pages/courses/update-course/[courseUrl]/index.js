@@ -3,6 +3,7 @@ import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { getCourses } from "../../../../apiCall/courses";
 
+import { UserRole } from "../../../../constants";
 import Formation from "../../../../components/FormFormation/Formation";
 
 const UpdateCourseDetails = (props) => {
@@ -15,7 +16,7 @@ const UpdateCourseDetails = (props) => {
       return;
     }
 
-    if (props.session.user.role !== "ADMIN") {
+    if (props.session.user.role !== UserRole.ADMIN) {
       router.back();
     }
   }, []);
@@ -44,7 +45,7 @@ export const getServerSideProps = async (context) => {
   const session = await getSession(context);
 
   // Check if user is authorized before sending request
-  if (!session || session.user.role !== "ADMIN") {
+  if (!session || session.user.role !== UserRole.ADMIN) {
     return {
       props: {
         session,

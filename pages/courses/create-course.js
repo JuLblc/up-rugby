@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { getSession } from "next-auth/react";
 import { useEffect } from "react";
 
+import { UserRole } from "../../constants";
 import Formation from "../../components/FormFormation/Formation";
 
 const NewCourse = (props) => {
@@ -13,7 +14,7 @@ const NewCourse = (props) => {
 
       return;
     }
-    if (props.session.user.role !== "ADMIN") {
+    if (props.session.user.role !== UserRole.ADMIN) {
       router.back();
     }
   }, []);
@@ -58,7 +59,7 @@ const NewCourse = (props) => {
 
   return (
     <main>
-      {props.session && props.session.user.role === "ADMIN" && (
+      {props.session && props.session.user.role === UserRole.ADMIN && (
         <>
           <h1>Ajouter formation</h1>
 

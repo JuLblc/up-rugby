@@ -10,7 +10,7 @@ import {
   getLecturesTime,
   checkPurchaseStatus,
 } from "../../utils/utilCourses";
-
+import { UserRole } from "../../constants";
 import CardFormation from "../../components/CardFormation";
 
 import styles from "../../styles/Courses.module.css";
@@ -43,7 +43,7 @@ const Courses = (props) => {
             compétences spécifiques sur des secteurs de jeu? Voici les
             formations qu'il te faut!
           </p>
-          {props.session?.user.role === "ADMIN" && (
+          {props.session?.user.role === UserRole.ADMIN && (
             <Link href="/courses/create-course">
               <a>Ajouter une formation</a>
             </Link>

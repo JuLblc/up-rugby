@@ -1,4 +1,5 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
+import { UserRole } from "../constants";
 
 type Course = mongoose.Schema.Types.ObjectId;
 
@@ -14,7 +15,7 @@ type User = Document & {
   lastName: string;
   password: string;
   purchasedCourses: Course[];
-  role: "USER" | "ADMIN";
+  role: UserRole;
   token: string;
   tokenExpires: Date;
 };

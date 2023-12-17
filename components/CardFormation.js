@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
 
+import { UserRole } from "../constants";
 import styles from "../styles/CardFormation.module.css";
 
 import { useWindowDimensions } from "../hooks/useWindowDimensions";
@@ -91,7 +92,7 @@ const CardFormation = (props) => {
           <h3 className={styles.formationTitle}>{props.course.title}</h3>
           {/* if course is a draft, it still can be updated by ADMIN only */}
           {/* {props.role === 'ADMIN' && !props.course.isPublished && ( */}
-          {props.role === "ADMIN" && (
+          {props.role === UserRole.ADMIN && (
             <Link href={`/courses/update-course/${props.course.seoUrl}`}>
               <a className={styles.linkAdmin}>Modifier</a>
             </Link>
