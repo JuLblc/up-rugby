@@ -145,10 +145,7 @@ const Formation = (props) => {
     router.push("/courses");
   };
 
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-
-    //Set Url for SEO
+  const generateSeoUrls = (courseData) => {
     const newCourseData = { ...courseData };
 
     newCourseData.seoUrl = toSeoUrl(courseData.title);
@@ -159,9 +156,10 @@ const Formation = (props) => {
       });
     });
 
-    setDisableField(true);
+    return newCourseData;
+  };
 
-    // 1. Files upload to Cloudinary & get secure urls
+  const uploadFilesToCloudinary = async (fileInput, courseData) => {
     if (fileInput.length > 0) {
       const formDataFile = new FormData();
 
@@ -175,12 +173,15 @@ const Formation = (props) => {
         "raw"
       );
 
-      newCourseData.attachments
+      return courseData.attachments
         .filter((file) => file.url === undefined)
         .map((file, idx) => (file.url = resUploadFile.data.secureUrls[idx]));
     }
 
-    //2. Picture upload to Cloudinary & get secure urls
+    return courseData;
+  };
+
+  const uploadPictureToCloudinary = async (pictInput, courseData) => {
     if (pictInput) {
       const formDataPict = new FormData();
 
@@ -192,27 +193,50 @@ const Formation = (props) => {
         "image"
       );
 
-      newCourseData.img.url = resUploadPict.data.url;
-      newCourseData.img.width = resUploadPict.data.width;
-      newCourseData.img.height = resUploadPict.data.height;
+      courseData.img.url = resUploadPict.data.url;
+      courseData.img.width = resUploadPict.data.width;
+      courseData.img.height = resUploadPict.data.height;
     }
 
-    //3. Save in DB
-    if (props.action === "create") {
-      const resCreate = await postCourse(newCourseData);
+    return courseData;
+  };
+
+  const saveCourseData = async (action, courseData) => {
+    if (action === "create") {
+      const resCreate = await postCourse(courseData);
 
       router.push(
         `/courses/update-course/${resCreate.data.newCourseFromDB.seoUrl}`
       );
     }
 
-    if (props.action === "update") {
-      const resUpdate = await putCourse(newCourseData);
+    if (action === "update") {
+      const resUpdate = await putCourse(courseData);
 
       router.push(
         `/courses/update-course/${resUpdate.data.updatedCourseFromDB.seoUrl}`
       );
     }
+  };
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
+    const courseDataWithSeoUrl = generateSeoUrls(courseData);
+
+    setDisableField(true);
+
+    const courseDataWithAttachement = await uploadFilesToCloudinary(
+      fileInput,
+      courseDataWithSeoUrl
+    );
+
+    const courseDataWithPicture = await uploadPictureToCloudinary(
+      pictInput,
+      courseDataWithAttachement
+    );
+
+    await saveCourseData(props.action, courseDataWithPicture);
   };
 
   return (
