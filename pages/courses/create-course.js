@@ -1,24 +1,9 @@
-import { useRouter } from "next/router";
 import { getSession } from "next-auth/react";
-import { useEffect } from "react";
 import Formation from "../../components/FormFormation/Formation";
-import { isAdmin } from "../../utils/session";
+import { useRedirectUnauthorizedUser } from "../../hooks/useRedirectUnauthorizedUser";
 
 const NewCourse = (props) => {
-  const router = useRouter();
-
-  const isRoleAdmin = isAdmin(props.session?.user.role);
-
-  useEffect(() => {
-    if (!props.session) {
-      router.push("/login?login=signin");
-
-      return;
-    }
-    if (!isRoleAdmin) {
-      router.back();
-    }
-  }, []);
+  useRedirectUnauthorizedUser(props.session);
 
   const emptyCourse = {
     attachments: [],
@@ -60,17 +45,15 @@ const NewCourse = (props) => {
 
   return (
     <main>
-      {props.session && isRoleAdmin && (
-        <>
-          <h1>Ajouter formation</h1>
+      <>
+        <h1>Ajouter formation</h1>
 
-          <Formation
-            courseContent={emptyCourse}
-            action={"create"}
-            disable={false}
-          />
-        </>
-      )}
+        <Formation
+          courseContent={emptyCourse}
+          action={"create"}
+          disable={false}
+        />
+      </>
     </main>
   );
 };

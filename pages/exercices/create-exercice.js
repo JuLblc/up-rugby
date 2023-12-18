@@ -1,23 +1,9 @@
 import Exercice from "../../components/FormExercice/Exercice";
 import { getSession } from "next-auth/react";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { isAdmin } from "../../utils/session";
+import { useRedirectUnauthorizedUser } from "../../hooks/useRedirectUnauthorizedUser";
 
 const NewExercice = (props) => {
-  const router = useRouter();
-  const isRoleAdmin = isAdmin(props.session?.user.role);
-
-  useEffect(() => {
-    if (!props.session) {
-      router.push("/login?login=signin");
-
-      return;
-    }
-    if (!isRoleAdmin) {
-      router.back();
-    }
-  }, []);
+  useRedirectUnauthorizedUser(props.session);
 
   const emptyExercice = {
     chapters: [
@@ -46,17 +32,15 @@ const NewExercice = (props) => {
 
   return (
     <main>
-      {props.session && isRoleAdmin && (
-        <>
-          <h1>Ajouter Exercices</h1>
+      <>
+        <h1>Ajouter Exercices</h1>
 
-          <Exercice
-            exerciceContent={emptyExercice}
-            action={"create"}
-            disable={false}
-          />
-        </>
-      )}
+        <Exercice
+          exerciceContent={emptyExercice}
+          action={"create"}
+          disable={false}
+        />
+      </>
     </main>
   );
 };

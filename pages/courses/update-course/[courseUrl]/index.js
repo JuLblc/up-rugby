@@ -1,25 +1,11 @@
-import { useEffect } from "react";
 import { getSession } from "next-auth/react";
-import { useRouter } from "next/router";
 import { getCourses } from "../../../../apiCall/courses";
 import Formation from "../../../../components/FormFormation/Formation";
 import { isAdmin } from "../../../../utils/session";
+import { useRedirectUnauthorizedUser } from "../../../../hooks/useRedirectUnauthorizedUser";
 
 const UpdateCourseDetails = (props) => {
-  const router = useRouter();
-  const isRoleAdmin = isAdmin(props.session?.user.role);
-
-  useEffect(() => {
-    if (!props.session) {
-      router.push("/login?login=signin");
-
-      return;
-    }
-
-    if (!isRoleAdmin) {
-      router.back();
-    }
-  }, []);
+  useRedirectUnauthorizedUser(props.session);
 
   return (
     <main>
